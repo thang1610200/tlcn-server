@@ -23,7 +23,8 @@ export class EmailProcessor {
                 subject: 'Reset Password',
                 template: 'reset_password',
                 context: {
-                  url: `${this.configService.get('CLIENT_URL')}/forgot-password?token=${payload.data.url}&email=${payload.data.email}`,
+                  url: `${this.configService.get('CLIENT_URL')}/reset-password?token=${payload.data.url}&email=${payload.data.email}`,
+                  name: payload.data.name
                 }
             });
         }
@@ -40,10 +41,10 @@ export class EmailProcessor {
               .sendMail({
                 to: payload.data.email,
                 from: '"No Reply" <noreply@example.com>',
-                subject: 'Verify',
+                subject: 'Welcome',
                 template: 'verify',
                 context: {
-                  url: `${this.configService.get('CLIENT_URL')}/auth/verify?token=${payload.data.token}&email=${payload.data.email}`,
+                  url: "test"
                 }
             });
         }

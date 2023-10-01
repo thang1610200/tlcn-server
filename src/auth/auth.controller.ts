@@ -1,12 +1,13 @@
-import { Controller, Get, Post, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Req, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NewUserDto } from './dtos/new-user.dto';
 import { LoginUserDto } from './dtos/login-user.dto';
 import { JwtGuard } from './guards/jwt.guard';
 import { RefreshJwtGuard } from './guards/refresh.guard';
-import { UserResponse } from './dtos/new-user-response.dto';
 import { LoginSocialDto } from './dtos/login-social.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
+import { VerifyResetPasswordDto } from './dtos/verify-reset-password.dto';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -30,6 +31,16 @@ export class AuthController {
     @Post('reset-password')
     resetPassword(@Body() dto: ResetPasswordDto){
         return this.authService.resetPassword(dto);
+    }
+
+    @Get('reset-password/click')
+    verifyTokenResetPassword(@Query() dto:VerifyResetPasswordDto){
+        return this.authService.verifyTokenResetPassword(dto);
+    }
+
+    @Post("update-password")
+    updatePassword(@Body() dto: UpdatePasswordDto){
+        return this.authService.updatePassword(dto);
     }
 
     @UseGuards(JwtGuard)

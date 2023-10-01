@@ -24,6 +24,7 @@ import { BullModule } from '@nestjs/bull';
       PASSWORD: Joi.string().required(),
       REDIS_HOST: Joi.string().required(),
       REDIS_PORT: Joi.string().required(),
+      BACKEND_URL: Joi.string().required()
     })
   }), MailingModule,
   MailerModule.forRootAsync({

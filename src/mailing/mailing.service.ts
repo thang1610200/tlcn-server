@@ -10,8 +10,8 @@ export class MailingService implements MailingServiceInterface {
 
     constructor(@InjectQueue('emailSending') private readonly emailQueue: Queue) {}
 
-    async sendRegisterEmail(payload: UserRegister): Promise<object> {
-        const job = await this.emailQueue.add('register', { payload });
+    async sendRegisterEmail(data: UserRegister): Promise<object> {
+        const job = await this.emailQueue.add('register', { data });
     
         return { jobId: job.id };
     }
