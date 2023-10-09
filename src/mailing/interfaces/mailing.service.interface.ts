@@ -1,5 +1,5 @@
-import { UserRegister } from "src/auth/events/user-register.event";
-import { UserResetPassword } from "src/auth/events/user-reset-password.event";
+import { UserRegister } from "src/auth/queues/user-register.queue";
+import { UserResetPassword } from "src/auth/queues/user-reset-password.queue";
 
 
 export interface MailingServiceInterface {

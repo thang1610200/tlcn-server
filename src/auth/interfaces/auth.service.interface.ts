@@ -4,8 +4,8 @@ import { UserResponse } from "../dtos/new-user-response.dto";
 import { LoginUserDto } from "../dtos/login-user.dto";
 import { LoginSocialDto } from "../dtos/login-social.dto";
 import { ResetPasswordDto } from "../dtos/reset-password.dto";
-import { UserResetPassword } from "../events/user-reset-password.event";
-import { UserRegister } from "../events/user-register.event";
+import { UserResetPassword } from "../queues/user-reset-password.queue";
+import { UserRegister } from "../queues/user-register.queue";
 import { VerifyResetPasswordDto } from "../dtos/verify-reset-password.dto";
 import { UpdatePasswordDto } from "../dtos/update-password.dto";
 
@@ -27,8 +27,6 @@ export interface AuthServiceInterface {
     }>;
     createUrl(): string;
     resetPassword(dto: ResetPasswordDto): Promise<void>;
-    sendEmailResetPassword(payload: UserResetPassword): Promise<void>;
-    sendEmailRegister(payload: UserRegister): Promise<void>;
     verifyTokenResetPassword(payload: VerifyResetPasswordDto): Promise<string>;
     updatePassword(payload: UpdatePasswordDto): Promise<void>;
 }

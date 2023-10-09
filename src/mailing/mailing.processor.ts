@@ -2,9 +2,9 @@ import { Process, Processor } from '@nestjs/bull';
 import { Job } from 'bull';
 import { ConfigService } from '@nestjs/config';
 import { MailerService } from '@nestjs-modules/mailer';
-import { UserResetPassword } from 'src/auth/events/user-reset-password.event';
+import { UserResetPassword } from 'src/auth/queues/user-reset-password.queue';
 import { InternalServerErrorException } from '@nestjs/common';
-import { UserRegister } from 'src/auth/events/user-register.event';
+import { UserRegister } from 'src/auth/queues/user-register.queue';
 
 @Processor('emailSending')
 export class EmailProcessor {

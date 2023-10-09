@@ -10,10 +10,9 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginSocialDto } from './dtos/login-social.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { randomBytes } from 'crypto';
-import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
-import { UserResetPassword } from './events/user-reset-password.event';
+import { UserResetPassword } from './queues/user-reset-password.queue';
 import { MailingService } from 'src/mailing/mailing.service';
-import { UserRegister } from './events/user-register.event';
+import { UserRegister } from './queues/user-register.queue';
 import { VerifyResetPasswordDto } from './dtos/verify-reset-password.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 
@@ -25,7 +24,6 @@ const RESET_PASS_SUCCESS_TIME = 24 * 60;
 export class AuthService implements AuthServiceInterface {
     constructor (private readonly prismaService: PrismaService,
                 private readonly jwtService: JwtService,
-                private readonly evenEmitter: EventEmitter2,
                 private readonly mailingService: MailingService) {}
 
     async updatePassword(payload: UpdatePasswordDto): Promise<void> {
@@ -42,7 +40,7 @@ export class AuthService implements AuthServiceInterface {
             }
         })
 
-        if(!forgotPassword || forgotPassword.isDeleted || ((new Date().getTime() - new Date(forgotPassword.token_expiry).getTime()) / 1000 > RESET_PASS_TIME)){
+        if(!forgotPassword || forgotPassword?.isDeleted || ((new Date().getTime() - new Date(forgotPassword.token_expiry).getTime()) / 1000 > RESET_PASS_TIME)){
             throw new UnauthorizedException();
         }
 
@@ -87,7 +85,7 @@ export class AuthService implements AuthServiceInterface {
             }
         })
 
-        if(userResetPass[0].isDeleted && ((new Date().getTime() - new Date(userResetPass[0]?.token_expiry).getTime()) / 1000 <= RESET_PASS_SUCCESS_TIME)){
+        if(userResetPass[0]?.isDeleted && ((new Date().getTime() - new Date(userResetPass[0]?.token_expiry).getTime()) / 1000 <= RESET_PASS_SUCCESS_TIME)){
             throw new ForbiddenException();
         }
 
@@ -107,13 +105,7 @@ export class AuthService implements AuthServiceInterface {
                 }
             }
         });
-
-        await this.evenEmitter.emitAsync('user.reset-password', new UserResetPassword(user.email, token, user.name));
-    }
-
-    @OnEvent('user.reset-password')
-    async sendEmailResetPassword(payload: UserResetPassword): Promise<void>{
-        await this.mailingService.sendResetPasswordEmail(payload);
+        await this.mailingService.sendResetPasswordEmail(new UserResetPassword(user.email, token, user.name));
     }
 
     createUrl(): string {
@@ -153,7 +145,7 @@ export class AuthService implements AuthServiceInterface {
 
         const newUserResponse = this.buildResponse(newUser);
 
-        await this.evenEmitter.emitAsync('user.register', new UserRegister(newUserResponse.email, newUserResponse.name));
+        await this.mailingService.sendRegisterEmail(new UserRegister(newUserResponse.email, newUserResponse.name));
 
         return {
             user: newUserResponse,
@@ -258,13 +250,9 @@ export class AuthService implements AuthServiceInterface {
             }
         })
 
-        await this.evenEmitter.emitAsync('user.register', new UserRegister(newUser.email, newUser.name));
+        await this.mailingService.sendRegisterEmail(new UserRegister(newUser.email, newUser.name));
+        
         return this.buildResponse(user);
-    }
-
-    @OnEvent('user.register')
-    async sendEmailRegister(payload: UserRegister): Promise<void>{
-        await this.mailingService.sendRegisterEmail(payload);
     }
 
     buildResponse(user: User): UserResponse{

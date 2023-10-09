@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { MailingServiceInterface } from './interfaces/mailing.service.interface';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
-import { UserResetPassword } from 'src/auth/events/user-reset-password.event';
-import { UserRegister } from 'src/auth/events/user-register.event';
+import { UserResetPassword } from 'src/auth/queues/user-reset-password.queue';
+import { UserRegister } from 'src/auth/queues/user-register.queue';
 
 @Injectable()
 export class MailingService implements MailingServiceInterface {
@@ -17,7 +17,12 @@ export class MailingService implements MailingServiceInterface {
     }
 
     async sendResetPasswordEmail(data: UserResetPassword): Promise<object> {
-        const job = await this.emailQueue.add('reset-password', { data });
+        const job = await this.emailQueue.add('reset-password', { data }, {
+            backoff: {
+                type: 'exponential',
+                delay: 2000,
+            }
+        });
     
         return { jobId: job.id };
     }
