@@ -21,6 +21,8 @@ model User {
   password          String?
   name              String
   image             String?
+  bio               String?
+  url               String[]
   role              Role                 @default(USER)
   activation_code   String?
   registration_date DateTime             @default(now())

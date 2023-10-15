@@ -1,11 +1,11 @@
-import { User } from "@prisma/client";
+import { User, PasswordResetToken } from "@prisma/client";
 import { NewUserDto } from "../dtos/new-user.dto";
 import { UserResponse } from "../dtos/new-user-response.dto";
 import { LoginUserDto } from "../dtos/login-user.dto";
 import { LoginSocialDto } from "../dtos/login-social.dto";
 import { ResetPasswordDto } from "../dtos/reset-password.dto";
-import { UserResetPassword } from "../queues/user-reset-password.queue";
-import { UserRegister } from "../queues/user-register.queue";
+import { UserResetPassword } from "../events/user-reset-password.event";
+import { UserRegister } from "../events/user-register.event";
 import { VerifyResetPasswordDto } from "../dtos/verify-reset-password.dto";
 import { UpdatePasswordDto } from "../dtos/update-password.dto";
 
@@ -26,7 +26,9 @@ export interface AuthServiceInterface {
         backendTokens: object
     }>;
     createUrl(): string;
-    resetPassword(dto: ResetPasswordDto): Promise<void>;
+    resetPassword(dto: ResetPasswordDto): Promise<PasswordResetToken>;
     verifyTokenResetPassword(payload: VerifyResetPasswordDto): Promise<string>;
-    updatePassword(payload: UpdatePasswordDto): Promise<void>;
+    updatePassword(payload: UpdatePasswordDto): Promise<UserResponse>;
+    sendEmailWelcome(data: UserRegister): Promise<void>;
+    sendEmailResetPassowrd(data: UserResetPassword): Promise<void>;
 }

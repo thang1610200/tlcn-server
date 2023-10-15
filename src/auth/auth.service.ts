@@ -1,7 +1,7 @@
-import { ConflictException, ForbiddenException, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { AuthServiceInterface } from './interfaces/auth.service.interface';
-import { User } from '@prisma/client';
+import { PasswordResetToken, User } from '@prisma/client';
 import { NewUserDto } from './dtos/new-user.dto';
 import { hash, compare } from 'bcrypt';
 import { UserResponse } from './dtos/new-user-response.dto';
@@ -10,11 +10,12 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginSocialDto } from './dtos/login-social.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { randomBytes } from 'crypto';
-import { UserResetPassword } from './queues/user-reset-password.queue';
+import { UserResetPassword } from './events/user-reset-password.event';
 import { MailingService } from 'src/mailing/mailing.service';
-import { UserRegister } from './queues/user-register.queue';
+import { UserRegister } from './events/user-register.event';
 import { VerifyResetPasswordDto } from './dtos/verify-reset-password.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 
 const EXPIRE_TIME = 24 * 60 * 60 * 1000;
 const RESET_PASS_TIME = 5 * 60;
@@ -23,10 +24,11 @@ const RESET_PASS_SUCCESS_TIME = 24 * 60;
 @Injectable()
 export class AuthService implements AuthServiceInterface {
     constructor (private readonly prismaService: PrismaService,
+                private readonly eventEmitter: EventEmitter2,
                 private readonly jwtService: JwtService,
                 private readonly mailingService: MailingService) {}
 
-    async updatePassword(payload: UpdatePasswordDto): Promise<void> {
+    async updatePassword(payload: UpdatePasswordDto): Promise<UserResponse> {
         const user = await this.findbyEmail(payload.email);
 
         if(!user){
@@ -37,6 +39,9 @@ export class AuthService implements AuthServiceInterface {
             where: {
                 user_id: user.id,
                 token: payload.token
+            },
+            include: {
+                user: true
             }
         })
 
@@ -44,16 +49,11 @@ export class AuthService implements AuthServiceInterface {
             throw new UnauthorizedException();
         }
 
-        const hashedPassword = await this.hashPassword(payload.password);
-        await this.prismaService.user.update({
-            where: {
-                email: payload.email
-            },
-            data: {
-                password: hashedPassword,
-            }
-        });
+        if(await this.comparePassword(payload.password, forgotPassword.user.password)){
+            throw new BadRequestException('Password matches current password');
+        }
 
+        const hashedPassword = await this.hashPassword(payload.password);
         await this.prismaService.passwordResetToken.update({
             where: {
                 user: {
@@ -65,9 +65,20 @@ export class AuthService implements AuthServiceInterface {
                 isDeleted: true
             }
         });
+
+        const userUpdate = await this.prismaService.user.update({
+            where: {
+                email: payload.email
+            },
+            data: {
+                password: hashedPassword,
+            }
+        });
+
+        return this.buildResponse(userUpdate);
     }
 
-    async resetPassword(dto: ResetPasswordDto): Promise<void> {
+    async resetPassword(dto: ResetPasswordDto): Promise<PasswordResetToken> {
         const user = await this.findbyEmail(dto.email);
 
         if(!user){
@@ -86,7 +97,7 @@ export class AuthService implements AuthServiceInterface {
         })
 
         if(userResetPass[0]?.isDeleted && ((new Date().getTime() - new Date(userResetPass[0]?.token_expiry).getTime()) / 1000 <= RESET_PASS_SUCCESS_TIME)){
-            throw new ForbiddenException();
+            throw new ForbiddenException('Please wait 1 hour!');
         }
 
         if (userResetPass && ((new Date().getTime() - new Date(userResetPass[0]?.token_expiry).getTime()) / 1000 <= RESET_PASS_TIME)){
@@ -95,7 +106,7 @@ export class AuthService implements AuthServiceInterface {
 
         const token = this.createUrl();
 
-        await this.prismaService.passwordResetToken.create({
+        const userToken = await this.prismaService.passwordResetToken.create({
             data: {
                 token,
                 user: {
@@ -105,7 +116,9 @@ export class AuthService implements AuthServiceInterface {
                 }
             }
         });
-        await this.mailingService.sendResetPasswordEmail(new UserResetPassword(user.email, token, user.name));
+        this.eventEmitter.emit('email.reset', new UserResetPassword(user.email, token, user.name));
+
+        return userToken;
     }
 
     createUrl(): string {
@@ -145,7 +158,7 @@ export class AuthService implements AuthServiceInterface {
 
         const newUserResponse = this.buildResponse(newUser);
 
-        await this.mailingService.sendRegisterEmail(new UserRegister(newUserResponse.email, newUserResponse.name));
+        this.eventEmitter.emit('email.welcome', new UserRegister(newUserResponse.email, newUserResponse.name));
 
         return {
             user: newUserResponse,
@@ -250,9 +263,19 @@ export class AuthService implements AuthServiceInterface {
             }
         })
 
-        await this.mailingService.sendRegisterEmail(new UserRegister(newUser.email, newUser.name));
+        this.eventEmitter.emit('email.welcome', new UserRegister(newUser.email, newUser.name));
         
         return this.buildResponse(user);
+    }
+
+    @OnEvent('email.welcome')
+    async sendEmailWelcome(data: UserRegister): Promise<void>{
+        this.mailingService.sendRegisterEmail(data);
+    }
+
+    @OnEvent('email.reset')
+    async sendEmailResetPassowrd(data: UserResetPassword): Promise<void>{
+        this.mailingService.sendResetPasswordEmail(data);
     }
 
     buildResponse(user: User): UserResponse{

@@ -10,6 +10,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import * as Joi from "joi";
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { BullModule } from '@nestjs/bull';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({
@@ -61,7 +62,8 @@ import { BullModule } from '@nestjs/bull';
       }
     }),
     inject: [ConfigService]
-  })
+  }),
+  UserModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
