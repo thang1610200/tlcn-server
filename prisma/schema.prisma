@@ -11,7 +11,8 @@ datasource db {
 }
 
 enum Role {
-  USER
+  LEARNER
+  INSTRUCTOR
   ADMIN
 }
 
@@ -22,9 +23,10 @@ model User {
   name              String
   image             String?
   bio               String?
-  url               String[]
-  role              Role                 @default(USER)
-  activation_code   String?
+  facebook_id       String?
+  youtube_id        String?
+  titok_id          String?
+  role              Role                 @default(LEARNER)
   registration_date DateTime             @default(now())
   verify_date       DateTime?
   forgot_password   PasswordResetToken[]

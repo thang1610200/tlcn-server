@@ -253,13 +253,11 @@ export class AuthService implements AuthServiceInterface {
         }
 
         const hashedPassword = await this.hashPassword(newUser.password);
-        const token = this.createUrl();
 
         const user = await this.prismaService.user.create({
             data: {
                 ...newUser,
-                password: hashedPassword,
-                activation_code: token
+                password: hashedPassword
             }
         })
 

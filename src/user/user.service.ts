@@ -5,10 +5,13 @@ import { PrismaService } from 'src/prisma.service';
 import { User } from '@prisma/client';
 import { ProfileResponse } from './dtos/profile-user-response.dto';
 import { UpdateProfile } from './dtos/update-profile.dto';
+import { UpdateAvatarDto } from './dtos/update-avatar.dto';
+import { UploadService } from 'src/upload/upload.service';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
-    constructor (private readonly prismaService: PrismaService) {}
+    constructor (private readonly prismaService: PrismaService,
+                private readonly uploadService: UploadService) {}
 
     async findByEmail(email: string): Promise<User> {
         const user = await this.prismaService.user.findUnique({
@@ -34,9 +37,9 @@ export class UserService implements UserServiceInterface {
             data: {
                 name: payload.username,
                 bio: payload.bio,
-                url: {
-                    set: payload.url
-                }
+                facebook_id: payload.facebook_id,
+                youtube_id: payload.youtube_id,
+                titok_id: payload.tiktok_id
             }
         })
 
@@ -49,7 +52,9 @@ export class UserService implements UserServiceInterface {
             name: data.name,
             image: data.image,
             bio: data.bio,
-            url: data.url
+            facebook_id: data.facebook_id,
+            youtube_id: data.youtube_id,
+            tiktok_id: data.titok_id
         }
     }
 
@@ -61,5 +66,9 @@ export class UserService implements UserServiceInterface {
         }
 
         return this.buildResponse(user);
+    }
+
+    async updateAvatar(payload: UpdateAvatarDto): Promise<void> {
+        await this.uploadService.uploadAvatarToStorage(payload);
     }
 }

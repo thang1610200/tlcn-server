@@ -11,6 +11,7 @@ import * as Joi from "joi";
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { BullModule } from '@nestjs/bull';
 import { UserModule } from './user/user.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({
@@ -63,7 +64,8 @@ import { UserModule } from './user/user.module';
     }),
     inject: [ConfigService]
   }),
-  UserModule
+  UserModule,
+  UploadModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

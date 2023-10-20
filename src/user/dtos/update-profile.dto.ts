@@ -10,6 +10,12 @@ export class UpdateProfile {
     @IsString()
     bio: string;
 
-    @IsArray()
-    url: string[];
+    @IsString()
+    facebook_id: string
+
+    @IsString()
+    youtube_id: string
+
+    @IsString()
+    tiktok_id: string
 }
