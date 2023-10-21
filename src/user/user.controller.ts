@@ -27,16 +27,16 @@ export class UserController {
         return this.userService.updateProfile(payload);
     }
 
-    //@UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
     @UseInterceptors(FileInterceptor('file'))
     @Patch('update-avatar')
     async updateAvatarUser(@UploadedFile(
         new ParseFilePipe({
             validators: [
                 // new MaxFileSizeValidator({ maxSize: 5 * 1000 }),
-                // new FileTypeValidator({
-                //     fileType: '.(png|jpeg|jpg)' ///\.(webm|mp4|x-msvideo|mpeg|ogg)$/ 
-                // })
+                new FileTypeValidator({
+                    fileType: '.(png|jpeg|jpg|webp)' ///\.(webm|mp4|x-msvideo|mpeg|ogg)$/ 
+                })
             ],
             errorHttpStatusCode: HttpStatus.BAD_REQUEST,
             exceptionFactory(error) {

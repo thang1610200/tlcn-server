@@ -68,7 +68,7 @@ export class UserService implements UserServiceInterface {
         return this.buildResponse(user);
     }
 
-    async updateAvatar(payload: UpdateAvatarDto): Promise<void> {
-        await this.uploadService.uploadAvatarToStorage(payload);
+    async updateAvatar(payload: UpdateAvatarDto): Promise<object> {
+        return await this.uploadService.uploadAvatarToStorage(payload);
     }
 }

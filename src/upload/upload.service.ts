@@ -41,6 +41,8 @@ export class UploadService implements UploadServiceInterface {
     async uploadAvatarToStorage(data: UpdateAvatarDto): Promise<object>{
         const job = await this.uploadQueue.add('update-avatar', {data});
 
-        return { jobId: job.id };
+        const datas = await job.finished();
+
+        return { jobData: datas };
     }
 }
