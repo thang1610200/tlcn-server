@@ -29,6 +29,7 @@ model User {
   role              Role                 @default(LEARNER)
   registration_date DateTime             @default(now())
   verify_date       DateTime?
+  course            Course[]
   forgot_password   PasswordResetToken[]
 }
 
@@ -39,4 +40,26 @@ model PasswordResetToken {
   user_id      String   @db.ObjectId
   user         User     @relation(fields: [user_id], references: [id])
   isDeleted    Boolean  @default(false)
+}
+
+model Topic {
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  title  String   @unique
+  course Course[]
+}
+
+model Course {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  topic_id         String   @db.ObjectId
+  topic            Topic    @relation(fields: [topic_id], references: [id])
+  owner_id         String   @db.ObjectId
+  owner            User     @relation(fields: [owner_id], references: [id])
+  name             String   @unique
+  description      String?
+  learning_outcome String
+  tag              String
+  slug             String
+  picture          String
+  create_at        DateTime @default(now())
+  update_at        DateTime @updatedAt
 }

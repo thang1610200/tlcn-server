@@ -16,6 +16,7 @@ import { UserRegister } from './events/user-register.event';
 import { VerifyResetPasswordDto } from './dtos/verify-reset-password.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { ConfigService } from '@nestjs/config';
 
 const EXPIRE_TIME = 24 * 60 * 60 * 1000;
 const RESET_PASS_TIME = 5 * 60;
@@ -177,11 +178,8 @@ export class AuthService implements AuthServiceInterface {
     }
 
     async refreshToken(user: any): Promise<object> {
-        const payload = {
-            email: user.email,
-            name: user.name,
-            image: user.image
-        }
+        const users = await this.findbyEmail(user.email);
+        const payload = this.buildResponse(users);
 
         return {
             accessToken: await this.jwtService.signAsync(payload, {
@@ -280,7 +278,8 @@ export class AuthService implements AuthServiceInterface {
         return {
             email: user.email,
             name: user.name,
-            image: user.image
+            image: user.image,
+            role: user.role
         }
     }
 

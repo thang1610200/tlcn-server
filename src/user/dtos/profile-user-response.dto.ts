@@ -5,5 +5,6 @@ export interface ProfileResponse {
     bio: string,
     facebook_id: string,
     youtube_id: string,
-    tiktok_id: string
+    tiktok_id: string,
+    role: string
 }

@@ -7,6 +7,8 @@ import { UpdateProfile } from './dtos/update-profile.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateAvatarDto } from './dtos/update-avatar.dto';
 import { UpdateAvatarRequestDto } from './dtos/update-avatar-request.dto';
+import { Roles } from 'src/course/decorators/roles.decorator';
+import { RolesGuard } from 'src/course/guards/role.guard';
 
 @Controller('user')
 export class UserController {
@@ -49,5 +51,12 @@ export class UserController {
             email: body.email
         }
         return this.userService.updateAvatar(payload);
+    }
+
+    @Roles('LEARNER')
+    @UseGuards(JwtGuard,RolesGuard)
+    @Patch('register-instructer')
+    async registerInstructor(@Body() payload: Profile) {
+        return this.userService.registerInstructor(payload);
     }
 }

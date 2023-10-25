@@ -12,6 +12,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { BullModule } from '@nestjs/bull';
 import { UserModule } from './user/user.module';
 import { UploadModule } from './upload/upload.module';
+import { CourseModule } from './course/course.module';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({
@@ -65,7 +67,8 @@ import { UploadModule } from './upload/upload.module';
     inject: [ConfigService]
   }),
   UserModule,
-  UploadModule
+  UploadModule,
+  CourseModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

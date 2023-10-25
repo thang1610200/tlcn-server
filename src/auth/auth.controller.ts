@@ -48,5 +48,4 @@ export class AuthController {
     async refresh(@Req() req){
         return this.authService.refreshToken(req.user);
     }
-
 }

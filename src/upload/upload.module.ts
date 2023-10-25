@@ -4,6 +4,9 @@ import { BullModule } from '@nestjs/bull';
 import { ConfigService } from '@nestjs/config';
 import { UploadProcessor } from './upload.processor';
 import { PrismaService } from 'src/prisma.service';
+import { JwtService } from '@nestjs/jwt';
+import { UserService } from 'src/user/user.service';
+import { UploadGateway } from './upload.gateway';
 
 @Module({
   imports: [
@@ -11,6 +14,6 @@ import { PrismaService } from 'src/prisma.service';
       name: 'upload'
     })
   ],
-  providers: [UploadService, ConfigService, UploadProcessor, PrismaService]
+  providers: [UploadService, ConfigService, UploadProcessor, PrismaService, UploadGateway, UserService, JwtService]
 })
 export class UploadModule {}
