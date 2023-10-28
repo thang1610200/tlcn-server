@@ -10,6 +10,18 @@ import { UploadService } from 'src/upload/upload.service';
 export class CourseService implements CourseServiceInterface {
     constructor (private readonly prismaService: PrismaService) {}
 
+    slugify(name: string, separator: string = '-'): string {
+        return name
+                .toString()
+                .toLowerCase()
+                .trim()
+                .replace(/\s+/g, separator)
+                .replace(/[^\w\-]+/g, '')
+                .replace(/\_/g, separator)
+                .replace(/\-\-+/g, separator)
+                .replace(/\-$/g, ''); 
+    }
+
     async createTopic(payload: CreateTopicDto): Promise<Topic> {
         const topic = await this.findByTitleTopic(payload.title);
 
@@ -26,15 +38,26 @@ export class CourseService implements CourseServiceInterface {
         return newTopic;
     }
 
-    async createCourse (payload: CreateCourseDto): Promise<Course> {
-        const course = await this.findByNameCourse(payload.name);
+    async createCourse (payload: CreateCourseDto, user: any): Promise<Course> {
+        const course = await this.findByNameCourse(payload.title);
 
         if(course){
             throw new UnprocessableEntityException();
         }
 
-        return course;
-        
+        const users = await this.prismaService.user.findUnique({
+            where: {
+                email: user.email
+            }
+        })
+
+        return await this.prismaService.course.create({
+            data: {
+                title: payload.title,
+                owner_id: users.id,
+                slug: this.slugify(payload.title)
+            }
+        });
     }
 
     async findByTitleTopic(payload: string): Promise<Topic> {
@@ -48,7 +71,7 @@ export class CourseService implements CourseServiceInterface {
     async findByNameCourse(payload: string): Promise<Course> {
         return await this.prismaService.course.findUnique({
             where: {
-                name: payload
+                title: payload
             } 
         });
     }

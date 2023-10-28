@@ -50,16 +50,26 @@ model Topic {
 
 model Course {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  topic_id         String   @db.ObjectId
-  topic            Topic    @relation(fields: [topic_id], references: [id])
+  topic_id         String?   @db.ObjectId
+  topic            Topic?    @relation(fields: [topic_id], references: [id])
   owner_id         String   @db.ObjectId
   owner            User     @relation(fields: [owner_id], references: [id])
-  name             String   @unique
+  title            String   @unique
   description      String?
-  learning_outcome String
-  tag              String
+  learning_outcome String?
   slug             String
-  picture          String
+  picture          String?
+  chapters         Chapter[]
   create_at        DateTime @default(now())
   update_at        DateTime @updatedAt
+}
+
+model Chapter {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  desciption String? 
+  isPublished Boolean @default(false)
+  videoUrl String?
+  courseId String @db.ObjectId
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }

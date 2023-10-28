@@ -23,6 +23,7 @@
     "schema": "prisma/schema.prisma"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.436.0",
     "@nestjs-modules/mailer": "^1.9.1",
     "@nestjs/bull": "^10.0.1",
     "@nestjs/common": "^10.0.0",

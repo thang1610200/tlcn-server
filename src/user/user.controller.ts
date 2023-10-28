@@ -2,10 +2,8 @@ import { Controller, Get, UseGuards, Body, Request, Patch, UseInterceptors, Uplo
 import { Profile } from './dtos/profile-user.dto';
 import { UserService } from './user.service';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
-import { ProfileResponse } from './dtos/profile-user-response.dto';
 import { UpdateProfile } from './dtos/update-profile.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UpdateAvatarDto } from './dtos/update-avatar.dto';
 import { UpdateAvatarRequestDto } from './dtos/update-avatar-request.dto';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { RolesGuard } from 'src/course/guards/role.guard';

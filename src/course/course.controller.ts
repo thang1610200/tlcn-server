@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { Roles } from './decorators/roles.decorator';
 import { CourseService } from './course.service';
 import { RolesGuard } from './guards/role.guard';
@@ -20,7 +20,7 @@ export class CourseController {
     @Roles('INSTRUCTOR')
     @UseGuards(JwtGuard,RolesGuard)
     @Post('create-course')
-    createCourse (@Body() payload: CreateCourseDto) {
-        return this.courseService.createCourse(payload);
+    createCourse (@Body() payload: CreateCourseDto, @Req() request: any) {
+        return this.courseService.createCourse(payload, request['user']);
     }
 }

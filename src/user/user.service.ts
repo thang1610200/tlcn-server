@@ -7,15 +7,13 @@ import { ProfileResponse } from './dtos/profile-user-response.dto';
 import { UpdateProfile } from './dtos/update-profile.dto';
 import { UpdateAvatarDto } from './dtos/update-avatar.dto';
 import { UploadService } from 'src/upload/upload.service';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { UploadGateway } from 'src/upload/upload.gateway';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
     constructor (private readonly prismaService: PrismaService,
                 private readonly uploadService: UploadService,
-                private readonly configService: ConfigService,
-                private readonly jwtService: JwtService) {}
+                private readonly uploadGateway: UploadGateway) {}
 
     async registerInstructor(payload: Profile): Promise<ProfileResponse> {
         const user = await this.findByEmail(payload.email);
@@ -93,9 +91,12 @@ export class UserService implements UserServiceInterface {
     }
 
     async updateAvatar(payload: UpdateAvatarDto): Promise<ProfileResponse> {
-        //return await this.uploadService.uploadAvatarToStorage(payload);
         try {
-            const fileName = await this.uploadService.uploadToWeb3Storage(payload.file);
+            //Web3
+            //const fileName = await this.uploadService.uploadToWeb3Storage(payload.file);
+
+            //S3
+            const fileName = await this.uploadService.uploadAvatarToS3(payload.file);
             //update vào database;
             const user =  await this.prismaService.user.update({
                 where: {
@@ -112,23 +113,4 @@ export class UserService implements UserServiceInterface {
             throw new InternalServerErrorException();
         }
     }
-
-    async verifyAccessToken(token: string): Promise<string> {
-        if(!token){
-            throw new UnauthorizedException();
-        } 
-
-        try {
-            const payload = await this.jwtService.verifyAsync(token,{
-                secret: this.configService.get('jwtSecretKey')
-            });
-            
-            return payload.email;
-        }
-        catch(err){
-            throw new UnauthorizedException();
-        }
-    }
-
-    
 }

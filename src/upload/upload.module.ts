@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config';
 import { UploadProcessor } from './upload.processor';
 import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
 import { UploadGateway } from './upload.gateway';
 
 @Module({
@@ -14,6 +13,7 @@ import { UploadGateway } from './upload.gateway';
       name: 'upload'
     })
   ],
-  providers: [UploadService, ConfigService, UploadProcessor, PrismaService, UploadGateway, UserService, JwtService]
+  providers: [UploadService, ConfigService, UploadProcessor, PrismaService, JwtService, UploadGateway],
+  controllers: []
 })
 export class UploadModule {}

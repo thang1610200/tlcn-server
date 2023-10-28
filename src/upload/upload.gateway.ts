@@ -1,7 +1,7 @@
 import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { Namespace, Server, Socket } from "socket.io";
-import { UserService } from "../user/user.service";
+import { Namespace, Socket } from "socket.io";
 import { Logger } from "@nestjs/common";
+import { UploadService } from "./upload.service";
 
 @WebSocketGateway({
     namespace: "uploads"
@@ -11,15 +11,16 @@ export class UploadGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     server: Namespace;
 
     private readonly logger = new Logger(UploadGateway.name);
-    constructor(private readonly userService: UserService){}
+    constructor(private readonly uploadService: UploadService){}
 
     afterInit(socket: Socket): any {}
 
     async handleConnection(client: Socket) {
         const authHeader = client.handshake.headers.authorization;
+        console.log(authHeader);
         if(authHeader && (authHeader as string).split(' ')[1]){
             try {
-                client.data.email = await this.userService.verifyAccessToken((authHeader as string).split(' ')[1]);
+                client.data.email = await this.uploadService.verifyAccessToken((authHeader as string).split(' ')[1]);
                 client.join(client.data.email);
             }
             catch(e){

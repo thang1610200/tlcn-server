@@ -10,6 +10,5 @@ export interface UserServiceInterface {
     updateProfile(payload: UpdateProfile): Promise<ProfileResponse>;
     findByEmail(email: string): Promise<User>;
     updateAvatar(payload: UpdateAvatarDto): Promise<object>;
-    verifyAccessToken(token: string): Promise<string>;
     registerInstructor(payload: Profile): Promise<ProfileResponse>;
 }
