@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CourseController } from './course.controller';
-import { CourseService } from './course.service';
+import { LessonController } from './lesson.controller';
+import { LessonService } from './lesson.service';
 import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { UploadService } from 'src/upload/upload.service';
@@ -12,7 +12,7 @@ import { BullModule } from '@nestjs/bull';
       name: 'upload'
     })
   ],
-  controllers: [CourseController],
-  providers: [CourseService, PrismaService, JwtService, UploadService]
+  controllers: [LessonController],
+  providers: [LessonService, PrismaService, JwtService, UploadService]
 })
-export class CourseModule {}
+export class LessonModule {}

@@ -1,10 +1,9 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class CreateCourseDto {
-
+export class GetCourseBySlugDto {
     @IsString()
     @IsNotEmpty()
-    title: string;
+    slug: string;
 
     @IsString()
     @IsNotEmpty()

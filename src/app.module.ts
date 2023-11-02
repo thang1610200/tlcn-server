@@ -13,6 +13,8 @@ import { BullModule } from '@nestjs/bull';
 import { UserModule } from './user/user.module';
 import { UploadModule } from './upload/upload.module';
 import { CourseModule } from './course/course.module';
+import { LessonModule } from './lesson/lesson.module';
+import { ChapterModule } from './chapter/chapter.module';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({
@@ -67,7 +69,9 @@ import { CourseModule } from './course/course.module';
   }),
   UserModule,
   UploadModule,
-  CourseModule
+  CourseModule,
+  LessonModule,
+  ChapterModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

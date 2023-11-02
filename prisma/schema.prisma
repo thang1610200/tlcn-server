@@ -49,27 +49,42 @@ model Topic {
 }
 
 model Course {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
   topic_id         String?   @db.ObjectId
   topic            Topic?    @relation(fields: [topic_id], references: [id])
-  owner_id         String   @db.ObjectId
-  owner            User     @relation(fields: [owner_id], references: [id])
-  title            String   @unique
+  owner_id         String    @db.ObjectId
+  owner            User      @relation(fields: [owner_id], references: [id])
+  title            String    @unique
   description      String?
   learning_outcome String?
-  slug             String
+  slug             String    @unique
   picture          String?
   chapters         Chapter[]
-  create_at        DateTime @default(now())
-  update_at        DateTime @updatedAt
+  isPublished      Boolean   @default(false)
+  create_at        DateTime  @default(now())
+  update_at        DateTime  @updatedAt
 }
 
 model Chapter {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  title   String
-  desciption String? 
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  token       String   @unique()
+  description String?
+  position    Int
+  isPublished Boolean  @default(false)
+  lessons     Lesson[]
+  courseId    String   @db.ObjectId
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Lesson {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  token       String  @unique
+  title       String
+  description String?
+  position    Int
   isPublished Boolean @default(false)
-  videoUrl String?
-  courseId String @db.ObjectId
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  videoUrl    String?
+  chapterId   String  @db.ObjectId
+  chapter     Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }

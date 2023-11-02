@@ -4,10 +4,10 @@ import { ConfigService } from '@nestjs/config';
 import { Queue } from 'bull';
 import { Web3Storage, File, CIDString } from 'web3.storage';
 import { UploadServiceInterface } from './interfaces/upload.service.interface';
-import { UpdateAvatarDto } from 'src/user/dtos/update-avatar.dto';
 import * as sharp from 'sharp';
 import { JwtService } from '@nestjs/jwt';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'; 
+import { QueueUploadVideo } from 'src/lesson/dto/queue-upload-video.dto';
 
 @Injectable()
 export class UploadService implements UploadServiceInterface {
@@ -74,12 +74,6 @@ export class UploadService implements UploadServiceInterface {
         return `https://${fileCid}.ipfs.w3s.link/${fileName}`;
     }
 
-    async uploadAvatarToStorage(data: UpdateAvatarDto): Promise<object>{
-        const job = await this.uploadQueue.add('update-avatar', {data});
-
-        return { job: job.id };
-    }
-
     async uploadAvatarToS3(file:any): Promise<string>{
         const fileName = `${new Date().getTime()}_${file.originalname.replaceAll(
             ' ',
@@ -95,6 +89,37 @@ export class UploadService implements UploadServiceInterface {
             })
         );
         return `https://${this.configService.get("AWS_BUCKET")}.s3.${this.configService.get('AWS_S3_REGION')}.amazonaws.com/${fileName}`;
+    }
+
+    async uploadVideoToS3(file: any, fileName: string): Promise<void> {
+        await this.s3Client.send(
+            new PutObjectCommand({
+                Bucket: this.configService.get("AWS_BUCKET"),
+                Key: fileName,
+                Body: Buffer.from(file.buffer),
+                ACL: 'public-read'
+            })
+        );
+    }
+
+    createFileNameVideo(file: any): any {
+        const fileName: string = `${new Date().getTime()}_${file.originalname.replaceAll(
+            ' ',
+            '',
+        )}`;
+
+        const link: string = `https://${this.configService.get("AWS_BUCKET")}.s3.${this.configService.get('AWS_S3_REGION')}.amazonaws.com/${fileName}`;
+
+        return {
+            fileName,
+            link
+        }
+    }
+
+    async uploadVideoToStorage(data: QueueUploadVideo): Promise<object>{
+        const job = await this.uploadQueue.add('update-video', {data});
+
+        return { job: job.id };
     }
 
     async verifyAccessToken(token: string): Promise<string> {
