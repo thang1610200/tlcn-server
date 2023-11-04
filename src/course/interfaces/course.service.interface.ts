@@ -23,4 +23,5 @@ export interface CourseServiceInterface {
     updateStatusCourse(payload: UpdateStatusDto):Promise<CourseResponse>;
     deleteCourse(payload: DeleteCourseDto): Promise<string>;
     updatePictureCourse (payload: UpdatePictureCourse): Promise<CourseResponse>
+    getAllCoursePublish(): Promise<Course[]>;
 }

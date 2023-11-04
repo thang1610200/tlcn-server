@@ -265,6 +265,14 @@ export class CourseService implements CourseServiceInterface {
         }
     }
 
+    async getAllCoursePublish(): Promise<Course[]> {
+        return await this.prismaService.course.findMany({
+            where: {
+                isPublished: true
+            }
+        });
+    }
+
     buildResponseCourse(payload: Course): CourseResponse {
         return {
             title: payload.title,

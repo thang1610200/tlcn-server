@@ -97,4 +97,9 @@ export class CourseController {
         }
         return this.courseService.updatePictureCourse(payload);
     }
+
+    @Get('all-course-publish')
+    getAllCoursePublish () {
+        return this.courseService.getAllCoursePublish();
+    }
 }
