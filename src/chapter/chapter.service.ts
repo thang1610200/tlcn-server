@@ -107,7 +107,7 @@ export class ChapterService implements ChapterServiceInterface {
                 token: payload.token
             },
             data: {
-                isPublished: payload.status
+                isPublished: !payload.status
             }
         });
 

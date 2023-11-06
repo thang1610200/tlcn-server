@@ -8,6 +8,7 @@ import { GetCourseBySlugDto } from "../dto/get-course-slug.dto";
 import { UpdateStatusDto } from "../dto/update-status.dto";
 import { DeleteCourseDto } from "../dto/delete-course.dto";
 import { UpdatePictureCourse } from "../dto/update-picture.dto";
+import { FilterCourseDto } from "../dto/filter-course-publish.dto";
 
 export interface CourseServiceInterface {
     slugify(string, separator): string;
@@ -23,5 +24,6 @@ export interface CourseServiceInterface {
     updateStatusCourse(payload: UpdateStatusDto):Promise<CourseResponse>;
     deleteCourse(payload: DeleteCourseDto): Promise<string>;
     updatePictureCourse (payload: UpdatePictureCourse): Promise<CourseResponse>
-    getAllCoursePublish(): Promise<Course[]>;
+    getAllCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
+    filterCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
 }

@@ -283,7 +283,7 @@ export class LessonService implements LessonServiceInterface {
                 token: lesson.token
             },
             data: {
-                isPublished: payload.status
+                isPublished: !payload.status
             }
         });
 

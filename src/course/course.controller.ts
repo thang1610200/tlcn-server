@@ -11,6 +11,7 @@ import { GetCourseBySlugDto } from './dto/get-course-slug.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { DeleteCourseDto } from './dto/delete-course.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { FilterCourseDto } from './dto/filter-course-publish.dto';
 
 @Controller('course')
 export class CourseController {
@@ -99,7 +100,12 @@ export class CourseController {
     }
 
     @Get('all-course-publish')
-    getAllCoursePublish () {
-        return this.courseService.getAllCoursePublish();
+    getAllCoursePublish (@Query() payload: FilterCourseDto) {
+        return this.courseService.getAllCoursePublish(payload);
+    }
+
+    @Get('all-topic-home')
+    getAllTopicHome () {
+        return this.courseService.findAllTopic();
     }
 }

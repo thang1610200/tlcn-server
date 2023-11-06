@@ -12,6 +12,7 @@ import { UpdateStatusDto } from './dto/update-status.dto';
 import { DeleteCourseDto } from './dto/delete-course.dto';
 import { UpdatePictureCourse } from './dto/update-picture.dto';
 import { UploadService } from 'src/upload/upload.service';
+import { FilterCourseDto } from './dto/filter-course-publish.dto';
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
@@ -31,7 +32,7 @@ export class CourseService implements CourseServiceInterface {
     }
 
     async createTopic(payload: CreateTopicDto): Promise<Topic> {
-        const topic = await this.findByTitleTopic(payload.title);
+        const topic = await this.findByTitleTopic(payload.slug);
 
         if(topic){
             throw new UnprocessableEntityException();
@@ -39,7 +40,8 @@ export class CourseService implements CourseServiceInterface {
 
         const newTopic = await this.prismaService.topic.create({
             data: {
-                title: payload.title
+                title: payload.title,
+                slug: this.slugify(payload.title)
             }
         })
 
@@ -75,7 +77,7 @@ export class CourseService implements CourseServiceInterface {
     async findByTitleTopic(payload: string): Promise<Topic> {
         return await this.prismaService.topic.findUnique({
             where: {
-                title: payload
+                slug: payload
             }
         });
     }
@@ -189,7 +191,7 @@ export class CourseService implements CourseServiceInterface {
                 owner_id: user.id
             },
             data: {
-                isPublished: payload.status
+                isPublished: !payload.status
             }
         });
 
@@ -265,12 +267,57 @@ export class CourseService implements CourseServiceInterface {
         }
     }
 
-    async getAllCoursePublish(): Promise<Course[]> {
+    async getAllCoursePublish(payload: FilterCourseDto): Promise<Course[]> {
+        if(payload.topic_slug.trim() === ""){
+            return await this.filterCoursePublish(payload);
+        }
+
+        const topic = await this.findByTitleTopic(payload.topic_slug);
+
         return await this.prismaService.course.findMany({
             where: {
-                isPublished: true
+                isPublished: true,
+                title: {
+                    contains: payload.title
+                },
+                topic_id: topic.id
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true
+                    }
+                },
+                owner: true
+            },
+            orderBy: {
+                create_at: "desc"
             }
         });
+    }
+
+    async filterCoursePublish(payload: FilterCourseDto): Promise<Course[]> {
+        return await this.prismaService.course.findMany({
+            where: {
+                isPublished: true,
+                title: {
+                    contains: payload.title
+                },
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true
+                    }
+                },
+                owner: true
+            },
+            orderBy: {
+                create_at: "desc"
+            }
+        })
     }
 
     buildResponseCourse(payload: Course): CourseResponse {
