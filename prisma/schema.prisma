@@ -57,7 +57,7 @@ model Course {
   owner            User      @relation(fields: [owner_id], references: [id])
   title            String    @unique
   description      String?
-  learning_outcome String?
+  learning_outcome String[]
   slug             String    @unique
   picture          String?
   chapters         Chapter[]

@@ -13,6 +13,7 @@ import { DeleteCourseDto } from './dto/delete-course.dto';
 import { UpdatePictureCourse } from './dto/update-picture.dto';
 import { UploadService } from 'src/upload/upload.service';
 import { FilterCourseDto } from './dto/filter-course-publish.dto';
+import { GetDetailCourseDto } from './dto/get-detail-course.dto';
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
@@ -318,6 +319,37 @@ export class CourseService implements CourseServiceInterface {
                 create_at: "desc"
             }
         })
+    }
+
+    async getDetailCourse(payload: GetDetailCourseDto): Promise<Course> {
+        const course = await this.prismaService.course.findUnique({
+            where: {
+                slug: payload.slug,
+                isPublished: true
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true
+                    },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true
+                            }
+                        }
+                    }
+                },
+                owner: true
+            }
+        });
+
+        if(!course){
+            throw new UnprocessableEntityException();
+        }
+
+        return course;
     }
 
     buildResponseCourse(payload: Course): CourseResponse {

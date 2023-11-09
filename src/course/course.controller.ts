@@ -12,6 +12,7 @@ import { UpdateStatusDto } from './dto/update-status.dto';
 import { DeleteCourseDto } from './dto/delete-course.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FilterCourseDto } from './dto/filter-course-publish.dto';
+import { GetDetailCourseDto } from './dto/get-detail-course.dto';
 
 @Controller('course')
 export class CourseController {
@@ -107,5 +108,10 @@ export class CourseController {
     @Get('all-topic-home')
     getAllTopicHome () {
         return this.courseService.findAllTopic();
+    }
+
+    @Get('detail-course')
+    getDetailCourse (@Query() payload: GetDetailCourseDto) {
+        return this.courseService.getDetailCourse(payload);
     }
 }
