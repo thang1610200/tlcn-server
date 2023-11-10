@@ -341,8 +341,14 @@ export class CourseService implements CourseServiceInterface {
                         lessons: {
                             where: {
                                 isPublished: true
+                            },
+                            orderBy: {
+                                position: "asc"
                             }
                         }
+                    },
+                    orderBy: {
+                        position: "asc"
                     }
                 },
                 owner: true

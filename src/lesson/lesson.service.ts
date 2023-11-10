@@ -231,7 +231,8 @@ export class LessonService implements LessonServiceInterface {
                 token: lesson.token
             },
             data: {
-                videoUrl: link
+                videoUrl: link,
+                isCompleteVideo: false
             }
         });
         
