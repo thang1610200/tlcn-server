@@ -10,6 +10,8 @@ import { UpdateVideoLesson } from './dto/update-video.dto';
 import { UploadService } from 'src/upload/upload.service';
 import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
+import { Lesson } from '@prisma/client';
+import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
 
 @Injectable()
 export class LessonService implements LessonServiceInterface {
@@ -219,7 +221,8 @@ export class LessonService implements LessonServiceInterface {
 
         const data = {
             fileName: fileName,
-            file: payload.file
+            file: payload.file,
+            lesson_id: lesson.id
         }
 
         const update = await this.prismaService.lesson.update({
@@ -340,15 +343,73 @@ export class LessonService implements LessonServiceInterface {
         return "Success";
     }
 
-    buildLessonResponse (lesson: any): LessonResponse {
+    async updateThumbnail(payload: UpdateThumbnailVideo): Promise<LessonResponse> {
+        const user = await this.prismaService.user.findUnique({
+            where: {
+                email: payload.email
+            }
+        });
+
+        const course = await this.prismaService.course.findFirst({
+            where: {
+                owner_id: user.id,
+                slug: payload.course_slug
+            }
+        });
+
+        if(!course){
+            throw new UnauthorizedException();
+        }
+
+        const chapter = await this.prismaService.chapter.findFirst({
+            where: {
+                courseId: course.id,
+                token: payload.chapter_token
+            }
+        });
+
+        if(!chapter){
+            throw new UnprocessableEntityException();
+        }
+
+        const lesson = await this.prismaService.lesson.findFirst({
+            where: {
+                chapterId: chapter.id,
+                token: payload.lesson_token
+            }
+        });
+
+        if(!lesson){
+            throw new UnprocessableEntityException();
+        }
+
+        const fileName = await this.uploadService.uploadAvatarToS3(payload.file);
+
+        const update = await this.prismaService.lesson.update({
+            where: {
+                chapterId: chapter.id,
+                token: lesson.token
+            },
+            data: {
+                thumbnail: fileName
+            }
+        });
+    
+
+        return this.buildLessonResponse(update);
+    }
+
+    buildLessonResponse (lesson: Lesson): LessonResponse {
         return {
             title: lesson.title,
             token: lesson.token,
-            description: lesson.desciption,
+            description: lesson.description,
             position: lesson.position,
             isPublished: lesson.isPublished,
             videoUrl: lesson.videoUrl,
-            course_title: lesson.course?.title
+            isCompleteVideo: lesson.isCompleteVideo,
+            thumbnail: lesson.thumbnail
+            //course_title: lesson.course?.title
         }
     }
 }

@@ -165,6 +165,10 @@ export class CourseService implements CourseServiceInterface {
             }
         });
 
+        if(!course){
+            throw new UnprocessableEntityException();
+        }
+
         return course;
     }
 
@@ -357,6 +361,7 @@ export class CourseService implements CourseServiceInterface {
             title: payload.title,
             description: payload.description,
             learning_outcome: payload.learning_outcome,
+            requirement: payload.requirement,
             slug: payload.slug,
             picture: payload.picture,
             isPublished: payload.isPublished,

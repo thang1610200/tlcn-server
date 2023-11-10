@@ -5,5 +5,7 @@ export interface LessonResponse {
     position: number;
     isPublished: boolean;
     videoUrl: string;
-    course_title: string
+    isCompleteVideo: boolean;
+    thumbnail: string;
+    //course_title: string
 }

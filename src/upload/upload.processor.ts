@@ -1,4 +1,4 @@
-import { Process, Processor } from "@nestjs/bull";
+import { OnQueueCompleted, Process, Processor } from "@nestjs/bull";
 import { UploadService } from "./upload.service";
 import { Job } from "bull";
 import { InternalServerErrorException } from "@nestjs/common";
@@ -14,13 +14,29 @@ export class UploadProcessor {
                 private uploadGateway: UploadGateway) {}
 
     @Process('update-video')
-    async updateVideo(job: Job<QueueUploadVideo>): Promise<void> { 
+    async updateVideo(job: Job<QueueUploadVideo>): Promise<string> { 
         try {
             const payload: any = job.data;
             await this.uploadService.uploadVideoToS3(payload.data.file, payload.data.fileName);
+
+            return "Success";
         }
         catch(err: any){
             throw new InternalServerErrorException();
         }
+    }
+
+    @OnQueueCompleted()
+    async handler(job: Job<QueueUploadVideo>, result: any): Promise<void> {
+        const payload: any = job.data;
+
+        await this.prismaService.lesson.update({
+            where: {
+                id: payload.data.lesson_id
+            },
+            data: {
+                isCompleteVideo: true
+            }
+        })
     }
 }

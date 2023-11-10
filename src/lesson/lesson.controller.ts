@@ -10,6 +10,7 @@ import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
+import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
 
 @Roles('INSTRUCTOR')
 @UseGuards(JwtGuard,RolesGuard)
@@ -71,5 +72,31 @@ export class LessonController {
             lesson_token: body.lesson_token
         }
         return this.lessonService.updateVideoLesson(payload);
+    }
+
+    @UseInterceptors(FileInterceptor('file'))
+    @Patch('update-thumbnail')
+    async updateThumbnailVideo(@UploadedFile(
+        new ParseFilePipe({
+            validators: [
+                // new MaxFileSizeValidator({ maxSize: 5 * 1000 }),
+                new FileTypeValidator({
+                    fileType: '.(png|jpeg|jpg|webp)' ///\.(webm|mp4|x-msvideo|mpeg|ogg)$/ 
+                })
+            ],
+            errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+            exceptionFactory(error) {
+                throw new HttpException(error, HttpStatus.UNPROCESSABLE_ENTITY);
+            },
+        })
+    ) file: Express.Multer.File,  @Body() body: UpdateThumbnailVideo){
+        const payload = {
+            file,
+            email: body.email,
+            course_slug: body.course_slug,
+            chapter_token: body.chapter_token,
+            lesson_token: body.lesson_token
+        }
+        return this.lessonService.updateThumbnail(payload);
     }
 }

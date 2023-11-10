@@ -44,7 +44,7 @@ model PasswordResetToken {
 
 model Topic {
   id     String   @id @default(auto()) @map("_id") @db.ObjectId
-  slug   String?   @unique
+  slug   String?  @unique
   title  String
   course Course[]
 }
@@ -58,6 +58,7 @@ model Course {
   title            String    @unique
   description      String?
   learning_outcome String[]
+  requirement      String[]
   slug             String    @unique
   picture          String?
   chapters         Chapter[]
@@ -79,13 +80,15 @@ model Chapter {
 }
 
 model Lesson {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  token       String  @unique
-  title       String
-  description String?
-  position    Int
-  isPublished Boolean @default(false)
-  videoUrl    String?
-  chapterId   String  @db.ObjectId
-  chapter     Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  token           String  @unique
+  title           String
+  description     String?
+  position        Int
+  isPublished     Boolean @default(false)
+  videoUrl        String?
+  isCompleteVideo Boolean @default(false)
+  thumbnail       String?
+  chapterId       String  @db.ObjectId
+  chapter         Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }
