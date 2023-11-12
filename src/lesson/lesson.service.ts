@@ -220,9 +220,10 @@ export class LessonService implements LessonServiceInterface {
         const {fileName, link} = this.uploadService.createFileNameVideo(payload.file);
 
         const data = {
-            fileName: fileName,
+            fileName,
             file: payload.file,
-            lesson_id: lesson.id
+            lesson_id: lesson.id,
+            link
         }
 
         const update = await this.prismaService.lesson.update({

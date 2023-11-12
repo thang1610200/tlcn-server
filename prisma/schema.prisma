@@ -87,8 +87,10 @@ model Lesson {
   position        Int
   isPublished     Boolean @default(false)
   videoUrl        String?
+  duration        Int?
   isCompleteVideo Boolean @default(false)
   thumbnail       String?
   chapterId       String  @db.ObjectId
   chapter         Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }
+

@@ -91,8 +91,8 @@ export class UploadService implements UploadServiceInterface {
         return `https://${this.configService.get("AWS_BUCKET")}.s3.${this.configService.get('AWS_S3_REGION')}.amazonaws.com/${fileName}`;
     }
 
-    async uploadVideoToS3(file: any, fileName: string): Promise<void> {
-        await this.s3Client.send(
+    async uploadVideoToS3(file: any, fileName: string): Promise<any> {
+        return await this.s3Client.send(
             new PutObjectCommand({
                 Bucket: this.configService.get("AWS_BUCKET"),
                 Key: fileName,
