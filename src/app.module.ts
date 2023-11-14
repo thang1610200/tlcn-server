@@ -15,6 +15,8 @@ import { UploadModule } from './upload/upload.module';
 import { CourseModule } from './course/course.module';
 import { LessonModule } from './lesson/lesson.module';
 import { ChapterModule } from './chapter/chapter.module';
+import { ExerciseModule } from './exercise/exercise.module';
+import { QuizzModule } from './quizz/quizz.module';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({
@@ -71,7 +73,9 @@ import { ChapterModule } from './chapter/chapter.module';
   UploadModule,
   CourseModule,
   LessonModule,
-  ChapterModule
+  ChapterModule,
+  ExerciseModule,
+  QuizzModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

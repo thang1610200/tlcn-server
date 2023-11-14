@@ -16,6 +16,12 @@ enum Role {
   ADMIN
 }
 
+enum TypeExercise {
+  QUIZZ
+  IMAGE
+  CODE
+}
+
 model User {
   id                String               @id @default(auto()) @map("_id") @db.ObjectId
   email             String               @unique
@@ -31,6 +37,7 @@ model User {
   verify_date       DateTime?
   course            Course[]
   forgot_password   PasswordResetToken[]
+  exercise          Exercise[]
 }
 
 model PasswordResetToken {
@@ -92,5 +99,35 @@ model Lesson {
   thumbnail       String?
   chapterId       String  @db.ObjectId
   chapter         Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  exercise Exercise[]
 }
 
+model Exercise {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  token        String       @unique
+  title        String
+  type         TypeExercise
+  lessonId     String?      @db.ObjectId
+  lesson       Lesson?      @relation(fields: [lessonId], references: [id])
+  instructorId String       @db.ObjectId
+  instructor   User         @relation(fields: [instructorId], references: [id])
+  create_at    DateTime     @default(now())
+  update_at    DateTime     @updatedAt
+  isOpen       Boolean      @default(false)
+  quizz        Quizz[]
+}
+
+model Quizz {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  token       String   @unique
+  question    String
+  answer      String?
+  option      Json?
+  position    Int
+  isPublished Boolean  @default(false)
+  exerciseId  String   @db.ObjectId
+  exercise    Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  create_at   DateTime @default(now())
+  update_at   DateTime @updatedAt
+}
