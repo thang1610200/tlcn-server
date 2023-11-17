@@ -123,11 +123,12 @@ model Quizz {
   token       String   @unique
   question    String
   answer      String?
-  option      Json?
+  option      String[]
   position    Int
   isPublished Boolean  @default(false)
   exerciseId  String   @db.ObjectId
   exercise    Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  explain     String?
   create_at   DateTime @default(now())
   update_at   DateTime @updatedAt
 }

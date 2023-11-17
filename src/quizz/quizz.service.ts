@@ -5,6 +5,9 @@ import { CreateQuizzDto } from './dto/create-quizz.dto';
 import { QuizzResponse } from './dto/response-quizz.dto';
 import { PrismaService } from 'src/prisma.service';
 import { ReorderQuizzDto } from './dto/reoder-quizz.dto';
+import { DetailQuizzDto } from './dto/detail-quizz.dto';
+import { UpdateQuizzDto } from './dto/update-quizz.dto';
+import { UpdateStatusQuizzDto } from './dto/update-status-quizz.dto';
 
 @Injectable()
 export class QuizzService implements QuizzServiceInterface {
@@ -78,14 +81,110 @@ export class QuizzService implements QuizzServiceInterface {
         return "Success";
     }
 
+    async getDetailQuizz(payload: DetailQuizzDto): Promise<QuizzResponse> {
+        const exercise = await this.findExcersie(payload.email, payload.exercise_token);
+
+        const quizz = await this.prismaService.quizz.findFirst({
+            where: {
+                token: payload.token,
+                exerciseId: exercise.id
+            }
+        });
+
+        if(!quizz){
+            throw new NotFoundException();
+        }
+
+        return this.buildQuizzResponse(quizz);
+    }
+
+    async updateValueQuizz(payload: UpdateQuizzDto): Promise<QuizzResponse> {
+        const exercise = await this.findExcersie(payload.email, payload.exercise_token);
+
+        const quizz = await this.prismaService.quizz.findFirst({
+            where: {
+                token: payload.token,
+                exerciseId: exercise.id
+            }
+        });
+
+        if(!quizz){
+            throw new NotFoundException();
+        }
+
+        const quizzUpdate = await this.prismaService.quizz.update({
+            where: {
+                token: quizz.token,
+                exerciseId: exercise.id
+            },
+            data: {
+                ...payload.value,
+            }
+        });
+
+        return this.buildQuizzResponse(quizzUpdate);
+    }
+
+    async updateStatusQuizz(payload: UpdateStatusQuizzDto): Promise<QuizzResponse> {
+        const exercise = await this.findExcersie(payload.email, payload.exercise_token);
+
+        const quizz = await this.prismaService.quizz.findFirst({
+            where: {
+                token: payload.token,
+                exerciseId: exercise.id
+            }
+        });
+
+        if(!quizz){
+            throw new NotFoundException();
+        }
+
+        const updateQuizz = await this.prismaService.quizz.update({
+            where: {
+                token: quizz.token,
+                exerciseId: exercise.id
+            },
+            data: {
+                isPublished: !quizz.isPublished
+            }
+        });
+
+        return this.buildQuizzResponse(updateQuizz);
+    }
+
+    async deleteQuizz(payload: DetailQuizzDto): Promise<string> {
+        const exercise = await this.findExcersie(payload.email, payload.exercise_token);
+
+        const quizz = await this.prismaService.quizz.findFirst({
+            where: {
+                token: payload.token,
+                exerciseId: exercise.id
+            }
+        });
+
+        if(!quizz){
+            throw new NotFoundException();
+        }
+
+        await this.prismaService.quizz.delete({
+            where: {
+                token: quizz.token,
+                exerciseId: exercise.id
+            }
+        });
+
+        return "SUCCESS";
+    }
+
     buildQuizzResponse(quizz: Quizz): QuizzResponse {
         return {
             token: quizz.token,
-            question: quizz.token,
+            question: quizz.question,
             answer: quizz.answer,
             option: quizz.option,
             position: quizz.position,
-            isPublished: quizz.isPublished
+            isPublished: quizz.isPublished,
+            explain: quizz.explain
         }
     }
     

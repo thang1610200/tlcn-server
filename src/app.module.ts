@@ -17,6 +17,7 @@ import { LessonModule } from './lesson/lesson.module';
 import { ChapterModule } from './chapter/chapter.module';
 import { ExerciseModule } from './exercise/exercise.module';
 import { QuizzModule } from './quizz/quizz.module';
+import { ChatgptModule } from './chatgpt/chatgpt.module';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({
@@ -31,7 +32,8 @@ import { QuizzModule } from './quizz/quizz.module';
       PASSWORD: Joi.string().required(),
       REDIS_HOST: Joi.string().required(),
       REDIS_PORT: Joi.string().required(),
-      BACKEND_URL: Joi.string().required()
+      BACKEND_URL: Joi.string().required(),
+      OPENAI_API_KEY: Joi.string().required()
     })
   }), MailingModule,
   MailerModule.forRootAsync({
@@ -75,7 +77,8 @@ import { QuizzModule } from './quizz/quizz.module';
   LessonModule,
   ChapterModule,
   ExerciseModule,
-  QuizzModule
+  QuizzModule,
+  ChatgptModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
