@@ -2,7 +2,6 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { Reflector } from "@nestjs/core";
 import { Role } from "@prisma/client";
 import { ROLE_KEYS } from "../decorators/roles.decorator";
-import { Observable } from "rxjs";
 import { PrismaService } from "src/prisma.service";
 
 @Injectable()
@@ -25,8 +24,16 @@ export class RolesGuard implements CanActivate {
             }
         });
 
-        if(requireRoles[0] !== auth.role) throw new UnauthorizedException("You are not authorized");
+        //if(requireRoles[0] !== auth.role) throw new UnauthorizedException("You are not authorized");
 
-        return true;
+        if(auth.role === 'INSTRUCTOR' && (requireRoles[0] === 'INSTRUCTOR' || requireRoles[0] === 'LEARNER')){
+            return true;
+        }
+        else if (auth.role === 'LEARNER' && requireRoles[0] === 'LEARNER'){
+            return true;
+        }
+
+        throw new UnauthorizedException("You are not authorized");
+        //return false;
     }
 }

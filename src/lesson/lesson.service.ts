@@ -12,6 +12,7 @@ import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
 import { Lesson } from '@prisma/client';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
+import { ContentLessonDto } from './dto/content-lesson.dto';
 
 @Injectable()
 export class LessonService implements LessonServiceInterface {
@@ -139,7 +140,7 @@ export class LessonService implements LessonServiceInterface {
         });
 
         if(!course){
-            throw new UnauthorizedException();
+            throw new UnprocessableEntityException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
@@ -352,6 +353,10 @@ export class LessonService implements LessonServiceInterface {
             }
         });
 
+        if(!user){
+            throw new UnauthorizedException();
+        }
+
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
@@ -401,6 +406,67 @@ export class LessonService implements LessonServiceInterface {
         return this.buildLessonResponse(update);
     }
 
+    async contentLesson(payload: ContentLessonDto): Promise<Lesson> {
+        const user = await this.prismaService.user.findUnique({
+            where: {
+                email: payload.email
+            }
+        });
+
+        if(!user){
+            throw new UnauthorizedException();
+        }
+
+        const course = await this.prismaService.course.findFirst({
+            where: {
+                slug: payload.course_slug
+            }
+        });
+
+        if(!course){
+            throw new UnauthorizedException();
+        }
+
+        const lesson = await this.prismaService.lesson.findUnique({
+            where: {
+                token: payload.lesson_token
+            },
+            include: {
+                exercise: {
+                    where: {
+                        isOpen: true
+                    },
+                    include: {
+                        quizz: {
+                            where: {
+                                isPublished: true
+                            }
+                        }
+                    }
+                },
+                userProgress: {
+                    where: {
+                        userId: user.id
+                    },
+                    include: {
+                        userProgressQuiz: {
+                            orderBy: {
+                                createdAt: "desc"
+                            }
+                        }
+                    }
+                }
+
+            }
+        });
+
+        if(!lesson){
+            throw new UnauthorizedException();
+        }
+
+        return lesson;
+    }
+
     buildLessonResponse (lesson: Lesson): LessonResponse {
         return {
             title: lesson.title,
@@ -410,7 +476,8 @@ export class LessonService implements LessonServiceInterface {
             isPublished: lesson.isPublished,
             videoUrl: lesson.videoUrl,
             isCompleteVideo: lesson.isCompleteVideo,
-            thumbnail: lesson.thumbnail
+            thumbnail: lesson.thumbnail,
+            exerciseId: lesson.exerciseId
             //course_title: lesson.course?.title
         }
     }

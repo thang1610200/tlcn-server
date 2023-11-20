@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException, UnauthorizedException, Unproc
 import { PrismaService } from 'src/prisma.service';
 import { CourseServiceInterface } from './interfaces/course.service.interface';
 import { CreateTopicDto } from './dto/create-topic.dto';
-import { Course, Topic } from '@prisma/client';
+import { Course, Topic, User } from '@prisma/client';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateValueCourse } from './dto/update-course.dto';
 import { CourseResponse } from './dto/course-response.dto';
@@ -14,6 +14,7 @@ import { UpdatePictureCourse } from './dto/update-picture.dto';
 import { UploadService } from 'src/upload/upload.service';
 import { FilterCourseDto } from './dto/filter-course-publish.dto';
 import { GetDetailCourseDto } from './dto/get-detail-course.dto';
+import { GetProgressCourseDto } from './dto/get-progress-course.dto';
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
@@ -56,15 +57,7 @@ export class CourseService implements CourseServiceInterface {
             throw new UnprocessableEntityException();
         }
 
-        const users = await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email
-            }
-        })
-
-        if(!users){
-            throw new UnauthorizedException();
-        }
+        const users = await this.findUserByEmail(payload.email);
 
         return await this.prismaService.course.create({
             data: {
@@ -96,11 +89,7 @@ export class CourseService implements CourseServiceInterface {
     }
 
     async updateCourse(payload: UpdateValueCourse): Promise<CourseResponse>{
-        const user = await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email
-            }
-        });
+        const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findFirst({
             where: {
@@ -126,11 +115,7 @@ export class CourseService implements CourseServiceInterface {
     }
 
     async getAllCourse (payload: GetCourseUserDto): Promise<Course[]> {
-        const user = await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email
-            }
-        })
+        const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findMany({
             where: {
@@ -145,11 +130,7 @@ export class CourseService implements CourseServiceInterface {
     }
 
     async getCourseBySlug (payload: GetCourseBySlugDto): Promise<Course>{
-        const user = await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email
-            }
-        });
+        const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findFirst({
             where: {
@@ -173,11 +154,7 @@ export class CourseService implements CourseServiceInterface {
     }
 
     async updateStatusCourse(payload: UpdateStatusDto): Promise<CourseResponse> {
-        const user = await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email
-            }
-        });
+        const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findFirst({
             where: {
@@ -204,11 +181,7 @@ export class CourseService implements CourseServiceInterface {
     }
 
     async deleteCourse(payload: DeleteCourseDto): Promise<string> {
-        const user = await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email
-            }
-        });
+        const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findFirst({
             where: {
@@ -233,11 +206,7 @@ export class CourseService implements CourseServiceInterface {
 
     async updatePictureCourse (payload: UpdatePictureCourse): Promise<CourseResponse>{
         try {
-            const user = await this.prismaService.user.findUnique({
-                where: {
-                    email: payload.email
-                }
-            });
+            const user = await this.findUserByEmail(payload.email);
     
             const course = await this.prismaService.course.findFirst({
                 where: {
@@ -344,6 +313,66 @@ export class CourseService implements CourseServiceInterface {
                             },
                             orderBy: {
                                 position: "asc"
+                            }
+                        }
+                    },
+                    orderBy: {
+                        position: "asc"
+                    }
+                },
+                owner: true
+            }
+        });
+
+        if(!course){
+            throw new UnprocessableEntityException();
+        }
+
+        return course;
+    }
+
+    async findUserByEmail(email: string): Promise<User>{
+        const users = await this.prismaService.user.findUnique({
+            where: {
+                email: email
+            }
+        })
+
+        if(!users){
+            throw new UnauthorizedException();
+        }
+
+        return users;
+    }
+
+    async getUserProgressCourse(payload: GetProgressCourseDto): Promise<Course>{
+        const user = await this.findUserByEmail(payload.email);
+
+        const course = await this.prismaService.course.findUnique({
+            where: {
+                slug: payload.course_slug,
+                isPublished: true
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true
+                    },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true
+                            },
+                            orderBy: {
+                                position: "asc"
+                            },
+                            include: {
+                                userProgress: {
+                                    where: {
+                                        userId: user.id
+                                    }
+                                }
                             }
                         }
                     },

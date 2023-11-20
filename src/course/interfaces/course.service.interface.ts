@@ -1,4 +1,4 @@
-import { Course, Topic } from "@prisma/client";
+import { Course, Topic, User } from "@prisma/client";
 import { CreateTopicDto } from "../dto/create-topic.dto";
 import { CreateCourseDto } from "../dto/create-course.dto";
 import { UpdateValueCourse } from "../dto/update-course.dto";
@@ -28,4 +28,5 @@ export interface CourseServiceInterface {
     getAllCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
     filterCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
     getDetailCourse(payload: GetDetailCourseDto): Promise<Course>;
+    findUserByEmail(email: string): Promise<User>;
 }

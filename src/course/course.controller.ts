@@ -13,6 +13,7 @@ import { DeleteCourseDto } from './dto/delete-course.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FilterCourseDto } from './dto/filter-course-publish.dto';
 import { GetDetailCourseDto } from './dto/get-detail-course.dto';
+import { GetProgressCourseDto } from './dto/get-progress-course.dto';
 
 @Controller('course')
 export class CourseController {
@@ -113,5 +114,12 @@ export class CourseController {
     @Get('detail-course')
     getDetailCourse (@Query() payload: GetDetailCourseDto) {
         return this.courseService.getDetailCourse(payload);
+    }
+
+    @Roles('LEARNER')
+    @UseGuards(JwtGuard,RolesGuard)
+    @Get('progress-course')
+    getProgressCourse(@Query() payload: GetProgressCourseDto){
+        return this.courseService.getUserProgressCourse(payload);
     }
 }

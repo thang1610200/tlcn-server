@@ -18,6 +18,7 @@ import { ChapterModule } from './chapter/chapter.module';
 import { ExerciseModule } from './exercise/exercise.module';
 import { QuizzModule } from './quizz/quizz.module';
 import { ChatgptModule } from './chatgpt/chatgpt.module';
+import { UserProgressModule } from './user-progress/user-progress.module';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({
@@ -78,7 +79,8 @@ import { ChatgptModule } from './chatgpt/chatgpt.module';
   ChapterModule,
   ExerciseModule,
   QuizzModule,
-  ChatgptModule
+  ChatgptModule,
+  UserProgressModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

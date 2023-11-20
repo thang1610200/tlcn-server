@@ -7,5 +7,6 @@ export interface LessonResponse {
     videoUrl: string;
     isCompleteVideo: boolean;
     thumbnail: string;
+    exerciseId: string;
     //course_title: string
 }

@@ -11,6 +11,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
+import { ContentLessonDto } from './dto/content-lesson.dto';
 
 @Roles('INSTRUCTOR')
 @UseGuards(JwtGuard,RolesGuard)
@@ -26,11 +27,6 @@ export class LessonController {
     @Put('reorder-lesson')
     reorderLesson(@Body() payload: ReorderLessonDto) {
         return this.lessonService.reorderLesson(payload);
-    }
-
-    @Get('get-lesson')
-    getLessonByToken (@Query() payload: GetLessonDto) {
-        return this.lessonService.findLessonByToken(payload);
     }
 
     @Patch('update-lesson')
@@ -98,5 +94,22 @@ export class LessonController {
             lesson_token: body.lesson_token
         }
         return this.lessonService.updateThumbnail(payload);
+    }
+}
+
+@Roles('LEARNER')
+@UseGuards(JwtGuard,RolesGuard)
+@Controller('lesson')
+export class LessonControllerUser {
+    constructor (private readonly lessonService: LessonService){}
+
+    @Get('get-lesson')
+    getLessonByToken (@Query() payload: GetLessonDto) {
+        return this.lessonService.findLessonByToken(payload);
+    }
+
+    @Get('detail-lesson')
+    contentLesson(@Query() payload: ContentLessonDto){
+        return this.lessonService.contentLesson(payload);
     }
 }

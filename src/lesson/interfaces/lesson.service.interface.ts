@@ -8,6 +8,7 @@ import { UpdateVideoLesson } from "../dto/update-video.dto";
 import { UpdateStatusLessonDto } from "../dto/update-status.dto";
 import { DeleteLessonDto } from "../dto/delete-lesson.dto";
 import { UpdateThumbnailVideo } from "../dto/update-thumbnail.dto";
+import { ContentLessonDto } from "../dto/content-lesson.dto";
 
 export interface LessonServiceInterface {
     buildLessonResponse (lesson: Lesson): LessonResponse;
@@ -18,5 +19,6 @@ export interface LessonServiceInterface {
     updateVideoLesson(payload: UpdateVideoLesson): Promise<LessonResponse>;
     updateStatusLesson(payload: UpdateStatusLessonDto): Promise<LessonResponse>; 
     deleteLesson(payload: DeleteLessonDto): Promise<string>;
+    contentLesson(payload: ContentLessonDto): Promise<Lesson>;
     updateThumbnail(payload: UpdateThumbnailVideo): Promise<LessonResponse>;
 }
