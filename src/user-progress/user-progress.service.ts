@@ -5,6 +5,7 @@ import { GetUserProgressDto } from './dto/get-user-progress.dto';
 import { Lesson, User, UserProgress, UserProgressQuiz } from '@prisma/client';
 import { AddUserProgressDto } from './dto/add-user-progress.dto';
 import { AddAnswerUserProgressDto } from './dto/add-answer-progress-quiz.dto';
+import { GetUserProgressQuizDto } from './dto/get-user-progress-quiz.dto';
 
 @Injectable()
 export class UserProgressService implements UserProgressServiceInterface {
@@ -79,6 +80,26 @@ export class UserProgressService implements UserProgressServiceInterface {
         });
 
         return user_progress;
+    }
+
+    async getUserProgressQuiz(payload: GetUserProgressQuizDto): Promise<UserProgressQuiz[]>{
+        const result = await this.prismaService.userProgressQuiz.findMany({
+            where: {
+                userProgressId: payload.id
+            }
+        });
+
+        return result;
+    }
+
+    async deleteAllProgressQuiz(payload: GetUserProgressQuizDto): Promise<string>{
+        await this.prismaService.userProgressQuiz.deleteMany({
+            where: {
+                userProgressId: payload.id
+            }
+        });
+
+        return "SUCCESS";
     }
 
     async addAnswerProgressQuiz(payload: AddAnswerUserProgressDto): Promise<UserProgressQuiz> {
