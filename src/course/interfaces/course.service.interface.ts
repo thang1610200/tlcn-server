@@ -10,6 +10,7 @@ import { DeleteCourseDto } from "../dto/delete-course.dto";
 import { UpdatePictureCourse } from "../dto/update-picture.dto";
 import { FilterCourseDto } from "../dto/filter-course-publish.dto";
 import { GetDetailCourseDto } from "../dto/get-detail-course.dto";
+import { GetProgressCourseDto } from "../dto/get-progress-course.dto";
 
 export interface CourseServiceInterface {
     slugify(string, separator): string;
@@ -28,5 +29,7 @@ export interface CourseServiceInterface {
     getAllCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
     filterCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
     getDetailCourse(payload: GetDetailCourseDto): Promise<Course>;
+    getUserProgressCourse(payload: GetProgressCourseDto): Promise<Course>;
+    getDetailCourseAuth(payload: GetProgressCourseDto): Promise<Course>;
     findUserByEmail(email: string): Promise<User>;
 }

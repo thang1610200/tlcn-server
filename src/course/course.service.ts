@@ -1,4 +1,9 @@
-import { Injectable, InternalServerErrorException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
+import {
+    Injectable,
+    InternalServerErrorException,
+    UnauthorizedException,
+    UnprocessableEntityException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CourseServiceInterface } from './interfaces/course.service.interface';
 import { CreateTopicDto } from './dto/create-topic.dto';
@@ -18,42 +23,44 @@ import { GetProgressCourseDto } from './dto/get-progress-course.dto';
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
-    constructor (private readonly prismaService: PrismaService,
-                private readonly uploadService: UploadService) {}
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly uploadService: UploadService,
+    ) {}
 
     slugify(name: string, separator: string = '-'): string {
         return name
-                .toString()
-                .toLowerCase()
-                .trim()
-                .replace(/\s+/g, separator)
-                .replace(/[^\w\-]+/g, '')
-                .replace(/\_/g, separator)
-                .replace(/\-\-+/g, separator)
-                .replace(/\-$/g, ''); 
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, separator)
+            .replace(/[^\w\-]+/g, '')
+            .replace(/\_/g, separator)
+            .replace(/\-\-+/g, separator)
+            .replace(/\-$/g, '');
     }
 
     async createTopic(payload: CreateTopicDto): Promise<Topic> {
         const topic = await this.findByTitleTopic(payload.slug);
 
-        if(topic){
+        if (topic) {
             throw new UnprocessableEntityException();
         }
 
         const newTopic = await this.prismaService.topic.create({
             data: {
                 title: payload.title,
-                slug: this.slugify(payload.title)
-            }
-        })
+                slug: this.slugify(payload.title),
+            },
+        });
 
         return newTopic;
     }
 
-    async createCourse (payload: CreateCourseDto): Promise<Course> {
+    async createCourse(payload: CreateCourseDto): Promise<Course> {
         const course = await this.findByNameCourse(payload.title);
 
-        if(course){
+        if (course) {
             throw new UnprocessableEntityException();
         }
 
@@ -63,24 +70,24 @@ export class CourseService implements CourseServiceInterface {
             data: {
                 title: payload.title,
                 owner_id: users.id,
-                slug: this.slugify(payload.title)
-            }
+                slug: this.slugify(payload.title),
+            },
         });
     }
 
     async findByTitleTopic(payload: string): Promise<Topic> {
         return await this.prismaService.topic.findUnique({
             where: {
-                slug: payload
-            }
+                slug: payload,
+            },
         });
     }
 
     async findByNameCourse(payload: string): Promise<Course> {
         return await this.prismaService.course.findUnique({
             where: {
-                title: payload
-            } 
+                title: payload,
+            },
         });
     }
 
@@ -88,93 +95,95 @@ export class CourseService implements CourseServiceInterface {
         return await this.prismaService.topic.findMany();
     }
 
-    async updateCourse(payload: UpdateValueCourse): Promise<CourseResponse>{
+    async updateCourse(payload: UpdateValueCourse): Promise<CourseResponse> {
         const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 slug: payload.slug,
-                owner_id: user.id
-            }
-        })
+                owner_id: user.id,
+            },
+        });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const update = await this.prismaService.course.update({
             where: {
-                slug: payload.slug
+                slug: payload.slug,
             },
             data: {
-                ...payload.value
-            }
+                ...payload.value,
+            },
         });
 
         return this.buildResponseCourse(update);
     }
 
-    async getAllCourse (payload: GetCourseUserDto): Promise<Course[]> {
+    async getAllCourse(payload: GetCourseUserDto): Promise<Course[]> {
         const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findMany({
             where: {
-                owner_id: user.id
+                owner_id: user.id,
             },
             orderBy: {
-                create_at: 'desc'
-            }
+                create_at: 'desc',
+            },
         });
 
         return course;
     }
 
-    async getCourseBySlug (payload: GetCourseBySlugDto): Promise<Course>{
+    async getCourseBySlug(payload: GetCourseBySlugDto): Promise<Course> {
         const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.slug
+                slug: payload.slug,
             },
             include: {
                 chapters: {
                     orderBy: {
-                        position: "asc"
-                    }
-                }
-            }
+                        position: 'asc',
+                    },
+                },
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnprocessableEntityException();
         }
 
         return course;
     }
 
-    async updateStatusCourse(payload: UpdateStatusDto): Promise<CourseResponse> {
+    async updateStatusCourse(
+        payload: UpdateStatusDto,
+    ): Promise<CourseResponse> {
         const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 slug: payload.slug,
-                owner_id: user.id
-            }
-        })
+                owner_id: user.id,
+            },
+        });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const update = await this.prismaService.course.update({
             where: {
                 slug: payload.slug,
-                owner_id: user.id
+                owner_id: user.id,
             },
             data: {
-                isPublished: !payload.status
-            }
+                isPublished: !payload.status,
+            },
         });
 
         return this.buildResponseCourse(update);
@@ -186,63 +195,66 @@ export class CourseService implements CourseServiceInterface {
         const course = await this.prismaService.course.findFirst({
             where: {
                 slug: payload.slug,
-                owner_id: user.id
-            }
-        })
+                owner_id: user.id,
+            },
+        });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         await this.prismaService.course.delete({
             where: {
                 slug: payload.slug,
-                owner_id: user.id
-            }
+                owner_id: user.id,
+            },
         });
 
-        return "Deleted Success";
+        return 'Deleted Success';
     }
 
-    async updatePictureCourse (payload: UpdatePictureCourse): Promise<CourseResponse>{
+    async updatePictureCourse(
+        payload: UpdatePictureCourse,
+    ): Promise<CourseResponse> {
         try {
             const user = await this.findUserByEmail(payload.email);
-    
+
             const course = await this.prismaService.course.findFirst({
                 where: {
                     slug: payload.slug,
-                    owner_id: user.id
-                }
-            })
-    
-            if(!course){
+                    owner_id: user.id,
+                },
+            });
+
+            if (!course) {
                 throw new UnauthorizedException();
             }
             //Web3
             //const fileName = await this.uploadService.uploadToWeb3Storage(payload.file);
 
             //S3
-            const fileName = await this.uploadService.uploadAvatarToS3(payload.file);
+            const fileName = await this.uploadService.uploadAvatarToS3(
+                payload.file,
+            );
             //update vào database;
             const update = await this.prismaService.course.update({
                 where: {
                     slug: payload.slug,
-                    owner_id: user.id
+                    owner_id: user.id,
                 },
                 data: {
-                    picture: fileName
-                }
-            })
+                    picture: fileName,
+                },
+            });
 
             return this.buildResponseCourse(update);
-        }
-        catch(err: any){
+        } catch (err: any) {
             throw new InternalServerErrorException();
         }
     }
 
     async getAllCoursePublish(payload: FilterCourseDto): Promise<Course[]> {
-        if(payload.topic_slug.trim() === ""){
+        if (payload.topic_slug.trim() === '') {
             return await this.filterCoursePublish(payload);
         }
 
@@ -252,22 +264,22 @@ export class CourseService implements CourseServiceInterface {
             where: {
                 isPublished: true,
                 title: {
-                    contains: payload.title
+                    contains: payload.title,
                 },
-                topic_id: topic.id
+                topic_id: topic.id,
             },
             include: {
                 topic: true,
                 chapters: {
                     where: {
-                        isPublished: true
-                    }
+                        isPublished: true,
+                    },
                 },
-                owner: true
+                owner: true,
             },
             orderBy: {
-                create_at: "desc"
-            }
+                create_at: 'desc',
+            },
         });
     }
 
@@ -276,115 +288,163 @@ export class CourseService implements CourseServiceInterface {
             where: {
                 isPublished: true,
                 title: {
-                    contains: payload.title
+                    contains: payload.title,
                 },
             },
             include: {
                 topic: true,
                 chapters: {
                     where: {
-                        isPublished: true
-                    }
+                        isPublished: true,
+                    },
                 },
-                owner: true
+                owner: true,
             },
             orderBy: {
-                create_at: "desc"
-            }
-        })
+                create_at: 'desc',
+            },
+        });
     }
 
     async getDetailCourse(payload: GetDetailCourseDto): Promise<Course> {
         const course = await this.prismaService.course.findUnique({
             where: {
                 slug: payload.slug,
-                isPublished: true
+                isPublished: true,
             },
             include: {
                 topic: true,
                 chapters: {
                     where: {
-                        isPublished: true
+                        isPublished: true,
                     },
                     include: {
                         lessons: {
                             where: {
-                                isPublished: true
+                                isPublished: true,
                             },
                             orderBy: {
-                                position: "asc"
-                            }
-                        }
+                                position: 'asc',
+                            },
+                        },
                     },
                     orderBy: {
-                        position: "asc"
-                    }
+                        position: 'asc',
+                    },
                 },
-                owner: true
-            }
+                owner: true,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnprocessableEntityException();
         }
 
         return course;
     }
 
-    async findUserByEmail(email: string): Promise<User>{
+    async findUserByEmail(email: string): Promise<User> {
         const users = await this.prismaService.user.findUnique({
             where: {
-                email: email
-            }
-        })
+                email: email,
+            },
+        });
 
-        if(!users){
+        if (!users) {
             throw new UnauthorizedException();
         }
 
         return users;
     }
 
-    async getUserProgressCourse(payload: GetProgressCourseDto): Promise<Course>{
+    async getUserProgressCourse(
+        payload: GetProgressCourseDto,
+    ): Promise<Course> {
         const user = await this.findUserByEmail(payload.email);
 
         const course = await this.prismaService.course.findUnique({
             where: {
                 slug: payload.course_slug,
-                isPublished: true
+                isPublished: true,
             },
             include: {
                 topic: true,
                 chapters: {
                     where: {
-                        isPublished: true
+                        isPublished: true,
                     },
                     include: {
                         lessons: {
                             where: {
-                                isPublished: true
+                                isPublished: true,
                             },
                             orderBy: {
-                                position: "asc"
+                                position: 'asc',
                             },
                             include: {
                                 userProgress: {
                                     where: {
-                                        userId: user.id
-                                    }
-                                }
-                            }
-                        }
+                                        userId: user.id,
+                                    },
+                                },
+                            },
+                        },
                     },
                     orderBy: {
-                        position: "asc"
-                    }
+                        position: 'asc',
+                    },
                 },
-                owner: true
-            }
+                owner: true,
+            },
         });
 
-        if(!course){
+        if (!course) {
+            throw new UnprocessableEntityException();
+        }
+
+        return course;
+    }
+
+    async getDetailCourseAuth(payload: GetProgressCourseDto): Promise<Course> {
+        const user = await this.findUserByEmail(payload.email);
+
+        const course = await this.prismaService.course.findUnique({
+            where: {
+                slug: payload.course_slug,
+                isPublished: true,
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true,
+                    },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true,
+                            },
+                            orderBy: {
+                                position: 'asc',
+                            },
+                            include: {
+                                userProgress: {
+                                    where: {
+                                        userId: user.id,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    orderBy: {
+                        position: 'asc',
+                    },
+                },
+                owner: true,
+            },
+        });
+
+        if (!course) {
             throw new UnprocessableEntityException();
         }
 
@@ -400,7 +460,7 @@ export class CourseService implements CourseServiceInterface {
             slug: payload.slug,
             picture: payload.picture,
             isPublished: payload.isPublished,
-            create_at: payload.create_at
-        }
+            create_at: payload.create_at,
+        };
     }
 }

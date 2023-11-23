@@ -1,4 +1,19 @@
-import { Body, Controller, Delete, FileTypeValidator, Get, HttpException, HttpStatus, ParseFilePipe, Patch, Post, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    FileTypeValidator,
+    Get,
+    HttpException,
+    HttpStatus,
+    ParseFilePipe,
+    Patch,
+    Post,
+    Query,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 import { Roles } from './decorators/roles.decorator';
 import { CourseService } from './course.service';
 import { RolesGuard } from './guards/role.guard';
@@ -20,58 +35,58 @@ export class CourseController {
     constructor(private readonly courseService: CourseService) {}
 
     @Roles('ADMIN')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Post('create-topic')
     createTopic(@Body() payload: CreateTopicDto) {
         return this.courseService.createTopic(payload);
     }
 
     @Roles('INSTRUCTOR')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Post('create-course')
-    createCourse (@Body() payload: CreateCourseDto) {
+    createCourse(@Body() payload: CreateCourseDto) {
         return this.courseService.createCourse(payload);
     }
 
     @Roles('INSTRUCTOR')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('findall-topic')
-    findAllTopic () {
+    findAllTopic() {
         return this.courseService.findAllTopic();
     }
 
     @Roles('INSTRUCTOR')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Patch('update-course')
-    updateCourse (@Body() payload: UpdateValueCourse) {
+    updateCourse(@Body() payload: UpdateValueCourse) {
         return this.courseService.updateCourse(payload);
     }
 
     @Roles('INSTRUCTOR')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('all-course')
-    getAllCourse (@Query() payload: GetCourseUserDto) {
+    getAllCourse(@Query() payload: GetCourseUserDto) {
         return this.courseService.getAllCourse(payload);
     }
 
     @Roles('INSTRUCTOR')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('course-slug')
-    getCourseBySlug (@Query() payload: GetCourseBySlugDto) {
+    getCourseBySlug(@Query() payload: GetCourseBySlugDto) {
         return this.courseService.getCourseBySlug(payload);
     }
 
     @Roles('INSTRUCTOR')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Patch('update-status')
-    updateStatusCourse (@Body() payload: UpdateStatusDto) {
+    updateStatusCourse(@Body() payload: UpdateStatusDto) {
         return this.courseService.updateStatusCourse(payload);
     }
 
     @Roles('INSTRUCTOR')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Delete('delete-course')
-    deleteCourse (@Query() payload: DeleteCourseDto) {
+    deleteCourse(@Query() payload: DeleteCourseDto) {
         return this.courseService.deleteCourse(payload);
     }
 
@@ -79,47 +94,61 @@ export class CourseController {
     @UseGuards(JwtGuard)
     @UseInterceptors(FileInterceptor('file'))
     @Patch('update-picture')
-    async updatePictureCourse(@UploadedFile(
-        new ParseFilePipe({
-            validators: [
-                // new MaxFileSizeValidator({ maxSize: 5 * 1000 }),
-                new FileTypeValidator({
-                    fileType: '.(png|jpeg|jpg|webp)' ///\.(webm|mp4|x-msvideo|mpeg|ogg)$/ 
-                })
-            ],
-            errorHttpStatusCode: HttpStatus.BAD_REQUEST,
-            exceptionFactory(error) {
-                throw new HttpException(error, HttpStatus.UNPROCESSABLE_ENTITY);
-            },
-        })
-    ) file: Express.Multer.File,  @Body() body: DeleteCourseDto){
+    async updatePictureCourse(
+        @UploadedFile(
+            new ParseFilePipe({
+                validators: [
+                    // new MaxFileSizeValidator({ maxSize: 5 * 1000 }),
+                    new FileTypeValidator({
+                        fileType: '.(png|jpeg|jpg|webp)', ///\.(webm|mp4|x-msvideo|mpeg|ogg)$/
+                    }),
+                ],
+                errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+                exceptionFactory(error) {
+                    throw new HttpException(
+                        error,
+                        HttpStatus.UNPROCESSABLE_ENTITY,
+                    );
+                },
+            }),
+        )
+        file: Express.Multer.File,
+        @Body() body: DeleteCourseDto,
+    ) {
         const payload = {
             file,
             email: body.email,
-            slug: body.slug
-        }
+            slug: body.slug,
+        };
         return this.courseService.updatePictureCourse(payload);
     }
 
     @Get('all-course-publish')
-    getAllCoursePublish (@Query() payload: FilterCourseDto) {
+    getAllCoursePublish(@Query() payload: FilterCourseDto) {
         return this.courseService.getAllCoursePublish(payload);
     }
 
     @Get('all-topic-home')
-    getAllTopicHome () {
+    getAllTopicHome() {
         return this.courseService.findAllTopic();
     }
 
     @Get('detail-course')
-    getDetailCourse (@Query() payload: GetDetailCourseDto) {
+    getDetailCourse(@Query() payload: GetDetailCourseDto) {
         return this.courseService.getDetailCourse(payload);
     }
 
     @Roles('LEARNER')
-    @UseGuards(JwtGuard,RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('progress-course')
-    getProgressCourse(@Query() payload: GetProgressCourseDto){
+    getProgressCourse(@Query() payload: GetProgressCourseDto) {
         return this.courseService.getUserProgressCourse(payload);
+    }
+
+    @Roles('LEARNER')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Get('detail-course-auth')
+    getProgressCourseAuth(@Query() payload: GetProgressCourseDto) {
+        return this.courseService.getDetailCourseAuth(payload);
     }
 }

@@ -143,7 +143,7 @@ model UserProgress {
   lessonId    String   @db.ObjectId
   lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   isCompleted Boolean  @default(false)
-  score       Int      @default(0)
+  isPassed    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

@@ -7,7 +7,7 @@ export interface UploadServiceInterface {
     storeFiles(file: any): Promise<CIDString>;
     uploadToWeb3Storage(file: any): Promise<string>;
     uploadVideoToStorage(data: QueueUploadVideo): Promise<object>;
-    uploadAvatarToS3(file:any): Promise<string>;
-    uploadVideoToS3(file:any, fileName: string): Promise<void>;
+    uploadAvatarToS3(file: any): Promise<string>;
+    uploadVideoToS3(file: any, fileName: string): Promise<void>;
     createFileNameVideo(file: any): any;
 }

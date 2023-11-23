@@ -9,9 +9,11 @@ import { OutputFormatMC, OutputFormatTF } from './dto/output-format.dto';
 
 @Injectable()
 export class ChatgptService implements ChatgptServiceInterface {
-    constructor(private readonly configService: ConfigService, 
-                private readonly prismaService: PrismaService,
-                private readonly quizzService: QuizzService) {}
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly prismaService: PrismaService,
+        private readonly quizzService: QuizzService,
+    ) {}
 
     private readonly openai = new OpenAI({
         //organization: this.configService.get('ORGANIZATION_ID'),
@@ -80,8 +82,7 @@ export class ChatgptService implements ChatgptServiceInterface {
                 ],
             });
 
-            let res: string =
-                response.choices[0].message?.content ?? '';
+            let res: string = response.choices[0].message?.content ?? '';
 
             // ensure that we don't replace away apostrophes in text
             res = res.replace(/(\w)"(\w)/g, "$1'$2");
@@ -89,7 +90,7 @@ export class ChatgptService implements ChatgptServiceInterface {
             try {
                 let output: any = JSON.parse(res);
                 console.log(output);
-                
+
                 output = !Array.isArray(output) ? new Array(output) : output;
                 // check for each element in the output_list, the format is correctly adhered to
                 for (let index = 0; index < output.length; index++) {
@@ -146,106 +147,133 @@ export class ChatgptService implements ChatgptServiceInterface {
         return [];
     }
 
-    async addListQuizzTFToDB(payload: CreateListQuizzDto, question: OutputFormatTF[]): Promise<string>{
+    async addListQuizzTFToDB(
+        payload: CreateListQuizzDto,
+        question: OutputFormatTF[],
+    ): Promise<string> {
         try {
-            const exercise = await this.quizzService.findExcersie(payload.email, payload.exercise_token);
+            const exercise = await this.quizzService.findExcersie(
+                payload.email,
+                payload.exercise_token,
+            );
 
             question.map(async (item) => {
                 const lastQuizz = await this.prismaService.quizz.findFirst({
                     where: {
-                        exerciseId: exercise.id
+                        exerciseId: exercise.id,
                     },
                     orderBy: {
-                        position: "desc"
-                    }
+                        position: 'desc',
+                    },
                 });
-        
+
                 const newPosition = lastQuizz ? lastQuizz.position + 1 : 1;
-    
+
                 await this.prismaService.quizz.create({
                     data: {
                         token: new Date().getTime().toString(),
                         question: item.question,
-                        answer: item.answer.charAt(0).toUpperCase() + item.answer.slice(1),
+                        answer:
+                            item.answer.charAt(0).toUpperCase() +
+                            item.answer.slice(1),
                         position: newPosition,
                         exerciseId: exercise.id,
-                        option: ["True", "False"],
-                        explain: item?.explain || ""
-                    }
+                        option: ['True', 'False'],
+                        explain: item?.explain || '',
+                    },
                 });
             });
-    
-            return "SUCCESS";
-        }
-        catch(err: any){
+
+            return 'SUCCESS';
+        } catch (err: any) {
             throw new InternalServerErrorException();
         }
     }
 
-    async addListQuizzMCToDB(payload: CreateListQuizzDto, question: OutputFormatMC[]): Promise<string>{
+    async addListQuizzMCToDB(
+        payload: CreateListQuizzDto,
+        question: OutputFormatMC[],
+    ): Promise<string> {
         try {
-            const exercise = await this.quizzService.findExcersie(payload.email, payload.exercise_token);
+            const exercise = await this.quizzService.findExcersie(
+                payload.email,
+                payload.exercise_token,
+            );
 
             question.map(async (item) => {
                 const lastQuizz = await this.prismaService.quizz.findFirst({
                     where: {
-                        exerciseId: exercise.id
+                        exerciseId: exercise.id,
                     },
                     orderBy: {
-                        position: "desc"
-                    }
+                        position: 'desc',
+                    },
                 });
-        
+
                 const newPosition = lastQuizz ? lastQuizz.position + 1 : 1;
-    
+
                 await this.prismaService.quizz.create({
                     data: {
                         token: new Date().getTime().toString(),
                         question: item.question,
-                        answer: item.answer.charAt(0).toUpperCase() + item.answer.slice(1),
+                        answer:
+                            item.answer.charAt(0).toUpperCase() +
+                            item.answer.slice(1),
                         position: newPosition,
                         exerciseId: exercise.id,
-                        option: [item?.option1 || "", item?.option2 || "", item?.option3 || "", item.answer],
-                        explain: item?.explain || ""
-                    }
+                        option: [
+                            item?.option1 || '',
+                            item?.option2 || '',
+                            item?.option3 || '',
+                            item.answer,
+                        ],
+                        explain: item?.explain || '',
+                    },
                 });
             });
-    
-            return "SUCCESS";
-        }
-        catch(err: any){
+
+            return 'SUCCESS';
+        } catch (err: any) {
             throw new InternalServerErrorException();
         }
     }
 
     async createQuizzList(payload: CreateListQuizzDto): Promise<any> {
-        let format = payload.type === "True Or False" ? 
-        {
-            question: 'question',
-            answer: 'answer',
-            explain: 'explain why you chose the answer'
-        }
-        :  {
-            question: 'question',
-            answer: 'answer with max length of 15 words',
-            option1: "option1 with max length of 15 words",
-            option2: "option2 with max length of 15 words",
-            option3: "option3 with max length of 15 words",
-            explain: 'explain why you chose the answer'
-        }
+        const format =
+            payload.type === 'True Or False'
+                ? {
+                      question: 'question',
+                      answer: 'answer',
+                      explain: 'explain why you chose the answer',
+                  }
+                : {
+                      question: 'question',
+                      answer: 'answer with max length of 15 words',
+                      option1: 'option1 with max length of 15 words',
+                      option2: 'option2 with max length of 15 words',
+                      option3: 'option3 with max length of 15 words',
+                      explain: 'explain why you chose the answer',
+                  };
 
-        let questions = await this.strict_output(
+        const questions = await this.strict_output(
             `You are a helpful AI that is able to generate ${payload.type} include questions and answers, the length of each answer should not be more than 15 words, store all answers, questions, options, explain in a JSON array by language Vietnamese.`,
             new Array(payload.amount).fill(
                 `You are to generate a question random level ${payload.level} ${payload.type} about ${payload.topic}`,
             ),
             format,
         );
-        if(questions.length < payload.amount){
+        if (questions.length < payload.amount) {
             throw new InternalServerErrorException();
-        }
-        else{
-            return payload.type === "True Or False" ? this.addListQuizzTFToDB(payload,questions.slice(0,payload.amount)) : this.addListQuizzMCToDB(payload, questions.slice(0,payload.amount));
+        } else {
+            return payload.type === 'True Or False'
+                ? this.addListQuizzTFToDB(
+                      payload,
+                      questions.slice(0, payload.amount),
+                  )
+                : this.addListQuizzMCToDB(
+                      payload,
+                      questions.slice(0, payload.amount),
+                  );
         }
     }
 }

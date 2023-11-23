@@ -1,6 +1,11 @@
-import { Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
+import {
+    Injectable,
+    NotFoundException,
+    UnauthorizedException,
+    UnprocessableEntityException,
+} from '@nestjs/common';
 import { ExerciseServiceInterface } from './interfaces/exercise.service.interface';
-import { $Enums, Exercise, User } from '@prisma/client';
+import { Exercise, User } from '@prisma/client';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { ExerciseResponse } from './dto/exercise-response.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -12,18 +17,18 @@ import { UpdateStatusExerciseDto } from './dto/update-status-exercise.dto';
 
 @Injectable()
 export class ExerciseService implements ExerciseServiceInterface {
-    constructor (private readonly prismaService: PrismaService){}
+    constructor(private readonly prismaService: PrismaService) {}
 
     async getAllExercise(payload: GetAllExerciseDto): Promise<Exercise[]> {
         const user = await this.findInstructorByEmail(payload.email);
 
         const exercise = await this.prismaService.exercise.findMany({
             where: {
-                instructorId: user.id
+                instructorId: user.id,
             },
             orderBy: {
-                create_at: "desc"
-            }
+                create_at: 'desc',
+            },
         });
 
         return exercise;
@@ -35,11 +40,11 @@ export class ExerciseService implements ExerciseServiceInterface {
         const exercise = await this.prismaService.exercise.findMany({
             where: {
                 instructorId: user.id,
-                isOpen: true
+                isOpen: true,
             },
             orderBy: {
-                create_at: "desc"
-            }
+                create_at: 'desc',
+            },
         });
 
         return exercise;
@@ -51,48 +56,53 @@ export class ExerciseService implements ExerciseServiceInterface {
         return await this.findExerciseByToken(payload.token, user.id);
     }
 
-    async findInstructorByEmail(email: string): Promise<User>{
+    async findInstructorByEmail(email: string): Promise<User> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email
-            }
+                email,
+            },
         });
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
         }
 
         return user;
     }
 
-    async findExerciseByToken(token: string, instructorId: string): Promise<Exercise> {
+    async findExerciseByToken(
+        token: string,
+        instructorId: string,
+    ): Promise<Exercise> {
         const exercise = await this.prismaService.exercise.findFirst({
             where: {
                 instructorId,
-                token
+                token,
             },
             include: {
                 quizz: {
                     orderBy: {
-                        position: "asc"
-                    }
+                        position: 'asc',
+                    },
                 },
                 lesson: {
                     orderBy: {
-                        position: "asc"
+                        position: 'asc',
                     },
-                }
-            }
+                },
+            },
         });
 
-        if(!exercise){
+        if (!exercise) {
             throw new NotFoundException();
         }
 
         return exercise;
     }
 
-    async createExercise(payload: CreateExerciseDto): Promise<ExerciseResponse> {
+    async createExercise(
+        payload: CreateExerciseDto,
+    ): Promise<ExerciseResponse> {
         const user = await this.findInstructorByEmail(payload.email);
 
         const exercise = await this.prismaService.exercise.create({
@@ -100,14 +110,16 @@ export class ExerciseService implements ExerciseServiceInterface {
                 token: new Date().getTime().toString(),
                 title: payload.title,
                 type: payload.type,
-                instructorId: user.id
-            }
+                instructorId: user.id,
+            },
         });
 
         return this.builResponseExercise(exercise);
     }
 
-    async updateExercise(payload: UpdateExerciseDto): Promise<ExerciseResponse> {
+    async updateExercise(
+        payload: UpdateExerciseDto,
+    ): Promise<ExerciseResponse> {
         const user = await this.findInstructorByEmail(payload.email);
 
         const exercise = await this.findExerciseByToken(payload.token, user.id);
@@ -115,29 +127,34 @@ export class ExerciseService implements ExerciseServiceInterface {
         const exerciseUpdate = await this.prismaService.exercise.update({
             where: {
                 instructorId: user.id,
-                token: exercise.token
+                token: exercise.token,
             },
             data: {
-                ...payload.value
-            }
+                ...payload.value,
+            },
         });
 
         return this.builResponseExercise(exerciseUpdate);
     }
 
-    async updateStatusExercise(payload: UpdateStatusExerciseDto): Promise<ExerciseResponse> {
+    async updateStatusExercise(
+        payload: UpdateStatusExerciseDto,
+    ): Promise<ExerciseResponse> {
         const user = await this.findInstructorByEmail(payload.email);
 
-        const exercise = await this.findExerciseByToken(payload.exercise_token, user.id);
+        const exercise = await this.findExerciseByToken(
+            payload.exercise_token,
+            user.id,
+        );
 
         const exerciseUpdate = await this.prismaService.exercise.update({
             where: {
                 instructorId: user.id,
-                token: exercise.token
+                token: exercise.token,
             },
             data: {
-                isOpen: !exercise.isOpen
-            }
+                isOpen: !exercise.isOpen,
+            },
         });
 
         return this.builResponseExercise(exerciseUpdate);
@@ -146,64 +163,64 @@ export class ExerciseService implements ExerciseServiceInterface {
     async addExerciseToLesson(payload: AddExerciseLessonDto): Promise<string> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnprocessableEntityException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
             where: {
                 courseId: course.id,
-                token: payload.chapter_token
-            }
+                token: payload.chapter_token,
+            },
         });
 
-        if(!chapter){
+        if (!chapter) {
             throw new UnprocessableEntityException();
         }
 
         const lesson = await this.prismaService.lesson.findFirst({
             where: {
                 chapterId: chapter.id,
-                token: payload.lesson_token
-            }
+                token: payload.lesson_token,
+            },
         });
 
-        if(!lesson){
+        if (!lesson) {
             throw new UnprocessableEntityException();
         }
 
         const exercise = await this.prismaService.exercise.findFirst({
             where: {
                 instructorId: user.id,
-                id: payload.exerciseId
-            }
+                id: payload.exerciseId,
+            },
         });
 
-        if(!exercise){
+        if (!exercise) {
             throw new UnprocessableEntityException();
         }
 
         await this.prismaService.lesson.update({
             where: {
-                token: lesson.token
+                token: lesson.token,
             },
             data: {
-                exerciseId: exercise.id
-            }
+                exerciseId: exercise.id,
+            },
         });
 
-        return "SUCCESS";
+        return 'SUCCESS';
     }
 
     async deleteExercise(payload: GetDetailExerciseDto): Promise<string> {
@@ -214,11 +231,11 @@ export class ExerciseService implements ExerciseServiceInterface {
         await this.prismaService.exercise.delete({
             where: {
                 instructorId: user.id,
-                token: exercise.token
-            }
+                token: exercise.token,
+            },
         });
 
-        return "SUCCESS";
+        return 'SUCCESS';
     }
 
     builResponseExercise(payload: Exercise): ExerciseResponse {
@@ -228,8 +245,7 @@ export class ExerciseService implements ExerciseServiceInterface {
             type: payload.type,
             isOpen: payload.isOpen,
             create_at: payload.create_at,
-            update_at: payload.update_at
-        }
+            update_at: payload.update_at,
+        };
     }
-
 }
