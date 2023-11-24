@@ -86,7 +86,7 @@ export class LessonService implements LessonServiceInterface {
         return "Success";
     }
 
-    async findLessonByToken(payload: GetLessonDto): Promise<LessonResponse>{
+    async findLessonByToken(payload: GetLessonDto): Promise<Lesson>{
         const user = await this.prismaService.user.findUnique({
             where: {
                 email: payload.email
@@ -119,10 +119,17 @@ export class LessonService implements LessonServiceInterface {
             where: {
                 chapterId: chapter.id,
                 token: payload.lesson_token
+            },
+            include: {
+                exercise: {
+                    include: {
+                        quizz: true
+                    }
+                }
             }
         });
 
-        return this.buildLessonResponse(lesson);
+        return lesson;
     }
 
     async updateValueLesson(payload: UpdateLessonDto): Promise<LessonResponse> {

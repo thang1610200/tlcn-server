@@ -14,7 +14,7 @@ export interface LessonServiceInterface {
     buildLessonResponse (lesson: Lesson): LessonResponse;
     createLesson(payload: CreateLessonDto): Promise<LessonResponse>;
     reorderLesson(payload: ReorderLessonDto): Promise<string>;
-    findLessonByToken(payload: GetLessonDto): Promise<LessonResponse>;
+    findLessonByToken(payload: GetLessonDto): Promise<Lesson>;
     updateValueLesson(payload: UpdateLessonDto): Promise<LessonResponse>;
     updateVideoLesson(payload: UpdateVideoLesson): Promise<LessonResponse>;
     updateStatusLesson(payload: UpdateStatusLessonDto): Promise<LessonResponse>; 

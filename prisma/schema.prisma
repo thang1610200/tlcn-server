@@ -100,7 +100,7 @@ model Lesson {
   thumbnail       String?
   chapterId       String  @db.ObjectId
   chapter         Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-
+  amountToPass  Int @default(0)
   exerciseId String?   @db.ObjectId
   exercise   Exercise? @relation(fields: [exerciseId], references: [id])
 

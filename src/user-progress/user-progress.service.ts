@@ -12,6 +12,7 @@ import { AddUserProgressDto } from './dto/add-user-progress.dto';
 import { AddAnswerUserProgressDto } from './dto/add-answer-progress-quiz.dto';
 import { GetUserProgressQuizDto } from './dto/get-user-progress-quiz.dto';
 import { UpdateProgressExerciseDto } from './dto/update-progress-exercise.dto';
+import { AddUserProgressNextDto } from './dto/add-user-progress-next.dto';
 
 @Injectable()
 export class UserProgressService implements UserProgressServiceInterface {
@@ -138,31 +139,6 @@ export class UserProgressService implements UserProgressServiceInterface {
         return result;
     }
 
-    // async getAllChapter(course_slug: string): Promise<Chapter[]> {
-    //     const course = await this.prismaService.course.findFirst({
-    //         where: {
-    //             slug: course_slug,
-    //         },
-    //     });
-
-    //     if (!course) {
-    //         throw new UnprocessableEntityException();
-    //     }
-
-    //     return await this.prismaService.chapter.findMany({
-    //         where: {
-    //             courseId: course.id,
-    //         },
-    //         include: {
-    //             lessons: {
-    //                 orderBy: {
-    //                     position: 'asc',
-    //                 },
-    //             },
-    //         },
-    //     });
-    // }
-
     async updatePrgressExerciseUser(
         payload: UpdateProgressExerciseDto,
     ): Promise<string> {
@@ -195,7 +171,40 @@ export class UserProgressService implements UserProgressServiceInterface {
 
             return 'SUCCESS';
         } catch (e: any) {
-            console.log(e);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async addUserProgressNext(payload: AddUserProgressNextDto): Promise<string> {
+        const user = await this.findUserByEmail(payload.email);
+
+        const lesson_next = await this.findLessonByToken(payload.lesson_next);
+
+        const lesson = await this.findLessonByToken(payload.lesson_token);
+
+        try {
+            await this.prismaService.$transaction([
+                this.prismaService.userProgress.update({
+                    where: {
+                        userId_lessonId: {
+                            userId: user.id,
+                            lessonId: lesson.id,
+                        },
+                    },
+                    data: {
+                        isCompleted: true
+                    },
+                }),
+                this.prismaService.userProgress.create({
+                    data: {
+                        userId: user.id,
+                        lessonId: lesson_next.id,
+                    },
+                }),
+            ]);
+
+            return 'SUCCESS';
+        } catch (e: any) {
             throw new InternalServerErrorException();
         }
     }

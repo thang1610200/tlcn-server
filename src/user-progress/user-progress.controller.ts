@@ -17,6 +17,7 @@ import { AddUserProgressDto } from './dto/add-user-progress.dto';
 import { AddAnswerUserProgressDto } from './dto/add-answer-progress-quiz.dto';
 import { GetUserProgressQuizDto } from './dto/get-user-progress-quiz.dto';
 import { UpdateProgressExerciseDto } from './dto/update-progress-exercise.dto';
+import { AddUserProgressNextDto } from './dto/add-user-progress-next.dto';
 
 @Roles('LEARNER')
 @UseGuards(JwtGuard, RolesGuard)
@@ -52,5 +53,10 @@ export class UserProgressController {
     @Post('add-pass-user')
     updateProgressExercise(@Body() payload: UpdateProgressExerciseDto) {
         return this.userProgressService.updatePrgressExerciseUser(payload);
+    }
+
+    @Post('user-progress-next')
+    addUserProgressNext(@Body() payload: AddUserProgressNextDto) {
+        return this.userProgressService.addUserProgressNext(payload);
     }
 }
