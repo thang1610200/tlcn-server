@@ -216,7 +216,7 @@ export class ExerciseService implements ExerciseServiceInterface {
                 token: lesson.token,
             },
             data: {
-                exerciseId: exercise.id
+                exerciseId: exercise.id,
             },
         });
 

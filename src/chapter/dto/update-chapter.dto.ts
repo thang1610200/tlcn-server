@@ -1,7 +1,6 @@
-import { IsEmail, IsNotEmpty, IsObject, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsObject, IsString } from 'class-validator';
 
 export class UpdateValueChapterDto {
-
     @IsString()
     @IsNotEmpty()
     course_slug: string;

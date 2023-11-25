@@ -4,5 +4,5 @@ export interface ExerciseResponse {
     type: string;
     isOpen: boolean;
     create_at: Date;
-    update_at: Date;    
+    update_at: Date;
 }

@@ -39,6 +39,8 @@ model User {
   forgot_password   PasswordResetToken[]
   exercise          Exercise[]
   userProgress      UserProgress[]
+  review            Review[]
+  reply             ReviewReply[]
 }
 
 model PasswordResetToken {
@@ -73,6 +75,8 @@ model Course {
   isPublished      Boolean   @default(false)
   create_at        DateTime  @default(now())
   update_at        DateTime  @updatedAt
+
+  review Review[]
 }
 
 model Chapter {
@@ -88,23 +92,47 @@ model Chapter {
 }
 
 model Lesson {
-  id              String  @id @default(auto()) @map("_id") @db.ObjectId
-  token           String  @unique
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  token           String    @unique
   title           String
   description     String?
   position        Int
-  isPublished     Boolean @default(false)
+  isPublished     Boolean   @default(false)
   videoUrl        String?
   duration        Int?
-  isCompleteVideo Boolean @default(false)
+  isCompleteVideo Boolean   @default(false)
   thumbnail       String?
-  chapterId       String  @db.ObjectId
-  chapter         Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  amountToPass  Int @default(0)
-  exerciseId String?   @db.ObjectId
-  exercise   Exercise? @relation(fields: [exerciseId], references: [id])
+  chapterId       String    @db.ObjectId
+  chapter         Chapter   @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  amountToPass    Int       @default(0)
+  exerciseId      String?   @db.ObjectId
+  exercise        Exercise? @relation(fields: [exerciseId], references: [id])
 
   userProgress UserProgress[]
+}
+
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId  String   @db.ObjectId
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  content   String
+  create_at DateTime @default(now())
+  update_at DateTime @updatedAt
+
+  reply ReviewReply[]
+}
+
+model ReviewReply {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reviewId  String   @db.ObjectId
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reply     String
+  create_at DateTime @default(now())
+  update_at DateTime @updatedAt
 }
 
 model Exercise {
@@ -159,5 +187,5 @@ model UserProgressQuiz {
   userProgressId String       @db.ObjectId
   userProgress   UserProgress @relation(fields: [userProgressId], references: [id], onDelete: Cascade)
   isCorrect      Boolean      @default(false)
-  createdAt   DateTime @default(now())
+  createdAt      DateTime     @default(now())
 }

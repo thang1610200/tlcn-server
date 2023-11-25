@@ -1,10 +1,10 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export interface OutputFormat {
     [key: string]: string | string[] | OutputFormat;
 }
 
-export class CreateListQuizzDto{
+export class CreateListQuizzDto {
     @IsString()
     @IsNotEmpty()
     topic: string;

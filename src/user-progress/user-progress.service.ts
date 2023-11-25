@@ -175,7 +175,9 @@ export class UserProgressService implements UserProgressServiceInterface {
         }
     }
 
-    async addUserProgressNext(payload: AddUserProgressNextDto): Promise<string> {
+    async addUserProgressNext(
+        payload: AddUserProgressNextDto,
+    ): Promise<string> {
         const user = await this.findUserByEmail(payload.email);
 
         const lesson_next = await this.findLessonByToken(payload.lesson_next);
@@ -192,7 +194,7 @@ export class UserProgressService implements UserProgressServiceInterface {
                         },
                     },
                     data: {
-                        isCompleted: true
+                        isCompleted: true,
                     },
                 }),
                 this.prismaService.userProgress.create({

@@ -7,12 +7,12 @@ import { UploadService } from 'src/upload/upload.service';
 import { BullModule } from '@nestjs/bull';
 
 @Module({
-  imports: [
-    BullModule.registerQueue({
-      name: 'upload'
-    })
-  ],
-  controllers: [LessonController, LessonControllerUser],
-  providers: [LessonService, PrismaService, JwtService, UploadService]
+    imports: [
+        BullModule.registerQueue({
+            name: 'upload',
+        }),
+    ],
+    controllers: [LessonController, LessonControllerUser],
+    providers: [LessonService, PrismaService, JwtService, UploadService],
 })
 export class LessonModule {}

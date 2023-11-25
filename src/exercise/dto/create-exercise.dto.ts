@@ -1,5 +1,5 @@
-import { TypeExercise } from "@prisma/client";
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { TypeExercise } from '@prisma/client';
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateExerciseDto {
     @IsString()

@@ -6,7 +6,7 @@ import { QuizzService } from 'src/quizz/quizz.service';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  controllers: [ChatgptController],
-  providers: [ChatgptService, PrismaService, QuizzService, JwtService]
+    controllers: [ChatgptController],
+    providers: [ChatgptService, PrismaService, QuizzService, JwtService],
 })
 export class ChatgptModule {}

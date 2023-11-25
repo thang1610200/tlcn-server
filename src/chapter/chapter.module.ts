@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  controllers: [ChapterController],
-  providers: [ChapterService, PrismaService, JwtService]
+    controllers: [ChapterController],
+    providers: [ChapterService, PrismaService, JwtService],
 })
 export class ChapterModule {}

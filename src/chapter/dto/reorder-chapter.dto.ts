@@ -1,4 +1,4 @@
-import { IsArray, IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class ReorderChapterDto {
     @IsString()
@@ -11,7 +11,7 @@ export class ReorderChapterDto {
 
     @IsArray()
     list: {
-        id: string,
-        position: number
+        id: string;
+        position: number;
     }[];
 }

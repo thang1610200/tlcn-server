@@ -1,8 +1,8 @@
-import { User } from "@prisma/client";
-import { Profile } from "../dtos/profile-user.dto";
-import { ProfileResponse } from "../dtos/profile-user-response.dto";
-import { UpdateProfile } from "../dtos/update-profile.dto";
-import { UpdateAvatarDto } from "../dtos/update-avatar.dto";
+import { User } from '@prisma/client';
+import { Profile } from '../dtos/profile-user.dto';
+import { ProfileResponse } from '../dtos/profile-user-response.dto';
+import { UpdateProfile } from '../dtos/update-profile.dto';
+import { UpdateAvatarDto } from '../dtos/update-avatar.dto';
 
 export interface UserServiceInterface {
     getProfileByEmail(payload: Profile): Promise<ProfileResponse>;

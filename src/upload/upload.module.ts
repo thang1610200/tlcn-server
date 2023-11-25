@@ -8,12 +8,19 @@ import { JwtService } from '@nestjs/jwt';
 import { UploadGateway } from './upload.gateway';
 
 @Module({
-  imports: [
-    BullModule.registerQueue({
-      name: 'upload'
-    })
-  ],
-  providers: [UploadService, ConfigService, UploadProcessor, PrismaService, JwtService, UploadGateway],
-  controllers: []
+    imports: [
+        BullModule.registerQueue({
+            name: 'upload',
+        }),
+    ],
+    providers: [
+        UploadService,
+        ConfigService,
+        UploadProcessor,
+        PrismaService,
+        JwtService,
+        UploadGateway,
+    ],
+    controllers: [],
 })
 export class UploadModule {}

@@ -1,7 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class FindChapterDto {
-    
     @IsString()
     @IsNotEmpty()
     course_slug: string;

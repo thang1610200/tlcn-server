@@ -1,3 +1,6 @@
 export class UserRegister {
-    constructor(public readonly email: string,public readonly name: string) {}
+    constructor(
+        public readonly email: string,
+        public readonly name: string,
+    ) {}
 }

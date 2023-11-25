@@ -1,6 +1,6 @@
 export interface QueueUploadVideo {
     lesson_id: string;
-    file: any,
+    file: any;
     fileName: string;
     link: string;
 }

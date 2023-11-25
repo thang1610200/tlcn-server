@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import {
+    Injectable,
+    InternalServerErrorException,
+    UnauthorizedException,
+} from '@nestjs/common';
 import { UserServiceInterface } from './interfaces/user.service.interface';
 import { Profile } from './dtos/profile-user.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -11,24 +15,26 @@ import { UploadGateway } from 'src/upload/upload.gateway';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
-    constructor (private readonly prismaService: PrismaService,
-                private readonly uploadService: UploadService,
-                private readonly uploadGateway: UploadGateway) {}
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly uploadService: UploadService,
+        private readonly uploadGateway: UploadGateway,
+    ) {}
 
     async registerInstructor(payload: Profile): Promise<ProfileResponse> {
         const user = await this.findByEmail(payload.email);
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
-        };
+        }
 
         const userUpdate = await this.prismaService.user.update({
             where: {
-                email: payload.email
+                email: payload.email,
             },
             data: {
-                role: 'INSTRUCTOR'
-            }
+                role: 'INSTRUCTOR',
+            },
         });
 
         return this.buildResponse(userUpdate);
@@ -37,8 +43,8 @@ export class UserService implements UserServiceInterface {
     async findByEmail(email: string): Promise<User> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email
-            }
+                email,
+            },
         });
 
         return user;
@@ -47,22 +53,22 @@ export class UserService implements UserServiceInterface {
     async updateProfile(payload: UpdateProfile): Promise<ProfileResponse> {
         const user = await this.findByEmail(payload.email);
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
-        };
+        }
 
         const userUpdate = await this.prismaService.user.update({
             where: {
-                email: payload.email
+                email: payload.email,
             },
             data: {
                 name: payload.username,
                 bio: payload.bio,
                 facebook_id: payload.facebook_id,
                 youtube_id: payload.youtube_id,
-                titok_id: payload.tiktok_id
-            }
-        })
+                titok_id: payload.tiktok_id,
+            },
+        });
 
         return this.buildResponse(userUpdate);
     }
@@ -76,14 +82,14 @@ export class UserService implements UserServiceInterface {
             role: data.role,
             facebook_id: data.facebook_id,
             youtube_id: data.youtube_id,
-            tiktok_id: data.titok_id
-        }
+            tiktok_id: data.titok_id,
+        };
     }
 
     async getProfileByEmail(payload: Profile): Promise<ProfileResponse> {
         const user = await this.findByEmail(payload.email);
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
         }
 
@@ -96,20 +102,21 @@ export class UserService implements UserServiceInterface {
             //const fileName = await this.uploadService.uploadToWeb3Storage(payload.file);
 
             //S3
-            const fileName = await this.uploadService.uploadAvatarToS3(payload.file);
+            const fileName = await this.uploadService.uploadAvatarToS3(
+                payload.file,
+            );
             //update vào database;
-            const user =  await this.prismaService.user.update({
+            const user = await this.prismaService.user.update({
                 where: {
-                    email: payload.email
+                    email: payload.email,
                 },
                 data: {
-                    image: fileName
-                }
+                    image: fileName,
+                },
             });
 
             return this.buildResponse(user);
-        }
-        catch(err: any){
+        } catch (err: any) {
             throw new InternalServerErrorException();
         }
     }

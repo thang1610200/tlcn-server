@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsObject, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsObject, IsString } from 'class-validator';
 
 export class UpdateLessonDto {
     @IsString()
@@ -18,5 +18,5 @@ export class UpdateLessonDto {
     lesson_token: string;
 
     @IsObject()
-    value: object
+    value: object;
 }

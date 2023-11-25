@@ -1,4 +1,4 @@
 export interface UpdateAvatarDto {
-    email: string,
-    file: any
+    email: string;
+    file: any;
 }

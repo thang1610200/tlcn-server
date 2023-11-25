@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsObject, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsObject, IsString } from 'class-validator';
 
 export class UpdateQuizzDto {
     @IsEmail()

@@ -1,14 +1,14 @@
-import { INestApplicationContext, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { IoAdapter } from "@nestjs/platform-socket.io";
-import { Server, ServerOptions } from "socket.io";
-
+import { INestApplicationContext, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { IoAdapter } from '@nestjs/platform-socket.io';
+import { Server, ServerOptions } from 'socket.io';
 
 export class SocketIOAdapter extends IoAdapter {
     private readonly logger = new Logger(SocketIOAdapter.name);
 
-    constructor(private app: INestApplicationContext,
-                private configService: ConfigService,
+    constructor(
+        private app: INestApplicationContext,
+        private configService: ConfigService,
     ) {
         super(app);
     }
@@ -17,14 +17,15 @@ export class SocketIOAdapter extends IoAdapter {
         const clientUrl = this.configService.get('CLIENT_URL');
 
         const cors = {
-            origin: [
-                clientUrl
-            ]
+            origin: [clientUrl],
         };
 
-        this.logger.log('Configuring SocketIO server with custom CORS options', {
-            cors,
-        });
+        this.logger.log(
+            'Configuring SocketIO server with custom CORS options',
+            {
+                cors,
+            },
+        );
 
         const optionsWithCORS: ServerOptions = {
             ...options,

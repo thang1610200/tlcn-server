@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class LoginSocialDto {
     @IsEmail()
@@ -10,4 +10,3 @@ export class LoginSocialDto {
     @IsString()
     image: string;
 }
-

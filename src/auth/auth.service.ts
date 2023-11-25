@@ -1,4 +1,11 @@
-import { BadRequestException, ConflictException, ForbiddenException, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+    BadRequestException,
+    ConflictException,
+    ForbiddenException,
+    HttpException,
+    Injectable,
+    UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { AuthServiceInterface } from './interfaces/auth.service.interface';
 import { PasswordResetToken, User } from '@prisma/client';
@@ -24,33 +31,48 @@ const RESET_PASS_SUCCESS_TIME = 24 * 60;
 
 @Injectable()
 export class AuthService implements AuthServiceInterface {
-    constructor (private readonly prismaService: PrismaService,
-                private readonly eventEmitter: EventEmitter2,
-                private readonly jwtService: JwtService,
-                private readonly mailingService: MailingService) {}
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly eventEmitter: EventEmitter2,
+        private readonly jwtService: JwtService,
+        private readonly mailingService: MailingService,
+    ) {}
 
     async updatePassword(payload: UpdatePasswordDto): Promise<UserResponse> {
         const user = await this.findbyEmail(payload.email);
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
         }
 
-        const forgotPassword = await this.prismaService.passwordResetToken.findFirst({
-            where: {
-                user_id: user.id,
-                token: payload.token
-            },
-            include: {
-                user: true
-            }
-        })
+        const forgotPassword =
+            await this.prismaService.passwordResetToken.findFirst({
+                where: {
+                    user_id: user.id,
+                    token: payload.token,
+                },
+                include: {
+                    user: true,
+                },
+            });
 
-        if(!forgotPassword || forgotPassword?.isDeleted || ((new Date().getTime() - new Date(forgotPassword.token_expiry).getTime()) / 1000 > RESET_PASS_TIME)){
+        if (
+            !forgotPassword ||
+            forgotPassword?.isDeleted ||
+            (new Date().getTime() -
+                new Date(forgotPassword.token_expiry).getTime()) /
+                1000 >
+                RESET_PASS_TIME
+        ) {
             throw new UnauthorizedException();
         }
 
-        if(await this.comparePassword(payload.password, forgotPassword.user.password)){
+        if (
+            await this.comparePassword(
+                payload.password,
+                forgotPassword.user.password,
+            )
+        ) {
             throw new BadRequestException('Password matches current password');
         }
 
@@ -58,22 +80,22 @@ export class AuthService implements AuthServiceInterface {
         await this.prismaService.passwordResetToken.update({
             where: {
                 user: {
-                    email: payload.email
+                    email: payload.email,
                 },
-                token: payload.token
+                token: payload.token,
             },
             data: {
-                isDeleted: true
-            }
+                isDeleted: true,
+            },
         });
 
         const userUpdate = await this.prismaService.user.update({
             where: {
-                email: payload.email
+                email: payload.email,
             },
             data: {
                 password: hashedPassword,
-            }
+            },
         });
 
         return this.buildResponse(userUpdate);
@@ -82,27 +104,40 @@ export class AuthService implements AuthServiceInterface {
     async resetPassword(dto: ResetPasswordDto): Promise<PasswordResetToken> {
         const user = await this.findbyEmail(dto.email);
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
         }
 
-        const userResetPass = await this.prismaService.passwordResetToken.findMany({
-            where: {
-                user: {
-                    email: dto.email
-                }
-            },
-            orderBy: {
-                token_expiry: 'desc'
-            }
-        })
+        const userResetPass =
+            await this.prismaService.passwordResetToken.findMany({
+                where: {
+                    user: {
+                        email: dto.email,
+                    },
+                },
+                orderBy: {
+                    token_expiry: 'desc',
+                },
+            });
 
-        if(userResetPass[0]?.isDeleted && ((new Date().getTime() - new Date(userResetPass[0]?.token_expiry).getTime()) / 1000 <= RESET_PASS_SUCCESS_TIME)){
+        if (
+            userResetPass[0]?.isDeleted &&
+            (new Date().getTime() -
+                new Date(userResetPass[0]?.token_expiry).getTime()) /
+                1000 <=
+                RESET_PASS_SUCCESS_TIME
+        ) {
             throw new ForbiddenException('Please wait 1 hour!');
         }
 
-        if (userResetPass && ((new Date().getTime() - new Date(userResetPass[0]?.token_expiry).getTime()) / 1000 <= RESET_PASS_TIME)){
-            throw new HttpException("To many request",429);
+        if (
+            userResetPass &&
+            (new Date().getTime() -
+                new Date(userResetPass[0]?.token_expiry).getTime()) /
+                1000 <=
+                RESET_PASS_TIME
+        ) {
+            throw new HttpException('To many request', 429);
         }
 
         const token = this.createUrl();
@@ -112,12 +147,15 @@ export class AuthService implements AuthServiceInterface {
                 token,
                 user: {
                     connect: {
-                        id: user.id
-                    }
-                }
-            }
+                        id: user.id,
+                    },
+                },
+            },
         });
-        this.eventEmitter.emit('email.reset', new UserResetPassword(user.email, token, user.name));
+        this.eventEmitter.emit(
+            'email.reset',
+            new UserResetPassword(user.email, token, user.name),
+        );
 
         return userToken;
     }
@@ -128,53 +166,65 @@ export class AuthService implements AuthServiceInterface {
         return url;
     }
 
-    async loginSocial(dto: LoginSocialDto): Promise<{ user: UserResponse; backendTokens: object; }> {
+    async loginSocial(
+        dto: LoginSocialDto,
+    ): Promise<{ user: UserResponse; backendTokens: object }> {
         const users = await this.findbyEmail(dto.email);
-        
-        if(users){
+
+        if (users) {
             const userResponse = this.buildResponse(users);
             return {
                 user: userResponse,
                 backendTokens: {
                     accessToken: await this.jwtService.signAsync(userResponse, {
-                        expiresIn: "24h",
-                        secret: process.env.jwtSecretKey
+                        expiresIn: '24h',
+                        secret: process.env.jwtSecretKey,
                     }),
-                    refreshToken: await this.jwtService.signAsync(userResponse, {
-                        expiresIn: "30d",
-                        secret: process.env.jwtRefreshToken
-                    }),
-                    expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME)
-                }
-            }
+                    refreshToken: await this.jwtService.signAsync(
+                        userResponse,
+                        {
+                            expiresIn: '30d',
+                            secret: process.env.jwtRefreshToken,
+                        },
+                    ),
+                    expiresIn: new Date().setTime(
+                        new Date().getTime() + EXPIRE_TIME,
+                    ),
+                },
+            };
         }
 
         const newUser = await this.prismaService.user.create({
             data: {
                 name: dto.name,
                 email: dto.email,
-                image: dto.image
-            }
+                image: dto.image,
+            },
         });
 
         const newUserResponse = this.buildResponse(newUser);
 
-        this.eventEmitter.emit('email.welcome', new UserRegister(newUserResponse.email, newUserResponse.name));
+        this.eventEmitter.emit(
+            'email.welcome',
+            new UserRegister(newUserResponse.email, newUserResponse.name),
+        );
 
         return {
             user: newUserResponse,
             backendTokens: {
                 accessToken: await this.jwtService.signAsync(newUserResponse, {
-                    expiresIn: "24h",
-                    secret: process.env.jwtSecretKey
+                    expiresIn: '24h',
+                    secret: process.env.jwtSecretKey,
                 }),
                 refreshToken: await this.jwtService.signAsync(newUserResponse, {
-                    expiresIn: "30d",
-                    secret: process.env.jwtRefreshToken
+                    expiresIn: '30d',
+                    secret: process.env.jwtRefreshToken,
                 }),
-                expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME)
-            }
-        }
+                expiresIn: new Date().setTime(
+                    new Date().getTime() + EXPIRE_TIME,
+                ),
+            },
+        };
     }
 
     async refreshToken(user: any): Promise<object> {
@@ -183,71 +233,80 @@ export class AuthService implements AuthServiceInterface {
 
         return {
             accessToken: await this.jwtService.signAsync(payload, {
-                expiresIn: "24h",
-                secret: process.env.jwtSecretKey
+                expiresIn: '24h',
+                secret: process.env.jwtSecretKey,
             }),
             refreshToken: await this.jwtService.signAsync(payload, {
-                expiresIn: "30d",
-                secret: process.env.jwtRefreshToken
+                expiresIn: '30d',
+                secret: process.env.jwtRefreshToken,
             }),
             expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
         };
     }
 
-    async comparePassword(password: string, hashPass: string): Promise<boolean> {
+    async comparePassword(
+        password: string,
+        hashPass: string,
+    ): Promise<boolean> {
         return await compare(password, hashPass);
     }
 
     async validateUser(email: string, password: string): Promise<UserResponse> {
         const user = await this.findbyEmail(email);
 
-        if(!user.password){
+        if (!user.password) {
             throw new UnauthorizedException();
         }
 
-        if(user && await this.comparePassword(password, user.password)){
+        if (user && (await this.comparePassword(password, user.password))) {
             return this.buildResponse(user);
         }
 
         throw new UnauthorizedException();
     }
 
-    async login(dto: Readonly<LoginUserDto>): Promise<{ user: UserResponse; backendTokens: object; }> {
+    async login(
+        dto: Readonly<LoginUserDto>,
+    ): Promise<{ user: UserResponse; backendTokens: object }> {
         const user = await this.validateUser(dto.email, dto.password);
 
         return {
             user,
             backendTokens: {
                 accessToken: await this.jwtService.signAsync(user, {
-                    expiresIn: "24h",
-                    secret: process.env.jwtSecretKey
+                    expiresIn: '24h',
+                    secret: process.env.jwtSecretKey,
                 }),
                 refreshToken: await this.jwtService.signAsync(user, {
-                    expiresIn: "30d",
-                    secret: process.env.jwtRefreshToken
+                    expiresIn: '30d',
+                    secret: process.env.jwtRefreshToken,
                 }),
-                expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME)
-            }
-        }
+                expiresIn: new Date().setTime(
+                    new Date().getTime() + EXPIRE_TIME,
+                ),
+            },
+        };
     }
 
     async hashPassword(password: string): Promise<string> {
-        return await hash(password,10);
+        return await hash(password, 10);
     }
 
     async findbyEmail(email: string): Promise<User> {
         return await this.prismaService.user.findUnique({
             where: {
-                email
-            }
-        })      
+                email,
+            },
+        });
     }
 
     async register(newUser: Readonly<NewUserDto>): Promise<UserResponse> {
         const existingUser = await this.findbyEmail(newUser.email);
 
-        if(existingUser){
-            throw new ConflictException("An account with that email already exists!");
+        if (existingUser) {
+            throw new ConflictException(
+                'An account with that email already exists!',
+            );
         }
 
         const hashedPassword = await this.hashPassword(newUser.password);
@@ -255,45 +314,56 @@ export class AuthService implements AuthServiceInterface {
         const user = await this.prismaService.user.create({
             data: {
                 ...newUser,
-                password: hashedPassword
-            }
-        })
+                password: hashedPassword,
+            },
+        });
 
-        this.eventEmitter.emit('email.welcome', new UserRegister(newUser.email, newUser.name));
-        
+        this.eventEmitter.emit(
+            'email.welcome',
+            new UserRegister(newUser.email, newUser.name),
+        );
+
         return this.buildResponse(user);
     }
 
     @OnEvent('email.welcome')
-    async sendEmailWelcome(data: UserRegister): Promise<void>{
+    async sendEmailWelcome(data: UserRegister): Promise<void> {
         this.mailingService.sendRegisterEmail(data);
     }
 
     @OnEvent('email.reset')
-    async sendEmailResetPassowrd(data: UserResetPassword): Promise<void>{
+    async sendEmailResetPassowrd(data: UserResetPassword): Promise<void> {
         this.mailingService.sendResetPasswordEmail(data);
     }
 
-    buildResponse(user: User): UserResponse{
+    buildResponse(user: User): UserResponse {
         return {
             email: user.email,
             name: user.name,
             image: user.image,
-            role: user.role
-        }
+            role: user.role,
+        };
     }
 
-    async verifyTokenResetPassword(payload: VerifyResetPasswordDto): Promise<string>{
+    async verifyTokenResetPassword(
+        payload: VerifyResetPasswordDto,
+    ): Promise<string> {
         const data = await this.prismaService.passwordResetToken.findFirst({
             where: {
                 user: {
-                    email: payload.email
+                    email: payload.email,
                 },
-                token: payload.token
-            }
+                token: payload.token,
+            },
         });
 
-        if(!data || data.isDeleted || ((new Date().getTime() - new Date(data.token_expiry).getTime()) / 1000 > RESET_PASS_TIME)){
+        if (
+            !data ||
+            data.isDeleted ||
+            (new Date().getTime() - new Date(data.token_expiry).getTime()) /
+                1000 >
+                RESET_PASS_TIME
+        ) {
             throw new UnauthorizedException();
         }
 

@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
+import {
+    Injectable,
+    UnauthorizedException,
+    UnprocessableEntityException,
+} from '@nestjs/common';
 import { LessonServiceInterface } from './interfaces/lesson.service.interface';
 import { PrismaService } from 'src/prisma.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
@@ -16,45 +20,47 @@ import { ContentLessonDto } from './dto/content-lesson.dto';
 
 @Injectable()
 export class LessonService implements LessonServiceInterface {
-    constructor (private readonly prismaService: PrismaService,
-                private readonly uploadService: UploadService){}
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly uploadService: UploadService,
+    ) {}
 
     async createLesson(payload: CreateLessonDto): Promise<LessonResponse> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
             where: {
                 courseId: course.id,
-                token: payload.chapter_token
-            }
+                token: payload.chapter_token,
+            },
         });
 
-        if(!chapter){
+        if (!chapter) {
             throw new UnprocessableEntityException();
         }
 
         const lastLesson = await this.prismaService.lesson.findFirst({
             where: {
-                chapterId: chapter.id
+                chapterId: chapter.id,
             },
             orderBy: {
-                position: "desc"
-            }
+                position: 'desc',
+            },
         });
 
         const newPosition = lastLesson ? lastLesson.position + 1 : 1;
@@ -64,69 +70,69 @@ export class LessonService implements LessonServiceInterface {
                 title: payload.title,
                 chapterId: chapter.id,
                 position: newPosition,
-                token: new Date().getTime().toString()
-            }
+                token: new Date().getTime().toString(),
+            },
         });
 
         return this.buildLessonResponse(lesson);
     }
 
     async reorderLesson(payload: ReorderLessonDto): Promise<string> {
-        for(let item of payload.list){
+        for (let item of payload.list) {
             await this.prismaService.lesson.update({
                 where: {
-                    id: item.id
+                    id: item.id,
                 },
                 data: {
-                    position: item.position
-                }
-            })
-        };
+                    position: item.position,
+                },
+            });
+        }
 
-        return "Success";
+        return 'Success';
     }
 
-    async findLessonByToken(payload: GetLessonDto): Promise<Lesson>{
+    async findLessonByToken(payload: GetLessonDto): Promise<Lesson> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
             where: {
                 courseId: course.id,
-                token: payload.chapter_token
-            }
+                token: payload.chapter_token,
+            },
         });
 
-        if(!chapter){
+        if (!chapter) {
             throw new UnprocessableEntityException();
         }
 
         const lesson = await this.prismaService.lesson.findFirst({
             where: {
                 chapterId: chapter.id,
-                token: payload.lesson_token
+                token: payload.lesson_token,
             },
             include: {
                 exercise: {
                     include: {
-                        quizz: true
-                    }
-                }
-            }
+                        quizz: true,
+                    },
+                },
+            },
         });
 
         return lesson;
@@ -135,169 +141,175 @@ export class LessonService implements LessonServiceInterface {
     async updateValueLesson(payload: UpdateLessonDto): Promise<LessonResponse> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnprocessableEntityException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
             where: {
                 courseId: course.id,
-                token: payload.chapter_token
-            }
+                token: payload.chapter_token,
+            },
         });
 
-        if(!chapter){
+        if (!chapter) {
             throw new UnprocessableEntityException();
         }
 
         const lesson = await this.prismaService.lesson.findFirst({
             where: {
                 chapterId: chapter.id,
-                token: payload.lesson_token
-            }
+                token: payload.lesson_token,
+            },
         });
 
-        if(!lesson){
+        if (!lesson) {
             throw new UnprocessableEntityException();
         }
 
         const update = await this.prismaService.lesson.update({
             where: {
                 chapterId: chapter.id,
-                token: payload.lesson_token
+                token: payload.lesson_token,
             },
-            data:{
-                ...payload.value
-            }
+            data: {
+                ...payload.value,
+            },
         });
 
         return this.buildLessonResponse(update);
     }
 
-    async updateVideoLesson(payload: UpdateVideoLesson): Promise<LessonResponse> {
+    async updateVideoLesson(
+        payload: UpdateVideoLesson,
+    ): Promise<LessonResponse> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
             where: {
                 courseId: course.id,
-                token: payload.chapter_token
-            }
+                token: payload.chapter_token,
+            },
         });
 
-        if(!chapter){
+        if (!chapter) {
             throw new UnprocessableEntityException();
         }
 
         const lesson = await this.prismaService.lesson.findFirst({
             where: {
                 chapterId: chapter.id,
-                token: payload.lesson_token
-            }
+                token: payload.lesson_token,
+            },
         });
 
-        if(!lesson){
+        if (!lesson) {
             throw new UnprocessableEntityException();
         }
 
-        const {fileName, link} = this.uploadService.createFileNameVideo(payload.file);
+        const { fileName, link } = this.uploadService.createFileNameVideo(
+            payload.file,
+        );
 
         const data = {
             fileName,
             file: payload.file,
             lesson_id: lesson.id,
-            link
-        }
+            link,
+        };
 
         const update = await this.prismaService.lesson.update({
             where: {
                 chapterId: chapter.id,
-                token: lesson.token
+                token: lesson.token,
             },
             data: {
                 videoUrl: link,
-                isCompleteVideo: false
-            }
+                isCompleteVideo: false,
+            },
         });
-        
+
         await this.uploadService.uploadVideoToStorage(data);
 
         return this.buildLessonResponse(update);
     }
 
-    async updateStatusLesson(payload: UpdateStatusLessonDto): Promise<LessonResponse> {
+    async updateStatusLesson(
+        payload: UpdateStatusLessonDto,
+    ): Promise<LessonResponse> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
             where: {
                 courseId: course.id,
-                token: payload.chapter_token
-            }
+                token: payload.chapter_token,
+            },
         });
 
-        if(!chapter){
+        if (!chapter) {
             throw new UnprocessableEntityException();
         }
 
         const lesson = await this.prismaService.lesson.findFirst({
             where: {
                 chapterId: chapter.id,
-                token: payload.lesson_token
-            }
+                token: payload.lesson_token,
+            },
         });
 
-        if(!lesson){
+        if (!lesson) {
             throw new UnprocessableEntityException();
         }
 
         const update = await this.prismaService.lesson.update({
             where: {
                 chapterId: chapter.id,
-                token: lesson.token
+                token: lesson.token,
             },
             data: {
-                isPublished: !payload.status
-            }
+                isPublished: !payload.status,
+            },
         });
 
         return this.buildLessonResponse(update);
@@ -306,109 +318,112 @@ export class LessonService implements LessonServiceInterface {
     async deleteLesson(payload: DeleteLessonDto): Promise<string> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
             where: {
                 courseId: course.id,
-                token: payload.chapter_token
-            }
+                token: payload.chapter_token,
+            },
         });
 
-        if(!chapter){
+        if (!chapter) {
             throw new UnprocessableEntityException();
         }
 
         const lesson = await this.prismaService.lesson.findFirst({
             where: {
                 chapterId: chapter.id,
-                token: payload.lesson_token
-            }
+                token: payload.lesson_token,
+            },
         });
 
-        if(!lesson){
+        if (!lesson) {
             throw new UnprocessableEntityException();
         }
 
         await this.prismaService.lesson.delete({
             where: {
                 chapterId: chapter.id,
-                token: lesson.token
-            }
+                token: lesson.token,
+            },
         });
 
-        return "Success";
+        return 'Success';
     }
 
-    async updateThumbnail(payload: UpdateThumbnailVideo): Promise<LessonResponse> {
+    async updateThumbnail(
+        payload: UpdateThumbnailVideo,
+    ): Promise<LessonResponse> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
         }
 
         const course = await this.prismaService.course.findFirst({
             where: {
                 owner_id: user.id,
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const chapter = await this.prismaService.chapter.findFirst({
             where: {
                 courseId: course.id,
-                token: payload.chapter_token
-            }
+                token: payload.chapter_token,
+            },
         });
 
-        if(!chapter){
+        if (!chapter) {
             throw new UnprocessableEntityException();
         }
 
         const lesson = await this.prismaService.lesson.findFirst({
             where: {
                 chapterId: chapter.id,
-                token: payload.lesson_token
-            }
+                token: payload.lesson_token,
+            },
         });
 
-        if(!lesson){
+        if (!lesson) {
             throw new UnprocessableEntityException();
         }
 
-        const fileName = await this.uploadService.uploadAvatarToS3(payload.file);
+        const fileName = await this.uploadService.uploadAvatarToS3(
+            payload.file,
+        );
 
         const update = await this.prismaService.lesson.update({
             where: {
                 chapterId: chapter.id,
-                token: lesson.token
+                token: lesson.token,
             },
             data: {
-                thumbnail: fileName
-            }
+                thumbnail: fileName,
+            },
         });
-    
 
         return this.buildLessonResponse(update);
     }
@@ -416,65 +431,64 @@ export class LessonService implements LessonServiceInterface {
     async contentLesson(payload: ContentLessonDto): Promise<Lesson> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email: payload.email
-            }
+                email: payload.email,
+            },
         });
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
         }
 
         const course = await this.prismaService.course.findFirst({
             where: {
-                slug: payload.course_slug
-            }
+                slug: payload.course_slug,
+            },
         });
 
-        if(!course){
+        if (!course) {
             throw new UnauthorizedException();
         }
 
         const lesson = await this.prismaService.lesson.findUnique({
             where: {
-                token: payload.lesson_token
+                token: payload.lesson_token,
             },
             include: {
                 exercise: {
                     where: {
-                        isOpen: true
+                        isOpen: true,
                     },
                     include: {
                         quizz: {
                             where: {
-                                isPublished: true
-                            }
-                        }
-                    }
+                                isPublished: true,
+                            },
+                        },
+                    },
                 },
                 userProgress: {
                     where: {
-                        userId: user.id
+                        userId: user.id,
                     },
                     include: {
                         userProgressQuiz: {
                             orderBy: {
-                                createdAt: "desc"
-                            }
-                        }
-                    }
-                }
-
-            }
+                                createdAt: 'desc',
+                            },
+                        },
+                    },
+                },
+            },
         });
 
-        if(!lesson){
+        if (!lesson) {
             throw new UnauthorizedException();
         }
 
         return lesson;
     }
 
-    buildLessonResponse (lesson: Lesson): LessonResponse {
+    buildLessonResponse(lesson: Lesson): LessonResponse {
         return {
             title: lesson.title,
             token: lesson.token,
@@ -484,8 +498,8 @@ export class LessonService implements LessonServiceInterface {
             videoUrl: lesson.videoUrl,
             isCompleteVideo: lesson.isCompleteVideo,
             thumbnail: lesson.thumbnail,
-            exerciseId: lesson.exerciseId
+            exerciseId: lesson.exerciseId,
             //course_title: lesson.course?.title
-        }
+        };
     }
 }

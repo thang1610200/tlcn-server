@@ -18,6 +18,12 @@ export interface ChatgptServiceInterface {
         }[]
     >;
     createQuizzList(payload: CreateListQuizzDto): Promise<any>;
-    addListQuizzTFToDB(payload: CreateListQuizzDto, question: OutputFormatTF[]): Promise<string>;
-    addListQuizzMCToDB(payload: CreateListQuizzDto, question: OutputFormatMC[]): Promise<string>
+    addListQuizzTFToDB(
+        payload: CreateListQuizzDto,
+        question: OutputFormatTF[],
+    ): Promise<string>;
+    addListQuizzMCToDB(
+        payload: CreateListQuizzDto,
+        question: OutputFormatMC[],
+    ): Promise<string>;
 }

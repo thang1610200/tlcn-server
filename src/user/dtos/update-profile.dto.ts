@@ -1,4 +1,4 @@
-import { IsArray, IsEmail, IsEmpty, IsString } from "class-validator";
+import { IsArray, IsEmail, IsEmpty, IsString } from 'class-validator';
 
 export class UpdateProfile {
     @IsEmail()
@@ -11,11 +11,11 @@ export class UpdateProfile {
     bio: string;
 
     @IsString()
-    facebook_id: string
+    facebook_id: string;
 
     @IsString()
-    youtube_id: string
+    youtube_id: string;
 
     @IsString()
-    tiktok_id: string
+    tiktok_id: string;
 }

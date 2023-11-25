@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  controllers: [UserProgressController],
-  providers: [UserProgressService, PrismaService, JwtService]
+    controllers: [UserProgressController],
+    providers: [UserProgressService, PrismaService, JwtService],
 })
 export class UserProgressModule {}
