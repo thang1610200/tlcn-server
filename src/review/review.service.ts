@@ -1,9 +1,12 @@
-import { Injectable, InternalServerErrorException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import { ReviewServiceInterface } from './interfaces/review.service.interface';
 import { AddReviewDto } from './dto/add-review.dto';
-import { Course, Review, User } from '@prisma/client';
+import { Course, Review, ReviewReply, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { AllReviewCourseDto } from './dto/all-review-course.dto';
+import { AddReplyDto } from './dto/add-reply.dto';
+import { DeleteReviewDto } from './dto/delete-review.dto';
+import { DeleteReplyDto } from './dto/delete-reply.dto';
 
 @Injectable()
 export class ReviewService implements ReviewServiceInterface {
@@ -58,6 +61,86 @@ export class ReviewService implements ReviewServiceInterface {
         }
     }
 
+    async addReply(payload: AddReplyDto): Promise<ReviewReply> {
+        try {
+            const user = await this.findUserByEmail(payload.email);
+
+            const review = await this.prismaService.review.findUnique({
+                where: {
+                    id: payload.reviewId
+                }
+            });
+    
+            if(!review){
+                throw new UnprocessableEntityException();
+            }
+
+            return await this.prismaService.reviewReply.create({
+                data: {
+                    reply: payload.reply,
+                    userId: user.id,
+                    reviewId: review.id
+                }
+            });
+        }
+        catch(err: any){
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteReview(payload: DeleteReviewDto): Promise<string> {
+        const user = await this.findUserByEmail(payload.email);
+
+        const review = await this.prismaService.review.findFirst({
+            where: {
+                userId: user.id,
+                id: payload.reviewId
+            }
+        });
+
+        if(!review){
+            throw new NotFoundException();
+        }
+
+        await this.prismaService.review.delete({
+            where: {
+                id: review.id
+            }
+        });
+
+        return "SUCCESS";
+    }
+
+    async deleteReply(payload: DeleteReplyDto): Promise<string> {
+        try {
+            const user = await this.findUserByEmail(payload.email);
+
+            const reply = await this.prismaService.reviewReply.findFirst({
+                where: {
+                    id: payload.replyId,
+                    userId: user.id,
+                    reviewId: payload.reviewId
+                }
+            });
+
+            if(!reply){
+                throw new UnprocessableEntityException();
+            }
+
+            await this.prismaService.reviewReply.delete({
+                where: {
+                    id: reply.id
+                }
+            });
+
+            return "SUCCESS";
+
+        }catch(err: any){
+            throw new InternalServerErrorException();
+        }
+    }
+
     async allReviewCourse(payload: AllReviewCourseDto): Promise<Review[]> {
         try {
             const course = await this.findCourseBySlug(payload.course_slug);
@@ -67,7 +150,18 @@ export class ReviewService implements ReviewServiceInterface {
                     courseId: course.id
                 },
                 include: {
-                    user: true
+                    user: true,
+                    reply: {
+                        include: {
+                            user: true
+                        },
+                        orderBy: {
+                            create_at: 'desc'
+                        }
+                    }
+                },
+                orderBy: {
+                    create_at: 'desc'
                 }
             });
 
