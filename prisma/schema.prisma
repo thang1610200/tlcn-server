@@ -60,23 +60,23 @@ model Topic {
 }
 
 model Course {
-  id               String    @id @default(auto()) @map("_id") @db.ObjectId
-  topic_id         String?   @db.ObjectId
-  topic            Topic?    @relation(fields: [topic_id], references: [id])
-  owner_id         String    @db.ObjectId
-  owner            User      @relation(fields: [owner_id], references: [id])
-  title            String    @unique
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  topic_id         String?        @db.ObjectId
+  topic            Topic?         @relation(fields: [topic_id], references: [id])
+  owner_id         String         @db.ObjectId
+  owner            User           @relation(fields: [owner_id], references: [id])
+  title            String         @unique
   description      String?
   learning_outcome String[]
   requirement      String[]
-  slug             String    @unique
+  slug             String         @unique
   picture          String?
   chapters         Chapter[]
-  isPublished      Boolean   @default(false)
-  create_at        DateTime  @default(now())
-  update_at        DateTime  @updatedAt
-
-  review Review[]
+  isPublished      Boolean        @default(false)
+  create_at        DateTime       @default(now())
+  update_at        DateTime       @updatedAt
+  userProgress     UserProgress[]
+  review           Review[]
 }
 
 model Chapter {
@@ -168,6 +168,8 @@ model UserProgress {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   userId      String   @db.ObjectId
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId    String   @db.ObjectId
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   lessonId    String   @db.ObjectId
   lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   isCompleted Boolean  @default(false)

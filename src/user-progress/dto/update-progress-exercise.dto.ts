@@ -12,4 +12,8 @@ export class UpdateProgressExerciseDto {
     @IsString()
     @IsNotEmpty()
     lessontoken: string;
+
+    @IsString()
+    @IsNotEmpty()
+    course_slug: string;
 }

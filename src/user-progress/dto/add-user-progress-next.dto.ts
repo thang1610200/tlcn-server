@@ -15,4 +15,8 @@ export class AddUserProgressNextDto {
     @IsString()
     @IsNotEmpty()
     lesson_next: string;
+
+    @IsString()
+    @IsNotEmpty()
+    course_slug: string;
 }

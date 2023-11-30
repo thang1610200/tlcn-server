@@ -7,7 +7,7 @@ import {
 import { UserProgressServiceInterface } from './interfaces/user-progress.service.interface';
 import { PrismaService } from 'src/prisma.service';
 import { GetUserProgressDto } from './dto/get-user-progress.dto';
-import { Lesson, User, UserProgress, UserProgressQuiz } from '@prisma/client';
+import { Course, Lesson, User, UserProgress, UserProgressQuiz } from '@prisma/client';
 import { AddUserProgressDto } from './dto/add-user-progress.dto';
 import { AddAnswerUserProgressDto } from './dto/add-answer-progress-quiz.dto';
 import { GetUserProgressQuizDto } from './dto/get-user-progress-quiz.dto';
@@ -64,29 +64,47 @@ export class UserProgressService implements UserProgressServiceInterface {
         return user_progress;
     }
 
-    async addUserProgress(payload: AddUserProgressDto): Promise<UserProgress> {
-        const user = await this.findUserByEmail(payload.email);
-
-        const lesson = await this.findLessonByToken(payload.lesson_token);
-
-        const user_progress = await this.prismaService.userProgress.upsert({
+    async findCourseBySlug(slug: string): Promise<Course>{
+        const course = await this.prismaService.course.findUnique({
             where: {
-                userId_lessonId: {
-                    userId: user.id,
-                    lessonId: lesson.id,
-                },
-            },
-            create: {
-                userId: user.id,
-                lessonId: lesson.id,
-                isCompleted: payload.isCompleted,
-            },
-            update: {
-                isCompleted: payload.isCompleted,
-            },
+                slug
+            }
         });
 
-        return user_progress;
+        return course;
+    }
+
+    async addUserProgress(payload: AddUserProgressDto): Promise<UserProgress> {
+        try { 
+            const user = await this.findUserByEmail(payload.email);
+
+            const lesson = await this.findLessonByToken(payload.lesson_token);
+
+            const course = await this.findCourseBySlug(payload.course_slug);
+
+            const user_progress = await this.prismaService.userProgress.upsert({
+                where: {
+                    userId_lessonId: {
+                        userId: user.id,
+                        lessonId: lesson.id,
+                    },
+                },
+                create: {
+                    courseId: course.id,
+                    userId: user.id,
+                    lessonId: lesson.id,
+                    isCompleted: payload.isCompleted,
+                },
+                update: {
+                    isCompleted: payload.isCompleted,
+                },
+            });
+
+            return user_progress;
+        }
+        catch(err: any){
+            throw new InternalServerErrorException();
+        }
     }
 
     async getUserProgressQuiz(
@@ -142,13 +160,15 @@ export class UserProgressService implements UserProgressServiceInterface {
     async updatePrgressExerciseUser(
         payload: UpdateProgressExerciseDto,
     ): Promise<string> {
-        const user = await this.findUserByEmail(payload.email);
-
-        const lesson_next = await this.findLessonByToken(payload.lesson_next);
-
-        const lesson = await this.findLessonByToken(payload.lessontoken);
-
         try {
+            const user = await this.findUserByEmail(payload.email);
+
+            const lesson_next = await this.findLessonByToken(payload.lesson_next);
+    
+            const lesson = await this.findLessonByToken(payload.lessontoken);
+
+            const course = await this.findCourseBySlug(payload.course_slug);
+
             await this.prismaService.$transaction([
                 this.prismaService.userProgress.update({
                     where: {
@@ -163,6 +183,7 @@ export class UserProgressService implements UserProgressServiceInterface {
                 }),
                 this.prismaService.userProgress.create({
                     data: {
+                        courseId: course.id,
                         userId: user.id,
                         lessonId: lesson_next.id,
                     },
@@ -178,13 +199,15 @@ export class UserProgressService implements UserProgressServiceInterface {
     async addUserProgressNext(
         payload: AddUserProgressNextDto,
     ): Promise<string> {
-        const user = await this.findUserByEmail(payload.email);
-
-        const lesson_next = await this.findLessonByToken(payload.lesson_next);
-
-        const lesson = await this.findLessonByToken(payload.lesson_token);
-
         try {
+            const user = await this.findUserByEmail(payload.email);
+
+            const lesson_next = await this.findLessonByToken(payload.lesson_next);
+    
+            const lesson = await this.findLessonByToken(payload.lesson_token);
+
+            const course = await this.findCourseBySlug(payload.course_slug);
+
             await this.prismaService.$transaction([
                 this.prismaService.userProgress.update({
                     where: {
@@ -199,6 +222,7 @@ export class UserProgressService implements UserProgressServiceInterface {
                 }),
                 this.prismaService.userProgress.create({
                     data: {
+                        courseId: course.id,
                         userId: user.id,
                         lessonId: lesson_next.id,
                     },

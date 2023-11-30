@@ -7,7 +7,7 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { CourseServiceInterface } from './interfaces/course.service.interface';
 import { CreateTopicDto } from './dto/create-topic.dto';
-import { Course, Topic, User } from '@prisma/client';
+import { $Enums, Course, Topic, User, UserProgress } from '@prisma/client';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateValueCourse } from './dto/update-course.dto';
 import { CourseResponse } from './dto/course-response.dto';
@@ -20,6 +20,7 @@ import { UploadService } from 'src/upload/upload.service';
 import { FilterCourseDto } from './dto/filter-course-publish.dto';
 import { GetDetailCourseDto } from './dto/get-detail-course.dto';
 import { GetProgressCourseDto } from './dto/get-progress-course.dto';
+import { uniqBy } from 'lodash';
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
@@ -449,6 +450,36 @@ export class CourseService implements CourseServiceInterface {
         }
 
         return course;
+    }
+
+    async getAllUserOfInstructor(payload: GetProgressCourseDto): Promise<Course> {
+        try {
+            const owner = await this.findUserByEmail(payload.email);
+
+            const course = await this.prismaService.course.findFirst({
+                where: {
+                    owner_id: owner.id,
+                    slug: payload.course_slug
+                },
+                include: {
+                    userProgress:{
+                        include: {
+                            user: true
+                        },
+                        orderBy: {
+                            createdAt: "asc"
+                        }
+                    }
+                }
+            });
+
+            //const user = uniqBy(course.userProgress, 'userId');
+
+            return course;
+        }
+        catch(err: any){
+            throw new InternalServerErrorException();
+        }
     }
 
     buildResponseCourse(payload: Course): CourseResponse {

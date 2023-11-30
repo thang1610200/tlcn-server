@@ -1,4 +1,4 @@
-import { Course, Topic, User } from '@prisma/client';
+import { Course, Topic, User, UserProgress } from '@prisma/client';
 import { CreateTopicDto } from '../dto/create-topic.dto';
 import { CreateCourseDto } from '../dto/create-course.dto';
 import { UpdateValueCourse } from '../dto/update-course.dto';
@@ -31,5 +31,6 @@ export interface CourseServiceInterface {
     getDetailCourse(payload: GetDetailCourseDto): Promise<Course>;
     getUserProgressCourse(payload: GetProgressCourseDto): Promise<Course>;
     getDetailCourseAuth(payload: GetProgressCourseDto): Promise<Course>;
+    getAllUserOfInstructor(payload: GetProgressCourseDto): Promise<Course>;
     findUserByEmail(email: string): Promise<User>;
 }

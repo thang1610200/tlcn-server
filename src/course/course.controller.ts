@@ -91,6 +91,13 @@ export class CourseController {
     }
 
     @Roles('INSTRUCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Get('user-course')
+    getAllUserOfCourse(@Query() payload: GetProgressCourseDto){
+        return this.courseService.getAllUserOfInstructor(payload);
+    }
+
+    @Roles('INSTRUCTOR')
     @UseGuards(JwtGuard)
     @UseInterceptors(FileInterceptor('file'))
     @Patch('update-picture')
