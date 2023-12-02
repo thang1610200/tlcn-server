@@ -92,9 +92,16 @@ export class CourseController {
 
     @Roles('INSTRUCTOR')
     @UseGuards(JwtGuard, RolesGuard)
+    @Get('user-instructor')
+    getAllUserOfInstructor(@Query() payload: GetCourseUserDto){
+        return this.courseService.getAllUserOfInstructor(payload);
+    }
+
+    @Roles('INSTRUCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('user-course')
     getAllUserOfCourse(@Query() payload: GetProgressCourseDto){
-        return this.courseService.getAllUserOfInstructor(payload);
+        return this.courseService.getAllUserOfCourse(payload);
     }
 
     @Roles('INSTRUCTOR')

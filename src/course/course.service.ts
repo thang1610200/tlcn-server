@@ -7,7 +7,7 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { CourseServiceInterface } from './interfaces/course.service.interface';
 import { CreateTopicDto } from './dto/create-topic.dto';
-import { $Enums, Course, Topic, User, UserProgress } from '@prisma/client';
+import { Course, Topic, User, UserProgress } from '@prisma/client';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateValueCourse } from './dto/update-course.dto';
 import { CourseResponse } from './dto/course-response.dto';
@@ -20,7 +20,6 @@ import { UploadService } from 'src/upload/upload.service';
 import { FilterCourseDto } from './dto/filter-course-publish.dto';
 import { GetDetailCourseDto } from './dto/get-detail-course.dto';
 import { GetProgressCourseDto } from './dto/get-progress-course.dto';
-import { uniqBy } from 'lodash';
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
@@ -452,28 +451,47 @@ export class CourseService implements CourseServiceInterface {
         return course;
     }
 
-    async getAllUserOfInstructor(payload: GetProgressCourseDto): Promise<Course> {
+    async getAllUserOfInstructor(payload: GetCourseUserDto): Promise<UserProgress[]> {
         try {
             const owner = await this.findUserByEmail(payload.email);
 
-            const course = await this.prismaService.course.findFirst({
+            const course = await this.prismaService.userProgress.findMany({
                 where: {
-                    owner_id: owner.id,
-                    slug: payload.course_slug
-                },
-                include: {
-                    userProgress:{
-                        include: {
-                            user: true
-                        },
-                        orderBy: {
-                            createdAt: "asc"
-                        }
+                    course: {
+                        owner_id: owner.id
                     }
+                },
+                distinct: ['userId','courseId'],
+                include: {
+                    course: true,
+                    user: true
                 }
             });
 
-            //const user = uniqBy(course.userProgress, 'userId');
+            return course;
+        }
+        catch(err: any){
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllUserOfCourse(payload: GetProgressCourseDto): Promise<UserProgress[]> {
+        try {
+            const owner = await this.findUserByEmail(payload.email);
+
+            const course = await this.prismaService.userProgress.findMany({
+                where: {
+                    course: {
+                        owner_id: owner.id,
+                        slug: payload.course_slug
+                    }
+                },
+                distinct: ['userId','courseId'],
+                include: {
+                    course: true,
+                    user: true
+                }
+            });
 
             return course;
         }

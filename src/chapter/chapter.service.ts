@@ -68,7 +68,7 @@ export class ChapterService implements ChapterServiceInterface {
             throw new UnauthorizedException();
         }
 
-        return this.prismaService.course.findFirst({
+        return await this.prismaService.course.findFirst({
             where: {
                 slug,
                 owner_id: user.id,
