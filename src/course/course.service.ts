@@ -20,6 +20,7 @@ import { UploadService } from 'src/upload/upload.service';
 import { FilterCourseDto } from './dto/filter-course-publish.dto';
 import { GetDetailCourseDto } from './dto/get-detail-course.dto';
 import { GetProgressCourseDto } from './dto/get-progress-course.dto';
+import { count } from 'console';
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
@@ -131,6 +132,9 @@ export class CourseService implements CourseServiceInterface {
             orderBy: {
                 create_at: 'desc',
             },
+            include: {
+                userProgress: true
+            }
         });
 
         return course;
@@ -451,7 +455,74 @@ export class CourseService implements CourseServiceInterface {
         return course;
     }
 
-    async getAllUserOfInstructor(payload: GetCourseUserDto): Promise<UserProgress[]> {
+    async getAllUserOfInstructor(
+        payload: GetCourseUserDto,
+    ): Promise<UserProgress[]> {
+        try {
+            const owner = await this.findUserByEmail(payload.email);
+
+            const course = await this.prismaService.userProgress.findMany({
+                where: {
+                    course: {
+                        owner_id: owner.id,
+                    },
+                },
+                distinct: ['userId', 'courseId'],
+                include: {
+                    course: true,
+                    user: true,
+                },
+            });
+
+            return course;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllUserOfCourse(
+        payload: GetProgressCourseDto,
+    ): Promise<UserProgress[]> {
+        try {
+            const owner = await this.findUserByEmail(payload.email);
+
+            const course = await this.prismaService.userProgress.findMany({
+                where: {
+                    course: {
+                        owner_id: owner.id,
+                        slug: payload.course_slug,
+                    },
+                },
+                distinct: ['userId', 'courseId'],
+                include: {
+                    course: true,
+                    user: true,
+                },
+            });
+
+            return course;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async countCourseOfUser(payload: GetCourseUserDto): Promise<number> {
+        try {
+            const ownder = await this.findUserByEmail(payload.email);
+
+            const count = await this.prismaService.course.count({
+                where: {
+                    owner_id: ownder.id,
+                },
+            });
+
+            return count;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async countUserOfInstructor(payload: GetCourseUserDto): Promise<number> {
         try {
             const owner = await this.findUserByEmail(payload.email);
 
@@ -461,41 +532,13 @@ export class CourseService implements CourseServiceInterface {
                         owner_id: owner.id
                     }
                 },
-                distinct: ['userId','courseId'],
-                include: {
-                    course: true,
-                    user: true
-                }
+                distinct: ['userId','courseId']
             });
 
-            return course;
+            return course.length;
         }
         catch(err: any){
-            throw new InternalServerErrorException();
-        }
-    }
-
-    async getAllUserOfCourse(payload: GetProgressCourseDto): Promise<UserProgress[]> {
-        try {
-            const owner = await this.findUserByEmail(payload.email);
-
-            const course = await this.prismaService.userProgress.findMany({
-                where: {
-                    course: {
-                        owner_id: owner.id,
-                        slug: payload.course_slug
-                    }
-                },
-                distinct: ['userId','courseId'],
-                include: {
-                    course: true,
-                    user: true
-                }
-            });
-
-            return course;
-        }
-        catch(err: any){
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }

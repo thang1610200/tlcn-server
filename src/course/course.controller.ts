@@ -105,6 +105,20 @@ export class CourseController {
     }
 
     @Roles('INSTRUCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Get('count-course')
+    countCourseOfUser(@Query() payload: GetCourseUserDto){
+        return this.courseService.countCourseOfUser(payload);
+    }
+
+    @Roles('INSTRUCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Get('count-user')
+    countUserOfInstructor(@Query() payload: GetCourseUserDto){
+        return this.courseService.countUserOfInstructor(payload);
+    }
+
+    @Roles('INSTRUCTOR')
     @UseGuards(JwtGuard)
     @UseInterceptors(FileInterceptor('file'))
     @Patch('update-picture')

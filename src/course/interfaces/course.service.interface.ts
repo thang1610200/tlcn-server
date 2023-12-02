@@ -33,5 +33,7 @@ export interface CourseServiceInterface {
     getDetailCourseAuth(payload: GetProgressCourseDto): Promise<Course>;
     getAllUserOfInstructor(payload: GetCourseUserDto): Promise<UserProgress[]>;
     getAllUserOfCourse(payload: GetProgressCourseDto): Promise<UserProgress[]>;
+    countCourseOfUser(payload: GetCourseUserDto): Promise<number>;
+    countUserOfInstructor(payload: GetCourseUserDto): Promise<number>;
     findUserByEmail(email: string): Promise<User>;
 }
