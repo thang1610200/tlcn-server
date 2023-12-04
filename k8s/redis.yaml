@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+    namespace: nestjs-tlcn-namespace
+    name: redis-service
+spec:
+    selector:
+        app: redis  # chỉ định service sẽ truy cập đến các nhóm có labels "app: redis"
+    ports:
+        - port: 6379
+    clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    namespace: nestjs-tlcn-namespace
+    name: redis-deployment
+spec:
+    selector:
+        matchLabels:  # quản lý các nhóm có labels "app:redis"
+            app: redis
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                app: redis
+        spec:
+            containers:
+                - name: redis
+                  image: redis
+                  ports:
+                  - containerPort: 6379

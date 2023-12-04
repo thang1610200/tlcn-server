@@ -20,6 +20,7 @@ import { QuizzModule } from './quizz/quizz.module';
 import { ChatgptModule } from './chatgpt/chatgpt.module';
 import { UserProgressModule } from './user-progress/user-progress.module';
 import { ReviewModule } from './review/review.module';
+import { ThreadModule } from './thread/thread.module';
 
 @Module({
     imports: [
@@ -86,6 +87,7 @@ import { ReviewModule } from './review/review.module';
         ChatgptModule,
         UserProgressModule,
         ReviewModule,
+        ThreadModule,
     ],
     controllers: [AppController],
     providers: [AppService, PrismaService],

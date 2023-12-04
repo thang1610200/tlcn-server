@@ -1,4 +1,4 @@
-FROM node:alpine As development
+FROM node:alpine as development
 
 WORKDIR /usr/src/app
 
@@ -10,7 +10,7 @@ COPY . .
 
 RUN npx prisma generate
 
-CMD ["npm", "run", "start:dev"]
+RUN npm run build
 
 FROM node:alpine as production
 
