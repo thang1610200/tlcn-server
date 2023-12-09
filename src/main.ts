@@ -12,7 +12,7 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
 
     app.enableCors({
-        origin: [configService.get('CLIENT_URL')],
+        origin: [configService.get('CLIENT_URL'), configService.get('CLIENT_ADMIN_URL')],
     });
 
     app.use(helmet());

@@ -43,6 +43,8 @@ export class RolesGuard implements CanActivate {
             return true;
         } else if (auth.role === 'LEARNER' && requireRoles[0] === 'LEARNER') {
             return true;
+        } else if (auth.role === 'ADMIN' && requireRoles[0] === 'ADMIN') {
+            return true;
         }
 
         throw new UnauthorizedException('You are not authorized');

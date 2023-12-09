@@ -41,6 +41,13 @@ export class CourseController {
         return this.courseService.createTopic(payload);
     }
 
+    @Roles('ADMIN')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Get('/admin/all-course')
+    getAllCourseAdmin(){
+        return this.courseService.getAllCourseAdmin();
+    }
+
     @Roles('INSTRUCTOR')
     @UseGuards(JwtGuard, RolesGuard)
     @Post('create-course')

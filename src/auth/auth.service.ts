@@ -4,6 +4,7 @@ import {
     ForbiddenException,
     HttpException,
     Injectable,
+    InternalServerErrorException,
     UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
@@ -24,6 +25,7 @@ import { VerifyResetPasswordDto } from './dtos/verify-reset-password.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { ConfigService } from '@nestjs/config';
+import { LoginAdminDto } from './dtos/login-admin-dto';
 
 const EXPIRE_TIME = 24 * 60 * 60 * 1000;
 const RESET_PASS_TIME = 5 * 60;
@@ -253,12 +255,11 @@ export class AuthService implements AuthServiceInterface {
 
     async validateUser(email: string, password: string): Promise<UserResponse> {
         const user = await this.findbyEmail(email);
-
-        if (!user.password) {
+        if (!user?.password) {
             throw new UnauthorizedException();
         }
 
-        if (user && (await this.comparePassword(password, user.password))) {
+        if (user && user.role !== "ADMIN" && (await this.comparePassword(password, user.password))) {
             return this.buildResponse(user);
         }
 
@@ -268,24 +269,28 @@ export class AuthService implements AuthServiceInterface {
     async login(
         dto: Readonly<LoginUserDto>,
     ): Promise<{ user: UserResponse; backendTokens: object }> {
-        const user = await this.validateUser(dto.email, dto.password);
-
-        return {
-            user,
-            backendTokens: {
-                accessToken: await this.jwtService.signAsync(user, {
-                    expiresIn: '24h',
-                    secret: process.env.jwtSecretKey,
-                }),
-                refreshToken: await this.jwtService.signAsync(user, {
-                    expiresIn: '30d',
-                    secret: process.env.jwtRefreshToken,
-                }),
-                expiresIn: new Date().setTime(
-                    new Date().getTime() + EXPIRE_TIME,
-                ),
-            },
-        };
+        try {
+            const user = await this.validateUser(dto.email, dto.password);
+            return {
+                user,
+                backendTokens: {
+                    accessToken: await this.jwtService.signAsync(user, {
+                        expiresIn: '24h',
+                        secret: process.env.jwtSecretKey,
+                    }),
+                    refreshToken: await this.jwtService.signAsync(user, {
+                        expiresIn: '30d',
+                        secret: process.env.jwtRefreshToken,
+                    }),
+                    expiresIn: new Date().setTime(
+                        new Date().getTime() + EXPIRE_TIME,
+                    ),
+                },
+            };
+        }
+        catch(err: any){
+            throw new InternalServerErrorException();
+        }
     }
 
     async hashPassword(password: string): Promise<string> {
@@ -368,5 +373,45 @@ export class AuthService implements AuthServiceInterface {
         }
 
         return payload.email;
+    }
+
+    async validateAdmin(email: string, password: string): Promise<UserResponse>{
+        const user = await this.findbyEmail(email);
+
+        if (!user) {
+            throw new UnauthorizedException();
+        }
+
+        if (user && user.role === "ADMIN" && (await this.comparePassword(password, user.password))) {
+            return this.buildResponse(user);
+        }
+
+        throw new UnauthorizedException();
+    }
+
+    async loginAdmin(payload: LoginAdminDto): Promise<{ user: UserResponse; backendTokens: object }> {
+        try {
+            const user = await this.validateAdmin(payload.email, payload.password);
+
+            return {
+                user,
+                backendTokens: {
+                    accessToken: await this.jwtService.signAsync(user, {
+                        expiresIn: '24h',
+                        secret: process.env.jwtSecretKey,
+                    }),
+                    refreshToken: await this.jwtService.signAsync(user, {
+                        expiresIn: '30d',
+                        secret: process.env.jwtRefreshToken,
+                    }),
+                    expiresIn: new Date().setTime(
+                        new Date().getTime() + EXPIRE_TIME,
+                    ),
+                },
+            };
+        }
+        catch(err: any){
+            throw new InternalServerErrorException();
+        }
     }
 }

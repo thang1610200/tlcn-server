@@ -11,6 +11,10 @@ import {
     HttpStatus,
     ParseFilePipe,
     FileTypeValidator,
+    Query,
+    Post,
+    Delete,
+    Put,
 } from '@nestjs/common';
 import { Profile } from './dtos/profile-user.dto';
 import { UserService } from './user.service';
@@ -20,6 +24,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateAvatarRequestDto } from './dtos/update-avatar-request.dto';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { RolesGuard } from 'src/course/guards/role.guard';
+import { UpdateRoleDto } from './dtos/update-role.dto';
 
 @Controller('user')
 export class UserController {
@@ -27,23 +32,24 @@ export class UserController {
 
     @UseGuards(JwtGuard)
     @Get('profile')
-    async getProfileUser(@Request() req) {
+    getProfileUser(@Request() req) {
         const payload: Profile = {
             email: req['user'].email,
         };
+    
         return this.userService.getProfileByEmail(payload);
     }
 
     @UseGuards(JwtGuard)
     @Patch('profile')
-    async updateProfileUser(@Body() payload: UpdateProfile) {
+    updateProfileUser(@Body() payload: UpdateProfile) {
         return this.userService.updateProfile(payload);
     }
 
     @UseGuards(JwtGuard)
     @UseInterceptors(FileInterceptor('file'))
     @Patch('update-avatar')
-    async updateAvatarUser(
+    updateAvatarUser(
         @UploadedFile(
             new ParseFilePipe({
                 validators: [
@@ -74,7 +80,35 @@ export class UserController {
     @Roles('LEARNER')
     @UseGuards(JwtGuard, RolesGuard)
     @Patch('register-instructer')
-    async registerInstructor(@Body() payload: Profile) {
+    registerInstructor(@Body() payload: Profile) {
         return this.userService.registerInstructor(payload);
+    }
+}
+
+
+@Roles('ADMIN')
+@UseGuards(JwtGuard, RolesGuard)
+@Controller('user')
+export class UserAdminController {
+    constructor(private readonly userService: UserService) {}
+
+    @Get('all-user')
+    getAllUser() {
+        return this.userService.getAllUser();
+    }
+
+    @Get('detail-user')
+    detailUsesr(@Query() payload: Profile) {
+        return this.userService.getProfileByEmail(payload);
+    }
+
+    @Put('update-role')
+    updateRole(@Body() payload: UpdateRoleDto){
+        return this.userService.updateRole(payload);
+    }
+
+    @Delete('delete-user')
+    deleteUser(@Query() payload: Profile){
+        return this.userService.deleteUser(payload);
     }
 }

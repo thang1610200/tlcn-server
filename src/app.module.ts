@@ -39,6 +39,7 @@ import { ThreadModule } from './thread/thread.module';
                 REDIS_PORT: Joi.string().required(),
                 BACKEND_URL: Joi.string().required(),
                 OPENAI_API_KEY: Joi.string().required(),
+                CLIENT_ADMIN_URL: Joi.string().required()
             }),
         }),
         MailingModule,

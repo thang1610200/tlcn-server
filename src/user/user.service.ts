@@ -6,12 +6,13 @@ import {
 import { UserServiceInterface } from './interfaces/user.service.interface';
 import { Profile } from './dtos/profile-user.dto';
 import { PrismaService } from 'src/prisma.service';
-import { User } from '@prisma/client';
+import { Course, User } from '@prisma/client';
 import { ProfileResponse } from './dtos/profile-user-response.dto';
 import { UpdateProfile } from './dtos/update-profile.dto';
 import { UpdateAvatarDto } from './dtos/update-avatar.dto';
 import { UploadService } from 'src/upload/upload.service';
 import { UploadGateway } from 'src/upload/upload.gateway';
+import { UpdateRoleDto } from './dtos/update-role.dto';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
@@ -117,6 +118,69 @@ export class UserService implements UserServiceInterface {
 
             return this.buildResponse(user);
         } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllUser(): Promise<User[]> {
+        return await this.prismaService.user.findMany();
+    }
+
+    async updateRole(payload: UpdateRoleDto): Promise<string> {
+        try {
+            const user = await this.findByEmail(payload.email);
+            return await this.prismaService.$transaction(async (tx) => {
+                await tx.user.update({
+                    where: {
+                        id: user.id,
+                    },
+                    data: {
+                        role: payload.role,
+                    },
+                });
+
+                const course = await this.prismaService.course.count({
+                    where: {
+                        owner_id: user.id,
+                    },
+                });
+
+                if (
+                    user.role === 'INSTRUCTOR' &&
+                    user.role !== payload.role &&
+                    course > 0
+                ) {
+                    await tx.course.updateMany({
+                        where: {
+                            owner_id: user.id,
+                        },
+                        data: {
+                            isPublished: false,
+                        },
+                    });
+                }
+
+                return 'SUCCESS';
+            });
+        } catch (err: any) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteUser(payload: Profile): Promise<string> {
+        try {
+            const user = await this.findByEmail(payload.email);
+
+            await this.prismaService.user.delete({
+                where: {
+                    id: user.id
+                },
+            });
+
+            return "SUCCESS";
+        } catch (err: any) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }

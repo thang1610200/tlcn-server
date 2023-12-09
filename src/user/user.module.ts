@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
+import { UserAdminController, UserController } from './user.controller';
 import { UserService } from './user.service';
 import { PrismaService } from 'src/prisma.service';
 import { BullModule } from '@nestjs/bull';
@@ -14,7 +14,7 @@ import { UploadGateway } from 'src/upload/upload.gateway';
             name: 'upload',
         }),
     ],
-    controllers: [UserController],
+    controllers: [UserController, UserAdminController],
     providers: [
         UserService,
         PrismaService,

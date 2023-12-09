@@ -473,7 +473,6 @@ export class CourseService implements CourseServiceInterface {
                     user: true,
                 },
             });
-
             return course;
         } catch (err: any) {
             throw new InternalServerErrorException();
@@ -539,6 +538,26 @@ export class CourseService implements CourseServiceInterface {
         }
         catch(err: any){
             console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllCourseAdmin(): Promise<Course[]>{
+        try {
+            return await this.prismaService.course.findMany({
+                where: {
+                    isPublished: true
+                },
+                include: {
+                    owner: true,
+                    userProgress: true
+                },
+                orderBy: {
+                    create_at: 'desc'
+                }
+            });
+        }
+        catch(err: any){
             throw new InternalServerErrorException();
         }
     }

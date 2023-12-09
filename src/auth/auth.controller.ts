@@ -11,29 +11,34 @@ import {
 import { AuthService } from './auth.service';
 import { NewUserDto } from './dtos/new-user.dto';
 import { LoginUserDto } from './dtos/login-user.dto';
-import { JwtGuard } from './guards/jwt.guard';
 import { RefreshJwtGuard } from './guards/refresh.guard';
 import { LoginSocialDto } from './dtos/login-social.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { VerifyResetPasswordDto } from './dtos/verify-reset-password.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
+import { LoginAdminDto } from './dtos/login-admin-dto';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post('register')
-    async register(@Body() newUser: NewUserDto) {
+    register(@Body() newUser: NewUserDto) {
         return this.authService.register(newUser);
     }
 
     @Post('login')
-    async login(@Body() dto: LoginUserDto) {
+    login(@Body() dto: LoginUserDto) {
         return this.authService.login(dto);
     }
 
+    @Post('login-admin')
+    loginAdmin(@Body() dto: LoginAdminDto){
+        return this.authService.loginAdmin(dto);
+    }
+
     @Post('login/social')
-    async loginSocial(@Body() dto: LoginSocialDto) {
+    loginSocial(@Body() dto: LoginSocialDto) {
         return this.authService.loginSocial(dto);
     }
 
@@ -54,7 +59,7 @@ export class AuthController {
 
     @UseGuards(RefreshJwtGuard)
     @Post('refresh')
-    async refresh(@Req() req) {
+    refresh(@Req() req: any) {
         return this.authService.refreshToken(req.user);
     }
 }

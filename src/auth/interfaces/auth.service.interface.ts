@@ -8,6 +8,7 @@ import { UserResetPassword } from '../events/user-reset-password.event';
 import { UserRegister } from '../events/user-register.event';
 import { VerifyResetPasswordDto } from '../dtos/verify-reset-password.dto';
 import { UpdatePasswordDto } from '../dtos/update-password.dto';
+import { LoginAdminDto } from '../dtos/login-admin-dto';
 
 export interface AuthServiceInterface {
     findbyEmail(email: string): Promise<User>;
@@ -31,4 +32,6 @@ export interface AuthServiceInterface {
     updatePassword(payload: UpdatePasswordDto): Promise<UserResponse>;
     sendEmailWelcome(data: UserRegister): Promise<void>;
     sendEmailResetPassowrd(data: UserResetPassword): Promise<void>;
+    loginAdmin(payload: LoginAdminDto): Promise<{ user: UserResponse; backendTokens: object }>;
+    validateAdmin(email: string, password: string): Promise<UserResponse>;
 }
