@@ -97,6 +97,26 @@ export class UploadService implements UploadServiceInterface {
         )}.amazonaws.com/${fileName}`;
     }
 
+    async uploadAttachmentToS3(file: any): Promise<string>{
+        const fileName = `${new Date().getTime()}_${file.originalname.replaceAll(
+            ' ',
+            '',
+        )}`;
+        await this.s3Client.send(
+            new PutObjectCommand({
+                Bucket: this.configService.get('AWS_BUCKET'),
+                Key: fileName,
+                Body: file.buffer,
+                ACL: 'public-read',
+            }),
+        );
+        return `https://${this.configService.get(
+            'AWS_BUCKET',
+        )}.s3.${this.configService.get(
+            'AWS_S3_REGION',
+        )}.amazonaws.com/${fileName}`;
+    }
+
     async uploadVideoToS3(file: any, fileName: string): Promise<any> {
         return await this.s3Client.send(
             new PutObjectCommand({

@@ -109,6 +109,7 @@ model Lesson {
   exercise        Exercise? @relation(fields: [exerciseId], references: [id])
 
   userProgress UserProgress[]
+  attachment   Attachment[]
 }
 
 model Review {
@@ -190,4 +191,14 @@ model UserProgressQuiz {
   userProgress   UserProgress @relation(fields: [userProgressId], references: [id], onDelete: Cascade)
   isCorrect      Boolean      @default(false)
   createdAt      DateTime     @default(now())
+}
+
+model Attachment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  url       String
+  lessonId  String   @db.ObjectId
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

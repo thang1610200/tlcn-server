@@ -10,4 +10,5 @@ export interface UploadServiceInterface {
     uploadAvatarToS3(file: any): Promise<string>;
     uploadVideoToS3(file: any, fileName: string): Promise<void>;
     createFileNameVideo(file: any): any;
+    uploadAttachmentToS3(file: any): Promise<string>;
 }

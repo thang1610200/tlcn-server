@@ -132,6 +132,7 @@ export class LessonService implements LessonServiceInterface {
                         quizz: true,
                     },
                 },
+                attachment: true
             },
         });
 
@@ -454,6 +455,7 @@ export class LessonService implements LessonServiceInterface {
                 token: payload.lesson_token,
             },
             include: {
+                attachment: true,
                 exercise: {
                     where: {
                         isOpen: true,

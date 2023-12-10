@@ -21,6 +21,7 @@ import { ChatgptModule } from './chatgpt/chatgpt.module';
 import { UserProgressModule } from './user-progress/user-progress.module';
 import { ReviewModule } from './review/review.module';
 import { ThreadModule } from './thread/thread.module';
+import { AttachmentModule } from './attachment/attachment.module';
 
 @Module({
     imports: [
@@ -89,6 +90,7 @@ import { ThreadModule } from './thread/thread.module';
         UserProgressModule,
         ReviewModule,
         ThreadModule,
+        AttachmentModule,
     ],
     controllers: [AppController],
     providers: [AppService, PrismaService],
