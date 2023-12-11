@@ -25,6 +25,8 @@ import { UpdateAvatarRequestDto } from './dtos/update-avatar-request.dto';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { RolesGuard } from 'src/course/guards/role.guard';
 import { UpdateRoleDto } from './dtos/update-role.dto';
+import { SetPasswordDto } from './dtos/set-password.dto';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 @Controller('user')
 export class UserController {
@@ -44,6 +46,18 @@ export class UserController {
     @Patch('profile')
     updateProfileUser(@Body() payload: UpdateProfile) {
         return this.userService.updateProfile(payload);
+    }
+
+    @UseGuards(JwtGuard)
+    @Patch('set-password')
+    setPasswordUser(@Body() payload: SetPasswordDto) {
+        return this.userService.setPassword(payload);
+    }
+
+    @UseGuards(JwtGuard)
+    @Patch('update-password')
+    updatePasswordUser(@Body() payload: UpdatePasswordDto) {
+        return this.userService.updatePassword(payload);
     }
 
     @UseGuards(JwtGuard)

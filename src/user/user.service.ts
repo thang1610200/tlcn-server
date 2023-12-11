@@ -1,25 +1,27 @@
 import {
     Injectable,
     InternalServerErrorException,
+    NotFoundException,
     UnauthorizedException,
 } from '@nestjs/common';
 import { UserServiceInterface } from './interfaces/user.service.interface';
 import { Profile } from './dtos/profile-user.dto';
 import { PrismaService } from 'src/prisma.service';
-import { Course, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { ProfileResponse } from './dtos/profile-user-response.dto';
 import { UpdateProfile } from './dtos/update-profile.dto';
 import { UpdateAvatarDto } from './dtos/update-avatar.dto';
 import { UploadService } from 'src/upload/upload.service';
-import { UploadGateway } from 'src/upload/upload.gateway';
 import { UpdateRoleDto } from './dtos/update-role.dto';
+import { SetPasswordDto } from './dtos/set-password.dto';
+import { compare, hash } from 'bcrypt';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
-        private readonly uploadGateway: UploadGateway,
     ) {}
 
     async registerInstructor(payload: Profile): Promise<ProfileResponse> {
@@ -52,26 +54,30 @@ export class UserService implements UserServiceInterface {
     }
 
     async updateProfile(payload: UpdateProfile): Promise<ProfileResponse> {
-        const user = await this.findByEmail(payload.email);
+        try {
+            const user = await this.findByEmail(payload.email);
 
-        if (!user) {
-            throw new UnauthorizedException();
+            if (!user) {
+                throw new UnauthorizedException();
+            }
+
+            const userUpdate = await this.prismaService.user.update({
+                where: {
+                    email: payload.email,
+                },
+                data: {
+                    name: payload.username,
+                    bio: payload.bio,
+                    facebook_id: payload.facebook_id,
+                    youtube_id: payload.youtube_id,
+                    titok_id: payload.tiktok_id,
+                },
+            });
+
+            return this.buildResponse(userUpdate);
+        } catch {
+            throw new InternalServerErrorException();
         }
-
-        const userUpdate = await this.prismaService.user.update({
-            where: {
-                email: payload.email,
-            },
-            data: {
-                name: payload.username,
-                bio: payload.bio,
-                facebook_id: payload.facebook_id,
-                youtube_id: payload.youtube_id,
-                titok_id: payload.tiktok_id,
-            },
-        });
-
-        return this.buildResponse(userUpdate);
     }
 
     buildResponse(data: User): ProfileResponse {
@@ -87,14 +93,18 @@ export class UserService implements UserServiceInterface {
         };
     }
 
-    async getProfileByEmail(payload: Profile): Promise<ProfileResponse> {
-        const user = await this.findByEmail(payload.email);
+    async getProfileByEmail(payload: Profile): Promise<User> {
+        try {
+            const user = await this.findByEmail(payload.email);
 
-        if (!user) {
-            throw new UnauthorizedException();
+            if (!user) {
+                throw new UnauthorizedException();
+            }
+
+            return user;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
         }
-
-        return this.buildResponse(user);
     }
 
     async updateAvatar(payload: UpdateAvatarDto): Promise<ProfileResponse> {
@@ -123,7 +133,11 @@ export class UserService implements UserServiceInterface {
     }
 
     async getAllUser(): Promise<User[]> {
-        return await this.prismaService.user.findMany();
+        try {
+            return await this.prismaService.user.findMany();
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateRole(payload: UpdateRoleDto): Promise<string> {
@@ -168,17 +182,67 @@ export class UserService implements UserServiceInterface {
         }
     }
 
+    async setPassword(payload: SetPasswordDto): Promise<ProfileResponse> {
+        try {
+            const passwordHash = await this.hashPassword(payload.password);
+
+            const user = await this.prismaService.user.update({
+                where: {
+                    email: payload.email,
+                },
+                data: {
+                    password: passwordHash,
+                },
+            });
+
+            return this.buildResponse(user);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async hashPassword(password: string): Promise<string> {
+        return await hash(password, 10);
+    }
+
+    async compare(email: string, currentPassword: string): Promise<string> {
+        const user = await this.findByEmail(email);
+
+        if (await compare(currentPassword, user.password)) {
+            return 'SUCCESS';
+        }
+
+        throw new NotFoundException("Current password don't match");
+    }
+
+    async updatePassword(payload: UpdatePasswordDto): Promise<ProfileResponse> {
+        await this.compare(payload.email, payload.currentPassword);
+
+        const passwordHash = await this.hashPassword(payload.password);
+
+        const user = await this.prismaService.user.update({
+            where: {
+                email: payload.email,
+            },
+            data: {
+                password: passwordHash,
+            },
+        });
+
+        return this.buildResponse(user);
+    }
+
     async deleteUser(payload: Profile): Promise<string> {
         try {
             const user = await this.findByEmail(payload.email);
 
             await this.prismaService.user.delete({
                 where: {
-                    id: user.id
+                    id: user.id,
                 },
             });
 
-            return "SUCCESS";
+            return 'SUCCESS';
         } catch (err: any) {
             console.log(err);
             throw new InternalServerErrorException();
