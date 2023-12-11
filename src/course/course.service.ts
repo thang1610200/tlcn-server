@@ -278,6 +278,13 @@ export class CourseService implements CourseServiceInterface {
                     where: {
                         isPublished: true,
                     },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true
+                            }
+                        }
+                    }
                 },
                 owner: true,
             },
@@ -301,6 +308,13 @@ export class CourseService implements CourseServiceInterface {
                     where: {
                         isPublished: true,
                     },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true
+                            }
+                        }
+                    }
                 },
                 owner: true,
             },
