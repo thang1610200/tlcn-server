@@ -22,25 +22,32 @@ enum TypeExercise {
   CODE
 }
 
+enum StatusRegisterInstructor {
+  PROGRESSING
+  REJECT
+  SUCCESS
+}
+
 model User {
-  id                String               @id @default(auto()) @map("_id") @db.ObjectId
-  email             String               @unique
-  password          String?
-  name              String
-  image             String?
-  bio               String?
-  facebook_id       String?
-  youtube_id        String?
-  titok_id          String?
-  role              Role                 @default(LEARNER)
-  registration_date DateTime             @default(now())
-  verify_date       DateTime?
-  course            Course[]
-  forgot_password   PasswordResetToken[]
-  exercise          Exercise[]
-  userProgress      UserProgress[]
-  review            Review[]
-  reply             ReviewReply[]
+  id                  String               @id @default(auto()) @map("_id") @db.ObjectId
+  email               String               @unique
+  password            String?
+  name                String
+  image               String?
+  bio                 String?
+  facebook_id         String?
+  youtube_id          String?
+  titok_id            String?
+  role                Role                 @default(LEARNER)
+  registration_date   DateTime             @default(now())
+  verify_date         DateTime?
+  register_instructor RegisterInstructor[]
+  course              Course[]
+  forgot_password     PasswordResetToken[]
+  exercise            Exercise[]
+  userProgress        UserProgress[]
+  review              Review[]
+  reply               ReviewReply[]
 }
 
 model PasswordResetToken {
@@ -199,6 +206,18 @@ model Attachment {
   url       String
   lessonId  String   @db.ObjectId
   lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RegisterInstructor {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String   @unique
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  file      String
+  status    StatusRegisterInstructor  @default(PROGRESSING)
+  reply     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

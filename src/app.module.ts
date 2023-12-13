@@ -22,6 +22,7 @@ import { UserProgressModule } from './user-progress/user-progress.module';
 import { ReviewModule } from './review/review.module';
 import { ThreadModule } from './thread/thread.module';
 import { AttachmentModule } from './attachment/attachment.module';
+import { RegisterInstructorModule } from './register-instructor/register-instructor.module';
 
 @Module({
     imports: [
@@ -91,6 +92,7 @@ import { AttachmentModule } from './attachment/attachment.module';
         ReviewModule,
         ThreadModule,
         AttachmentModule,
+        RegisterInstructorModule,
     ],
     controllers: [AppController],
     providers: [AppService, PrismaService],
