@@ -5,12 +5,16 @@ import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { UploadService } from 'src/upload/upload.service';
 import { BullModule } from '@nestjs/bull';
+import { MailingService } from 'src/mailing/mailing.service';
 
 @Module({
     imports: [
         BullModule.registerQueue({
             name: 'upload',
         }),
+        BullModule.registerQueue({
+            name: 'emailSending',
+        })
     ],
     controllers: [RegisterInstructorController, RegisterInstructorAdminController],
     providers: [
@@ -18,6 +22,7 @@ import { BullModule } from '@nestjs/bull';
         PrismaService,
         JwtService,
         UploadService,
+        MailingService
     ],
 })
 export class RegisterInstructorModule {}
