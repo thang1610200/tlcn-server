@@ -6,8 +6,8 @@ services:
       dockerfile: ./Dockerfile
       # target: development
     # command: npm run start:dev
-    env_file:
-      - ./.env
+    # env_file:
+    #   - ./.env
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
