@@ -18,7 +18,9 @@ async function bootstrap() {
         .addTag('tlcn')
         .build();
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('api', app, document,{
+        customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+    });
 
     app.enableCors({
         origin: [
