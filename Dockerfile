@@ -65,4 +65,4 @@ ENV OPENAI_API_KEY=${OPENAI_API_KEY}
 
 RUN npx prisma generate
 
-CMD ["node", "dist/main"]
+CMD ["npm", "run", "start:prod"]
