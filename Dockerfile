@@ -43,6 +43,8 @@ RUN npm install --only=production
 
 COPY . .
 
+COPY --from=development /usr/src/app/dist ./dist
+
 ENV DATABASE_URL=${DATABASE_URL}
 ENV jwtSecretKey=${jwtSecretKey}
 ENV jwtRefreshToken=${jwtRefreshToken}
@@ -60,8 +62,6 @@ ENV AWS_S3_REGION=${AWS_S3_REGION}
 ENV AWS_BUCKET=${AWS_BUCKET}
 ENV ORGANIZATION_ID=${ORGANIZATION_ID}
 ENV OPENAI_API_KEY=${OPENAI_API_KEY}
-
-COPY --from=development /usr/src/app/dist ./dist
 
 RUN npx prisma generate
 
