@@ -4,6 +4,6 @@ import { PrismaService } from './prisma.service';
 @Injectable()
 export class AppService {
     getHello(): string {
-        return 'Hello World!';
+        return 'TLCN!';
     }
 }
