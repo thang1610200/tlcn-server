@@ -11,14 +11,6 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const configService = app.get(ConfigService);
 
-    app.enableCors({
-        origin: [configService.get('CLIENT_URL'), configService.get('CLIENT_ADMIN_URL')],
-    });
-
-    app.use(helmet());
-    app.use(compression());
-    app.useWebSocketAdapter(new SocketIOAdapter(app, configService));
-
     const config = new DocumentBuilder()
         .setTitle('TLCN Server')
         .setDescription('TLCN API description')
@@ -27,6 +19,18 @@ async function bootstrap() {
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
+
+    app.enableCors({
+        origin: [
+            configService.get('CLIENT_URL'),
+            configService.get('CLIENT_ADMIN_URL'),
+            configService.get('BACKEND_URL')
+        ],
+    });
+
+    app.use(helmet());
+    app.use(compression());
+    app.useWebSocketAdapter(new SocketIOAdapter(app, configService));
 
     app.useGlobalPipes(
         new ValidationPipe({
