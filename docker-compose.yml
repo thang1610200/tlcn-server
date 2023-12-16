@@ -12,6 +12,7 @@ services:
       jwtRefreshToken: 'Vdv7hnAwg9XjpfiSvMUd9omsM6HR+DgVPb+KCuloW/Uqk1d0wpwncnbPAioy5J2g5IidM6+S2Xo/7MI+BU0N6w=='
       CLIENT_URL: 'http://localhost:3000'
       BACKEND_URL: 'http://localhost:4000'
+      CLIENT_ADMIN_URL: "http://localhost:5000"
       HOST_EMAIL: smtp.gmail.com
       USER_NAME: 'nguyenhuuthangc7@gmail.com'
       PASSWORD: 'qzazlqaaozoikcqx'
