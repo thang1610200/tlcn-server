@@ -1,5 +1,7 @@
 FROM node:alpine as development
 
+RUN mkdir -p /usr/src/app
+RUN chmod -R 777 /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -35,6 +37,8 @@ FROM node:alpine as production
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
+RUN mkdir -p /usr/src/app
+RUN chmod -R 777 /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package*.json ./
