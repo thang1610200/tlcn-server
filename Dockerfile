@@ -1,3 +1,4 @@
+## development
 FROM node:18-alpine As development
 
 WORKDIR /usr/src/app
@@ -12,6 +13,7 @@ RUN npx prisma generate
 
 USER node
 
+## build
 FROM node:18-alpine As build
 
 WORKDIR /usr/src/app
@@ -30,6 +32,15 @@ RUN npm ci --only=production && npm cache clean --force
 
 USER node
 
+## test
+# FROM build as testing
+
+# COPY tests ./
+# ENV CI=true
+
+# RUN ["npm", "run", "test"]
+
+## production
 FROM node:18-alpine As production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
