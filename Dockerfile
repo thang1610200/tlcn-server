@@ -33,4 +33,4 @@ COPY --from=development /usr/src/app/dist ./dist
 
 RUN npx prisma generate
 
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "dist/main"]
