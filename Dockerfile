@@ -33,4 +33,6 @@ COPY --from=development /usr/src/app/dist ./dist
 
 RUN npx prisma generate
 
+EXPOSE 4000
+
 CMD ["node", "dist/main"]
