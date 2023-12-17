@@ -1,38 +1,38 @@
-FROM node:alpine as development
+FROM node:18-alpine As development
 
-RUN mkdir -p /usr/src/app
-RUN chmod -R 777 /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 
-RUN npm install
+RUN npm ci
 
-COPY . .
+COPY --chown=node:node . .
 
 RUN npx prisma generate
+
+USER node
+
+FROM node:18-alpine As build
+
+WORKDIR /usr/src/app
+
+COPY --chown=node:node package*.json ./
+
+COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
+
+COPY --chown=node:node . .
 
 RUN npm run build
 
-FROM node:alpine as production
+ENV NODE_ENV production
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+RUN npm ci --only=production && npm cache clean --force
 
-RUN mkdir -p /usr/src/app
-RUN chmod -R 777 /usr/src/app
-WORKDIR /usr/src/app
+USER node
 
-COPY package*.json ./
+FROM node:18-alpine As production
 
-RUN npm install --only=production
+COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
-COPY . .
-
-COPY --from=development /usr/src/app/dist ./dist
-
-RUN npx prisma generate
-
-EXPOSE 4000
-
-CMD ["node", "dist/main"]
+CMD [ "node", "dist/main.js" ]
