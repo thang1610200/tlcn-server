@@ -10,7 +10,7 @@ export interface QuizzServiceInterface {
     reorderQuizz(payload: ReorderQuizzDto): Promise<string>;
     createQuizz(payload: CreateQuizzDto): Promise<QuizzResponse>;
     findExcersie(email: string, exercise_token: string): Promise<Exercise>;
-    getDetailQuizz(payload: DetailQuizzDto): Promise<QuizzResponse>;
+    getDetailQuizz(payload: DetailQuizzDto): Promise<Quizz>;
     updateValueQuizz(payload: UpdateQuizzDto): Promise<QuizzResponse>;
     updateStatusQuizz(payload: UpdateStatusQuizzDto): Promise<QuizzResponse>;
     deleteQuizz(payload: DetailQuizzDto): Promise<string>;

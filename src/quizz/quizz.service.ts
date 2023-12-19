@@ -94,7 +94,7 @@ export class QuizzService implements QuizzServiceInterface {
         return 'Success';
     }
 
-    async getDetailQuizz(payload: DetailQuizzDto): Promise<QuizzResponse> {
+    async getDetailQuizz(payload: DetailQuizzDto): Promise<Quizz> {
         const exercise = await this.findExcersie(
             payload.email,
             payload.exercise_token,
@@ -105,13 +105,20 @@ export class QuizzService implements QuizzServiceInterface {
                 token: payload.token,
                 exerciseId: exercise.id,
             },
+            include: {
+                exercise: {
+                    include: {
+                        lesson: true
+                    }
+                }
+            }
         });
 
         if (!quizz) {
             throw new NotFoundException();
         }
 
-        return this.buildQuizzResponse(quizz);
+        return quizz;
     }
 
     async updateValueQuizz(payload: UpdateQuizzDto): Promise<QuizzResponse> {
