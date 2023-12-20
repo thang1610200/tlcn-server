@@ -24,7 +24,7 @@ services:
       AWS_S3_REGION: 'ap-southeast-1'
       AWS_BUCKET: 'tlcn-upload'
       ORGANIZATION_ID: 'org-5LLSrr0KdsLdeHGKu7c1UhLu'
-      OPENAI_API_KEY: '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'
+      OPENAI_API_KEY: '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'
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
