@@ -89,7 +89,6 @@ export class ChatgptService implements ChatgptServiceInterface {
             // try-catch block to ensure output format is adhered to
             try {
                 let output: any = JSON.parse(res);
-                console.log(output);
 
                 output = !Array.isArray(output) ? new Array(output) : output;
                 // check for each element in the output_list, the format is correctly adhered to
