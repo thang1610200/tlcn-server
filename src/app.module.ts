@@ -61,7 +61,7 @@ import * as path from 'path';
                     },
                 },
                 template: {
-                    dir: path.join(__dirname, 'templates'),
+                    dir: path.join(__dirname,'mailing','templates'),
                     adapter: new HandlebarsAdapter(),
                     options: {
                         strict: true,
