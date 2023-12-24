@@ -23,6 +23,7 @@ import { ReviewModule } from './review/review.module';
 import { ThreadModule } from './thread/thread.module';
 import { AttachmentModule } from './attachment/attachment.module';
 import { RegisterInstructorModule } from './register-instructor/register-instructor.module';
+import * as path from 'path';
 
 @Module({
     imports: [
@@ -60,10 +61,10 @@ import { RegisterInstructorModule } from './register-instructor/register-instruc
                     },
                 },
                 template: {
-                    dir: process.cwd() + '/src/mailing/templates/',
+                    dir: path.join(__dirname, 'templates'),
                     adapter: new HandlebarsAdapter(),
                     options: {
-                        strict: false,
+                        strict: true,
                     },
                 },
             }),
