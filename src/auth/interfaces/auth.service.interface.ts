@@ -33,5 +33,6 @@ export interface AuthServiceInterface {
     sendEmailWelcome(data: UserRegister): Promise<void>;
     sendEmailResetPassowrd(data: UserResetPassword): Promise<void>;
     loginAdmin(payload: LoginAdminDto): Promise<{ user: UserResponse; backendTokens: object }>;
-    validateAdmin(email: string, password: string): Promise<UserResponse>;
+    validateAdmin(email: string, password: string): Promise<User>;
+    storeRefreshToken (id: string, user: UserResponse): Promise<string>;
 }

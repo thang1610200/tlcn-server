@@ -26,8 +26,10 @@ import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { ConfigService } from '@nestjs/config';
 import { LoginAdminDto } from './dtos/login-admin-dto';
+import { InjectRedis } from '@nestjs-modules/ioredis';
+import { Redis } from 'ioredis';
 
-const EXPIRE_TIME = 24 * 60 * 60 * 1000;
+const EXPIRE_TIME = 15 * 60 * 1000;
 const RESET_PASS_TIME = 5 * 60;
 const RESET_PASS_SUCCESS_TIME = 24 * 60;
 
@@ -38,6 +40,8 @@ export class AuthService implements AuthServiceInterface {
         private readonly eventEmitter: EventEmitter2,
         private readonly jwtService: JwtService,
         private readonly mailingService: MailingService,
+        @InjectRedis() private readonly redis: Redis,
+        private readonly configService: ConfigService
     ) {}
 
     async updatePassword(payload: UpdatePasswordDto): Promise<UserResponse> {
@@ -175,20 +179,16 @@ export class AuthService implements AuthServiceInterface {
 
         if (users) {
             const userResponse = this.buildResponse(users);
+            let refreshTokenUser = await this.storeRefreshToken(users.id, userResponse);
+
             return {
                 user: userResponse,
                 backendTokens: {
                     accessToken: await this.jwtService.signAsync(userResponse, {
-                        expiresIn: '24h',
-                        secret: process.env.jwtSecretKey,
+                        expiresIn: '15m',
+                        secret: this.configService.get('jwtSecretKey'),
                     }),
-                    refreshToken: await this.jwtService.signAsync(
-                        userResponse,
-                        {
-                            expiresIn: '30d',
-                            secret: process.env.jwtRefreshToken,
-                        },
-                    ),
+                    refreshToken: refreshTokenUser,
                     expiresIn: new Date().setTime(
                         new Date().getTime() + EXPIRE_TIME,
                     ),
@@ -211,17 +211,16 @@ export class AuthService implements AuthServiceInterface {
             new UserRegister(newUserResponse.email, newUserResponse.name),
         );
 
+        const refreshTokenNewUser = await this.storeRefreshToken(newUser.id, newUserResponse);
+
         return {
             user: newUserResponse,
             backendTokens: {
                 accessToken: await this.jwtService.signAsync(newUserResponse, {
-                    expiresIn: '24h',
-                    secret: process.env.jwtSecretKey,
+                    expiresIn: '15m',
+                    secret: this.configService.get('jwtSecretKey'),
                 }),
-                refreshToken: await this.jwtService.signAsync(newUserResponse, {
-                    expiresIn: '30d',
-                    secret: process.env.jwtRefreshToken,
-                }),
+                refreshToken: refreshTokenNewUser,
                 expiresIn: new Date().setTime(
                     new Date().getTime() + EXPIRE_TIME,
                 ),
@@ -233,15 +232,14 @@ export class AuthService implements AuthServiceInterface {
         const users = await this.findbyEmail(user.email);
         const payload = this.buildResponse(users);
 
+        let refreshToken = await this.storeRefreshToken(users.id, payload);
+
         return {
             accessToken: await this.jwtService.signAsync(payload, {
-                expiresIn: '24h',
-                secret: process.env.jwtSecretKey,
+                expiresIn: '15m',
+                secret: this.configService.get('jwtSecretKey'),
             }),
-            refreshToken: await this.jwtService.signAsync(payload, {
-                expiresIn: '30d',
-                secret: process.env.jwtRefreshToken,
-            }),
+            refreshToken,
             expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
         };
     }
@@ -253,14 +251,14 @@ export class AuthService implements AuthServiceInterface {
         return await compare(password, hashPass);
     }
 
-    async validateUser(email: string, password: string): Promise<UserResponse> {
+    async validateUser(email: string, password: string): Promise<User> {
         const user = await this.findbyEmail(email);
         if (!user?.password) {
             throw new UnauthorizedException();
         }
 
         if (user && user.role !== "ADMIN" && (await this.comparePassword(password, user.password))) {
-            return this.buildResponse(user);
+            return user;
         }
 
         throw new UnauthorizedException();
@@ -269,28 +267,24 @@ export class AuthService implements AuthServiceInterface {
     async login(
         dto: Readonly<LoginUserDto>,
     ): Promise<{ user: UserResponse; backendTokens: object }> {
-        try {
-            const user = await this.validateUser(dto.email, dto.password);
-            return {
-                user,
-                backendTokens: {
-                    accessToken: await this.jwtService.signAsync(user, {
-                        expiresIn: '24h',
-                        secret: process.env.jwtSecretKey,
-                    }),
-                    refreshToken: await this.jwtService.signAsync(user, {
-                        expiresIn: '30d',
-                        secret: process.env.jwtRefreshToken,
-                    }),
-                    expiresIn: new Date().setTime(
-                        new Date().getTime() + EXPIRE_TIME,
-                    ),
-                },
-            };
-        }
-        catch(err: any){
-            throw new InternalServerErrorException();
-        }
+        const user = await this.validateUser(dto.email, dto.password);
+        let userResponse = this.buildResponse(user);
+
+        let refreshToken = await this.storeRefreshToken(user.id, userResponse);
+
+        return {
+            user: userResponse,
+            backendTokens: {
+                accessToken: await this.jwtService.signAsync(userResponse, {
+                    expiresIn: '15m',
+                    secret: this.configService.get('jwtSecretKey'),
+                }),
+                refreshToken: refreshToken,
+                expiresIn: new Date().setTime(
+                    new Date().getTime() + EXPIRE_TIME,
+                ),
+            },
+        };
     }
 
     async hashPassword(password: string): Promise<string> {
@@ -375,7 +369,7 @@ export class AuthService implements AuthServiceInterface {
         return payload.email;
     }
 
-    async validateAdmin(email: string, password: string): Promise<UserResponse>{
+    async validateAdmin(email: string, password: string): Promise<User>{
         const user = await this.findbyEmail(email);
 
         if (!user) {
@@ -383,7 +377,7 @@ export class AuthService implements AuthServiceInterface {
         }
 
         if (user && user.role === "ADMIN" && (await this.comparePassword(password, user.password))) {
-            return this.buildResponse(user);
+            return user;
         }
 
         throw new UnauthorizedException();
@@ -393,17 +387,16 @@ export class AuthService implements AuthServiceInterface {
         try {
             const user = await this.validateAdmin(payload.email, payload.password);
 
+            const refreshToken = await this.storeRefreshToken(user.id, user);
+
             return {
-                user,
+                user: this.buildResponse(user),
                 backendTokens: {
                     accessToken: await this.jwtService.signAsync(user, {
-                        expiresIn: '24h',
-                        secret: process.env.jwtSecretKey,
+                        expiresIn: '15m',
+                        secret: this.configService.get('jwtSecretKey'),
                     }),
-                    refreshToken: await this.jwtService.signAsync(user, {
-                        expiresIn: '30d',
-                        secret: process.env.jwtRefreshToken,
-                    }),
+                    refreshToken,
                     expiresIn: new Date().setTime(
                         new Date().getTime() + EXPIRE_TIME,
                     ),
@@ -411,6 +404,30 @@ export class AuthService implements AuthServiceInterface {
             };
         }
         catch(err: any){
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async storeRefreshToken (id: string, user: UserResponse): Promise<string> {
+        try {
+            await this.redis.select(1);
+
+            const token = await this.redis.get(id);
+
+            if(!token){
+                let refreshToken = await this.jwtService.signAsync(user, {
+                    expiresIn: '7d',
+                    secret: this.configService.get('jwtRefreshToken'),
+                });
+
+                await this.redis.set(id, refreshToken,'EX',7 * 24 * 60 * 60);
+
+                return refreshToken;
+            }
+
+            return token;
+        }
+        catch{
             throw new InternalServerErrorException();
         }
     }

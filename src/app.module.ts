@@ -24,9 +24,14 @@ import { ThreadModule } from './thread/thread.module';
 import { AttachmentModule } from './attachment/attachment.module';
 import { RegisterInstructorModule } from './register-instructor/register-instructor.module';
 import * as path from 'path';
+import { RedisModule } from '@nestjs-modules/ioredis';
+import { DevtoolsModule } from '@nestjs/devtools-integration';
 
 @Module({
     imports: [
+        DevtoolsModule.register({
+            http: process.env.NODE_ENV !== 'production',
+        }),
         AuthModule,
         ConfigModule.forRoot({
             isGlobal: true,
@@ -80,6 +85,14 @@ import * as path from 'path';
                 },
             }),
             inject: [ConfigService],
+        }),
+        RedisModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => ({
+                type: 'single',
+                url: `redis://${configService.get('REDIS_HOST')}:${configService.get('REDIS_PORT')}`
+            }),
+            inject: [ConfigService]
         }),
         UserModule,
         UploadModule,

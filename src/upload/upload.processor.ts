@@ -49,6 +49,7 @@ export class UploadProcessor {
                 },
             });
         } catch (err: any) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }

@@ -1,0 +1,2599 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tlcn-server documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">tlcn-server documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >CourseService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/course/course.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#buildResponseCourse" >buildResponseCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#countCourseOfUser" >countCourseOfUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#countUserOfInstructor" >countUserOfInstructor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createCourse" >createCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createTopic" >createTopic</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteCourse" >deleteCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#filterCoursePublish" >filterCoursePublish</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAllTopic" >findAllTopic</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findByNameCourse" >findByNameCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findByTitleTopic" >findByTitleTopic</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findUserByEmail" >findUserByEmail</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllCourse" >getAllCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllCourseAdmin" >getAllCourseAdmin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllCoursePublish" >getAllCoursePublish</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllUserOfCourse" >getAllUserOfCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllUserOfInstructor" >getAllUserOfInstructor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getCourseBySlug" >getCourseBySlug</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getDetailCourse" >getDetailCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getDetailCourseAuth" >getDetailCourseAuth</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getUserProgressCourse" >getUserProgressCourse</a>
+                            </li>
+                            <li>
+                                <a href="#slugify" >slugify</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateCourse" >updateCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updatePictureCourse" >updatePictureCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateStatusCourse" >updateStatusCourse</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/course/course.service.ts:26</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>prismaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PrismaService.html" target="_self" >PrismaService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>uploadService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UploadService.html" target="_self" >UploadService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildResponseCourse"></a>
+                    <span class="name">
+                        <span ><b>buildResponseCourse</b></span>
+                        <a href="#buildResponseCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>buildResponseCourse(payload: Course)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="579"
+                                    class="link-to-prism">src/course/course.service.ts:579</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                        <code>Course</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/CourseResponse.html" target="_self" >CourseResponse</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="countCourseOfUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>countCourseOfUser</b></span>
+                        <a href="#countCourseOfUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>countCourseOfUser(payload: <a href="../classes/GetCourseUserDto.html" target="_self">GetCourseUserDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="522"
+                                    class="link-to-prism">src/course/course.service.ts:522</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetCourseUserDto.html" target="_self" >GetCourseUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;number&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="countUserOfInstructor"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>countUserOfInstructor</b></span>
+                        <a href="#countUserOfInstructor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>countUserOfInstructor(payload: <a href="../classes/GetCourseUserDto.html" target="_self">GetCourseUserDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="538"
+                                    class="link-to-prism">src/course/course.service.ts:538</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetCourseUserDto.html" target="_self" >GetCourseUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;number&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createCourse</b></span>
+                        <a href="#createCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createCourse(payload: <a href="../classes/CreateCourseDto.html" target="_self">CreateCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">src/course/course.service.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateCourseDto.html" target="_self" >CreateCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createTopic"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createTopic</b></span>
+                        <a href="#createTopic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createTopic(payload: <a href="../classes/CreateTopicDto.html" target="_self">CreateTopicDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/course/course.service.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateTopicDto.html" target="_self" >CreateTopicDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Topic&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteCourse</b></span>
+                        <a href="#deleteCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteCourse(payload: <a href="../classes/DeleteCourseDto.html" target="_self">DeleteCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="196"
+                                    class="link-to-prism">src/course/course.service.ts:196</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/DeleteCourseDto.html" target="_self" >DeleteCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterCoursePublish"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>filterCoursePublish</b></span>
+                        <a href="#filterCoursePublish"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>filterCoursePublish(payload: <a href="../classes/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="297"
+                                    class="link-to-prism">src/course/course.service.ts:297</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAllTopic"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findAllTopic</b></span>
+                        <a href="#findAllTopic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAllTopic()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="95"
+                                    class="link-to-prism">src/course/course.service.ts:95</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Topic[]&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findByNameCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findByNameCourse</b></span>
+                        <a href="#findByNameCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findByNameCourse(payload: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="87"
+                                    class="link-to-prism">src/course/course.service.ts:87</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findByTitleTopic"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findByTitleTopic</b></span>
+                        <a href="#findByTitleTopic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findByTitleTopic(payload: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/course/course.service.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Topic&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findUserByEmail"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findUserByEmail</b></span>
+                        <a href="#findUserByEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findUserByEmail(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="364"
+                                    class="link-to-prism">src/course/course.service.ts:364</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;User&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getAllCourse</b></span>
+                        <a href="#getAllCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllCourse(payload: <a href="../classes/GetCourseUserDto.html" target="_self">GetCourseUserDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="125"
+                                    class="link-to-prism">src/course/course.service.ts:125</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetCourseUserDto.html" target="_self" >GetCourseUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllCourseAdmin"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getAllCourseAdmin</b></span>
+                        <a href="#getAllCourseAdmin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllCourseAdmin()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="559"
+                                    class="link-to-prism">src/course/course.service.ts:559</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course[]&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllCoursePublish"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getAllCoursePublish</b></span>
+                        <a href="#getAllCoursePublish"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllCoursePublish(payload: <a href="../classes/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="260"
+                                    class="link-to-prism">src/course/course.service.ts:260</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllUserOfCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getAllUserOfCourse</b></span>
+                        <a href="#getAllUserOfCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllUserOfCourse(payload: <a href="../classes/GetProgressCourseDto.html" target="_self">GetProgressCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="496"
+                                    class="link-to-prism">src/course/course.service.ts:496</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetProgressCourseDto.html" target="_self" >GetProgressCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;UserProgress[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllUserOfInstructor"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getAllUserOfInstructor</b></span>
+                        <a href="#getAllUserOfInstructor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllUserOfInstructor(payload: <a href="../classes/GetCourseUserDto.html" target="_self">GetCourseUserDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="472"
+                                    class="link-to-prism">src/course/course.service.ts:472</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetCourseUserDto.html" target="_self" >GetCourseUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;UserProgress[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCourseBySlug"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getCourseBySlug</b></span>
+                        <a href="#getCourseBySlug"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCourseBySlug(payload: <a href="../classes/GetCourseBySlugDto.html" target="_self">GetCourseBySlugDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="143"
+                                    class="link-to-prism">src/course/course.service.ts:143</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetCourseBySlugDto.html" target="_self" >GetCourseBySlugDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDetailCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getDetailCourse</b></span>
+                        <a href="#getDetailCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDetailCourse(payload: <a href="../classes/GetDetailCourseDto.html" target="_self">GetDetailCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="327"
+                                    class="link-to-prism">src/course/course.service.ts:327</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetDetailCourseDto.html" target="_self" >GetDetailCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDetailCourseAuth"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getDetailCourseAuth</b></span>
+                        <a href="#getDetailCourseAuth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDetailCourseAuth(payload: <a href="../classes/GetProgressCourseDto.html" target="_self">GetProgressCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="426"
+                                    class="link-to-prism">src/course/course.service.ts:426</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetProgressCourseDto.html" target="_self" >GetProgressCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserProgressCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getUserProgressCourse</b></span>
+                        <a href="#getUserProgressCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getUserProgressCourse(payload: <a href="../classes/GetProgressCourseDto.html" target="_self">GetProgressCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="378"
+                                    class="link-to-prism">src/course/course.service.ts:378</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetProgressCourseDto.html" target="_self" >GetProgressCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="slugify"></a>
+                    <span class="name">
+                        <span ><b>slugify</b></span>
+                        <a href="#slugify"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>slugify(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, separator: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="32"
+                                    class="link-to-prism">src/course/course.service.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>separator</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;-&#x27;</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateCourse</b></span>
+                        <a href="#updateCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateCourse(payload: <a href="../classes/UpdateValueCourse.html" target="_self">UpdateValueCourse</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/course/course.service.ts:99</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateValueCourse.html" target="_self" >UpdateValueCourse</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/CourseResponse.html" target="_self" >Promise&lt;CourseResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePictureCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updatePictureCourse</b></span>
+                        <a href="#updatePictureCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePictureCourse(payload: <a href="../interfaces/UpdatePictureCourse.html" target="_self">UpdatePictureCourse</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="220"
+                                    class="link-to-prism">src/course/course.service.ts:220</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/UpdatePictureCourse.html" target="_self" >UpdatePictureCourse</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/CourseResponse.html" target="_self" >Promise&lt;CourseResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateStatusCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateStatusCourse</b></span>
+                        <a href="#updateStatusCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateStatusCourse(payload: <a href="../classes/UpdateStatusDto.html" target="_self">UpdateStatusDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="167"
+                                    class="link-to-prism">src/course/course.service.ts:167</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateStatusDto.html" target="_self" >UpdateStatusDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/CourseResponse.html" target="_self" >Promise&lt;CourseResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    Injectable,
+    InternalServerErrorException,
+    UnauthorizedException,
+    UnprocessableEntityException,
+} from &#x27;@nestjs/common&#x27;;
+import { PrismaService } from &#x27;src/prisma.service&#x27;;
+import { CourseServiceInterface } from &#x27;./interfaces/course.service.interface&#x27;;
+import { CreateTopicDto } from &#x27;./dto/create-topic.dto&#x27;;
+import { Course, Topic, User, UserProgress } from &#x27;@prisma/client&#x27;;
+import { CreateCourseDto } from &#x27;./dto/create-course.dto&#x27;;
+import { UpdateValueCourse } from &#x27;./dto/update-course.dto&#x27;;
+import { CourseResponse } from &#x27;./dto/course-response.dto&#x27;;
+import { GetCourseUserDto } from &#x27;./dto/get-course-user.dto&#x27;;
+import { GetCourseBySlugDto } from &#x27;./dto/get-course-slug.dto&#x27;;
+import { UpdateStatusDto } from &#x27;./dto/update-status.dto&#x27;;
+import { DeleteCourseDto } from &#x27;./dto/delete-course.dto&#x27;;
+import { UpdatePictureCourse } from &#x27;./dto/update-picture.dto&#x27;;
+import { UploadService } from &#x27;src/upload/upload.service&#x27;;
+import { FilterCourseDto } from &#x27;./dto/filter-course-publish.dto&#x27;;
+import { GetDetailCourseDto } from &#x27;./dto/get-detail-course.dto&#x27;;
+import { GetProgressCourseDto } from &#x27;./dto/get-progress-course.dto&#x27;;
+import { count } from &#x27;console&#x27;;
+
+@Injectable()
+export class CourseService implements CourseServiceInterface {
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly uploadService: UploadService,
+    ) {}
+
+    slugify(name: string, separator: string &#x3D; &#x27;-&#x27;): string {
+        return name
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, separator)
+            .replace(/[^\w\-]+/g, &#x27;&#x27;)
+            .replace(/\_/g, separator)
+            .replace(/\-\-+/g, separator)
+            .replace(/\-$/g, &#x27;&#x27;);
+    }
+
+    async createTopic(payload: CreateTopicDto): Promise&lt;Topic&gt; {
+        const topic &#x3D; await this.findByTitleTopic(payload.slug);
+
+        if (topic) {
+            throw new UnprocessableEntityException();
+        }
+
+        const newTopic &#x3D; await this.prismaService.topic.create({
+            data: {
+                title: payload.title,
+                slug: this.slugify(payload.title),
+            },
+        });
+
+        return newTopic;
+    }
+
+    async createCourse(payload: CreateCourseDto): Promise&lt;Course&gt; {
+        const course &#x3D; await this.findByNameCourse(payload.title);
+
+        if (course) {
+            throw new UnprocessableEntityException();
+        }
+
+        const users &#x3D; await this.findUserByEmail(payload.email);
+
+        return await this.prismaService.course.create({
+            data: {
+                title: payload.title,
+                owner_id: users.id,
+                slug: this.slugify(payload.title),
+            },
+        });
+    }
+
+    async findByTitleTopic(payload: string): Promise&lt;Topic&gt; {
+        return await this.prismaService.topic.findUnique({
+            where: {
+                slug: payload,
+            },
+        });
+    }
+
+    async findByNameCourse(payload: string): Promise&lt;Course&gt; {
+        return await this.prismaService.course.findUnique({
+            where: {
+                title: payload,
+            },
+        });
+    }
+
+    async findAllTopic(): Promise&lt;Topic[]&gt; {
+        return await this.prismaService.topic.findMany();
+    }
+
+    async updateCourse(payload: UpdateValueCourse): Promise&lt;CourseResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const course &#x3D; await this.prismaService.course.findFirst({
+            where: {
+                slug: payload.slug,
+                owner_id: user.id,
+            },
+        });
+
+        if (!course) {
+            throw new UnauthorizedException();
+        }
+
+        const update &#x3D; await this.prismaService.course.update({
+            where: {
+                slug: payload.slug,
+            },
+            data: {
+                ...payload.value,
+            },
+        });
+
+        return this.buildResponseCourse(update);
+    }
+
+    async getAllCourse(payload: GetCourseUserDto): Promise&lt;Course[]&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const course &#x3D; await this.prismaService.course.findMany({
+            where: {
+                owner_id: user.id,
+            },
+            orderBy: {
+                create_at: &#x27;desc&#x27;,
+            },
+            include: {
+                userProgress: true
+            }
+        });
+
+        return course;
+    }
+
+    async getCourseBySlug(payload: GetCourseBySlugDto): Promise&lt;Course&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const course &#x3D; await this.prismaService.course.findFirst({
+            where: {
+                owner_id: user.id,
+                slug: payload.slug,
+            },
+            include: {
+                chapters: {
+                    orderBy: {
+                        position: &#x27;asc&#x27;,
+                    },
+                },
+            },
+        });
+
+        if (!course) {
+            throw new UnprocessableEntityException();
+        }
+
+        return course;
+    }
+
+    async updateStatusCourse(
+        payload: UpdateStatusDto,
+    ): Promise&lt;CourseResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const course &#x3D; await this.prismaService.course.findFirst({
+            where: {
+                slug: payload.slug,
+                owner_id: user.id,
+            },
+        });
+
+        if (!course) {
+            throw new UnauthorizedException();
+        }
+
+        const update &#x3D; await this.prismaService.course.update({
+            where: {
+                slug: payload.slug,
+                owner_id: user.id,
+            },
+            data: {
+                isPublished: !payload.status,
+            },
+        });
+
+        return this.buildResponseCourse(update);
+    }
+
+    async deleteCourse(payload: DeleteCourseDto): Promise&lt;string&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const course &#x3D; await this.prismaService.course.findFirst({
+            where: {
+                slug: payload.slug,
+                owner_id: user.id,
+            },
+        });
+
+        if (!course) {
+            throw new UnauthorizedException();
+        }
+
+        await this.prismaService.course.delete({
+            where: {
+                slug: payload.slug,
+                owner_id: user.id,
+            },
+        });
+
+        return &#x27;Deleted Success&#x27;;
+    }
+
+    async updatePictureCourse(
+        payload: UpdatePictureCourse,
+    ): Promise&lt;CourseResponse&gt; {
+        try {
+            const user &#x3D; await this.findUserByEmail(payload.email);
+
+            const course &#x3D; await this.prismaService.course.findFirst({
+                where: {
+                    slug: payload.slug,
+                    owner_id: user.id,
+                },
+            });
+
+            if (!course) {
+                throw new UnauthorizedException();
+            }
+            //Web3
+            //const fileName &#x3D; await this.uploadService.uploadToWeb3Storage(payload.file);
+
+            //S3
+            const fileName &#x3D; await this.uploadService.uploadAvatarToS3(
+                payload.file,
+            );
+            //update vào database;
+            const update &#x3D; await this.prismaService.course.update({
+                where: {
+                    slug: payload.slug,
+                    owner_id: user.id,
+                },
+                data: {
+                    picture: fileName,
+                },
+            });
+
+            return this.buildResponseCourse(update);
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllCoursePublish(payload: FilterCourseDto): Promise&lt;Course[]&gt; {
+        if (payload.topic_slug.trim() &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+            return await this.filterCoursePublish(payload);
+        }
+
+        const topic &#x3D; await this.findByTitleTopic(payload.topic_slug);
+
+        return await this.prismaService.course.findMany({
+            where: {
+                isPublished: true,
+                title: {
+                    contains: payload.title,
+                },
+                topic_id: topic.id,
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true,
+                    },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true
+                            }
+                        }
+                    }
+                },
+                owner: true,
+            },
+            orderBy: {
+                create_at: &#x27;desc&#x27;,
+            },
+        });
+    }
+
+    async filterCoursePublish(payload: FilterCourseDto): Promise&lt;Course[]&gt; {
+        return await this.prismaService.course.findMany({
+            where: {
+                isPublished: true,
+                title: {
+                    contains: payload.title,
+                },
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true,
+                    },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true
+                            }
+                        }
+                    }
+                },
+                owner: true,
+            },
+            orderBy: {
+                create_at: &#x27;desc&#x27;,
+            },
+        });
+    }
+
+    async getDetailCourse(payload: GetDetailCourseDto): Promise&lt;Course&gt; {
+        const course &#x3D; await this.prismaService.course.findUnique({
+            where: {
+                slug: payload.slug,
+                isPublished: true,
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true,
+                    },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true,
+                            },
+                            orderBy: {
+                                position: &#x27;asc&#x27;,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        position: &#x27;asc&#x27;,
+                    },
+                },
+                owner: true,
+            },
+        });
+
+        if (!course) {
+            throw new UnprocessableEntityException();
+        }
+
+        return course;
+    }
+
+    async findUserByEmail(email: string): Promise&lt;User&gt; {
+        const users &#x3D; await this.prismaService.user.findUnique({
+            where: {
+                email: email,
+            },
+        });
+
+        if (!users) {
+            throw new UnauthorizedException();
+        }
+
+        return users;
+    }
+
+    async getUserProgressCourse(
+        payload: GetProgressCourseDto,
+    ): Promise&lt;Course&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const course &#x3D; await this.prismaService.course.findUnique({
+            where: {
+                slug: payload.course_slug,
+                isPublished: true,
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true,
+                    },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true,
+                            },
+                            orderBy: {
+                                position: &#x27;asc&#x27;,
+                            },
+                            include: {
+                                userProgress: {
+                                    where: {
+                                        userId: user.id,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    orderBy: {
+                        position: &#x27;asc&#x27;,
+                    },
+                },
+                owner: true,
+            },
+        });
+
+        if (!course) {
+            throw new UnprocessableEntityException();
+        }
+
+        return course;
+    }
+
+    async getDetailCourseAuth(payload: GetProgressCourseDto): Promise&lt;Course&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const course &#x3D; await this.prismaService.course.findUnique({
+            where: {
+                slug: payload.course_slug,
+                isPublished: true,
+            },
+            include: {
+                topic: true,
+                chapters: {
+                    where: {
+                        isPublished: true,
+                    },
+                    include: {
+                        lessons: {
+                            where: {
+                                isPublished: true,
+                            },
+                            orderBy: {
+                                position: &#x27;asc&#x27;,
+                            },
+                            include: {
+                                userProgress: {
+                                    where: {
+                                        userId: user.id,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    orderBy: {
+                        position: &#x27;asc&#x27;,
+                    },
+                },
+                owner: true,
+            },
+        });
+
+        if (!course) {
+            throw new UnprocessableEntityException();
+        }
+
+        return course;
+    }
+
+    async getAllUserOfInstructor(
+        payload: GetCourseUserDto,
+    ): Promise&lt;UserProgress[]&gt; {
+        try {
+            const owner &#x3D; await this.findUserByEmail(payload.email);
+
+            const course &#x3D; await this.prismaService.userProgress.findMany({
+                where: {
+                    course: {
+                        owner_id: owner.id,
+                    },
+                },
+                distinct: [&#x27;userId&#x27;, &#x27;courseId&#x27;],
+                include: {
+                    course: true,
+                    user: true,
+                },
+            });
+            return course;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllUserOfCourse(
+        payload: GetProgressCourseDto,
+    ): Promise&lt;UserProgress[]&gt; {
+        try {
+            const owner &#x3D; await this.findUserByEmail(payload.email);
+
+            const course &#x3D; await this.prismaService.userProgress.findMany({
+                where: {
+                    course: {
+                        owner_id: owner.id,
+                        slug: payload.course_slug,
+                    },
+                },
+                distinct: [&#x27;userId&#x27;, &#x27;courseId&#x27;],
+                include: {
+                    course: true,
+                    user: true,
+                },
+            });
+
+            return course;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async countCourseOfUser(payload: GetCourseUserDto): Promise&lt;number&gt; {
+        try {
+            const ownder &#x3D; await this.findUserByEmail(payload.email);
+
+            const count &#x3D; await this.prismaService.course.count({
+                where: {
+                    owner_id: ownder.id,
+                },
+            });
+
+            return count;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async countUserOfInstructor(payload: GetCourseUserDto): Promise&lt;number&gt; {
+        try {
+            const owner &#x3D; await this.findUserByEmail(payload.email);
+
+            const course &#x3D; await this.prismaService.userProgress.findMany({
+                where: {
+                    course: {
+                        owner_id: owner.id
+                    }
+                },
+                distinct: [&#x27;userId&#x27;,&#x27;courseId&#x27;]
+            });
+
+            return course.length;
+        }
+        catch(err: any){
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllCourseAdmin(): Promise&lt;Course[]&gt;{
+        try {
+            return await this.prismaService.course.findMany({
+                where: {
+                    isPublished: true
+                },
+                include: {
+                    owner: true,
+                    userProgress: true
+                },
+                orderBy: {
+                    create_at: &#x27;desc&#x27;
+                }
+            });
+        }
+        catch(err: any){
+            throw new InternalServerErrorException();
+        }
+    }
+
+    buildResponseCourse(payload: Course): CourseResponse {
+        return {
+            title: payload.title,
+            description: payload.description,
+            learning_outcome: payload.learning_outcome,
+            requirement: payload.requirement,
+            slug: payload.slug,
+            picture: payload.picture,
+            isPublished: payload.isPublished,
+            create_at: payload.create_at,
+        };
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'CourseService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

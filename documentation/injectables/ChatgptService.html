@@ -1,0 +1,1068 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tlcn-server documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">tlcn-server documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ChatgptService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/chatgpt/chatgpt.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#openai" >openai</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addListQuizzMCToDB" >addListQuizzMCToDB</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addListQuizzTFToDB" >addListQuizzTFToDB</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createQuizzList" >createQuizzList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#strict_output" >strict_output</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(configService: ConfigService, prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, quizzService: <a href="../injectables/QuizzService.html" target="_self">QuizzService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/chatgpt/chatgpt.service.ts:11</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>configService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>prismaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PrismaService.html" target="_self" >PrismaService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>quizzService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/QuizzService.html" target="_self" >QuizzService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addListQuizzMCToDB"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addListQuizzMCToDB</b></span>
+                        <a href="#addListQuizzMCToDB"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addListQuizzMCToDB(payload: <a href="../classes/CreateListQuizzDto.html" target="_self">CreateListQuizzDto</a>, question: OutputFormatMC[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="192"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:192</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateListQuizzDto.html" target="_self" >CreateListQuizzDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>question</td>
+                                            <td>
+                                                        <code>OutputFormatMC[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addListQuizzTFToDB"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addListQuizzTFToDB</b></span>
+                        <a href="#addListQuizzTFToDB"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addListQuizzTFToDB(payload: <a href="../classes/CreateListQuizzDto.html" target="_self">CreateListQuizzDto</a>, question: OutputFormatTF[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="149"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:149</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateListQuizzDto.html" target="_self" >CreateListQuizzDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>question</td>
+                                            <td>
+                                                        <code>OutputFormatTF[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createQuizzList"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createQuizzList</b></span>
+                        <a href="#createQuizzList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createQuizzList(payload: <a href="../classes/CreateListQuizzDto.html" target="_self">CreateListQuizzDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="240"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:240</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateListQuizzDto.html" target="_self" >CreateListQuizzDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="strict_output"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>strict_output</b></span>
+                        <a href="#strict_output"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>strict_output(system_prompt: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user_prompt: string | string[], output_format: <a href="../interfaces/OutputFormat.html" target="_self">OutputFormat</a>, default_category: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, output_value_only: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, model: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, temperature: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, num_tries: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="23"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>system_prompt</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>user_prompt</td>
+                                            <td>
+                                                        <code>string | string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>output_format</td>
+                                            <td>
+                                                            <code><a href="../interfaces/OutputFormat.html" target="_self" >OutputFormat</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>default_category</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;&#x27;</code>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>output_value_only</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>false</code>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>model</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;gpt-3.5-turbo&#x27;</code>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>temperature</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>1</code>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>num_tries</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>3</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openai"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>openai</b></span>
+                        <a href="#openai"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new OpenAI({
+        //organization: this.configService.get(&#x27;ORGANIZATION_ID&#x27;),
+        apiKey: this.configService.get(&#x27;OPENAI_API_KEY&#x27;),
+    })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/chatgpt/chatgpt.service.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, InternalServerErrorException } from &#x27;@nestjs/common&#x27;;
+import OpenAI from &#x27;openai&#x27;;
+import { CreateListQuizzDto, OutputFormat } from &#x27;./dto/create-list-quizz.dto&#x27;;
+import { ConfigService } from &#x27;@nestjs/config&#x27;;
+import { ChatgptServiceInterface } from &#x27;./interfaces/chatgpt.service.interface&#x27;;
+import { PrismaService } from &#x27;src/prisma.service&#x27;;
+import { QuizzService } from &#x27;src/quizz/quizz.service&#x27;;
+import { OutputFormatMC, OutputFormatTF } from &#x27;./dto/output-format.dto&#x27;;
+
+@Injectable()
+export class ChatgptService implements ChatgptServiceInterface {
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly prismaService: PrismaService,
+        private readonly quizzService: QuizzService,
+    ) {}
+
+    private readonly openai &#x3D; new OpenAI({
+        //organization: this.configService.get(&#x27;ORGANIZATION_ID&#x27;),
+        apiKey: this.configService.get(&#x27;OPENAI_API_KEY&#x27;),
+    });
+
+    async strict_output(
+        system_prompt: string,
+        user_prompt: string | string[],
+        output_format: OutputFormat,
+        default_category: string &#x3D; &#x27;&#x27;,
+        output_value_only: boolean &#x3D; false,
+        model: string &#x3D; &#x27;gpt-3.5-turbo&#x27;,
+        temperature: number &#x3D; 1,
+        num_tries: number &#x3D; 3,
+    ): Promise&lt;
+        {
+            question: string;
+            answer: string;
+        }[]
+    &gt; {
+        // if the user input is in a list, we also process the output as a list of json
+        const list_input: boolean &#x3D; Array.isArray(user_prompt);
+        // if the output format contains dynamic elements of &lt; or &gt;, then add to the prompt to handle dynamic elements
+        const dynamic_elements: boolean &#x3D; /&lt;.*?&gt;/.test(
+            JSON.stringify(output_format),
+        );
+        // if the output format contains list elements of [ or ], then we add to the prompt to handle lists
+        const list_output: boolean &#x3D; /\[.*?\]/.test(
+            JSON.stringify(output_format),
+        );
+
+        // start off with no error message
+        let error_msg: string &#x3D; &#x27;&#x27;;
+
+        for (let i &#x3D; 0; i &lt; num_tries; i++) {
+            let output_format_prompt: string &#x3D; &#x60;\nYou are to output the following in json format: ${JSON.stringify(
+                output_format,
+            )}. \nDo not put quotation marks or escape character \\ in the output fields.&#x60;;
+
+            if (list_output) {
+                output_format_prompt +&#x3D; &#x60;\nIf output field is a list, classify output into the best element of the list.&#x60;;
+            }
+
+            // if output_format contains dynamic elements, process it accordingly
+            if (dynamic_elements) {
+                output_format_prompt +&#x3D; &#x60;\nAny text enclosed by &lt; and &gt; indicates you must generate content to replace it. Example input: Go to &lt;location&gt;, Example output: Go to the garden\nAny output key containing &lt; and &gt; indicates you must generate the key name to replace it. Example input: {&#x27;&lt;location&gt;&#x27;: &#x27;description of location&#x27;}, Example output: {school: a place for education}&#x60;;
+            }
+
+            // if input is in a list format, ask it to generate json in a list
+            if (list_input) {
+                output_format_prompt +&#x3D; &#x60;\nGenerate a list of json, one json for each input element.&#x60;;
+            }
+
+            // Use OpenAI to get a response
+            const response &#x3D; await this.openai.chat.completions.create({
+                temperature: temperature,
+                model: model,
+                messages: [
+                    {
+                        role: &#x27;system&#x27;,
+                        content:
+                            system_prompt + output_format_prompt + error_msg,
+                    },
+                    { role: &#x27;user&#x27;, content: user_prompt.toString() },
+                ],
+            });
+
+            let res: string &#x3D; response.choices[0].message?.content ?? &#x27;&#x27;;
+
+            // ensure that we don&#x27;t replace away apostrophes in text
+            res &#x3D; res.replace(/(\w)&quot;(\w)/g, &quot;$1&#x27;$2&quot;);
+            // try-catch block to ensure output format is adhered to
+            try {
+                let output: any &#x3D; JSON.parse(res);
+
+                output &#x3D; !Array.isArray(output) ? new Array(output) : output;
+                // check for each element in the output_list, the format is correctly adhered to
+                for (let index &#x3D; 0; index &lt; output.length; index++) {
+                    for (const key in output_format) {
+                        // unable to ensure accuracy of dynamic output header, so skip it
+                        if (/&lt;.*?&gt;/.test(key)) {
+                            continue;
+                        }
+
+                        //if output field missing, raise an error
+                        if (!(key in output[index])) {
+                            throw new Error(&#x60;${key} not in json output&#x60;);
+                        }
+
+                        // check that one of the choices given for the list of words is an unknown
+                        if (Array.isArray(output_format[key])) {
+                            const choices &#x3D; output_format[key] as string[];
+                            // ensure output is not a list
+                            if (Array.isArray(output[index][key])) {
+                                output[index][key] &#x3D; output[index][key][0];
+                            }
+                            // output the default category (if any) if GPT is unable to identify the category
+                            if (
+                                !choices.includes(output[index][key]) &amp;&amp;
+                                default_category
+                            ) {
+                                output[index][key] &#x3D; default_category;
+                            }
+                            // if the output is a description format, get only the label
+                            if (output[index][key].includes(&#x27;:&#x27;)) {
+                                output[index][key] &#x3D;
+                                    output[index][key].split(&#x27;:&#x27;)[0];
+                            }
+                        }
+                    }
+
+                    // if we just want the values for the outputs
+                    if (output_value_only) {
+                        output[index] &#x3D; Object.values(output[index]);
+                        // just output without the list if there is only one element
+                        if (output[index].length &#x3D;&#x3D;&#x3D; 1) {
+                            output[index] &#x3D; output[index][0];
+                        }
+                    }
+                }
+
+                return output;
+            } catch (e) {
+                error_msg &#x3D; &#x60;\n\nResult: ${res}\n\nError message: ${e}&#x60;;
+                throw new InternalServerErrorException();
+            }
+        }
+
+        return [];
+    }
+
+    async addListQuizzTFToDB(
+        payload: CreateListQuizzDto,
+        question: OutputFormatTF[],
+    ): Promise&lt;string&gt; {
+        try {
+            const exercise &#x3D; await this.quizzService.findExcersie(
+                payload.email,
+                payload.exercise_token,
+            );
+
+            question.map(async (item) &#x3D;&gt; {
+                const lastQuizz &#x3D; await this.prismaService.quizz.findFirst({
+                    where: {
+                        exerciseId: exercise.id,
+                    },
+                    orderBy: {
+                        position: &#x27;desc&#x27;,
+                    },
+                });
+
+                const newPosition &#x3D; lastQuizz ? lastQuizz.position + 1 : 1;
+
+                await this.prismaService.quizz.create({
+                    data: {
+                        token: new Date().getTime().toString(),
+                        question: item.question,
+                        answer:
+                            item.answer.charAt(0).toUpperCase() +
+                            item.answer.slice(1),
+                        position: newPosition,
+                        exerciseId: exercise.id,
+                        option: [&#x27;True&#x27;, &#x27;False&#x27;],
+                        explain: item?.explain || &#x27;&#x27;,
+                    },
+                });
+            });
+
+            return &#x27;SUCCESS&#x27;;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async addListQuizzMCToDB(
+        payload: CreateListQuizzDto,
+        question: OutputFormatMC[],
+    ): Promise&lt;string&gt; {
+        try {
+            const exercise &#x3D; await this.quizzService.findExcersie(
+                payload.email,
+                payload.exercise_token,
+            );
+
+            question.map(async (item) &#x3D;&gt; {
+                const lastQuizz &#x3D; await this.prismaService.quizz.findFirst({
+                    where: {
+                        exerciseId: exercise.id,
+                    },
+                    orderBy: {
+                        position: &#x27;desc&#x27;,
+                    },
+                });
+
+                const newPosition &#x3D; lastQuizz ? lastQuizz.position + 1 : 1;
+
+                await this.prismaService.quizz.create({
+                    data: {
+                        token: new Date().getTime().toString(),
+                        question: item.question,
+                        answer:
+                            item.answer.charAt(0).toUpperCase() +
+                            item.answer.slice(1),
+                        position: newPosition,
+                        exerciseId: exercise.id,
+                        option: [
+                            item?.option1 || &#x27;&#x27;,
+                            item?.option2 || &#x27;&#x27;,
+                            item?.option3 || &#x27;&#x27;,
+                            item.answer,
+                        ],
+                        explain: item?.explain || &#x27;&#x27;,
+                    },
+                });
+            });
+
+            return &#x27;SUCCESS&#x27;;
+        } catch (err: any) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async createQuizzList(payload: CreateListQuizzDto): Promise&lt;any&gt; {
+        const format &#x3D;
+            payload.type &#x3D;&#x3D;&#x3D; &#x27;True Or False&#x27;
+                ? {
+                      question: &#x27;question&#x27;,
+                      answer: &#x27;answer&#x27;,
+                      explain: &#x27;explain why you chose the answer&#x27;,
+                  }
+                : {
+                      question: &#x27;question&#x27;,
+                      answer: &#x27;answer with max length of 15 words&#x27;,
+                      option1: &#x27;option1 with max length of 15 words&#x27;,
+                      option2: &#x27;option2 with max length of 15 words&#x27;,
+                      option3: &#x27;option3 with max length of 15 words&#x27;,
+                      explain: &#x27;explain why you chose the answer&#x27;,
+                  };
+
+        const questions &#x3D; await this.strict_output(
+            &#x60;You are a helpful AI that is able to generate ${payload.type} include questions and answers, the length of each answer should not be more than 15 words, store all answers, questions, options, explain in a JSON array by language Vietnamese.&#x60;,
+            new Array(payload.amount).fill(
+                &#x60;You are to generate a question random level ${payload.level} ${payload.type} about ${payload.topic}&#x60;,
+            ),
+            format,
+        );
+        if (questions.length &lt; payload.amount) {
+            throw new InternalServerErrorException();
+        } else {
+            return payload.type &#x3D;&#x3D;&#x3D; &#x27;True Or False&#x27;
+                ? this.addListQuizzTFToDB(
+                      payload,
+                      questions.slice(0, payload.amount),
+                  )
+                : this.addListQuizzMCToDB(
+                      payload,
+                      questions.slice(0, payload.amount),
+                  );
+        }
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ChatgptService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
