@@ -18,5 +18,6 @@ export interface ThreadServiceInterface {
     generateNewInviteCode(payload: GenerateInviteCodeDto): Promise<Server>;
     checkInviteCode(payload: CheckInviteCodeDto): Promise<ServerResponse>;
     updateServer(payload: UpdateServerInterface): Promise<ServerResponse>;
+    checkUserServer(payload: GenerateInviteCodeDto): Promise<ServerResponse>;
     buildServerResponse(payload: Server): ServerResponse;
 }

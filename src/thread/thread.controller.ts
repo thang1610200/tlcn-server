@@ -85,6 +85,11 @@ export class ThreadController {
         return this.threadService.getChannelServer(query);
     }
 
+    @Get('check-user')
+    checkUserServer(@Query() query: GenerateInviteCodeDto){
+        return this.threadService.checkUserServer(query);
+    }
+
     @Patch('generate-invite')
     generateNewInviteCode(@Body() body: GenerateInviteCodeDto){
         return this.threadService.generateNewInviteCode(body);

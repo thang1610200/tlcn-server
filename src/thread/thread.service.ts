@@ -23,6 +23,7 @@ export class ThreadService implements ThreadServiceInterface {
                 token: payload.serverToken
             },
             include: {
+                user: true,
                 channels: {
                     orderBy: {
                         createAt: "asc"
@@ -236,6 +237,27 @@ export class ThreadService implements ThreadServiceInterface {
         catch{
             throw new InternalServerErrorException();
         }
+    }
+
+    async checkUserServer(payload: GenerateInviteCodeDto): Promise<ServerResponse> {
+        const server = await this.prismaService.server.findFirst({
+            where: {
+                token: payload.serverToken,
+                members: {
+                    some: {
+                        user: {
+                            email: payload.email
+                        }
+                    }
+                }
+            }
+        });
+
+        if(!server) {
+            throw new NotFoundException();
+        }
+
+        return server;
     }
 
     buildServerResponse(payload: Server): ServerResponse {
