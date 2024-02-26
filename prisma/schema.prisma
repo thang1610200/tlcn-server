@@ -269,6 +269,8 @@ model Member {
 
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
+
+  @@unique([serverId, userId])
 }
 
 model Channel {

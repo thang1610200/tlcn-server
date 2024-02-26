@@ -1,4 +1,4 @@
-import { Body, Controller, FileTypeValidator, Get, HttpException, HttpStatus, ParseFilePipe, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, FileTypeValidator, Get, HttpException, HttpStatus, ParseFilePipe, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ThreadService } from './thread.service';
 import { CreateServerDto } from './dto/create-server.dto';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
@@ -8,6 +8,9 @@ import { GetChannelServerDto } from './dto/get-channel-server';
 import { GenerateInviteCodeDto } from './dto/generate-invitecode.dto';
 import { CheckInviteCodeDto } from './dto/check-invitecode.dto';
 import { UpdateServerDto } from './dto/update-server.dto';
+import { UpdateRoleMemberDto } from './dto/update-role.dto';
+import { KickMemberDto } from './dto/kick-member.dto';
+import { CreateChannelDto } from './dto/channel.dto';
 
 @UseGuards(JwtGuard)
 @Controller('thread')
@@ -98,5 +101,20 @@ export class ThreadController {
     @Post('join-server')
     joinServer(@Body() body: CheckInviteCodeDto){
         return this.threadService.checkInviteCode(body);
+    }
+
+    @Patch('update-role')
+    updateRoleMember(@Body() body: UpdateRoleMemberDto){
+        return this.threadService.updateRoleMember(body);
+    }
+
+    @Delete('kick-member')
+    kickMember(@Query() query: KickMemberDto){
+        return this.threadService.kickMember(query);
+    }
+
+    @Post('create-channel')
+    createChannel(@Body() body: CreateChannelDto){
+        return this.threadService.createChannel(body);
     }
 }

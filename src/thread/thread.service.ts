@@ -2,7 +2,7 @@ import { BadRequestException, ConflictException, Injectable, InternalServerError
 import { ThreadServiceInterface } from './interface/thread.service.interface';
 import { PrismaService } from 'src/prisma.service';
 import { ServerResponse } from './dto/server-response.dto';
-import { MemberRole, Server, User } from '@prisma/client';
+import { Channel, MemberRole, Server, User } from '@prisma/client';
 import { CreateServerInterface } from './dto/create-server-interface.dto';
 import { UploadService } from 'src/upload/upload.service';
 import * as randomstring from 'randomstring';
@@ -11,6 +11,9 @@ import { GetChannelServerDto } from './dto/get-channel-server';
 import { GenerateInviteCodeDto } from './dto/generate-invitecode.dto';
 import { CheckInviteCodeDto } from './dto/check-invitecode.dto';
 import { UpdateServerInterface } from './dto/update-server-interface.dto';
+import { UpdateRoleMemberDto } from './dto/update-role.dto';
+import { KickMemberDto } from './dto/kick-member.dto';
+import { CreateChannelDto } from './dto/channel.dto';
 
 @Injectable()
 export class ThreadService implements ThreadServiceInterface {
@@ -258,6 +261,148 @@ export class ThreadService implements ThreadServiceInterface {
         }
 
         return server;
+    }
+
+    async updateRoleMember(payload: UpdateRoleMemberDto): Promise<Server> {
+        const member = await this.findUserByEmail(payload.emailMember);
+        const user = await this.findUserByEmail(payload.email); 
+
+        const server = await this.getChannelServer({
+            serverToken: payload.serverToken
+        });
+
+        try {
+            const serverUpdate = await this.prismaService.server.update({
+                where: {
+                    userId: user.id,
+                    token: payload.serverToken
+                },
+                data: {
+                    members: {
+                        update: {
+                            where: {
+                                serverId_userId: {
+                                    userId: member.id,
+                                    serverId: server.id
+                                }
+                            },
+                            data: {
+                                role: payload.role
+                            }
+                        }
+                    }
+                },
+                include: {
+                    user: true,
+                    channels: {
+                        orderBy: {
+                            createAt: "asc"
+                        }
+                    },
+                    members: {
+                        include: {
+                            user: true
+                        },
+                        orderBy: {
+                            role: "asc"
+                        }
+                    }
+                }
+            });
+
+            return serverUpdate;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async kickMember(payload: KickMemberDto): Promise<Server> {
+        const member = await this.findUserByEmail(payload.emailMember);
+        const user = await this.findUserByEmail(payload.email); 
+
+        const server = await this.getChannelServer({
+            serverToken: payload.serverToken
+        });
+
+        try {
+            const serverUpdate = await this.prismaService.server.update({
+                where: {
+                    userId: user.id,
+                    token: payload.serverToken
+                },
+                data: {
+                    members: {
+                        delete: {
+                            serverId_userId: {
+                                serverId: server.id,
+                                userId: member.id
+                            }
+                        }
+                    }
+                },
+                include: {
+                    user: true,
+                    channels: {
+                        orderBy: {
+                            createAt: "asc"
+                        }
+                    },
+                    members: {
+                        include: {
+                            user: true
+                        },
+                        orderBy: {
+                            role: "asc"
+                        }
+                    }
+                }
+            });
+
+            return serverUpdate;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async createChannel(payload: CreateChannelDto): Promise<ServerResponse> {
+        if(payload.name === 'general') {
+            throw new BadRequestException("Name cannot be 'general'");
+        }
+
+        const user = await this.findUserByEmail(payload.email);
+
+        try {
+            const server = await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            userId: user.id,
+                            role: {
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR]
+                            }
+                        }
+                    }
+                },
+                data: {
+                    channels: {
+                        create: {
+                            token: new Date().getTime().toString(),
+                            userId: user.id,
+                            name: payload.name,
+                            type: payload.type
+                        }
+                    }
+                }
+            });
+
+            return this.buildServerResponse(server);
+        }
+        catch{
+            throw new InternalServerErrorException();
+        }
     }
 
     buildServerResponse(payload: Server): ServerResponse {
