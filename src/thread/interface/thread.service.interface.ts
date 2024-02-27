@@ -8,7 +8,7 @@ import { CheckInviteCodeDto } from "../dto/check-invitecode.dto";
 import { UpdateServerInterface } from "../dto/update-server-interface.dto";
 import { UpdateRoleMemberDto } from "../dto/update-role.dto";
 import { KickMemberDto } from "../dto/kick-member.dto";
-import { CreateChannelDto } from "../dto/channel.dto";
+import { CreateChannelDto, DeleteChannelDto, EditChannelDto } from "../dto/channel.dto";
 
 export interface ThreadServiceInterface {
     findUserByEmail(email: string): Promise<User>;
@@ -27,5 +27,7 @@ export interface ThreadServiceInterface {
     createChannel(payload: CreateChannelDto): Promise<ServerResponse>;
     leaveServer(payload: LeaveServerDto): Promise<ServerResponse>;
     deleteServer(payload: LeaveServerDto): Promise<ServerResponse>;
+    editChannel(payload: EditChannelDto): Promise<ServerResponse>;
+    deleteChannel(payload: DeleteChannelDto): Promise<ServerResponse>
     buildServerResponse(payload: Server): ServerResponse;
 }

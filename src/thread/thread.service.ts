@@ -13,7 +13,7 @@ import { CheckInviteCodeDto } from './dto/check-invitecode.dto';
 import { UpdateServerInterface } from './dto/update-server-interface.dto';
 import { UpdateRoleMemberDto } from './dto/update-role.dto';
 import { KickMemberDto } from './dto/kick-member.dto';
-import { CreateChannelDto } from './dto/channel.dto';
+import { CreateChannelDto, DeleteChannelDto, EditChannelDto } from './dto/channel.dto';
 
 @Injectable()
 export class ThreadService implements ThreadServiceInterface {
@@ -453,6 +453,82 @@ export class ThreadService implements ThreadServiceInterface {
                 where: {
                     token: payload.serverToken,
                     userId: user.id
+                }
+            });
+
+            return this.buildServerResponse(server);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async editChannel(payload: EditChannelDto): Promise<ServerResponse> {
+        const user = await this.findUserByEmail(payload.email);
+
+        try {
+            const server = await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            userId: user.id,
+                            role: {
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR]
+                            }
+                        }
+                    }
+                },
+                data: {
+                    channels: {
+                        update: {
+                            where:{
+                                token: payload.channelToken,
+                                NOT: {
+                                    name: 'general'
+                                }
+                            },
+                            data: {
+                                name: payload.name,
+                                type: payload.type
+                            }
+                        }
+                    }
+                }
+            });
+
+            return this.buildServerResponse(server);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteChannel(payload: DeleteChannelDto): Promise<ServerResponse> {
+        const user = await this.findUserByEmail(payload.email);
+
+        try {
+            const server = await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            userId: user.id,
+                            role: {
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR]
+                            }
+                        }
+                    }
+                },
+                data: {
+                    channels: {
+                        delete: {
+                            token: payload.channelToken,
+                            NOT: {
+                                name: 'general'
+                            }
+                        }
+                    }
                 }
             });
 

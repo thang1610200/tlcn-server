@@ -10,7 +10,7 @@ import { CheckInviteCodeDto } from './dto/check-invitecode.dto';
 import { UpdateServerDto } from './dto/update-server.dto';
 import { UpdateRoleMemberDto } from './dto/update-role.dto';
 import { KickMemberDto } from './dto/kick-member.dto';
-import { CreateChannelDto } from './dto/channel.dto';
+import { CreateChannelDto, DeleteChannelDto, EditChannelDto } from './dto/channel.dto';
 
 @UseGuards(JwtGuard)
 @Controller('thread')
@@ -126,5 +126,15 @@ export class ThreadController {
     @Delete('delete-server')
     deleteServer(@Query() query: LeaveServerDto) {
         return this.threadService.deleteServer(query);
+    }
+
+    @Patch('edit-channel')
+    editChannel(@Body() body: EditChannelDto) {
+        return this.threadService.editChannel(body);
+    }
+
+    @Delete('delete-channel')
+    deleteChannel(@Query() query: DeleteChannelDto) {
+        return this.threadService.deleteChannel(query);
     }
 }
