@@ -2,7 +2,7 @@ import { Body, Controller, Delete, FileTypeValidator, Get, HttpException, HttpSt
 import { ThreadService } from './thread.service';
 import { CreateServerDto } from './dto/create-server.dto';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
-import { GetServerDto } from './dto/get-server.dto';
+import { GetServerDto, LeaveServerDto } from './dto/get-server.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GetChannelServerDto } from './dto/get-channel-server';
 import { GenerateInviteCodeDto } from './dto/generate-invitecode.dto';
@@ -98,7 +98,7 @@ export class ThreadController {
         return this.threadService.generateNewInviteCode(body);
     }
 
-    @Post('join-server')
+    @Patch('join-server')
     joinServer(@Body() body: CheckInviteCodeDto){
         return this.threadService.checkInviteCode(body);
     }
@@ -116,5 +116,15 @@ export class ThreadController {
     @Post('create-channel')
     createChannel(@Body() body: CreateChannelDto){
         return this.threadService.createChannel(body);
+    }
+
+    @Patch('leave-server')
+    leaveServer(@Body() body: LeaveServerDto){
+        return this.threadService.leaveServer(body);
+    }
+
+    @Delete('delete-server')
+    deleteServer(@Query() query: LeaveServerDto) {
+        return this.threadService.deleteServer(query);
     }
 }

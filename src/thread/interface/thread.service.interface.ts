@@ -1,7 +1,7 @@
 import { Channel, Server, User } from "@prisma/client";
 import { ServerResponse } from "../dto/server-response.dto";
 import { CreateServerInterface } from "../dto/create-server-interface.dto";
-import { GetServerDto } from "../dto/get-server.dto";
+import { GetServerDto, LeaveServerDto } from "../dto/get-server.dto";
 import { GetChannelServerDto } from "../dto/get-channel-server";
 import { GenerateInviteCodeDto } from "../dto/generate-invitecode.dto";
 import { CheckInviteCodeDto } from "../dto/check-invitecode.dto";
@@ -25,5 +25,7 @@ export interface ThreadServiceInterface {
     updateRoleMember(payload: UpdateRoleMemberDto): Promise<Server>;
     kickMember(payload: KickMemberDto): Promise<Server>;
     createChannel(payload: CreateChannelDto): Promise<ServerResponse>;
+    leaveServer(payload: LeaveServerDto): Promise<ServerResponse>;
+    deleteServer(payload: LeaveServerDto): Promise<ServerResponse>;
     buildServerResponse(payload: Server): ServerResponse;
 }

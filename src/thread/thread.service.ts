@@ -6,7 +6,7 @@ import { Channel, MemberRole, Server, User } from '@prisma/client';
 import { CreateServerInterface } from './dto/create-server-interface.dto';
 import { UploadService } from 'src/upload/upload.service';
 import * as randomstring from 'randomstring';
-import { GetServerDto } from './dto/get-server.dto';
+import { GetServerDto, LeaveServerDto } from './dto/get-server.dto';
 import { GetChannelServerDto } from './dto/get-channel-server';
 import { GenerateInviteCodeDto } from './dto/generate-invitecode.dto';
 import { CheckInviteCodeDto } from './dto/check-invitecode.dto';
@@ -23,7 +23,14 @@ export class ThreadService implements ThreadServiceInterface {
     async getChannelServer(payload: GetChannelServerDto): Promise<Server> {
         const server = await this.prismaService.server.findUnique({
             where: {
-                token: payload.serverToken
+                token: payload.serverToken,
+                members: {
+                    some: {
+                        user: {
+                            email: payload.email
+                        }
+                    }
+                }
             },
             include: {
                 user: true,
@@ -216,7 +223,7 @@ export class ThreadService implements ThreadServiceInterface {
             });
         }
 
-        return existingSever;
+        return this.buildServerResponse(existingInviteCode);
     }
 
     async updateServer(payload: UpdateServerInterface): Promise<ServerResponse> {
@@ -267,11 +274,13 @@ export class ThreadService implements ThreadServiceInterface {
         const member = await this.findUserByEmail(payload.emailMember);
         const user = await this.findUserByEmail(payload.email); 
 
-        const server = await this.getChannelServer({
-            serverToken: payload.serverToken
-        });
-
         try {
+            const server = await this.prismaService.server.findUnique({
+                where: {
+                    token: payload.serverToken
+                }
+            });
+
             const serverUpdate = await this.prismaService.server.update({
                 where: {
                     userId: user.id,
@@ -321,11 +330,13 @@ export class ThreadService implements ThreadServiceInterface {
         const member = await this.findUserByEmail(payload.emailMember);
         const user = await this.findUserByEmail(payload.email); 
 
-        const server = await this.getChannelServer({
-            serverToken: payload.serverToken
-        });
-
         try {
+            const server = await this.prismaService.server.findUnique({
+                where:{
+                    token: payload.serverToken
+                }
+            });
+
             const serverUpdate = await this.prismaService.server.update({
                 where: {
                     userId: user.id,
@@ -401,6 +412,53 @@ export class ThreadService implements ThreadServiceInterface {
             return this.buildServerResponse(server);
         }
         catch{
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async leaveServer(payload: LeaveServerDto): Promise<ServerResponse> {
+        const user = await this.findUserByEmail(payload.email);
+
+        try {
+            const server = await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            userId: user.id
+                        }
+                    }
+                },
+                data: {
+                    members: {
+                        deleteMany: {
+                            userId: user.id
+                        }
+                    }
+                }
+            });
+
+            return this.buildServerResponse(server);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteServer(payload: LeaveServerDto): Promise<ServerResponse> {
+        const user = await this.findUserByEmail(payload.email);
+
+        try {
+            const server = await this.prismaService.server.delete({
+                where: {
+                    token: payload.serverToken,
+                    userId: user.id
+                }
+            });
+
+            return this.buildServerResponse(server);
+        }
+        catch {
             throw new InternalServerErrorException();
         }
     }
