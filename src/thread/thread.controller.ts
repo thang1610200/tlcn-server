@@ -10,7 +10,8 @@ import { CheckInviteCodeDto } from './dto/check-invitecode.dto';
 import { UpdateServerDto } from './dto/update-server.dto';
 import { UpdateRoleMemberDto } from './dto/update-role.dto';
 import { KickMemberDto } from './dto/kick-member.dto';
-import { CreateChannelDto, DeleteChannelDto, EditChannelDto } from './dto/channel.dto';
+import { AccessChannelGeneralDto, CreateChannelDto, DeleteChannelDto, DetailChannelDto, EditChannelDto } from './dto/channel.dto';
+import { CreateConversationDto } from './dto/conversation.dto';
 
 @UseGuards(JwtGuard)
 @Controller('thread')
@@ -136,5 +137,20 @@ export class ThreadController {
     @Delete('delete-channel')
     deleteChannel(@Query() query: DeleteChannelDto) {
         return this.threadService.deleteChannel(query);
+    }
+
+    @Get('access-channel-general')
+    accessChannelGeneral(@Query() query: AccessChannelGeneralDto) {
+        return this.threadService.accessChannelGeneral(query);
+    }
+
+    @Get('detail-channel')
+    detailChannel(@Query() query: DetailChannelDto) {
+        return this.threadService.detailChannel(query);
+    }
+
+    @Post('create-conversation')
+    getOrCreateConversation(@Body() body: CreateConversationDto) {
+        return this.threadService.getOrCreateConversation(body);
     }
 }

@@ -52,3 +52,25 @@ export class DeleteChannelDto {
     @IsNotEmpty()
     channelToken: string;
 }
+
+export class AccessChannelGeneralDto {
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    serverToken: string;
+}
+
+export interface ChannelResponse {
+    token: string;
+    name: string;
+    type: ChannelType;
+}
+
+export class DetailChannelDto {
+    @IsString()
+    @IsNotEmpty()
+    channelToken: string;
+}

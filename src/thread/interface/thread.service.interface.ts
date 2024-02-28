@@ -1,4 +1,4 @@
-import { Channel, Server, User } from "@prisma/client";
+import { Channel, Conversation, Server, User } from "@prisma/client";
 import { ServerResponse } from "../dto/server-response.dto";
 import { CreateServerInterface } from "../dto/create-server-interface.dto";
 import { GetServerDto, LeaveServerDto } from "../dto/get-server.dto";
@@ -8,7 +8,8 @@ import { CheckInviteCodeDto } from "../dto/check-invitecode.dto";
 import { UpdateServerInterface } from "../dto/update-server-interface.dto";
 import { UpdateRoleMemberDto } from "../dto/update-role.dto";
 import { KickMemberDto } from "../dto/kick-member.dto";
-import { CreateChannelDto, DeleteChannelDto, EditChannelDto } from "../dto/channel.dto";
+import { AccessChannelGeneralDto, ChannelResponse, CreateChannelDto, DeleteChannelDto, DetailChannelDto, EditChannelDto } from "../dto/channel.dto";
+import { CreateConversationDto } from "../dto/conversation.dto";
 
 export interface ThreadServiceInterface {
     findUserByEmail(email: string): Promise<User>;
@@ -28,6 +29,12 @@ export interface ThreadServiceInterface {
     leaveServer(payload: LeaveServerDto): Promise<ServerResponse>;
     deleteServer(payload: LeaveServerDto): Promise<ServerResponse>;
     editChannel(payload: EditChannelDto): Promise<ServerResponse>;
-    deleteChannel(payload: DeleteChannelDto): Promise<ServerResponse>
+    deleteChannel(payload: DeleteChannelDto): Promise<ServerResponse>;
+    accessChannelGeneral(payload: AccessChannelGeneralDto): Promise<ChannelResponse>;
+    detailChannel(payload: DetailChannelDto): Promise<Channel>;
+    findConversation(memberOwnerId: string, memberGuestId: string): Promise<Conversation>;
+    createNewConversation(memberOwnerId: string, memberGuestId: string): Promise<Conversation>;
+    getOrCreateConversation(payload: CreateConversationDto): Promise<Conversation>;
+    buildChannelResponse(payload: Channel): ChannelResponse;
     buildServerResponse(payload: Server): ServerResponse;
 }

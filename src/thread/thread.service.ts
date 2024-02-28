@@ -1,8 +1,15 @@
-import { BadRequestException, ConflictException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+    BadRequestException,
+    ConflictException,
+    Injectable,
+    InternalServerErrorException,
+    NotFoundException,
+    UnauthorizedException,
+} from '@nestjs/common';
 import { ThreadServiceInterface } from './interface/thread.service.interface';
 import { PrismaService } from 'src/prisma.service';
 import { ServerResponse } from './dto/server-response.dto';
-import { Channel, MemberRole, Server, User } from '@prisma/client';
+import { Channel, Conversation, MemberRole, Server, User } from '@prisma/client';
 import { CreateServerInterface } from './dto/create-server-interface.dto';
 import { UploadService } from 'src/upload/upload.service';
 import * as randomstring from 'randomstring';
@@ -13,12 +20,22 @@ import { CheckInviteCodeDto } from './dto/check-invitecode.dto';
 import { UpdateServerInterface } from './dto/update-server-interface.dto';
 import { UpdateRoleMemberDto } from './dto/update-role.dto';
 import { KickMemberDto } from './dto/kick-member.dto';
-import { CreateChannelDto, DeleteChannelDto, EditChannelDto } from './dto/channel.dto';
+import {
+    AccessChannelGeneralDto,
+    ChannelResponse,
+    CreateChannelDto,
+    DeleteChannelDto,
+    DetailChannelDto,
+    EditChannelDto,
+} from './dto/channel.dto';
+import { CreateConversationDto } from './dto/conversation.dto';
 
 @Injectable()
 export class ThreadService implements ThreadServiceInterface {
-    constructor(private readonly prismaService: PrismaService,
-                private readonly uploadService: UploadService) {}
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly uploadService: UploadService,
+    ) {}
 
     async getChannelServer(payload: GetChannelServerDto): Promise<Server> {
         const server = await this.prismaService.server.findUnique({
@@ -27,30 +44,30 @@ export class ThreadService implements ThreadServiceInterface {
                 members: {
                     some: {
                         user: {
-                            email: payload.email
-                        }
-                    }
-                }
+                            email: payload.email,
+                        },
+                    },
+                },
             },
             include: {
                 user: true,
                 channels: {
                     orderBy: {
-                        createAt: "asc"
-                    }
+                        createAt: 'asc',
+                    },
                 },
                 members: {
                     include: {
-                        user: true
+                        user: true,
                     },
                     orderBy: {
-                        role: "asc"
-                    }
-                }
-            }
+                        role: 'asc',
+                    },
+                },
+            },
         });
 
-        if(!server){
+        if (!server) {
             throw new BadRequestException();
         }
 
@@ -60,25 +77,25 @@ export class ThreadService implements ThreadServiceInterface {
     async findServerByName(name: string): Promise<Server> {
         const server = await this.prismaService.server.findFirst({
             where: {
-                name
-            }
+                name,
+            },
         });
 
-        if(server){
+        if (server) {
             throw new ConflictException();
         }
-    
+
         return server;
     }
 
     async findUserByEmail(email: string): Promise<User> {
         const user = await this.prismaService.user.findUnique({
             where: {
-                email
-            }
+                email,
+            },
         });
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException();
         }
 
@@ -88,14 +105,16 @@ export class ThreadService implements ThreadServiceInterface {
     async isCodeExist(inviteCode: string): Promise<boolean> {
         const code = await this.prismaService.server.findUnique({
             where: {
-                inviteCode
-            }
+                inviteCode,
+            },
         });
 
         return code !== null;
     }
 
-    async createServer(payload: CreateServerInterface): Promise<ServerResponse> {
+    async createServer(
+        payload: CreateServerInterface,
+    ): Promise<ServerResponse> {
         const user = await this.findUserByEmail(payload.email);
 
         await this.findServerByName(payload.name);
@@ -115,24 +134,24 @@ export class ThreadService implements ThreadServiceInterface {
                     create: [
                         {
                             token: new Date().getTime().toString(),
-                            name: "general",
-                            userId: user.id
-                        }
-                    ]
+                            name: 'general',
+                            userId: user.id,
+                        },
+                    ],
                 },
                 members: {
                     create: [
                         {
+                            token: new Date().getTime().toString(),
                             userId: user.id,
-                            role: MemberRole.ADMIN
-                        }
-                    ]
-                }
-            }
+                            role: MemberRole.ADMIN,
+                        },
+                    ],
+                },
+            },
         });
 
         return this.buildServerResponse(createServer);
-
     }
 
     async getServerUser(payload: GetServerDto): Promise<Server[]> {
@@ -142,10 +161,10 @@ export class ThreadService implements ThreadServiceInterface {
             where: {
                 members: {
                     some: {
-                        userId: user.id
-                    }
-                }
-            }
+                        userId: user.id,
+                    },
+                },
+            },
         });
 
         return server;
@@ -154,14 +173,16 @@ export class ThreadService implements ThreadServiceInterface {
     async generateInviteCode(): Promise<string> {
         let inviteCode: string;
 
-        do{
+        do {
             inviteCode = randomstring.generate(8);
-        }while(await this.isCodeExist(inviteCode));
+        } while (await this.isCodeExist(inviteCode));
 
         return inviteCode;
     }
 
-    async generateNewInviteCode(payload: GenerateInviteCodeDto): Promise<Server> {
+    async generateNewInviteCode(
+        payload: GenerateInviteCodeDto,
+    ): Promise<Server> {
         const user = await this.findUserByEmail(payload.email);
 
         const inviteCode = await this.generateInviteCode();
@@ -169,25 +190,27 @@ export class ThreadService implements ThreadServiceInterface {
         const server = await this.prismaService.server.update({
             where: {
                 userId: user.id,
-                token: payload.serverToken
+                token: payload.serverToken,
             },
             data: {
-                inviteCode
-            }
+                inviteCode,
+            },
         });
 
         return server;
     }
 
-    async checkInviteCode(payload: CheckInviteCodeDto): Promise<ServerResponse> {
+    async checkInviteCode(
+        payload: CheckInviteCodeDto,
+    ): Promise<ServerResponse> {
         // kiểm tra xem inviteCode đúng không
         const existingInviteCode = await this.prismaService.server.findFirst({
             where: {
-                inviteCode: payload.inviteCode
-            }
+                inviteCode: payload.inviteCode,
+            },
         });
 
-        if(!existingInviteCode){
+        if (!existingInviteCode) {
             throw new NotFoundException();
         }
 
@@ -199,34 +222,37 @@ export class ThreadService implements ThreadServiceInterface {
                 inviteCode: payload.inviteCode,
                 members: {
                     some: {
-                        userId: user.id
-                    }
-                }
-            }
+                        userId: user.id,
+                    },
+                },
+            },
         });
 
         // nếu user chưa join server thì cập nhật vào.
-        if(!existingSever){
+        if (!existingSever) {
             await this.prismaService.server.update({
                 where: {
-                    inviteCode: payload.inviteCode
+                    inviteCode: payload.inviteCode,
                 },
                 data: {
                     members: {
                         create: [
                             {
-                                userId: user.id
-                            }
-                        ]
-                    }
-                }
+                                token: new Date().getTime().toString(),
+                                userId: user.id,
+                            },
+                        ],
+                    },
+                },
             });
         }
 
         return this.buildServerResponse(existingInviteCode);
     }
 
-    async updateServer(payload: UpdateServerInterface): Promise<ServerResponse> {
+    async updateServer(
+        payload: UpdateServerInterface,
+    ): Promise<ServerResponse> {
         const user = await this.findUserByEmail(payload.email);
 
         const imgUrl = await this.uploadService.uploadAvatarToS3(payload.image);
@@ -234,36 +260,37 @@ export class ThreadService implements ThreadServiceInterface {
         try {
             const server = await this.prismaService.server.update({
                 where: {
-                    token: payload.serverToken
+                    token: payload.serverToken,
                 },
                 data: {
                     name: payload.name,
-                    imageUrl: imgUrl
-                }
+                    imageUrl: imgUrl,
+                },
             });
 
             return this.buildServerResponse(server);
-        }
-        catch{
+        } catch {
             throw new InternalServerErrorException();
         }
     }
 
-    async checkUserServer(payload: GenerateInviteCodeDto): Promise<ServerResponse> {
+    async checkUserServer(
+        payload: GenerateInviteCodeDto,
+    ): Promise<ServerResponse> {
         const server = await this.prismaService.server.findFirst({
             where: {
                 token: payload.serverToken,
                 members: {
                     some: {
                         user: {
-                            email: payload.email
-                        }
-                    }
-                }
-            }
+                            email: payload.email,
+                        },
+                    },
+                },
+            },
         });
 
-        if(!server) {
+        if (!server) {
             throw new NotFoundException();
         }
 
@@ -272,19 +299,19 @@ export class ThreadService implements ThreadServiceInterface {
 
     async updateRoleMember(payload: UpdateRoleMemberDto): Promise<Server> {
         const member = await this.findUserByEmail(payload.emailMember);
-        const user = await this.findUserByEmail(payload.email); 
+        const user = await this.findUserByEmail(payload.email);
 
         try {
             const server = await this.prismaService.server.findUnique({
                 where: {
-                    token: payload.serverToken
-                }
+                    token: payload.serverToken,
+                },
             });
 
             const serverUpdate = await this.prismaService.server.update({
                 where: {
                     userId: user.id,
-                    token: payload.serverToken
+                    token: payload.serverToken,
                 },
                 data: {
                     members: {
@@ -292,93 +319,91 @@ export class ThreadService implements ThreadServiceInterface {
                             where: {
                                 serverId_userId: {
                                     userId: member.id,
-                                    serverId: server.id
-                                }
+                                    serverId: server.id,
+                                },
                             },
                             data: {
-                                role: payload.role
-                            }
-                        }
-                    }
+                                role: payload.role,
+                            },
+                        },
+                    },
                 },
                 include: {
                     user: true,
                     channels: {
                         orderBy: {
-                            createAt: "asc"
-                        }
+                            createAt: 'asc',
+                        },
                     },
                     members: {
                         include: {
-                            user: true
+                            user: true,
                         },
                         orderBy: {
-                            role: "asc"
-                        }
-                    }
-                }
+                            role: 'asc',
+                        },
+                    },
+                },
             });
 
             return serverUpdate;
-        }
-        catch {
+        } catch {
             throw new InternalServerErrorException();
         }
     }
 
     async kickMember(payload: KickMemberDto): Promise<Server> {
         const member = await this.findUserByEmail(payload.emailMember);
-        const user = await this.findUserByEmail(payload.email); 
+        const user = await this.findUserByEmail(payload.email);
 
         try {
             const server = await this.prismaService.server.findUnique({
-                where:{
-                    token: payload.serverToken
-                }
+                where: {
+                    token: payload.serverToken,
+                },
             });
 
             const serverUpdate = await this.prismaService.server.update({
                 where: {
                     userId: user.id,
-                    token: payload.serverToken
+                    token: payload.serverToken,
                 },
                 data: {
                     members: {
                         delete: {
                             serverId_userId: {
                                 serverId: server.id,
-                                userId: member.id
-                            }
-                        }
-                    }
+                                userId: member.id,
+                            },
+                        },
+                    },
                 },
                 include: {
                     user: true,
                     channels: {
                         orderBy: {
-                            createAt: "asc"
-                        }
+                            createAt: 'asc',
+                        },
                     },
                     members: {
                         include: {
-                            user: true
+                            user: true,
                         },
                         orderBy: {
-                            role: "asc"
-                        }
-                    }
-                }
+                            role: 'asc',
+                        },
+                    },
+                },
             });
 
             return serverUpdate;
-        }
-        catch {
+        } catch {
             throw new InternalServerErrorException();
         }
     }
 
     async createChannel(payload: CreateChannelDto): Promise<ServerResponse> {
-        if(payload.name === 'general') {
+        if (payload.name === 'general') {
             throw new BadRequestException("Name cannot be 'general'");
         }
 
@@ -392,10 +417,10 @@ export class ThreadService implements ThreadServiceInterface {
                         some: {
                             userId: user.id,
                             role: {
-                                in: [MemberRole.ADMIN, MemberRole.MODERATOR]
-                            }
-                        }
-                    }
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+                            },
+                        },
+                    },
                 },
                 data: {
                     channels: {
@@ -403,15 +428,14 @@ export class ThreadService implements ThreadServiceInterface {
                             token: new Date().getTime().toString(),
                             userId: user.id,
                             name: payload.name,
-                            type: payload.type
-                        }
-                    }
-                }
+                            type: payload.type,
+                        },
+                    },
+                },
             });
 
             return this.buildServerResponse(server);
-        }
-        catch{
+        } catch {
             throw new InternalServerErrorException();
         }
     }
@@ -425,22 +449,21 @@ export class ThreadService implements ThreadServiceInterface {
                     token: payload.serverToken,
                     members: {
                         some: {
-                            userId: user.id
-                        }
-                    }
+                            userId: user.id,
+                        },
+                    },
                 },
                 data: {
                     members: {
                         deleteMany: {
-                            userId: user.id
-                        }
-                    }
-                }
+                            userId: user.id,
+                        },
+                    },
+                },
             });
 
             return this.buildServerResponse(server);
-        }
-        catch {
+        } catch {
             throw new InternalServerErrorException();
         }
     }
@@ -452,13 +475,12 @@ export class ThreadService implements ThreadServiceInterface {
             const server = await this.prismaService.server.delete({
                 where: {
                     token: payload.serverToken,
-                    userId: user.id
-                }
+                    userId: user.id,
+                },
             });
 
             return this.buildServerResponse(server);
-        }
-        catch {
+        } catch {
             throw new InternalServerErrorException();
         }
     }
@@ -474,32 +496,31 @@ export class ThreadService implements ThreadServiceInterface {
                         some: {
                             userId: user.id,
                             role: {
-                                in: [MemberRole.ADMIN, MemberRole.MODERATOR]
-                            }
-                        }
-                    }
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+                            },
+                        },
+                    },
                 },
                 data: {
                     channels: {
                         update: {
-                            where:{
+                            where: {
                                 token: payload.channelToken,
                                 NOT: {
-                                    name: 'general'
-                                }
+                                    name: 'general',
+                                },
                             },
                             data: {
                                 name: payload.name,
-                                type: payload.type
-                            }
-                        }
-                    }
-                }
+                                type: payload.type,
+                            },
+                        },
+                    },
+                },
             });
 
             return this.buildServerResponse(server);
-        }
-        catch {
+        } catch {
             throw new InternalServerErrorException();
         }
     }
@@ -515,28 +536,157 @@ export class ThreadService implements ThreadServiceInterface {
                         some: {
                             userId: user.id,
                             role: {
-                                in: [MemberRole.ADMIN, MemberRole.MODERATOR]
-                            }
-                        }
-                    }
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+                            },
+                        },
+                    },
                 },
                 data: {
                     channels: {
                         delete: {
                             token: payload.channelToken,
                             NOT: {
-                                name: 'general'
+                                name: 'general',
+                            },
+                        },
+                    },
+                },
+            });
+
+            return this.buildServerResponse(server);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async accessChannelGeneral(
+        payload: AccessChannelGeneralDto,
+    ): Promise<ChannelResponse> {
+        try {
+            const server = await this.prismaService.server.findUnique({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            user: {
+                                email: payload.email
                             }
+                        },
+                    },
+                },
+                include: {
+                    channels: {
+                        where: {
+                            name: 'general',
+                        },
+                        orderBy: {
+                            createAt: 'asc',
+                        },
+                    },
+                },
+            });
+
+            const initialChannel = server?.channels[0];
+
+            return this.buildChannelResponse(initialChannel);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async detailChannel(payload: DetailChannelDto): Promise<Channel> {
+        try {
+            const channel = await this.prismaService.channel.findUnique({
+                where: {
+                    token: payload.channelToken,
+                },
+            });
+
+            return channel;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findConversation(memberOwnerId: string, memberGuestId: string): Promise<Conversation> {
+        try {
+            return await this.prismaService.conversation.findFirst({
+                where: {
+                    AND: {
+                        memberOwnerId,
+                        memberGuestId
+                    }
+                },
+                include: {
+                    memberOwner: {
+                        include: {
+                            user: true
+                        }
+                    },
+                    memberGuest: {
+                        include: {
+                            user: true
                         }
                     }
                 }
             });
-
-            return this.buildServerResponse(server);
         }
-        catch {
+        catch(err) {
             throw new InternalServerErrorException();
         }
+    }
+
+    async createNewConversation(memberOwnerId: string, memberGuestId: string): Promise<Conversation> {
+        try {
+            return await this.prismaService.conversation.create({
+                data: {
+                    memberOwnerId,
+                    memberGuestId
+                },
+                include: {
+                    memberOwner: {
+                        include: {
+                            user: true
+                        }
+                    },
+                    memberGuest: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getOrCreateConversation(payload: CreateConversationDto): Promise<Conversation> {
+        const memberOwner = await this.prismaService.member.findFirst({
+            where: {
+                server: {
+                    token: payload.serverToken
+                },
+                user: {
+                    email: payload.emailOwner
+                }
+            }
+        });
+
+        const memberGuest = await this.prismaService.member.findUnique({
+            where: {
+                token: payload.memberTokenGuest
+            }
+        });
+
+        const conversation = await this.findConversation(memberOwner.id, memberGuest.id);
+        if(!conversation) {
+            return await this.createNewConversation(memberOwner.id, memberGuest.id);
+        }
+
+        return conversation;
     }
 
     buildServerResponse(payload: Server): ServerResponse {
@@ -546,7 +696,15 @@ export class ThreadService implements ThreadServiceInterface {
             inviteCode: payload.inviteCode,
             imageUrl: payload.imageUrl,
             createAt: payload.createAt,
-            updateAt: payload.updateAt
-        }
+            updateAt: payload.updateAt,
+        };
+    }
+
+    buildChannelResponse(payload: Channel): ChannelResponse {
+        return {
+            token: payload.token,
+            name: payload.name,
+            type: payload.type,
+        };
     }
 }
