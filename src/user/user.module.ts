@@ -6,7 +6,7 @@ import { BullModule } from '@nestjs/bull';
 import { ConfigService } from '@nestjs/config';
 import { UploadService } from 'src/upload/upload.service';
 import { JwtService } from '@nestjs/jwt';
-import { UploadGateway } from 'src/upload/upload.gateway';
+//import { UploadGateway } from 'src/upload/upload.gateway';
 
 @Module({
     imports: [
@@ -21,7 +21,7 @@ import { UploadGateway } from 'src/upload/upload.gateway';
         ConfigService,
         UploadService,
         JwtService,
-        UploadGateway,
+       // UploadGateway,
     ],
 })
 export class UserModule {}

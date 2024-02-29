@@ -600,6 +600,9 @@ export class ThreadService implements ThreadServiceInterface {
                 where: {
                     token: payload.channelToken,
                 },
+                include: {
+                    server: true
+                }
             });
 
             return channel;

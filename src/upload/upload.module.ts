@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { UploadProcessor } from './upload.processor';
 import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
-import { UploadGateway } from './upload.gateway';
+//import { UploadGateway } from './upload.gateway';
 
 @Module({
     imports: [
@@ -19,7 +19,7 @@ import { UploadGateway } from './upload.gateway';
         UploadProcessor,
         PrismaService,
         JwtService,
-        UploadGateway,
+        //UploadGateway,
     ],
     controllers: [],
 })
