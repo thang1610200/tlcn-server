@@ -601,7 +601,15 @@ export class ThreadService implements ThreadServiceInterface {
                     token: payload.channelToken,
                 },
                 include: {
-                    server: true
+                    server: {
+                        include: {
+                            members: {
+                                include: {
+                                    user: true
+                                }
+                            }
+                        }
+                    }
                 }
             });
 

@@ -1,62 +1,145 @@
-import { Inject, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+    Inject,
+    Injectable,
+    InternalServerErrorException,
+    NotFoundException,
+    UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { createMessageChannelDto } from './dto/message.dto';
+import {
+    PaginationMessageDto,
+    UploadFileChannelInterface,
+    createMessageChannelDto,
+} from './dto/message.dto';
 import { Channel, Member, Message, User } from '@prisma/client';
 import { MessageServiceInterface } from './interface/message.service.interface';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { WsException } from '@nestjs/websockets';
+import { UploadService } from 'src/upload/upload.service';
 
+const MESSAGES_BATCH = 10;
 @Injectable()
 export class MessageService implements MessageServiceInterface {
-    constructor (private readonly prismaService: PrismaService,
-                private readonly jwtService: JwtService,
-                private readonly configService: ConfigService) {}
-    async createMessageChannel(payload: createMessageChannelDto): Promise<{ id: string; content: string; fileUrl: string; memberId: string; member: Member; channelId: string; channel: Channel; deleted: boolean; createAt: Date; updateAt: Date; }> {
-        const channel = await this.findChannelByToken(payload.channelToken, payload.serverToken);
-        const member = await this.findMemberByToken(payload.email, payload.serverToken);
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
+        private readonly uploadService: UploadService,
+    ) {}
+
+    async uploadFileChannel(payload: UploadFileChannelInterface): Promise<{
+        id: string;
+        content: string;
+        fileUrl: string;
+        memberId: string;
+        member: Member;
+        channelId: string;
+        channel: Channel;
+        deleted: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }> {
+        const channel = await this.findChannelByToken(
+            payload.channelToken,
+            payload.serverToken,
+        );
+        const member = await this.findMemberByToken(
+            payload.email,
+            payload.serverToken,
+        );
+
+        try {
+            const fileUrl = await this.uploadService.uploadAttachmentToS3(
+                payload.file,
+            );
+
+            const message = await this.prismaService.message.create({
+                data: {
+                    content: fileUrl,
+                    fileUrl,
+                    channelId: channel.id,
+                    memberId: member.id,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                    channel: true,
+                },
+            });
+
+            return message;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async createMessageChannel(payload: createMessageChannelDto): Promise<{
+        id: string;
+        content: string;
+        fileUrl: string;
+        memberId: string;
+        member: Member;
+        channelId: string;
+        channel: Channel;
+        deleted: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }> {
+        const channel = await this.findChannelByToken(
+            payload.channelToken,
+            payload.serverToken,
+        );
+        const member = await this.findMemberByToken(
+            payload.email,
+            payload.serverToken,
+        );
         try {
             const message = await this.prismaService.message.create({
                 data: {
                     content: payload.content,
                     channelId: channel.id,
-                    memberId: member.id
+                    memberId: member.id,
                 },
                 include: {
                     member: {
                         include: {
-                            user: true
-                        }
+                            user: true,
+                        },
                     },
-                    channel: true
-                }
+                    channel: true,
+                },
             });
 
             return message;
-        }
-        catch{
+        } catch {
             throw new InternalServerErrorException();
         }
     }
 
-    async findChannelByToken(channelToken: string, serverToken: string): Promise<Channel> {
+    async findChannelByToken(
+        channelToken: string,
+        serverToken: string,
+    ): Promise<Channel> {
         try {
             const channel = await this.prismaService.channel.findUnique({
                 where: {
                     token: channelToken,
                     server: {
-                        token: serverToken
-                    }
-                }
+                        token: serverToken,
+                    },
+                },
             });
 
-            if(!channel) {
+            if (!channel) {
                 throw new NotFoundException();
             }
 
             return channel;
-        }
-        catch {
+        } catch {
             throw new InternalServerErrorException();
         }
     }
@@ -75,7 +158,10 @@ export class MessageService implements MessageServiceInterface {
         return user;
     }
 
-    async findMemberByToken(email: string, serverToken: string): Promise<Member> {
+    async findMemberByToken(
+        email: string,
+        serverToken: string,
+    ): Promise<Member> {
         const user = await this.findUserByEmail(email);
 
         try {
@@ -84,32 +170,92 @@ export class MessageService implements MessageServiceInterface {
                     token: serverToken,
                     members: {
                         some: {
-                            userId: user.id
-                        }
-                    }
+                            userId: user.id,
+                        },
+                    },
                 },
                 include: {
                     members: {
                         include: {
-                            user: true
-                        }
-                    }
-                }
+                            user: true,
+                        },
+                    },
+                },
             });
 
-            if(!server) {
+            if (!server) {
                 throw new NotFoundException();
             }
 
             const member = server.members.find((member) => {
-                return member.userId === user.id
+                return member.userId === user.id;
             });
 
-            console.log(member);
-
             return member;
+        } catch {
+            throw new InternalServerErrorException();
         }
-        catch {
+    }
+
+    async paginationMessage(payload: PaginationMessageDto): Promise<{item: Message[]; nextCursor: string}> {
+        try {
+            let messages: Message[] = [];
+
+            if (payload.cursor) {
+                messages = await this.prismaService.message.findMany({
+                    take: MESSAGES_BATCH,
+                    skip: 1,
+                    cursor: {
+                        id: payload.cursor,
+                    },
+                    where: {
+                        channel: {
+                            token: payload.channelToken,
+                        },
+                    },
+                    include: {
+                        member: {
+                            include: {
+                                user: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createAt: 'desc',
+                    },
+                });
+            } else {
+                messages = await this.prismaService.message.findMany({
+                    take: MESSAGES_BATCH,
+                    where: {
+                        channel: {
+                            token: payload.channelToken,
+                        },
+                    },
+                    include: {
+                        member: {
+                            include: {
+                                user: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createAt: 'desc',
+                    },
+                });
+            }
+
+            let nextCursor = null;
+
+            if (messages.length === MESSAGES_BATCH) {
+                nextCursor = messages[MESSAGES_BATCH - 1].id;
+            }
+
+            return {
+                item: messages,
+                nextCursor
+            }
+        } catch {
             throw new InternalServerErrorException();
         }
     }
