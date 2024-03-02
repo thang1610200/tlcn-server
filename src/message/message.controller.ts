@@ -1,7 +1,7 @@
-import { Body, Controller, FileTypeValidator, Get, HttpException, HttpStatus, ParseFilePipe, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, FileTypeValidator, Get, HttpException, HttpStatus, ParseFilePipe, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { MessageGateway } from './message.gateway';
 import { MessageService } from './message.service';
-import { PaginationMessageDto, UploadFileChannelDto, createMessageChannelDto } from './dto/message.dto';
+import { DeleteMessageChannelDto, EditMessageChannelDto, PaginationMessageDto, UploadFileChannelDto, createMessageChannelDto } from './dto/message.dto';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -62,5 +62,27 @@ export class MessageController {
     @Get('pagination-message')
     paginationMessage(@Query() query: PaginationMessageDto) {
         return this.messageService.paginationMessage(query);
+    }
+
+    @Patch('edit-message')
+    async editMessageChannel(@Body() body: EditMessageChannelDto) {
+        const message = await this.messageService.editMessageChannel(body);
+
+        const updateKey = `chat:${message.channel.token}:messages:update`;
+
+        this.messageGateWay.server.emit(updateKey, message);
+
+        return message;
+    }
+
+    @Delete('delete-message')
+    async deleteMessageChannel(@Query() query: DeleteMessageChannelDto) {
+        const message = await this.messageService.deleteMessageChannel(query);
+
+        const updateKey = `chat:${message.channel.token}:messages:update`;
+
+        this.messageGateWay.server.emit(updateKey, message);
+
+        return message;
     }
 }

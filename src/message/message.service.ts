@@ -1,5 +1,4 @@
 import {
-    Inject,
     Injectable,
     InternalServerErrorException,
     NotFoundException,
@@ -7,11 +6,20 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import {
+    DeleteMessageChannelDto,
+    EditMessageChannelDto,
     PaginationMessageDto,
     UploadFileChannelInterface,
     createMessageChannelDto,
 } from './dto/message.dto';
-import { Channel, Member, Message, User } from '@prisma/client';
+import {
+    Channel,
+    Member,
+    MemberRole,
+    Message,
+    Server,
+    User,
+} from '@prisma/client';
 import { MessageServiceInterface } from './interface/message.service.interface';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -27,6 +35,152 @@ export class MessageService implements MessageServiceInterface {
         private readonly configService: ConfigService,
         private readonly uploadService: UploadService,
     ) {}
+
+    async checkRoleChannel(
+        messageId: string,
+        channelToken: string,
+        serverToken: string,
+        email: string,
+    ): Promise<{ message: Message; isMessageOwner: boolean }> {
+        const user = await this.findUserByEmail(email);
+        const server = await this.findServerByToken(serverToken, user.id);
+        const channel = await this.findChannelByToken(
+            channelToken,
+            serverToken,
+        );
+        const member = server.members.find((data) => {
+            return data.userId === user.id;
+        });
+        const message = await this.findMessage(messageId, channel.id);
+
+        const isMessageOwner = message.memberId === member.id;
+        const isAdmin = member.role === MemberRole.ADMIN;
+        const isModerator = member.role === MemberRole.MODERATOR;
+        const canModify = isMessageOwner || isAdmin || isModerator;
+
+        if (!canModify) {
+            throw new UnauthorizedException();
+        }
+
+        return {
+            message,
+            isMessageOwner,
+        };
+    }
+
+    async deleteMessageChannel(
+        payload: DeleteMessageChannelDto,
+    ): Promise<{
+        id: string;
+        content: string;
+        fileUrl: string;
+        member: Member & {
+            user: User
+        };
+        memberId: string;
+        channel: Channel;
+        channelId: string;
+        deleted: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }> {
+        const { message } = await this.checkRoleChannel(
+            payload.messageId,
+            payload.channelToken,
+            payload.serverToken,
+            payload.email,
+        );
+
+        try {
+            const messageDeleted = await this.prismaService.message.update({
+                where: {
+                    id: message.id,
+                },
+                data: {
+                    fileUrl: null,
+                    content: 'This message has been deleted.',
+                    deleted: true,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                    channel: true
+                },
+            });
+
+            return messageDeleted;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findMessage(messageId: string, channelId: string): Promise<Message> {
+        try {
+            const message = await this.prismaService.message.findFirst({
+                where: {
+                    id: messageId,
+                    channelId,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                },
+            });
+
+            if (!message || message.deleted) {
+                throw new NotFoundException();
+            }
+
+            return message;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findServerByToken(
+        serverToken: string,
+        userId: string,
+    ): Promise<{
+        id: string;
+        token: string;
+        name: string;
+        imageUrl: string;
+        members: Member[];
+        inviteCode: string;
+        userId: string;
+        createAt: Date;
+        updateAt: Date;
+    }> {
+        try {
+            const server = await this.prismaService.server.findFirst({
+                where: {
+                    token: serverToken,
+                    members: {
+                        some: {
+                            userId,
+                        },
+                    },
+                },
+                include: {
+                    members: true,
+                },
+            });
+
+            if (!server) {
+                throw new NotFoundException();
+            }
+
+            return server;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     async uploadFileChannel(payload: UploadFileChannelInterface): Promise<{
         id: string;
@@ -197,7 +351,9 @@ export class MessageService implements MessageServiceInterface {
         }
     }
 
-    async paginationMessage(payload: PaginationMessageDto): Promise<{item: Message[]; nextCursor: string}> {
+    async paginationMessage(
+        payload: PaginationMessageDto,
+    ): Promise<{ item: Message[]; nextCursor: string }> {
         try {
             let messages: Message[] = [];
 
@@ -253,8 +409,57 @@ export class MessageService implements MessageServiceInterface {
 
             return {
                 item: messages,
-                nextCursor
-            }
+                nextCursor,
+            };
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async editMessageChannel(payload: EditMessageChannelDto): Promise<{
+        id: string;
+        content: string;
+        fileUrl: string;
+        memberId: string;
+        member: Member & {
+            user: User;
+        };
+        channelId: string;
+        channel: Channel;
+        deleted: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }> {
+        const { message, isMessageOwner } = await this.checkRoleChannel(
+            payload.messageId,
+            payload.channelToken,
+            payload.serverToken,
+            payload.email,
+        );
+
+        if (!isMessageOwner) {
+            throw new UnauthorizedException();
+        }
+
+        try {
+            const messageUpdated = await this.prismaService.message.update({
+                where: {
+                    id: message.id,
+                },
+                data: {
+                    content: payload.content,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                    channel: true,
+                },
+            });
+
+            return messageUpdated;
         } catch {
             throw new InternalServerErrorException();
         }

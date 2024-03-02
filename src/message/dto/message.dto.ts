@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class createMessageChannelDto {
     @IsString()
@@ -46,4 +46,44 @@ export class PaginationMessageDto {
 
     @IsOptional()
     cursor: string;
+}
+
+export class EditMessageChannelDto {
+    @IsString()
+    @IsNotEmpty()
+    messageId: string;
+
+    @IsString()
+    @IsNotEmpty()
+    channelToken: string;
+
+    @IsString()
+    @IsNotEmpty()
+    serverToken: string;
+
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    content: string;
+}
+
+export class DeleteMessageChannelDto {
+    @IsString()
+    @IsNotEmpty()
+    messageId: string;
+
+    @IsString()
+    @IsNotEmpty()
+    channelToken: string;
+
+    @IsString()
+    @IsNotEmpty()
+    serverToken: string;
+
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
 }
