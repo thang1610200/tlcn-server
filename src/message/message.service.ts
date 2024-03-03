@@ -14,6 +14,8 @@ import {
 } from './dto/message.dto';
 import {
     Channel,
+    Conversation,
+    DirectMessage,
     Member,
     MemberRole,
     Message,
@@ -25,6 +27,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { WsException } from '@nestjs/websockets';
 import { UploadService } from 'src/upload/upload.service';
+import { CreateDirectMessageDto, DeleteMessageConversationDto, EditMessageConversationDto, PaginationMessageConversationDto, UploadFileConversationInterface } from './dto/direct-message.dto';
 
 const MESSAGES_BATCH = 10;
 @Injectable()
@@ -35,6 +38,250 @@ export class MessageService implements MessageServiceInterface {
         private readonly configService: ConfigService,
         private readonly uploadService: UploadService,
     ) {}
+    async deleteMessageConversation(payload: DeleteMessageConversationDto): Promise<DirectMessage> {
+        const user = await this.findUserByEmail(payload.email);
+        const conversation = await this.findConversation(payload.conversationId, user.id);
+        const directMessage = await this.findDirectMessage(payload.directMessageId, conversation.id);
+
+        const member = conversation.memberOwner.userId === user.id ? conversation.memberOwner : conversation.memberGuest;
+
+        const isMessageOwner = directMessage.memberId === member.id;
+        const isAdmin = member.role === MemberRole.ADMIN;
+        const isModerator = member.role === MemberRole.MODERATOR;
+        const canModify = isMessageOwner || isAdmin || isModerator;
+    
+        if (!canModify) {
+            throw new UnauthorizedException();
+        }
+
+        try {
+            const directMessageUpdated = await this.prismaService.directMessage.update({
+                where: {
+                    id: directMessage.id
+                },
+                data: {
+                    fileUrl: null,
+                    content: "This message has been deleted.",
+                    deleted: true,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            return directMessageUpdated;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findDirectMessage(directMessageId: string, conversationId: string): Promise<DirectMessage> {
+        try {
+            const directMessage = await this.prismaService.directMessage.findFirst({
+                where: {
+                    id: directMessageId,
+                    conversationId
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            if(!directMessage || directMessage.deleted) {
+                throw new NotFoundException();
+            }
+
+            return directMessage;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async editMessageConversation(payload: EditMessageConversationDto): Promise<DirectMessage> {
+        const user = await this.findUserByEmail(payload.email);
+        const conversation = await this.findConversation(payload.conversationId, user.id);
+        const directMessage = await this.findDirectMessage(payload.directMessageId, conversation.id);
+
+        const member = conversation.memberOwner.userId === user.id ? conversation.memberOwner : conversation.memberGuest;
+
+        const isMessageOwner = directMessage.memberId === member.id;
+        const isAdmin = member.role === MemberRole.ADMIN;
+        const isModerator = member.role === MemberRole.MODERATOR;
+        const canModify = isMessageOwner || isAdmin || isModerator;
+    
+        if (!canModify || !isMessageOwner) {
+            throw new UnauthorizedException();
+        }
+
+        try {
+            const directMessageUpdated = await this.prismaService.directMessage.update({
+                where: {
+                    id: directMessage.id
+                },
+                data: {
+                    content: payload.content
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            return directMessageUpdated;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async paginationMessageConversation(payload: PaginationMessageConversationDto): Promise<{item: DirectMessage[]; nextCursor: string; }> {
+        try {
+            let messages: DirectMessage[] = [];
+
+            if (payload.cursor) {
+                messages = await this.prismaService.directMessage.findMany({
+                    take: MESSAGES_BATCH,
+                    skip: 1,
+                    cursor: {
+                        id: payload.cursor,
+                    },
+                    where: {
+                        conversationId: payload.conversationId
+                    },
+                    include: {
+                        member: {
+                            include: {
+                                user: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createAt: 'desc',
+                    },
+                });
+            } else {
+                messages = await this.prismaService.directMessage.findMany({
+                    take: MESSAGES_BATCH,
+                    where: {
+                        conversationId: payload.conversationId,
+                    },
+                    include: {
+                        member: {
+                            include: {
+                                user: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createAt: 'desc',
+                    },
+                });
+            }
+
+            let nextCursor = null;
+
+            if (messages.length === MESSAGES_BATCH) {
+                nextCursor = messages[MESSAGES_BATCH - 1].id;
+            }
+
+            return {
+                item: messages,
+                nextCursor,
+            };
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findConversation(conversationId: string, userId: string): Promise<{ id: string; memberOwnerId: string; memberOwner: Member; memberGuestId: string; memberGuest: Member }> {
+        try {
+            const conversation = await this.prismaService.conversation.findFirst({
+                where: {
+                    id: conversationId,
+                    OR: [
+                        {
+                            memberOwner: {
+                                userId
+                            }
+                        },
+                        {
+                            memberGuest: {
+                                userId
+                            }
+                        }
+                    ]
+                },
+                include: {
+                    memberOwner: {
+                        include: {
+                            user: true
+                        }
+                    },
+                    memberGuest: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            if(!conversation) {
+                throw new NotFoundException();
+            }
+
+            return conversation;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async uploadFileConversation(payload: UploadFileConversationInterface): Promise<DirectMessage> {
+        const user = await this.findUserByEmail(payload.email);
+        const conversation = await this.findConversation(payload.conversationId, user.id);
+
+        try {
+            const member = conversation.memberOwner.userId === user.id ? conversation.memberOwner : conversation.memberGuest;
+
+            const fileUrl = await this.uploadService.uploadAttachmentToS3(
+                payload.file,
+            );
+
+            const message = await this.prismaService.directMessage.create({
+                data: {
+                    content: fileUrl,
+                    fileUrl,
+                    conversationId: conversation.id,
+                    memberId: member.id
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            return message;
+        }   
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     async checkRoleChannel(
         messageId: string,
@@ -478,6 +725,35 @@ export class MessageService implements MessageServiceInterface {
             return payload.email;
         } catch (err) {
             throw new WsException('Unauthorized');
+        }
+    }
+
+    async createDirectMessage(payload: CreateDirectMessageDto): Promise<DirectMessage> {
+        const user = await this.findUserByEmail(payload.email);
+        const conversation = await this.findConversation(payload.conversationId, user.id);
+
+        try {
+            const member = conversation.memberOwner.userId === user.id ? conversation.memberOwner : conversation.memberGuest;
+
+            const message = await this.prismaService.directMessage.create({
+                data: {
+                    content: payload.content,
+                    conversationId: conversation.id,
+                    memberId: member.id
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            return message;
+        }
+        catch {
+            throw new InternalServerErrorException();
         }
     }
 }
