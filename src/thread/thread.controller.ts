@@ -12,6 +12,7 @@ import { UpdateRoleMemberDto } from './dto/update-role.dto';
 import { KickMemberDto } from './dto/kick-member.dto';
 import { AccessChannelGeneralDto, CreateChannelDto, DeleteChannelDto, DetailChannelDto, EditChannelDto } from './dto/channel.dto';
 import { CreateConversationDto } from './dto/conversation.dto';
+import { CreateMediaRoomDto } from './dto/livekit.dto';
 
 @UseGuards(JwtGuard)
 @Controller('thread')
@@ -152,5 +153,10 @@ export class ThreadController {
     @Post('create-conversation')
     getOrCreateConversation(@Body() body: CreateConversationDto) {
         return this.threadService.getOrCreateConversation(body);
+    }
+
+    @Get('livekit')
+    createMediaRoom(@Query() query: CreateMediaRoomDto) {
+        return this.threadService.createMediaRoom(query);
     }
 }

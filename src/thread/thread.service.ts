@@ -29,13 +29,29 @@ import {
     EditChannelDto,
 } from './dto/channel.dto';
 import { CreateConversationDto } from './dto/conversation.dto';
+import { CreateMediaRoomDto } from './dto/livekit.dto';
+import { ConfigService } from '@nestjs/config';
+import { AccessToken } from 'livekit-server-sdk';
 
 @Injectable()
 export class ThreadService implements ThreadServiceInterface {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
+        private readonly configService: ConfigService
     ) {}
+
+    async createMediaRoom(payload: CreateMediaRoomDto): Promise<object> {
+        const apiKey = this.configService.get('LIVEKIT_API_KEY');
+        const apiSecret = this.configService.get('LIVEKIT_API_SECRET');
+        const wsUrl = this.configService.get('NEXT_PUBLIC_LIVEKIT_URL');
+      
+        const at = new AccessToken(apiKey, apiSecret, { identity: payload.username });
+      
+        at.addGrant({ room: payload.room, roomJoin: true, canPublish: true, canSubscribe: true });
+      
+        return { token: at.toJwt() };
+    }
 
     async getChannelServer(payload: GetChannelServerDto): Promise<Server> {
         const server = await this.prismaService.server.findUnique({
@@ -692,7 +708,7 @@ export class ThreadService implements ThreadServiceInterface {
             }
         });
 
-        const conversation = await this.findConversation(memberOwner.id, memberGuest.id);
+        const conversation = await this.findConversation(memberOwner.id, memberGuest.id) || await this.findConversation(memberGuest.id, memberOwner.id);
         if(!conversation) {
             return await this.createNewConversation(memberOwner.id, memberGuest.id);
         }

@@ -10,6 +10,7 @@ import { UpdateRoleMemberDto } from "../dto/update-role.dto";
 import { KickMemberDto } from "../dto/kick-member.dto";
 import { AccessChannelGeneralDto, ChannelResponse, CreateChannelDto, DeleteChannelDto, DetailChannelDto, EditChannelDto } from "../dto/channel.dto";
 import { CreateConversationDto } from "../dto/conversation.dto";
+import { CreateMediaRoomDto } from "../dto/livekit.dto";
 
 export interface ThreadServiceInterface {
     findUserByEmail(email: string): Promise<User>;
@@ -36,5 +37,6 @@ export interface ThreadServiceInterface {
     createNewConversation(memberOwnerId: string, memberGuestId: string): Promise<Conversation>;
     getOrCreateConversation(payload: CreateConversationDto): Promise<Conversation>;
     buildChannelResponse(payload: Channel): ChannelResponse;
+    createMediaRoom(payload: CreateMediaRoomDto): Promise<object>;
     buildServerResponse(payload: Server): ServerResponse;
 }
