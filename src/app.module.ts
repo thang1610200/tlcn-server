@@ -27,6 +27,7 @@ import * as path from 'path';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { MessageModule } from './message/message.module';
+import { ElasticSearchModule } from './elastic-search/elastic-search.module';
 
 @Module({
     imports: [
@@ -48,7 +49,9 @@ import { MessageModule } from './message/message.module';
                 REDIS_PORT: Joi.string().required(),
                 BACKEND_URL: Joi.string().required(),
                 OPENAI_API_KEY: Joi.string().required(),
-                CLIENT_ADMIN_URL: Joi.string().required()
+                CLIENT_ADMIN_URL: Joi.string().required(),
+                LIVEKIT_API_KEY: Joi.string().required(),
+                LIVEKIT_API_SECRET: Joi.string().required()
             }),
         }),
         MailingModule,
@@ -109,6 +112,7 @@ import { MessageModule } from './message/message.module';
         AttachmentModule,
         RegisterInstructorModule,
         MessageModule,
+        ElasticSearchModule,
     ],
     controllers: [AppController],
     providers: [AppService, PrismaService],
