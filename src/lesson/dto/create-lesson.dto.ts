@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { ContentType } from '@prisma/client';
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateLessonDto {
     @IsString()
@@ -16,4 +17,8 @@ export class CreateLessonDto {
     @IsString()
     @IsEmail()
     email: string;
+
+    @IsEnum(ContentType)
+    @IsNotEmpty()
+    type: ContentType
 }

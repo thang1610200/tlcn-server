@@ -40,6 +40,11 @@ enum ChannelType {
   VIDEO
 }
 
+enum ContentType {
+  LESSON
+  EXERCISE
+}
+
 model User {
   id                  String               @id @default(auto()) @map("_id") @db.ObjectId
   email               String               @unique
@@ -102,36 +107,46 @@ model Course {
 }
 
 model Chapter {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  token       String   @unique()
+  token       String    @unique()
   description String?
   position    Int
-  isPublished Boolean  @default(false)
-  lessons     Lesson[]
-  courseId    String   @db.ObjectId
-  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  isPublished Boolean   @default(false)
+  contents    Content[]
+  courseId    String    @db.ObjectId
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 model Lesson {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  token           String    @unique
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  token           String         @unique
   title           String
   description     String?
-  position        Int
-  isPublished     Boolean   @default(false)
+  //position        Int
+  isPublished     Boolean        @default(false)
   videoUrl        String?
   duration        Int?
-  isCompleteVideo Boolean   @default(false)
+  isCompleteVideo Boolean        @default(false)
+  //isPreview       Boolean   @default(true)
   thumbnail       String?
-  chapterId       String    @db.ObjectId
-  chapter         Chapter   @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  amountToPass    Int       @default(0)
-  exerciseId      String?   @db.ObjectId
-  exercise        Exercise? @relation(fields: [exerciseId], references: [id])
+  //amountToPass    Int       @default(0)
+  // exerciseId      String?   @db.ObjectId
+  // exercise        Exercise? @relation(fields: [exerciseId], references: [id])
+  contentId       String         @unique @db.ObjectId
+  content         Content        @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  userProgress    UserProgress[]
+  attachment      Attachment[]
+}
 
-  userProgress UserProgress[]
-  attachment   Attachment[]
+model Content {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  type      ContentType
+  chapterId String      @db.ObjectId
+  chapter   Chapter     @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  position  Int
+  lesson    Lesson?
+  exercise  Exercise?
 }
 
 model Review {
@@ -165,10 +180,12 @@ model Exercise {
   type         TypeExercise
   instructorId String       @db.ObjectId
   instructor   User         @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  contentId    String       @unique @db.ObjectId
+  content      Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
   create_at    DateTime     @default(now())
   update_at    DateTime     @updatedAt
   isOpen       Boolean      @default(false)
-  lesson       Lesson[]
+  //lesson       Lesson[]
   quizz        Quizz[]
 }
 

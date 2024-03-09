@@ -27,8 +27,6 @@ import * as path from 'path';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { MessageModule } from './message/message.module';
-import { ElasticSearchModule } from './elastic-search/elastic-search.module';
-
 @Module({
     imports: [
         DevtoolsModule.register({
@@ -112,7 +110,6 @@ import { ElasticSearchModule } from './elastic-search/elastic-search.module';
         AttachmentModule,
         RegisterInstructorModule,
         MessageModule,
-        ElasticSearchModule,
     ],
     controllers: [AppController],
     providers: [AppService, PrismaService],

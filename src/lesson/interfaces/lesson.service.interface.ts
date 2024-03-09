@@ -1,4 +1,4 @@
-import { Lesson } from '@prisma/client';
+import { Chapter, Course, Lesson, User } from '@prisma/client';
 import { LessonResponse } from '../dto/lesson-response.dto';
 import { CreateLessonDto } from '../dto/create-lesson.dto';
 import { ReorderLessonDto } from '../dto/reorder-lesson.dto';
@@ -21,4 +21,7 @@ export interface LessonServiceInterface {
     deleteLesson(payload: DeleteLessonDto): Promise<string>;
     contentLesson(payload: ContentLessonDto): Promise<Lesson>;
     updateThumbnail(payload: UpdateThumbnailVideo): Promise<LessonResponse>;
+    findUserByEmail(email: string): Promise<User>;
+    findCourseBySlug(courseSlug: string, userId: string): Promise<Course>;
+    findChapterByToken(chapterToken: string, courseId: string): Promise<Chapter>;
 }
