@@ -61,7 +61,7 @@ model User {
   register_instructor RegisterInstructor[]
   course              Course[]
   forgot_password     PasswordResetToken[]
-  exercise            Exercise[]
+  //exercise            Exercise[]
   userProgress        UserProgress[]
   review              Review[]
   reply               ReviewReply[]
@@ -178,8 +178,8 @@ model Exercise {
   token        String       @unique
   title        String
   type         TypeExercise
-  instructorId String       @db.ObjectId
-  instructor   User         @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  // instructorId String       @db.ObjectId
+  // instructor   User         @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   contentId    String       @unique @db.ObjectId
   content      Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
   create_at    DateTime     @default(now())

@@ -1,4 +1,4 @@
-import { Exercise, User } from '@prisma/client';
+import { Chapter, Course, Exercise, User } from '@prisma/client';
 import { ExerciseResponse } from '../dto/exercise-response.dto';
 import { CreateExerciseDto } from '../dto/create-exercise.dto';
 import { GetAllExerciseDto } from '../dto/getall-exercise.dto';
@@ -21,4 +21,6 @@ export interface ExerciseServiceInterface {
     deleteExercise(payload: GetDetailExerciseDto): Promise<string>;
     getAllExerciseOpen(payload: GetAllExerciseDto): Promise<Exercise[]>;
     builResponseExercise(payload: Exercise): ExerciseResponse;
+    findChapterByToken(chapterToken: string, courseId: string): Promise<Chapter>;
+    findCourseBySlug(courseSlug: string, userId: string): Promise<Course>;
 }

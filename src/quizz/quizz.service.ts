@@ -21,28 +21,29 @@ export class QuizzService implements QuizzServiceInterface {
         email: string,
         exercise_token: string,
     ): Promise<Exercise> {
-        const user = await this.prismaService.user.findUnique({
-            where: {
-                email,
-            },
-        });
+        throw new Error();
+        // const user = await this.prismaService.user.findUnique({
+        //     where: {
+        //         email,
+        //     },
+        // });
 
-        if (!user) {
-            throw new UnauthorizedException();
-        }
+        // if (!user) {
+        //     throw new UnauthorizedException();
+        // }
 
-        const exercise = await this.prismaService.exercise.findFirst({
-            where: {
-                token: exercise_token,
-                instructorId: user.id,
-            },
-        });
+        // const exercise = await this.prismaService.exercise.findFirst({
+        //     where: {
+        //         token: exercise_token,
+        //         instructorId: user.id,
+        //     },
+        // });
 
-        if (!exercise) {
-            throw new NotFoundException();
-        }
+        // if (!exercise) {
+        //     throw new NotFoundException();
+        // }
 
-        return exercise;
+        // return exercise;
     }
 
     async createQuizz(payload: CreateQuizzDto): Promise<QuizzResponse> {
@@ -105,13 +106,13 @@ export class QuizzService implements QuizzServiceInterface {
                 token: payload.token,
                 exerciseId: exercise.id,
             },
-            include: {
-                exercise: {
-                    include: {
-                        lesson: true
-                    }
-                }
-            }
+            // include: {
+            //     exercise: {
+            //         include: {
+            //             lesson: true
+            //         }
+            //     }
+            // }
         });
 
         if (!quizz) {

@@ -22,10 +22,12 @@ export class AttachmentService implements AttachmentServiceInterface {
         const lesson = await this.prismaService.lesson.findUnique({
             where: {
                 token,
-                chapter: {
-                    course: {
-                        owner_id: id
-                    }
+                content: {
+                    chapter: {
+                        course: {
+                            owner_id: id
+                        }
+                    },
                 }
             },
         });

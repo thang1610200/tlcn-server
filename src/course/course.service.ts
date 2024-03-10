@@ -279,11 +279,20 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                     include: {
-                        lessons: {
-                            where: {
-                                isPublished: true
+                        contents: {
+                            include: {
+                                lesson: {
+                                    where: {
+                                        isPublished: true
+                                    }
+                                },
+                                exercise: {
+                                    where: {
+                                        isOpen: true
+                                    }
+                                }
                             }
-                        }
+                        },
                     }
                 },
                 owner: true,
@@ -309,11 +318,20 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                     include: {
-                        lessons: {
-                            where: {
-                                isPublished: true
+                        contents: {
+                            include: {
+                                lesson: {
+                                    where: {
+                                        isPublished: true
+                                    }
+                                },
+                                exercise: {
+                                    where: {
+                                        isOpen: true
+                                    }
+                                }
                             }
-                        }
+                        },
                     }
                 },
                 owner: true,
@@ -337,13 +355,22 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                     include: {
-                        lessons: {
-                            where: {
-                                isPublished: true,
+                        contents: {
+                            include: {
+                                lesson: {
+                                    where: {
+                                        isPublished: true
+                                    }
+                                },
+                                exercise: {
+                                    where: {
+                                        isOpen: true
+                                    }
+                                }
                             },
                             orderBy: {
-                                position: 'asc',
-                            },
+                                position: "asc"
+                            }
                         },
                     },
                     orderBy: {
@@ -392,21 +419,21 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                     include: {
-                        lessons: {
-                            where: {
-                                isPublished: true,
-                            },
-                            orderBy: {
-                                position: 'asc',
-                            },
-                            include: {
-                                userProgress: {
-                                    where: {
-                                        userId: user.id,
-                                    },
-                                },
-                            },
-                        },
+                        // lessons: {
+                        //     where: {
+                        //         isPublished: true,
+                        //     },
+                        //     orderBy: {
+                        //         position: 'asc',
+                        //     },
+                        //     include: {
+                        //         userProgress: {
+                        //             where: {
+                        //                 userId: user.id,
+                        //             },
+                        //         },
+                        //     },
+                        // },
                     },
                     orderBy: {
                         position: 'asc',
@@ -438,21 +465,21 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                     include: {
-                        lessons: {
-                            where: {
-                                isPublished: true,
-                            },
-                            orderBy: {
-                                position: 'asc',
-                            },
-                            include: {
-                                userProgress: {
-                                    where: {
-                                        userId: user.id,
-                                    },
-                                },
-                            },
-                        },
+                        // lessons: {
+                        //     where: {
+                        //         isPublished: true,
+                        //     },
+                        //     orderBy: {
+                        //         position: 'asc',
+                        //     },
+                        //     include: {
+                        //         userProgress: {
+                        //             where: {
+                        //                 userId: user.id,
+                        //             },
+                        //         },
+                        //     },
+                        // },
                     },
                     orderBy: {
                         position: 'asc',

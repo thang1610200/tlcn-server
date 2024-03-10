@@ -196,7 +196,12 @@ export class ChapterService implements ChapterServiceInterface {
                 token: payload.token,
             },
             include: {
-                lessons: {
+                course: true,
+                contents: {
+                    include: {
+                        lesson: true,
+                        exercise: true
+                    },
                     orderBy: {
                         position: 'asc',
                     },
