@@ -9,7 +9,6 @@ import { UpdateStatusExerciseDto } from '../dto/update-status-exercise.dto';
 
 export interface ExerciseServiceInterface {
     findInstructorByEmail(email: string): Promise<User>;
-    findExerciseByToken(token: string, instructorId: string): Promise<Exercise>;
     getAllExercise(payload: GetAllExerciseDto): Promise<Exercise[]>;
     createExercise(payload: CreateExerciseDto): Promise<ExerciseResponse>;
     getDetailExercise(payload: GetDetailExerciseDto): Promise<Exercise>;

@@ -95,8 +95,31 @@ export class ExerciseService implements ExerciseServiceInterface {
 
     async getDetailExercise(payload: GetDetailExerciseDto): Promise<Exercise> {
         const user = await this.findInstructorByEmail(payload.email);
+        const course = await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.findChapterByToken(payload.chapter_token, course.id);
 
-        return await this.findExerciseByToken(payload.token, user.id);
+        try {
+            const exercise = await this.prismaService.exercise.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id
+                    },
+                    token: payload.token
+                },
+                include: {
+                    quizz: {
+                        orderBy: {
+                            position: "asc"
+                        }
+                    }
+                }
+            });
+
+            return exercise;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async findInstructorByEmail(email: string): Promise<User> {
@@ -113,31 +136,6 @@ export class ExerciseService implements ExerciseServiceInterface {
         return user;
     }
 
-    async findExerciseByToken(
-        token: string,
-        instructorId: string,
-    ): Promise<Exercise> {
-        throw new Error();
-        // const exercise = await this.prismaService.exercise.findFirst({
-        //     where: {
-        //         instructorId,
-        //         token,
-        //     },
-        //     include: {
-        //         quizz: {
-        //             orderBy: {
-        //                 position: 'asc',
-        //             },
-        //         }
-        //     },
-        // });
-
-        // if (!exercise) {
-        //     throw new NotFoundException();
-        // }
-
-        // return exercise;
-    }
 
     async createExercise(
         payload: CreateExerciseDto,
@@ -187,22 +185,28 @@ export class ExerciseService implements ExerciseServiceInterface {
     async updateExercise(
         payload: UpdateExerciseDto,
     ): Promise<ExerciseResponse> {
-        throw new Error();
-        // const user = await this.findInstructorByEmail(payload.email);
+        const user = await this.findInstructorByEmail(payload.email);
+        const course = await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.findChapterByToken(payload.chapter_token, course.id);
 
-        // const exercise = await this.findExerciseByToken(payload.token, user.id);
+        try {
+            const exerciseUpdate = await this.prismaService.exercise.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id
+                    },
+                    token: payload.token
+                },
+                data: {
+                    ...payload.value,
+                },
+            });
 
-        // const exerciseUpdate = await this.prismaService.exercise.update({
-        //     where: {
-        //         instructorId: user.id,
-        //         token: exercise.token,
-        //     },
-        //     data: {
-        //         ...payload.value,
-        //     },
-        // });
-
-        // return this.builResponseExercise(exerciseUpdate);
+            return this.builResponseExercise(exerciseUpdate);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateStatusExercise(

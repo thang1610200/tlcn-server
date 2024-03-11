@@ -1,10 +1,13 @@
 import {
+    BadRequestException,
     Injectable,
+    InternalServerErrorException,
     NotFoundException,
     UnauthorizedException,
+    UnprocessableEntityException,
 } from '@nestjs/common';
 import { QuizzServiceInterface } from './interfaces/quizz.service.interface';
-import { Exercise, Prisma, Quizz } from '@prisma/client';
+import { Chapter, Course, Exercise, Prisma, Quizz, User } from '@prisma/client';
 import { CreateQuizzDto } from './dto/create-quizz.dto';
 import { QuizzResponse } from './dto/response-quizz.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -17,82 +20,146 @@ import { UpdateStatusQuizzDto } from './dto/update-status-quizz.dto';
 export class QuizzService implements QuizzServiceInterface {
     constructor(private readonly prismaService: PrismaService) {}
 
+    async findChapterByToken(
+        chapterToken: string,
+        courseId: string,
+    ): Promise<Chapter> {
+        try {
+            const chapter = await this.prismaService.chapter.findFirst({
+                where: {
+                    courseId: courseId,
+                    token: chapterToken,
+                },
+            });
+
+            if (!chapter) {
+                throw new UnprocessableEntityException();
+            }
+
+            return chapter;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findCourseBySlug(
+        courseSlug: string,
+        userId: string,
+    ): Promise<Course> {
+        try {
+            const course = await this.prismaService.course.findFirst({
+                where: {
+                    owner_id: userId,
+                    slug: courseSlug,
+                },
+            });
+
+            if (!course) {
+                throw new UnauthorizedException();
+            }
+
+            return course;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findUserByEmail(email: string): Promise<User> {
+        try {
+            const user = await this.prismaService.user.findUnique({
+                where: {
+                    email,
+                },
+            });
+
+            if (!user) {
+                throw new UnauthorizedException();
+            }
+
+            return user;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
     async findExcersie(
-        email: string,
+        chapterId: string,
         exercise_token: string,
     ): Promise<Exercise> {
-        throw new Error();
-        // const user = await this.prismaService.user.findUnique({
-        //     where: {
-        //         email,
-        //     },
-        // });
+        try {
+            const exercise = await this.prismaService.exercise.findFirst({
+                where: {
+                    token: exercise_token,
+                    content: {
+                        chapterId
+                    }
+                }
+            });
 
-        // if (!user) {
-        //     throw new UnauthorizedException();
-        // }
+            if(!exercise) {
+                throw new BadRequestException();
+            }
 
-        // const exercise = await this.prismaService.exercise.findFirst({
-        //     where: {
-        //         token: exercise_token,
-        //         instructorId: user.id,
-        //     },
-        // });
-
-        // if (!exercise) {
-        //     throw new NotFoundException();
-        // }
-
-        // return exercise;
+            return exercise;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async createQuizz(payload: CreateQuizzDto): Promise<QuizzResponse> {
-        const exercise = await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
+        const user = await this.findUserByEmail(payload.email);
+        const course = await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.findChapterByToken(payload.chapter_token, course.id);
+    
+        const exercise = await this.findExcersie(chapter.id, payload.exercise_token);
 
-        const lastQuizz = await this.prismaService.quizz.findFirst({
-            where: {
-                exerciseId: exercise.id,
-            },
-            orderBy: {
-                position: 'desc',
-            },
-        });
-
-        const newPosition = lastQuizz ? lastQuizz.position + 1 : 1;
-
-        const quizz = await this.prismaService.quizz.create({
-            data: {
-                token: new Date().getTime().toString(),
-                question: payload.question,
-                position: newPosition,
-                exerciseId: exercise.id,
-            },
-        });
-
-        return this.buildQuizzResponse(quizz);
+        try {
+            const lastQuizz = await this.prismaService.quizz.findFirst({
+                where: {
+                    exerciseId: exercise.id,
+                },
+                orderBy: {
+                    position: 'desc',
+                },
+            });
+    
+            const newPosition = lastQuizz ? lastQuizz.position + 1 : 1;
+    
+            const quizz = await this.prismaService.quizz.create({
+                data: {
+                    token: new Date().getTime().toString(),
+                    question: payload.question,
+                    position: newPosition,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            return this.buildQuizzResponse(quizz);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async reorderQuizz(payload: ReorderQuizzDto): Promise<string> {
-        const exercise = await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
-
-        for (let item of payload.list) {
-            await this.prismaService.quizz.update({
-                where: {
-                    token: item.token,
-                },
-                data: {
-                    position: item.position,
-                },
-            });
+        try {
+            for (let item of payload.list) {
+                await this.prismaService.quizz.update({
+                    where: {
+                        token: item.token,
+                    },
+                    data: {
+                        position: item.position,
+                    },
+                });
+            }
+    
+            return 'Success';
         }
-
-        return 'Success';
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async getDetailQuizz(payload: DetailQuizzDto): Promise<Quizz> {

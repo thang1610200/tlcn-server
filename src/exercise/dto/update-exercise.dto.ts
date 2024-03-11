@@ -9,6 +9,14 @@ export class UpdateExerciseDto {
     @IsString()
     token: string;
 
+    @IsNotEmpty()
+    @IsString()
+    course_slug: string;
+
+    @IsNotEmpty()
+    @IsString()
+    chapter_token: string;
+
     @IsObject()
     value: object;
 }

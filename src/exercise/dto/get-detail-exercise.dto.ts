@@ -8,4 +8,12 @@ export class GetDetailExerciseDto {
     @IsEmail()
     @IsNotEmpty()
     email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    course_slug: string;
+
+    @IsString()
+    @IsNotEmpty()
+    chapter_token: string;
 }

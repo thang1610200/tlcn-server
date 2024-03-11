@@ -9,6 +9,14 @@ export class CreateQuizzDto {
     @IsNotEmpty()
     exercise_token: string;
 
+    @IsString()
+    @IsNotEmpty()
+    course_slug: string;
+
+    @IsString()
+    @IsNotEmpty()
+    chapter_token: string;
+
     @IsEmail()
     email: string;
 }
