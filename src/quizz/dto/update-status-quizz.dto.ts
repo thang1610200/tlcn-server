@@ -7,7 +7,15 @@ export class UpdateStatusQuizzDto {
 
     @IsString()
     @IsNotEmpty()
-    token: string;
+    course_slug: string;
+
+    @IsString()
+    @IsNotEmpty()
+    chapter_token: string;
+
+    @IsString()
+    @IsNotEmpty()
+    quiz_token: string;
 
     @IsString()
     @IsNotEmpty()

@@ -27,7 +27,7 @@ export class QuizzService implements QuizzServiceInterface {
         try {
             const chapter = await this.prismaService.chapter.findFirst({
                 where: {
-                    courseId: courseId,
+                    courseId,
                     token: chapterToken,
                 },
             });
@@ -37,7 +37,7 @@ export class QuizzService implements QuizzServiceInterface {
             }
 
             return chapter;
-        } catch {
+        } catch(e) {
             throw new InternalServerErrorException();
         }
     }
@@ -163,119 +163,159 @@ export class QuizzService implements QuizzServiceInterface {
     }
 
     async getDetailQuizz(payload: DetailQuizzDto): Promise<Quizz> {
-        const exercise = await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
+        const user = await this.findUserByEmail(payload.email);
+        const course = await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.findChapterByToken(payload.chapter_token, course.id);
+        const exercise = await this.findExcersie(chapter.id, payload.exercise_token);
 
-        const quizz = await this.prismaService.quizz.findFirst({
-            where: {
-                token: payload.token,
-                exerciseId: exercise.id,
-            },
-            // include: {
-            //     exercise: {
-            //         include: {
-            //             lesson: true
-            //         }
-            //     }
-            // }
-        });
-
-        if (!quizz) {
-            throw new NotFoundException();
+        try {
+            const quizz = await this.prismaService.quizz.findFirst({
+                where: {
+                    token: payload.quiz_token,
+                    exerciseId: exercise.id
+                }
+            });
+    
+            if (!quizz) {
+                throw new NotFoundException();
+            }
+    
+            return quizz;
         }
-
-        return quizz;
+        catch{
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateValueQuizz(payload: UpdateQuizzDto): Promise<QuizzResponse> {
-        const exercise = await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
+        const user = await this.findUserByEmail(payload.email);
+        const course = await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.findChapterByToken(payload.chapter_token, course.id);
+        const exercise = await this.findExcersie(chapter.id, payload.exercise_token);
 
-        const quizz = await this.prismaService.quizz.findFirst({
-            where: {
-                token: payload.token,
-                exerciseId: exercise.id,
-            },
-        });
-
-        if (!quizz) {
-            throw new NotFoundException();
+        try {
+            const quizz = await this.prismaService.quizz.findFirst({
+                where: {
+                    token: payload.quiz_token,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            if (!quizz) {
+                throw new NotFoundException();
+            }
+    
+            const updateQuizz = await this.prismaService.quizz.update({
+                where: {
+                    token: quizz.token,
+                    exerciseId: exercise.id,
+                },
+                data: {
+                    ...payload.value
+                },
+            });
+    
+            return this.buildQuizzResponse(updateQuizz);
         }
-
-        const quizzUpdate = await this.prismaService.quizz.update({
-            where: {
-                token: quizz.token,
-                exerciseId: exercise.id,
-            },
-            data: {
-                ...payload.value,
-            },
-        });
-
-        return this.buildQuizzResponse(quizzUpdate);
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateStatusQuizz(
         payload: UpdateStatusQuizzDto,
     ): Promise<QuizzResponse> {
-        const exercise = await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
+        const user = await this.findUserByEmail(payload.email);
+        const course = await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.findChapterByToken(payload.chapter_token, course.id);
+        const exercise = await this.findExcersie(chapter.id, payload.exercise_token);
 
-        const quizz = await this.prismaService.quizz.findFirst({
-            where: {
-                token: payload.token,
-                exerciseId: exercise.id,
-            },
-        });
-
-        if (!quizz) {
-            throw new NotFoundException();
+        try {
+            const quizz = await this.prismaService.quizz.findFirst({
+                where: {
+                    token: payload.quiz_token,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            if (!quizz) {
+                throw new NotFoundException();
+            }
+    
+            const updateQuizz = await this.prismaService.quizz.update({
+                where: {
+                    token: quizz.token,
+                    exerciseId: exercise.id,
+                },
+                data: {
+                    isPublished: !quizz.isPublished,
+                },
+            });
+    
+            return this.buildQuizzResponse(updateQuizz);
         }
-
-        const updateQuizz = await this.prismaService.quizz.update({
-            where: {
-                token: quizz.token,
-                exerciseId: exercise.id,
-            },
-            data: {
-                isPublished: !quizz.isPublished,
-            },
-        });
-
-        return this.buildQuizzResponse(updateQuizz);
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
-    async deleteQuizz(payload: DetailQuizzDto): Promise<string> {
-        const exercise = await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
-
-        const quizz = await this.prismaService.quizz.findFirst({
+    async updatePositionQuizs(exerciseId: string, position: number): Promise<string> {
+        const quizs = await this.prismaService.quizz.findMany({
             where: {
-                token: payload.token,
-                exerciseId: exercise.id,
+                exerciseId,
+                position: {
+                    gt: position,
+                },
             },
+            orderBy: {
+                position: "asc"
+            }
         });
 
-        if (!quizz) {
-            throw new NotFoundException();
-        }
-
-        await this.prismaService.quizz.delete({
-            where: {
-                token: quizz.token,
-                exerciseId: exercise.id,
-            },
+        quizs.forEach(async (item) => {
+            await this.prismaService.quizz.update({
+                where: {
+                    id: item.id,
+                },
+                data: {
+                    position: item.position - 1,
+                },
+            });
         });
 
         return 'SUCCESS';
+    }
+
+    async deleteQuizz(payload: DetailQuizzDto): Promise<string> {
+        const user = await this.findUserByEmail(payload.email);
+        const course = await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.findChapterByToken(payload.chapter_token, course.id);
+        const exercise = await this.findExcersie(chapter.id, payload.exercise_token);
+
+        try {
+            const quizz = await this.prismaService.quizz.findFirst({
+                where: {
+                    token: payload.quiz_token,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            if (!quizz) {
+                throw new NotFoundException();
+            }
+    
+            const quizDeleted = await this.prismaService.quizz.delete({
+                where: {
+                    token: quizz.token,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            return await this.updatePositionQuizs(exercise.id, quizDeleted.position);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     buildQuizzResponse(quizz: Quizz): QuizzResponse {

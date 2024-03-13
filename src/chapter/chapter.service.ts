@@ -1,5 +1,6 @@
 import {
     Injectable,
+    InternalServerErrorException,
     UnauthorizedException,
     UnprocessableEntityException,
 } from '@nestjs/common';
@@ -17,6 +18,33 @@ import { DeleteChapterDto } from './dto/delete-chapter.dto';
 @Injectable()
 export class ChapterService implements ChapterServiceInterface {
     constructor(private readonly prismaService: PrismaService) {}
+
+    async updatePositionChapter(courseId: string, position: number): Promise<string> {
+        const chapters = await this.prismaService.chapter.findMany({
+            where: {
+                courseId,
+                position: {
+                    gt: position,
+                },
+            },
+            orderBy: {
+                position: "asc"
+            }
+        });
+
+        chapters.forEach(async (item) => {
+            await this.prismaService.chapter.update({
+                where: {
+                    id: item.id,
+                },
+                data: {
+                    position: item.position - 1,
+                },
+            });
+        });
+
+        return 'SUCCESS';
+    }
 
     async deleteChapter(payload: DeleteChapterDto): Promise<string> {
         const user = await this.prismaService.user.findUnique({
@@ -46,15 +74,21 @@ export class ChapterService implements ChapterServiceInterface {
         if (!chapter) {
             throw new UnprocessableEntityException();
         }
-
-        await this.prismaService.chapter.delete({
-            where: {
-                courseId: course.id,
-                token: payload.token,
-            },
-        });
-
-        return 'SUCCESS';
+        try {
+            return this.prismaService.$transaction(async (tx) => {
+                const chapterDeleted = await this.prismaService.chapter.delete({
+                    where: {
+                        courseId: course.id,
+                        token: payload.token,
+                    },
+                });
+    
+                return await this.updatePositionChapter(course.id, chapterDeleted.position);
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async findCourseBySlug(slug: string, email: string): Promise<Course> {

@@ -17,5 +17,6 @@ export interface QuizzServiceInterface {
     findUserByEmail(email: string): Promise<User>;
     findCourseBySlug(courseSlug: string, userId: string): Promise<Course>;
     findChapterByToken(chapterToken: string, courseId: string): Promise<Chapter>;
+    updatePositionQuizs(exerciseId: string, position: number): Promise<string>;
     buildQuizzResponse(quizz: Quizz): QuizzResponse;
 }

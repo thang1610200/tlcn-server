@@ -22,4 +22,5 @@ export interface ExerciseServiceInterface {
     builResponseExercise(payload: Exercise): ExerciseResponse;
     findChapterByToken(chapterToken: string, courseId: string): Promise<Chapter>;
     findCourseBySlug(courseSlug: string, userId: string): Promise<Course>;
+    updatePositionExercises(contentId: string): Promise<string>;
 }

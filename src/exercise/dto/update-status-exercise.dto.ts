@@ -2,12 +2,20 @@ import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class UpdateStatusExerciseDto {
     @IsEmail()
-    @IsNotEmpty()
+    @IsString()
     email: string;
 
-    @IsString()
     @IsNotEmpty()
-    exercise_token: string;
+    @IsString()
+    token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    course_slug: string;
+
+    @IsNotEmpty()
+    @IsString()
+    chapter_token: string;
 
     @IsBoolean()
     status: boolean;

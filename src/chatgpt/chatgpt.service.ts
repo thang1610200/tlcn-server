@@ -198,20 +198,6 @@ export class ChatgptService implements ChatgptServiceInterface {
                 output_format_prompt += `\nGenerate a list of json, one json for each input element.`;
             }
 
-            // Use OpenAI to get a response
-            // const response = await this.openai.chat.completions.create({
-            //     temperature,
-            //     model,
-            //     messages: [
-            //         {
-            //             role: 'system',
-            //             content:
-            //                 system_prompt + output_format_prompt + error_msg,
-            //         },
-            //         { role: 'user', content: user_prompt.toString() },
-            //     ],
-            // });
-
             const models = this.genai.getGenerativeModel({model});
 
             const chat = models.startChat({
@@ -325,8 +311,7 @@ export class ChatgptService implements ChatgptServiceInterface {
                         token: new Date().getTime().toString(),
                         question: item.question,
                         answer:
-                            item.answer.charAt(0).toUpperCase() +
-                            item.answer.slice(1),
+                            item.answer,
                         position: newPosition,
                         exerciseId: exercise.id,
                         option: ['True', 'False'],
@@ -369,8 +354,7 @@ export class ChatgptService implements ChatgptServiceInterface {
                         token: new Date().getTime().toString(),
                         question: item.question,
                         answer:
-                            item.answer.charAt(0).toUpperCase() +
-                            item.answer.slice(1),
+                            item.answer,
                         position: newPosition,
                         exerciseId: exercise.id,
                         option: [
@@ -412,20 +396,18 @@ export class ChatgptService implements ChatgptServiceInterface {
             `You are to generate ${payload.amount} question random level ${payload.level} ${payload.type} about ${payload.topic}`,
             format,
         );
-        console.log(questions);
-        return "dsd";
-        // if (questions.length < payload.amount) {
-        //     throw new InternalServerErrorException();
-        // } else {
-        //     return payload.type === 'True Or False'
-        //         ? this.addListQuizzTFToDB(
-        //               payload,
-        //               questions.slice(0, payload.amount),
-        //           )
-        //         : this.addListQuizzMCToDB(
-        //               payload,
-        //               questions.slice(0, payload.amount),
-        //           );
-        // }
+        if (questions.length < payload.amount) {
+            throw new InternalServerErrorException();
+        } else {
+            return payload.type === 'True Or False'
+                ? this.addListQuizzTFToDB(
+                      payload,
+                      questions.slice(0, payload.amount),
+                  )
+                : this.addListQuizzMCToDB(
+                      payload,
+                      questions.slice(0, payload.amount),
+                  );
+        }
     }
 }

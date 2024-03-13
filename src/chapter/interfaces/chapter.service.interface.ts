@@ -20,4 +20,5 @@ export interface ChapterServiceInterface {
         payload: UpdateStatusChapterDto,
     ): Promise<ChapterResponse>;
     deleteChapter(payload: DeleteChapterDto): Promise<string>;
+    updatePositionChapter(courseId: string, position: number): Promise<string>;
 }

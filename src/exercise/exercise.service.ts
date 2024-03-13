@@ -115,6 +115,10 @@ export class ExerciseService implements ExerciseServiceInterface {
                 }
             });
 
+            if(!exercise){
+                throw new NotFoundException();
+            }
+
             return exercise;
         }
         catch {
@@ -135,7 +139,6 @@ export class ExerciseService implements ExerciseServiceInterface {
 
         return user;
     }
-
 
     async createExercise(
         payload: CreateExerciseDto,
@@ -212,25 +215,61 @@ export class ExerciseService implements ExerciseServiceInterface {
     async updateStatusExercise(
         payload: UpdateStatusExerciseDto,
     ): Promise<ExerciseResponse> {
-        // const user = await this.findInstructorByEmail(payload.email);
+        const user = await this.findInstructorByEmail(payload.email);
+        const course = await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.findChapterByToken(payload.chapter_token, course.id);
 
-        // const exercise = await this.findExerciseByToken(
-        //     payload.exercise_token,
-        //     user.id,
-        // );
+        try {
+            const exerciseUpdate = await this.prismaService.exercise.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id
+                    },
+                    token: payload.token
+                },
+                data: {
+                    isOpen: !payload.status
+                },
+            });
 
-        // const exerciseUpdate = await this.prismaService.exercise.update({
-        //     where: {
-        //         instructorId: user.id,
-        //         token: exercise.token,
-        //     },
-        //     data: {
-        //         isOpen: !exercise.isOpen,
-        //     },
-        // });
+            return this.builResponseExercise(exerciseUpdate);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
-        // return this.builResponseExercise(exerciseUpdate);
-        throw new Error();
+    async updatePositionExercises(contentId: string): Promise<string> {
+        const contentDeleted = await this.prismaService.content.delete({
+            where: {
+                id: contentId,
+            },
+        });
+
+        const contents = await this.prismaService.content.findMany({
+            where: {
+                chapterId: contentDeleted.chapterId,
+                position: {
+                    gt: contentDeleted.position,
+                },
+            },
+            orderBy: {
+                position: "asc"
+            }
+        });
+
+        contents.forEach(async (item) => {
+            await this.prismaService.content.update({
+                where: {
+                    id: item.id,
+                },
+                data: {
+                    position: item.position - 1,
+                },
+            });
+        });
+
+        return 'SUCCESS';
     }
 
     async addExerciseToLesson(payload: AddExerciseLessonDto): Promise<string> {
@@ -298,18 +337,45 @@ export class ExerciseService implements ExerciseServiceInterface {
     }
 
     async deleteExercise(payload: GetDetailExerciseDto): Promise<string> {
-        // const user = await this.findInstructorByEmail(payload.email);
+        const user = await this.findInstructorByEmail(payload.email);
 
-        // const exercise = await this.findExerciseByToken(payload.token, user.id);
+        const course = await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
 
-        // await this.prismaService.exercise.delete({
-        //     where: {
-        //         instructorId: user.id,
-        //         token: exercise.token,
-        //     },
-        // });
+        const chapter = await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
 
-        return 'SUCCESS';
+        try {
+            const exercise = await this.prismaService.exercise.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.token,
+                },
+            });
+
+            if (!exercise) {
+                throw new UnprocessableEntityException();
+            }
+
+            const exerciseDeleted = await this.prismaService.exercise.delete({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    id: exercise.id
+                },
+            });
+
+            return this.updatePositionExercises(exerciseDeleted.contentId);
+        } catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     builResponseExercise(payload: Exercise): ExerciseResponse {

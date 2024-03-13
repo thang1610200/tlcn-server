@@ -11,5 +11,13 @@ export class DetailQuizzDto {
 
     @IsString()
     @IsNotEmpty()
-    token: string;
+    quiz_token: string;
+
+    @IsString()
+    @IsNotEmpty()
+    course_slug: string;
+
+    @IsString()
+    @IsNotEmpty()
+    chapter_token: string;
 }
