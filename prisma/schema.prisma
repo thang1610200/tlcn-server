@@ -119,23 +119,22 @@ model Chapter {
 }
 
 model Lesson {
-  id              String         @id @default(auto()) @map("_id") @db.ObjectId
-  token           String         @unique
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  token           String       @unique
   title           String
   description     String?
   //position        Int
-  isPublished     Boolean        @default(false)
+  isPublished     Boolean      @default(false)
   videoUrl        String?
   duration        Int?
-  isCompleteVideo Boolean        @default(false)
+  isCompleteVideo Boolean      @default(false)
   //isPreview       Boolean   @default(true)
   thumbnail       String?
   //amountToPass    Int       @default(0)
   // exerciseId      String?   @db.ObjectId
   // exercise        Exercise? @relation(fields: [exerciseId], references: [id])
-  contentId       String         @unique @db.ObjectId
-  content         Content        @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  userProgress    UserProgress[]
+  contentId       String       @unique @db.ObjectId
+  content         Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
   attachment      Attachment[]
 }
 
@@ -147,6 +146,8 @@ model Content {
   position  Int
   lesson    Lesson?
   exercise  Exercise?
+
+  userProgress UserProgress[]
 }
 
 model Review {
@@ -174,19 +175,19 @@ model ReviewReply {
 }
 
 model Exercise {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  token        String       @unique
-  title        String
-  type         TypeExercise
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  token     String       @unique
+  title     String
+  type      TypeExercise
   // instructorId String       @db.ObjectId
   // instructor   User         @relation(fields: [instructorId], references: [id], onDelete: Cascade)
-  contentId    String       @unique @db.ObjectId
-  content      Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  create_at    DateTime     @default(now())
-  update_at    DateTime     @updatedAt
-  isOpen       Boolean      @default(false)
+  contentId String       @unique @db.ObjectId
+  content   Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  create_at DateTime     @default(now())
+  update_at DateTime     @updatedAt
+  isOpen    Boolean      @default(false)
   //lesson       Lesson[]
-  quizz        Quizz[]
+  quizz     Quizz[]
 }
 
 model Quizz {
@@ -210,16 +211,16 @@ model UserProgress {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   courseId    String   @db.ObjectId
   course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  lessonId    String   @db.ObjectId
-  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  contentId   String   @db.ObjectId
+  content     Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
   isCompleted Boolean  @default(false)
-  isPassed    Boolean  @default(false)
+  //isPassed    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   userProgressQuiz UserProgressQuiz[]
 
-  @@unique([userId, lessonId])
+  @@unique([userId, contentId])
 }
 
 model UserProgressQuiz {

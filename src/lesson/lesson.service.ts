@@ -485,18 +485,18 @@ export class LessonService implements LessonServiceInterface {
                 },
                 include: {
                     attachment: true,
-                    userProgress: {
-                        where: {
-                            userId: user.id,
-                        },
-                        include: {
-                            userProgressQuiz: {
-                                orderBy: {
-                                    createdAt: 'desc',
-                                },
-                            },
-                        },
-                    },
+                    // userProgress: {
+                    //     where: {
+                    //         userId: user.id,
+                    //     },
+                    //     include: {
+                    //         userProgressQuiz: {
+                    //             orderBy: {
+                    //                 createdAt: 'desc',
+                    //             },
+                    //         },
+                    //     },
+                    // },
                 },
             });
 

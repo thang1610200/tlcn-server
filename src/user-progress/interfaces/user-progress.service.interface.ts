@@ -6,16 +6,17 @@ import { GetUserProgressQuizDto } from '../dto/get-user-progress-quiz.dto';
 import { AddUserProgressNextDto } from '../dto/add-user-progress-next.dto';
 
 export interface UserProgressServiceInterface {
-    getUserProgress(payload: GetUserProgressDto): Promise<UserProgress>;
-    findLessonByToken(token: string): Promise<Lesson>;
+    getUserProgressByCourse(courseId: string, userId: string): Promise<UserProgress[]>;
+    // getUserProgress(payload: GetUserProgressDto): Promise<UserProgress>;
+    // findLessonByToken(token: string): Promise<Lesson>;
     findUserByEmail(email: string): Promise<User>;
     findCourseBySlug(slug: string): Promise<Course>;
     addUserProgress(payload: AddUserProgressDto): Promise<UserProgress>;
-    addUserProgressNext(payload: AddUserProgressNextDto): Promise<string>;
-    getUserProgressQuiz(
-        payload: GetUserProgressQuizDto,
-    ): Promise<UserProgressQuiz[]>;
-    addAnswerProgressQuiz(
-        payload: AddAnswerUserProgressDto,
-    ): Promise<UserProgressQuiz>;
+    // addUserProgressNext(payload: AddUserProgressNextDto): Promise<string>;
+    // getUserProgressQuiz(
+    //     payload: GetUserProgressQuizDto,
+    // ): Promise<UserProgressQuiz[]>;
+    // addAnswerProgressQuiz(
+    //     payload: AddAnswerUserProgressDto,
+    // ): Promise<UserProgressQuiz>;
 }

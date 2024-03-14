@@ -25,38 +25,38 @@ import { AddUserProgressNextDto } from './dto/add-user-progress-next.dto';
 export class UserProgressController {
     constructor(private readonly userProgressService: UserProgressService) {}
 
-    @Get('get-user-progress')
-    getUserProgress(@Query() payload: GetUserProgressDto) {
-        return this.userProgressService.getUserProgress(payload);
-    }
+    // @Get('get-user-progress')
+    // getUserProgress(@Query() payload: GetUserProgressDto) {
+    //     return this.userProgressService.getUserProgress(payload);
+    // }
 
-    @Get('get-progress-quiz')
-    getUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
-        return this.userProgressService.getUserProgressQuiz(payload);
-    }
+    // @Get('get-progress-quiz')
+    // getUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
+    //     return this.userProgressService.getUserProgressQuiz(payload);
+    // }
 
-    @Delete('delete-progress-quiz')
-    deleteUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
-        return this.userProgressService.deleteAllProgressQuiz(payload);
-    }
+    // @Delete('delete-progress-quiz')
+    // deleteUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
+    //     return this.userProgressService.deleteAllProgressQuiz(payload);
+    // }
 
-    @Put('add-user-progress')
+    @Post('add-user-progress')
     addUserProgress(@Body() payload: AddUserProgressDto) {
         return this.userProgressService.addUserProgress(payload);
     }
 
-    @Post('add-answer-quiz')
-    addAnswerQuiz(@Body() payload: AddAnswerUserProgressDto) {
-        return this.userProgressService.addAnswerProgressQuiz(payload);
-    }
+    // @Post('add-answer-quiz')
+    // addAnswerQuiz(@Body() payload: AddAnswerUserProgressDto) {
+    //     return this.userProgressService.addAnswerProgressQuiz(payload);
+    // }
 
-    @Post('add-pass-user')
-    updateProgressExercise(@Body() payload: UpdateProgressExerciseDto) {
-        return this.userProgressService.updatePrgressExerciseUser(payload);
-    }
+    // @Post('add-pass-user')
+    // updateProgressExercise(@Body() payload: UpdateProgressExerciseDto) {
+    //     return this.userProgressService.updatePrgressExerciseUser(payload);
+    // }
 
-    @Post('user-progress-next')
-    addUserProgressNext(@Body() payload: AddUserProgressNextDto) {
-        return this.userProgressService.addUserProgressNext(payload);
-    }
+    // @Post('user-progress-next')
+    // addUserProgressNext(@Body() payload: AddUserProgressNextDto) {
+    //     return this.userProgressService.addUserProgressNext(payload);
+    // }
 }
