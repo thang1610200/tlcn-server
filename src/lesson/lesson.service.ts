@@ -1,6 +1,7 @@
 import {
     Injectable,
     InternalServerErrorException,
+    NotFoundException,
     UnauthorizedException,
     UnprocessableEntityException,
 } from '@nestjs/common';
@@ -15,7 +16,7 @@ import { UpdateVideoLesson } from './dto/update-video.dto';
 import { UploadService } from 'src/upload/upload.service';
 import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
-import { Chapter, Course, Lesson, User } from '@prisma/client';
+import { Chapter, Content, Course, Lesson, User } from '@prisma/client';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
 import { ContentLessonDto } from './dto/content-lesson.dto';
 
@@ -121,7 +122,7 @@ export class LessonService implements LessonServiceInterface {
         }
     }
 
-    async createLesson(payload: CreateLessonDto): Promise<LessonResponse> {
+    async createLesson(payload: CreateLessonDto): Promise<Content> {
         const user = await this.findUserByEmail(payload.email);
 
         const course = await this.findCourseBySlug(
@@ -148,21 +149,28 @@ export class LessonService implements LessonServiceInterface {
 
             const content = await this.prismaService.content.create({
                 data: {
+                    token: new Date().getTime().toString(),
                     type: payload.type,
                     chapterId: chapter.id,
                     position: newPosition,
-                },
+                    lesson: {
+                        create: {
+                            title: payload.title,
+                            token: new Date().getTime().toString(),
+                        }
+                    }
+                }
             });
 
-            const lesson = await this.prismaService.lesson.create({
-                data: {
-                    title: payload.title,
-                    token: new Date().getTime().toString(),
-                    contentId: content.id,
-                },
-            });
+            // const lesson = await this.prismaService.lesson.create({
+            //     data: {
+            //         title: payload.title,
+            //         token: new Date().getTime().toString(),
+            //         contentId: content.id,
+            //     },
+            // });
 
-            return this.buildLessonResponse(lesson);
+            return content;
         } catch {
             throw new InternalServerErrorException();
         }
@@ -474,37 +482,50 @@ export class LessonService implements LessonServiceInterface {
         }
     }
 
-    // chưa fix file DTO
-    async contentLesson(payload: ContentLessonDto): Promise<Lesson> {
+    async contentLesson(payload: ContentLessonDto): Promise<Content> {
         const user = await this.findUserByEmail(payload.email);
 
         try {
-            const lesson = await this.prismaService.lesson.findUnique({
+            const content = await this.prismaService.content.findUnique({
                 where: {
-                    token: payload.lesson_token,
+                    token: payload.content_token,
+                    chapter: {
+                        course: {
+                            slug: payload.course_slug
+                        }
+                    }
                 },
                 include: {
-                    attachment: true,
-                    // userProgress: {
-                    //     where: {
-                    //         userId: user.id,
-                    //     },
-                    //     include: {
-                    //         userProgressQuiz: {
-                    //             orderBy: {
-                    //                 createdAt: 'desc',
-                    //             },
-                    //         },
-                    //     },
-                    // },
-                },
+                    exercise: {
+                        include: {
+                            quizz: {
+                                orderBy: {
+                                    position: "asc"
+                                }
+                            }
+                        }
+                    },
+                    lesson: {
+                        include: {
+                            attachment: true
+                        }
+                    },
+                    userProgress: {
+                        where: {
+                            userId: user.id
+                        },
+                        include: {
+                            userProgressQuiz: true
+                        }
+                    }
+                }
             });
 
-            if (!lesson) {
-                throw new UnauthorizedException();
+            if (!content) {
+                throw new NotFoundException();
             }
 
-            return lesson;
+            return content;
         } catch {
             throw new InternalServerErrorException();
         }

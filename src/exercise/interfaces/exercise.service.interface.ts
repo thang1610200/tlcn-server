@@ -1,4 +1,4 @@
-import { Chapter, Course, Exercise, User } from '@prisma/client';
+import { Chapter, Content, Course, Exercise, User } from '@prisma/client';
 import { ExerciseResponse } from '../dto/exercise-response.dto';
 import { CreateExerciseDto } from '../dto/create-exercise.dto';
 import { GetAllExerciseDto } from '../dto/getall-exercise.dto';
@@ -10,7 +10,7 @@ import { UpdateStatusExerciseDto } from '../dto/update-status-exercise.dto';
 export interface ExerciseServiceInterface {
     findInstructorByEmail(email: string): Promise<User>;
     getAllExercise(payload: GetAllExerciseDto): Promise<Exercise[]>;
-    createExercise(payload: CreateExerciseDto): Promise<ExerciseResponse>;
+    createExercise(payload: CreateExerciseDto): Promise<Content>;
     getDetailExercise(payload: GetDetailExerciseDto): Promise<Exercise>;
     updateExercise(payload: UpdateExerciseDto): Promise<ExerciseResponse>;
     updateStatusExercise(

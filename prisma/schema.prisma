@@ -140,6 +140,7 @@ model Lesson {
 
 model Content {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  token     String      @unique
   type      ContentType
   chapterId String      @db.ObjectId
   chapter   Chapter     @relation(fields: [chapterId], references: [id], onDelete: Cascade)

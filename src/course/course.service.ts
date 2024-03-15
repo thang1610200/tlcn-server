@@ -465,27 +465,34 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                     include: {
-                        // lessons: {
-                        //     where: {
-                        //         isPublished: true,
-                        //     },
-                        //     orderBy: {
-                        //         position: 'asc',
-                        //     },
-                        //     include: {
-                        //         userProgress: {
-                        //             where: {
-                        //                 userId: user.id,
-                        //             },
-                        //         },
-                        //     },
-                        // },
+                        contents: {
+                            include: {
+                                lesson: {
+                                    where: {
+                                        isPublished: true
+                                    }
+                                },
+                                exercise: {
+                                    where: {
+                                        isOpen: true
+                                    }
+                                }
+                            },
+                            orderBy: {
+                                position: "asc"
+                            }
+                        },
                     },
                     orderBy: {
                         position: 'asc',
                     },
                 },
                 owner: true,
+                userProgress: {
+                    where: {
+                        userId: user.id
+                    }
+                }
             },
         });
 

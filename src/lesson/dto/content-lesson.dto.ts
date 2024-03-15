@@ -7,7 +7,7 @@ export class ContentLessonDto {
 
     @IsString()
     @IsNotEmpty()
-    lesson_token: string;
+    content_token: string;
 
     @IsEmail()
     @IsNotEmpty()

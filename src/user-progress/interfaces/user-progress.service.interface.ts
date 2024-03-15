@@ -11,7 +11,7 @@ export interface UserProgressServiceInterface {
     // findLessonByToken(token: string): Promise<Lesson>;
     findUserByEmail(email: string): Promise<User>;
     findCourseBySlug(slug: string): Promise<Course>;
-    addUserProgress(payload: AddUserProgressDto): Promise<UserProgress>;
+    addUserProgress(payload: AddUserProgressDto): Promise<Course>;
     // addUserProgressNext(payload: AddUserProgressNextDto): Promise<string>;
     // getUserProgressQuiz(
     //     payload: GetUserProgressQuizDto,

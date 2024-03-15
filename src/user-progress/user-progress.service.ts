@@ -102,7 +102,7 @@ export class UserProgressService implements UserProgressServiceInterface {
         }
     }
 
-    async addUserProgress(payload: AddUserProgressDto): Promise<UserProgress> {
+    async addUserProgress(payload: AddUserProgressDto): Promise<Course> {
         const user = await this.findUserByEmail(payload.email);
 
         const course = await this.findCourseBySlug(payload.course_slug);
@@ -110,17 +110,19 @@ export class UserProgressService implements UserProgressServiceInterface {
         const course_progress = await this.getUserProgressByCourse(course.id, user.id);
 
         try { 
-            if (course_progress.length > 0) {
-                return course_progress[0];
+            if (course_progress.length > 0 || user.id === course.owner_id) {
+                return course;
             }
 
-            return await this.prismaService.userProgress.create({
+            await this.prismaService.userProgress.create({
                 data: {
                     courseId: course.id,
                     userId: user.id,
                     contentId: course.chapters[0].contents[0].id
                 }
             });
+
+            return course;
         }
         catch{
             throw new InternalServerErrorException();

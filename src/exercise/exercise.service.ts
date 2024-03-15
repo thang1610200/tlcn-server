@@ -6,7 +6,7 @@ import {
     UnprocessableEntityException,
 } from '@nestjs/common';
 import { ExerciseServiceInterface } from './interfaces/exercise.service.interface';
-import { Chapter, Course, Exercise, User } from '@prisma/client';
+import { Chapter, Content, Course, Exercise, User } from '@prisma/client';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { ExerciseResponse } from './dto/exercise-response.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -142,7 +142,7 @@ export class ExerciseService implements ExerciseServiceInterface {
 
     async createExercise(
         payload: CreateExerciseDto,
-    ): Promise<ExerciseResponse> {
+    ): Promise<Content> {
         const user = await this.findInstructorByEmail(payload.email);
 
         const course = await this.findCourseBySlug(payload.course_slug, user.id);
@@ -163,22 +163,22 @@ export class ExerciseService implements ExerciseServiceInterface {
     
             const content = await this.prismaService.content.create({
                 data: {
+                    token: new Date().getTime().toString(),
                     type: payload.typeContent,
                     chapterId: chapter.id,
                     position: newPosition,
+                    exercise: {
+                        create: {
+                            title: payload.title,
+                            token: new Date().getTime().toString(),
+                            type: payload.typeExercise
+                        }
+                    }
                 }
             });
     
-            const exercise = await this.prismaService.exercise.create({
-                data: {
-                    title: payload.title,
-                    token: new Date().getTime().toString(),
-                    contentId: content.id,
-                    type: payload.typeExercise
-                },
-            });
     
-            return this.builResponseExercise(exercise);
+            return content;
         }
         catch {
             throw new InternalServerErrorException();

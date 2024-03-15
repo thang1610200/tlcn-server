@@ -156,7 +156,7 @@ export class ChatgptService implements ChatgptServiceInterface {
         output_format: OutputFormat,
         default_category: string = '',
         output_value_only: boolean = false,
-        model: string = 'gemini-1.0-pro-001',
+        model: string = 'gemini-1.0-pro-latest',
         temperature: number = 0.9,
         num_tries: number = 3,
     ): Promise<
@@ -294,33 +294,37 @@ export class ChatgptService implements ChatgptServiceInterface {
         const exercise = await this.quizzService.findExcersie(chapter.id, payload.exercise_token);
 
         try {
-            question.map(async (item) => {
-                const lastQuizz = await this.prismaService.quizz.findFirst({
-                    where: {
-                        exerciseId: exercise.id,
-                    },
-                    orderBy: {
-                        position: 'desc',
-                    },
-                });
-
-                const newPosition = lastQuizz ? lastQuizz.position + 1 : 1;
-
-                await this.prismaService.quizz.create({
-                    data: {
-                        token: new Date().getTime().toString(),
-                        question: item.question,
-                        answer:
-                            item.answer,
-                        position: newPosition,
-                        exerciseId: exercise.id,
-                        option: ['True', 'False'],
-                        explain: item?.explain || '',
-                    },
-                });
+            return await this.prismaService.$transaction(async (tx) => {
+                await Promise.all(
+                    question.map(async (item) => {
+                        const lastQuizz = await this.prismaService.quizz.findFirst({
+                            where: {
+                                exerciseId: exercise.id,
+                            },
+                            orderBy: {
+                                position: 'desc',
+                            },
+                        });
+        
+                        const newPosition = lastQuizz ? lastQuizz.position + 1 : 1;
+        
+                        await tx.quizz.create({
+                            data: {
+                                token: new Date().getTime().toString(),
+                                question: item.question,
+                                answer:
+                                    item.answer,
+                                position: newPosition,
+                                exerciseId: exercise.id,
+                                option: ['True', 'False'],
+                                explain: item?.explain || '',
+                            },
+                        });
+                    })
+                );
+    
+                return 'SUCCESS';
             });
-
-            return 'SUCCESS';
         } catch (err: any) {
             throw new InternalServerErrorException();
         }
@@ -337,38 +341,42 @@ export class ChatgptService implements ChatgptServiceInterface {
         const exercise = await this.quizzService.findExcersie(chapter.id, payload.exercise_token);
 
         try {
-            question.map(async (item) => {
-                const lastQuizz = await this.prismaService.quizz.findFirst({
-                    where: {
-                        exerciseId: exercise.id,
-                    },
-                    orderBy: {
-                        position: 'desc',
-                    },
-                });
-
-                const newPosition = lastQuizz ? lastQuizz.position + 1 : 1;
-
-                await this.prismaService.quizz.create({
-                    data: {
-                        token: new Date().getTime().toString(),
-                        question: item.question,
-                        answer:
-                            item.answer,
-                        position: newPosition,
-                        exerciseId: exercise.id,
-                        option: [
-                            item?.option1 || '',
-                            item?.option2 || '',
-                            item?.option3 || '',
-                            item.answer,
-                        ],
-                        explain: item?.explain || '',
-                    },
-                });
+            return this.prismaService.$transaction(async (tx) => {
+                await Promise.all(
+                    question.map(async (item) => {
+                        const lastQuizz = await this.prismaService.quizz.findFirst({
+                            where: {
+                                exerciseId: exercise.id,
+                            },
+                            orderBy: {
+                                position: 'desc',
+                            },
+                        });
+        
+                        const newPosition = lastQuizz ? lastQuizz.position + 1 : 1;
+        
+                        await tx.quizz.create({
+                            data: {
+                                token: new Date().getTime().toString(),
+                                question: item.question,
+                                answer:
+                                    item.answer,
+                                position: newPosition,
+                                exerciseId: exercise.id,
+                                option: [
+                                    item?.option1 || '',
+                                    item?.option2 || '',
+                                    item?.option3 || '',
+                                    item.answer,
+                                ],
+                                explain: item?.explain || '',
+                            },
+                        });
+                    })
+                );
+    
+                return 'SUCCESS';
             });
-
-            return 'SUCCESS';
         } catch (err: any) {
             throw new InternalServerErrorException();
         }

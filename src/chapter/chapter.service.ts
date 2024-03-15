@@ -76,7 +76,7 @@ export class ChapterService implements ChapterServiceInterface {
         }
         try {
             return this.prismaService.$transaction(async (tx) => {
-                const chapterDeleted = await this.prismaService.chapter.delete({
+                const chapterDeleted = await tx.chapter.delete({
                     where: {
                         courseId: course.id,
                         token: payload.token,
