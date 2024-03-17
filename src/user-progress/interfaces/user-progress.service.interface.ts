@@ -1,17 +1,15 @@
-import { Course, Lesson, User, UserProgress, UserProgressQuiz } from '@prisma/client';
-import { GetUserProgressDto } from '../dto/get-user-progress.dto';
-import { AddUserProgressDto } from '../dto/add-user-progress.dto';
-import { AddAnswerUserProgressDto } from '../dto/add-answer-progress-quiz.dto';
-import { GetUserProgressQuizDto } from '../dto/get-user-progress-quiz.dto';
-import { AddUserProgressNextDto } from '../dto/add-user-progress-next.dto';
+import { Content, Course, Lesson, User, UserProgress, UserProgressQuiz } from '@prisma/client';
+import { AddUserProgressDto, CompleteLessonDto } from '../dto/user-progress.dto';
 
 export interface UserProgressServiceInterface {
     getUserProgressByCourse(courseId: string, userId: string): Promise<UserProgress[]>;
     // getUserProgress(payload: GetUserProgressDto): Promise<UserProgress>;
     // findLessonByToken(token: string): Promise<Lesson>;
+    findContentOfCourse(token: string, courseId: string): Promise<Content>;
     findUserByEmail(email: string): Promise<User>;
     findCourseBySlug(slug: string): Promise<Course>;
     addUserProgress(payload: AddUserProgressDto): Promise<Course>;
+    completeLesson(payload: CompleteLessonDto): Promise<UserProgress>;
     // addUserProgressNext(payload: AddUserProgressNextDto): Promise<string>;
     // getUserProgressQuiz(
     //     payload: GetUserProgressQuizDto,

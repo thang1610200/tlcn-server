@@ -173,12 +173,12 @@ export class CourseController {
         return this.courseService.getDetailCourse(payload);
     }
 
-    @Roles('LEARNER')
-    @UseGuards(JwtGuard, RolesGuard)
-    @Get('progress-course')
-    getProgressCourse(@Query() payload: GetProgressCourseDto) {
-        return this.courseService.getUserProgressCourse(payload);
-    }
+    // @Roles('LEARNER')
+    // @UseGuards(JwtGuard, RolesGuard)
+    // @Get('progress-course')
+    // getProgressCourse(@Query() payload: GetProgressCourseDto) {
+    //     return this.courseService.getUserProgressCourse(payload);
+    // }
 
     @Roles('LEARNER')
     @UseGuards(JwtGuard, RolesGuard)

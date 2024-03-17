@@ -29,7 +29,7 @@ export interface CourseServiceInterface {
     getAllCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
     filterCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
     getDetailCourse(payload: GetDetailCourseDto): Promise<Course>;
-    getUserProgressCourse(payload: GetProgressCourseDto): Promise<Course>;
+    //getUserProgressCourse(payload: GetProgressCourseDto): Promise<Course>;
     getDetailCourseAuth(payload: GetProgressCourseDto): Promise<Course>;
     getAllUserOfInstructor(payload: GetCourseUserDto): Promise<UserProgress[]>;
     getAllUserOfCourse(payload: GetProgressCourseDto): Promise<UserProgress[]>;

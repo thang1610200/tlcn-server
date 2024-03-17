@@ -3,6 +3,7 @@ import {
     Controller,
     Delete,
     Get,
+    Patch,
     Post,
     Put,
     Query,
@@ -12,12 +13,7 @@ import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { RolesGuard } from 'src/course/guards/role.guard';
 import { UserProgressService } from './user-progress.service';
-import { GetUserProgressDto } from './dto/get-user-progress.dto';
-import { AddUserProgressDto } from './dto/add-user-progress.dto';
-import { AddAnswerUserProgressDto } from './dto/add-answer-progress-quiz.dto';
-import { GetUserProgressQuizDto } from './dto/get-user-progress-quiz.dto';
-import { UpdateProgressExerciseDto } from './dto/update-progress-exercise.dto';
-import { AddUserProgressNextDto } from './dto/add-user-progress-next.dto';
+import { AddUserProgressDto, CompleteLessonDto } from './dto/user-progress.dto';
 
 @Roles('LEARNER')
 @UseGuards(JwtGuard, RolesGuard)
@@ -55,8 +51,8 @@ export class UserProgressController {
     //     return this.userProgressService.updatePrgressExerciseUser(payload);
     // }
 
-    // @Post('user-progress-next')
-    // addUserProgressNext(@Body() payload: AddUserProgressNextDto) {
-    //     return this.userProgressService.addUserProgressNext(payload);
-    // }
+    @Patch('complete-lesson')
+    addUserProgressNext(@Body() payload: CompleteLessonDto) {
+        return this.userProgressService.completeLesson(payload);
+    }
 }

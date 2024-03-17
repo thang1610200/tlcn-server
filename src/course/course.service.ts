@@ -402,53 +402,53 @@ export class CourseService implements CourseServiceInterface {
         return users;
     }
 
-    async getUserProgressCourse(
-        payload: GetProgressCourseDto,
-    ): Promise<Course> {
-        const user = await this.findUserByEmail(payload.email);
+    // async getUserProgressCourse(
+    //     payload: GetProgressCourseDto,
+    // ): Promise<Course> {
+    //     const user = await this.findUserByEmail(payload.email);
 
-        const course = await this.prismaService.course.findUnique({
-            where: {
-                slug: payload.course_slug,
-                isPublished: true,
-            },
-            include: {
-                topic: true,
-                chapters: {
-                    where: {
-                        isPublished: true,
-                    },
-                    include: {
-                        // lessons: {
-                        //     where: {
-                        //         isPublished: true,
-                        //     },
-                        //     orderBy: {
-                        //         position: 'asc',
-                        //     },
-                        //     include: {
-                        //         userProgress: {
-                        //             where: {
-                        //                 userId: user.id,
-                        //             },
-                        //         },
-                        //     },
-                        // },
-                    },
-                    orderBy: {
-                        position: 'asc',
-                    },
-                },
-                owner: true,
-            },
-        });
+    //     const course = await this.prismaService.course.findUnique({
+    //         where: {
+    //             slug: payload.course_slug,
+    //             isPublished: true,
+    //         },
+    //         include: {
+    //             topic: true,
+    //             chapters: {
+    //                 where: {
+    //                     isPublished: true,
+    //                 },
+    //                 include: {
+    //                     // lessons: {
+    //                     //     where: {
+    //                     //         isPublished: true,
+    //                     //     },
+    //                     //     orderBy: {
+    //                     //         position: 'asc',
+    //                     //     },
+    //                     //     include: {
+    //                     //         userProgress: {
+    //                     //             where: {
+    //                     //                 userId: user.id,
+    //                     //             },
+    //                     //         },
+    //                     //     },
+    //                     // },
+    //                 },
+    //                 orderBy: {
+    //                     position: 'asc',
+    //                 },
+    //             },
+    //             owner: true,
+    //         },
+    //     });
 
-        if (!course) {
-            throw new UnprocessableEntityException();
-        }
+    //     if (!course) {
+    //         throw new UnprocessableEntityException();
+    //     }
 
-        return course;
-    }
+    //     return course;
+    // }
 
     async getDetailCourseAuth(payload: GetProgressCourseDto): Promise<Course> {
         const user = await this.findUserByEmail(payload.email);
@@ -475,6 +475,11 @@ export class CourseService implements CourseServiceInterface {
                                 exercise: {
                                     where: {
                                         isOpen: true
+                                    }
+                                },
+                                userProgress: {
+                                    where: {
+                                        userId: user.id
                                     }
                                 }
                             },

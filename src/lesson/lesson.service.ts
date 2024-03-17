@@ -499,6 +499,9 @@ export class LessonService implements LessonServiceInterface {
                     exercise: {
                         include: {
                             quizz: {
+                                where: {
+                                    isPublished: true
+                                },
                                 orderBy: {
                                     position: "asc"
                                 }
