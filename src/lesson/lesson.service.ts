@@ -389,6 +389,53 @@ export class LessonService implements LessonServiceInterface {
         }
     }
 
+    async updatePreviewLesson(
+        payload: UpdateStatusLessonDto,
+    ): Promise<LessonResponse> {
+        const user = await this.findUserByEmail(payload.email);
+
+        const course = await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
+
+        const chapter = await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
+
+        try {
+            const lesson = await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.lesson_token,
+                },
+            });
+
+            if (!lesson) {
+                throw new UnprocessableEntityException();
+            }
+
+            const update = await this.prismaService.lesson.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: lesson.token,
+                },
+                data: {
+                    isPreview: !payload.status,
+                },
+            });
+
+            return this.buildLessonResponse(update);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
     async deleteLesson(payload: DeleteLessonDto): Promise<string> {
         const user = await this.findUserByEmail(payload.email);
 

@@ -25,4 +25,5 @@ export interface LessonServiceInterface {
     findCourseBySlug(courseSlug: string, userId: string): Promise<Course>;
     findChapterByToken(chapterToken: string, courseId: string): Promise<Chapter>;
     updatePositionLessons(contentId: string): Promise<string>;
+    updatePreviewLesson(payload: UpdateStatusLessonDto): Promise<LessonResponse>;
 }

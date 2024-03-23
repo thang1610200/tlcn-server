@@ -128,7 +128,7 @@ model Lesson {
   videoUrl        String?
   duration        Int?
   isCompleteVideo Boolean      @default(false)
-  //isPreview       Boolean   @default(true)
+  isPreview       Boolean      @default(false)
   thumbnail       String?
   //amountToPass    Int       @default(0)
   // exerciseId      String?   @db.ObjectId

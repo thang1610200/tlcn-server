@@ -55,6 +55,11 @@ export class LessonController {
         return this.lessonService.updateStatusLesson(payload);
     }
 
+    @Patch('update-preview')
+    updatePreviewLesson(@Body() payload: UpdateStatusLessonDto) {
+        return this.lessonService.updatePreviewLesson(payload);
+    }
+
     @Delete('delete-lesson')
     deleteLesson(@Query() payload: DeleteLessonDto) {
         return this.lessonService.deleteLesson(payload);
