@@ -1,4 +1,4 @@
-import { Chapter, Content, Course, Lesson, User } from '@prisma/client';
+import { Chapter, Content, Course, Lesson, Subtitle, User } from '@prisma/client';
 import { LessonResponse } from '../dto/lesson-response.dto';
 import { CreateLessonDto } from '../dto/create-lesson.dto';
 import { ReorderLessonDto } from '../dto/reorder-lesson.dto';
@@ -9,6 +9,7 @@ import { UpdateStatusLessonDto } from '../dto/update-status.dto';
 import { DeleteLessonDto } from '../dto/delete-lesson.dto';
 import { UpdateThumbnailVideo } from '../dto/update-thumbnail.dto';
 import { ContentLessonDto } from '../dto/content-lesson.dto';
+import { AddSubtitleLessonDto, AddSubtitleLessonInterface, DeleteSubtitleLessonDto, TranslateSubtitleDto } from '../dto/subtitle.dto';
 
 export interface LessonServiceInterface {
     buildLessonResponse(lesson: Lesson): LessonResponse;
@@ -26,4 +27,8 @@ export interface LessonServiceInterface {
     findChapterByToken(chapterToken: string, courseId: string): Promise<Chapter>;
     updatePositionLessons(contentId: string): Promise<string>;
     updatePreviewLesson(payload: UpdateStatusLessonDto): Promise<LessonResponse>;
+    addSubtitleLesson(payload: AddSubtitleLessonInterface): Promise<Subtitle>;
+    deleteSubtitleLesson(payload: DeleteSubtitleLessonDto): Promise<Subtitle>;
+    generateSubtitleVideo(payload: AddSubtitleLessonDto): Promise<Subtitle>;
+    translateSubtitle(payload: TranslateSubtitleDto):Promise<void>;
 }

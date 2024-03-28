@@ -136,6 +136,18 @@ model Lesson {
   contentId       String       @unique @db.ObjectId
   content         Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
   attachment      Attachment[]
+  subtitles       Subtitle[]
+}
+
+model Subtitle {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  language      String
+  language_code String
+  file          String
+  lessonId      String   @db.ObjectId
+  lesson        Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  create_at     DateTime @default(now())
+  update_at     DateTime @updatedAt
 }
 
 model Content {

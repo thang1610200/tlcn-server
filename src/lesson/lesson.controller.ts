@@ -28,6 +28,8 @@ import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
 import { ContentLessonDto } from './dto/content-lesson.dto';
+import { AddSubtitleLessonDto, DeleteSubtitleLessonDto } from './dto/subtitle.dto';
+import { FileTypeValidationPipe } from './pipes/file-type-validation.pipe';
 
 @Roles('INSTRUCTOR')
 @UseGuards(JwtGuard, RolesGuard)
@@ -50,6 +52,11 @@ export class LessonController {
         return this.lessonService.updateValueLesson(payload);
     }
 
+    @Post('generate-subtitle')
+    generateSubtitle(@Body() payload: AddSubtitleLessonDto) {
+        return this.lessonService.generateSubtitleVideo(payload);
+    }
+
     @Patch('update-status')
     updateStatusLesson(@Body() payload: UpdateStatusLessonDto) {
         return this.lessonService.updateStatusLesson(payload);
@@ -63,6 +70,11 @@ export class LessonController {
     @Delete('delete-lesson')
     deleteLesson(@Query() payload: DeleteLessonDto) {
         return this.lessonService.deleteLesson(payload);
+    }
+
+    @Delete('delete-subtitle')
+    deleteSubtitleLesson(@Query() payload: DeleteSubtitleLessonDto) {
+        return this.lessonService.deleteSubtitleLesson(payload);
     }
 
     @UseInterceptors(FileInterceptor('file'))
@@ -96,6 +108,27 @@ export class LessonController {
             lesson_token: body.lesson_token,
         };
         return this.lessonService.updateVideoLesson(payload);
+    }
+
+    @UseInterceptors(FileInterceptor('file'))
+    @Post('add-subtitle')
+    async addSubtitleLesson(
+        @UploadedFile(
+            new FileTypeValidationPipe()
+        )
+        file: Express.Multer.File,
+        @Body() body: AddSubtitleLessonDto,
+    ) {
+        const payload = {
+            file,
+            email: body.email,
+            course_slug: body.course_slug,
+            chapter_token: body.chapter_token,
+            lesson_token: body.lesson_token,
+            language: body.language,
+            language_code: body.language_code
+        };
+        return this.lessonService.addSubtitleLesson(payload);
     }
 
     @UseInterceptors(FileInterceptor('file'))

@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { UploadService } from 'src/upload/upload.service';
 import { BullModule } from '@nestjs/bull';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
     imports: [
@@ -13,6 +14,6 @@ import { BullModule } from '@nestjs/bull';
         }),
     ],
     controllers: [LessonController, LessonControllerUser],
-    providers: [LessonService, PrismaService, JwtService, UploadService],
+    providers: [LessonService, PrismaService, JwtService, UploadService, ConfigService],
 })
 export class LessonModule {}

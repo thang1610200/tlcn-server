@@ -42,6 +42,7 @@
     "@nestjs/websockets": "^10.2.7",
     "@prisma/client": "^5.3.1",
     "@types/lodash": "^4.14.202",
+    "assemblyai": "^4.3.3",
     "bcrypt": "^5.1.1",
     "bull": "^4.11.3",
     "class-transformer": "^0.5.1",
@@ -61,7 +62,8 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "sharp": "^0.32.6",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "subtitle": "^4.2.1"
   },
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.23",

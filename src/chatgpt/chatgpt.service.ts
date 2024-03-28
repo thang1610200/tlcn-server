@@ -6,7 +6,10 @@ import { ChatgptServiceInterface } from './interfaces/chatgpt.service.interface'
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
 import { OutputFormatMC, OutputFormatTF } from './dto/output-format.dto';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { ChatSession, GoogleGenerativeAI } from "@google/generative-ai";
+import { parseSync, stringifySync } from 'subtitle';
+import fetch from 'node-fetch';
+import { UploadService } from 'src/upload/upload.service';
 
 @Injectable()
 export class ChatgptService implements ChatgptServiceInterface {
@@ -14,12 +17,107 @@ export class ChatgptService implements ChatgptServiceInterface {
         private readonly configService: ConfigService,
         private readonly prismaService: PrismaService,
         private readonly quizzService: QuizzService,
+        private readonly uploadService: UploadService
     ) {}
-
     private readonly openai = new OpenAI({
         //organization: this.configService.get('ORGANIZATION_ID'),
         apiKey: this.configService.get('OPENAI_API_KEY'),
     });
+
+    async translateSubtitle(subtitleUrl: any): Promise<string> {
+        try {
+            const file = await fetch(subtitleUrl.payload);
+            const buffer = await file.buffer();
+
+            const output_format = {
+                "Input": "Translation of subtitles"
+            }
+
+            let subtitle = parseSync(buffer.toString());
+
+            subtitle = subtitle.filter(line => line.type === 'cue');
+
+            let previousSubtitles = [];
+
+            for (let i = 0; i < subtitle.length; i++) {
+                let text: string = subtitle[i].data['text'];
+
+                let input: {
+                    Input: string,
+                    Next?: string
+                } = { Input: text };
+
+                if (subtitle[i + 1]) {
+                    input.Next = subtitle[i + 1].data['text'];
+                }
+                let completion: ChatSession;
+
+                for(;;) {
+                    try {
+                        let output_format_prompt: string = `\nYou are to output the following in json format: ${JSON.stringify(
+                            output_format,
+                        )}. \nDo not put quotation marks or escape character \\ in the output fields.`;
+
+                        const model = this.genai.getGenerativeModel({
+                            model: 'gemini-1.0-pro-001',
+                        },{
+                            timeout: 60 * 1000
+                        });
+
+                        completion = model.startChat({
+                            history: [
+                                {
+                                    role: 'user',
+                                    parts: JSON.stringify(input)
+                                },
+                                ...previousSubtitles.slice(-4),
+                                {
+                                    role: 'model',
+                                    parts: `You are a program responsible for translating subtitles. Your task is to output the specified target language based on the input text. Please do not create the following subtitles on your own. Please do not output any text other than the translation. You will receive the subtitles as array that needs to be translated, as well as the previous translation results and next subtitle. You need to review the previous and next subtitles to translate the current subtitle to suit the context.If you need to merge the subtitles with the following line, simply repeat the translation. Please transliterate the person's name into the local language. Target language: Vietnamese`
+                                    + output_format_prompt
+                                }
+                            ]
+                        });
+                        break;
+                    }
+                    catch {
+                        throw new InternalServerErrorException();
+                    }
+                }
+
+                try {
+                    const result = await completion.sendMessage(JSON.stringify(input));
+
+                    const response = await result.response;
+        
+                    let res: string = response.text() ?? '';
+
+                    res = JSON.parse(res).Input;
+
+                    previousSubtitles.push({ role: 'model', parts: JSON.stringify({ ...input, Input: res }) });
+                    previousSubtitles.push({ role: 'user', parts: JSON.stringify(input) });
+
+                    subtitle[i].data['text'] = res;
+                }
+                catch {
+                    throw new InternalServerErrorException();
+                }
+            }
+
+            const output_file = stringifySync(subtitle, {format: 'WebVTT'});
+
+            const fileAWS = {
+                originalname: 'translate-learning.vtt',
+                buffer: Buffer.from(output_file)
+            }
+
+            return await this.uploadService.uploadAttachmentToS3(fileAWS);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+
+    }
 
     private readonly genai = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
 

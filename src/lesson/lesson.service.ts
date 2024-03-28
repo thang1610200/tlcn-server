@@ -16,16 +16,117 @@ import { UpdateVideoLesson } from './dto/update-video.dto';
 import { UploadService } from 'src/upload/upload.service';
 import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
-import { Chapter, Content, Course, Lesson, User } from '@prisma/client';
+import { Chapter, Content, Course, Lesson, Subtitle, User } from '@prisma/client';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
 import { ContentLessonDto } from './dto/content-lesson.dto';
+import { AddSubtitleLessonDto, AddSubtitleLessonInterface, DeleteSubtitleLessonDto, TranslateSubtitleDto } from './dto/subtitle.dto';
+import { AssemblyAI } from 'assemblyai';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class LessonService implements LessonServiceInterface {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
+        private readonly configService: ConfigService
     ) {}
+    private readonly client = new AssemblyAI({
+        apiKey: this.configService.get('ASSEMBLY_API_KEY'),
+    });   
+
+    async translateSubtitle(payload: TranslateSubtitleDto): Promise<void> {
+        const lesson = await this.findLessonByToken(payload);
+
+        try {
+            const subtitle = await this.prismaService.subtitle.findFirst({
+                where: {
+                    id: payload.subtitleId,
+                    lessonId: lesson.id
+                }
+            });
+
+            if(!subtitle) {
+                throw new NotFoundException();
+            }
+
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async generateSubtitleVideo(payload: AddSubtitleLessonDto): Promise<Subtitle> {
+        const lesson = await this.findLessonByToken(payload);
+
+        const fileTranscript = {
+            audio_url: lesson.videoUrl,
+            language_code: payload.language_code
+        }
+
+        const transcript = await this.client.transcripts.transcribe(fileTranscript);
+
+        let vtt = await this.client.transcripts.subtitles(transcript.id, 'vtt');
+
+        const fileAWS = {
+            originalname: 'transcript-learning.vtt',
+            buffer: Buffer.from(vtt)
+        }
+
+        try {
+            const file = await this.uploadService.uploadAttachmentToS3(fileAWS);
+
+            return await this.prismaService.subtitle.create({
+                data: {
+                    lessonId: lesson.id,
+                    language: payload.language,
+                    language_code: payload.language_code,
+                    file
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteSubtitleLesson(payload: DeleteSubtitleLessonDto): Promise<Subtitle> {
+        const lesson = await this.findLessonByToken(payload);
+
+        try {
+            return await this.prismaService.subtitle.delete({
+                where: {
+                    lessonId: lesson.id,
+                    id: payload.subtitleId
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async addSubtitleLesson(payload: AddSubtitleLessonInterface): Promise<Subtitle> {
+        const lesson = await this.findLessonByToken(payload);
+
+        try {
+            const file = await this.uploadService.uploadAttachmentToS3(payload.file);
+
+            const subtitle = await this.prismaService.subtitle.create({
+                data: {
+                    lessonId: lesson.id,
+                    language: payload.language,
+                    language_code: payload.language_code,
+                    file
+                }
+            });
+
+            return subtitle;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
 
     async updatePositionLessons(contentId: string): Promise<string> {
         const contentDeleted = await this.prismaService.content.delete({
@@ -223,6 +324,7 @@ export class LessonService implements LessonServiceInterface {
                             },
                         },
                     },
+                    subtitles: true
                 },
             });
 

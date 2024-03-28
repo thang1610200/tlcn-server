@@ -26,4 +26,5 @@ export interface ChatgptServiceInterface {
         payload: CreateListQuizzDto,
         question: OutputFormatMC[],
     ): Promise<string>;
+    translateSubtitle(subtitleUrl: string): Promise<string>;
 }

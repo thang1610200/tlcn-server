@@ -16,3 +16,13 @@ export class ChatgptController {
         return this.chatgptService.createQuizzList(payload);
     }
 }
+
+@Controller('test')
+export class ChatgptControllers {
+    constructor(private readonly chatgptService: ChatgptService) {}
+
+    @Post('tran')
+    createQuizzLists(@Body() payload: any) {
+        return this.chatgptService.translateSubtitle(payload);
+    }
+}
