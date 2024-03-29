@@ -5,7 +5,8 @@ import { ConfigService } from '@nestjs/config';
 import { UploadProcessor } from './upload.processor';
 import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
-//import { UploadGateway } from './upload.gateway';
+import { ChatgptService } from 'src/chatgpt/chatgpt.service';
+import { QuizzService } from 'src/quizz/quizz.service';
 
 @Module({
     imports: [
@@ -19,7 +20,8 @@ import { JwtService } from '@nestjs/jwt';
         UploadProcessor,
         PrismaService,
         JwtService,
-        //UploadGateway,
+        ChatgptService,
+        QuizzService
     ],
     controllers: [],
 })

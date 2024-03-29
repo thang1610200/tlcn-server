@@ -1,4 +1,5 @@
 import { QueueUploadVideo } from 'src/lesson/dto/queue-upload-video.dto';
+import { TranslateSubtitleQueue } from 'src/lesson/dto/subtitle.dto';
 //import { CIDString, Web3Storage } from 'web3.storage';
 
 export interface UploadServiceInterface {
@@ -11,4 +12,5 @@ export interface UploadServiceInterface {
     uploadVideoToS3(file: any, fileName: string): Promise<void>;
     createFileNameVideo(file: any): any;
     uploadAttachmentToS3(file: any): Promise<string>;
+    translateSubtitleJob(data: TranslateSubtitleQueue): Promise<object>;
 }

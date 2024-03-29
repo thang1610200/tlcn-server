@@ -28,7 +28,7 @@ import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
 import { ContentLessonDto } from './dto/content-lesson.dto';
-import { AddSubtitleLessonDto, DeleteSubtitleLessonDto } from './dto/subtitle.dto';
+import { AddSubtitleLessonDto, DeleteSubtitleLessonDto, TranslateSubtitleDto } from './dto/subtitle.dto';
 import { FileTypeValidationPipe } from './pipes/file-type-validation.pipe';
 
 @Roles('INSTRUCTOR')
@@ -55,6 +55,11 @@ export class LessonController {
     @Post('generate-subtitle')
     generateSubtitle(@Body() payload: AddSubtitleLessonDto) {
         return this.lessonService.generateSubtitleVideo(payload);
+    }
+
+    @Post('translate-subtitle')
+    translateSubtitle(@Body() payload: TranslateSubtitleDto) {
+        return this.lessonService.translateSubtitle(payload);
     }
 
     @Patch('update-status')

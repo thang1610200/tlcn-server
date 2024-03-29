@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ChatgptController, ChatgptControllers } from './chatgpt.controller';
+import { ChatgptController } from './chatgpt.controller';
 import { ChatgptService } from './chatgpt.service';
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
@@ -13,7 +13,7 @@ import { BullModule } from '@nestjs/bull';
             name: 'upload',
         }),
     ],
-    controllers: [ChatgptController, ChatgptControllers],
+    controllers: [ChatgptController],
     providers: [ChatgptService, PrismaService, QuizzService, JwtService, UploadService],
 })
 export class ChatgptModule {}

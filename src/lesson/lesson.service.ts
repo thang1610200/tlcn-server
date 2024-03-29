@@ -19,7 +19,7 @@ import { DeleteLessonDto } from './dto/delete-lesson.dto';
 import { Chapter, Content, Course, Lesson, Subtitle, User } from '@prisma/client';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
 import { ContentLessonDto } from './dto/content-lesson.dto';
-import { AddSubtitleLessonDto, AddSubtitleLessonInterface, DeleteSubtitleLessonDto, TranslateSubtitleDto } from './dto/subtitle.dto';
+import { AddSubtitleLessonDto, AddSubtitleLessonInterface, DeleteSubtitleLessonDto, TranslateSubtitleDto, TranslateSubtitleQueue } from './dto/subtitle.dto';
 import { AssemblyAI } from 'assemblyai';
 import { ConfigService } from '@nestjs/config';
 
@@ -34,7 +34,7 @@ export class LessonService implements LessonServiceInterface {
         apiKey: this.configService.get('ASSEMBLY_API_KEY'),
     });   
 
-    async translateSubtitle(payload: TranslateSubtitleDto): Promise<void> {
+    async translateSubtitle(payload: TranslateSubtitleDto): Promise<Subtitle> {
         const lesson = await this.findLessonByToken(payload);
 
         try {
@@ -49,6 +49,16 @@ export class LessonService implements LessonServiceInterface {
                 throw new NotFoundException();
             }
 
+            const data: TranslateSubtitleQueue = {
+                lessonId: lesson.id,
+                subtitleUrl: subtitle.file,
+                language: payload.language,
+                language_code: payload.language_code
+            }
+
+            await this.uploadService.translateSubtitleJob(data);
+
+            return subtitle;
         }
         catch {
             throw new InternalServerErrorException();
@@ -659,7 +669,8 @@ export class LessonService implements LessonServiceInterface {
                     },
                     lesson: {
                         include: {
-                            attachment: true
+                            attachment: true,
+                            subtitles: true
                         }
                     },
                     userProgress: {

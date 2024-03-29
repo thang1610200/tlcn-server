@@ -89,5 +89,8 @@ export interface AddSubtitleLessonInterface {
 }
 
 export interface TranslateSubtitleQueue {
-    
+    lessonId: string;
+    subtitleUrl: string;
+    language: string;
+    language_code: string;
 }

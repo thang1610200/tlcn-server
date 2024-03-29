@@ -24,9 +24,9 @@ export class ChatgptService implements ChatgptServiceInterface {
         apiKey: this.configService.get('OPENAI_API_KEY'),
     });
 
-    async translateSubtitle(subtitleUrl: any): Promise<string> {
+    async translateSubtitle(subtitleUrl: string, languageTarget: string): Promise<string> {
         try {
-            const file = await fetch(subtitleUrl.payload);
+            const file = await fetch(subtitleUrl);
             const buffer = await file.buffer();
 
             const output_format = {
@@ -73,7 +73,7 @@ export class ChatgptService implements ChatgptServiceInterface {
                                 ...previousSubtitles.slice(-4),
                                 {
                                     role: 'model',
-                                    parts: `You are a program responsible for translating subtitles. Your task is to output the specified target language based on the input text. Please do not create the following subtitles on your own. Please do not output any text other than the translation. You will receive the subtitles as array that needs to be translated, as well as the previous translation results and next subtitle. You need to review the previous and next subtitles to translate the current subtitle to suit the context.If you need to merge the subtitles with the following line, simply repeat the translation. Please transliterate the person's name into the local language. Target language: Vietnamese`
+                                    parts: `You are a program responsible for translating subtitles. Your task is to output the specified target language based on the input text. Please do not create the following subtitles on your own. Please do not output any text other than the translation. You will receive the subtitles as array that needs to be translated, as well as the previous translation results and next subtitle. You need to review the previous and next subtitles to translate the current subtitle to suit the context.If you need to merge the subtitles with the following line, simply repeat the translation. Please transliterate the person's name into the local language. Target language: ${languageTarget}`
                                     + output_format_prompt
                                 }
                             ]

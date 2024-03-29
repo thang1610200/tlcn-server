@@ -30,5 +30,5 @@ export interface LessonServiceInterface {
     addSubtitleLesson(payload: AddSubtitleLessonInterface): Promise<Subtitle>;
     deleteSubtitleLesson(payload: DeleteSubtitleLessonDto): Promise<Subtitle>;
     generateSubtitleVideo(payload: AddSubtitleLessonDto): Promise<Subtitle>;
-    translateSubtitle(payload: TranslateSubtitleDto):Promise<void>;
+    translateSubtitle(payload: TranslateSubtitleDto):Promise<Subtitle>;
 }

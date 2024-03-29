@@ -8,6 +8,7 @@ import * as sharp from 'sharp';
 import { JwtService } from '@nestjs/jwt';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { QueueUploadVideo } from 'src/lesson/dto/queue-upload-video.dto';
+import { TranslateSubtitleQueue } from 'src/lesson/dto/subtitle.dto';
 
 @Injectable()
 export class UploadService implements UploadServiceInterface {
@@ -166,5 +167,11 @@ export class UploadService implements UploadServiceInterface {
         } catch (err) {
             throw new UnauthorizedException();
         }
+    }
+
+    async translateSubtitleJob(data: TranslateSubtitleQueue): Promise<object> {
+        const job = await this.uploadQueue.add('translate-subtitle', { data });
+
+        return { job: job.id };
     }
 }
