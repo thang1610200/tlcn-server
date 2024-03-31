@@ -202,6 +202,7 @@ model Exercise {
   isOpen         Boolean      @default(false)
   //lesson       Lesson[]
   quizz          Quizz[]
+  code           Code?
 }
 
 model Quizz {
@@ -217,6 +218,42 @@ model Quizz {
   explain     String?
   create_at   DateTime @default(now())
   update_at   DateTime @updatedAt
+}
+
+model LanguageCode {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  lab      String
+  language String[]
+  mime     String[]
+  code     Code[]
+}
+
+model FileCode {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  fileName        String
+  default_content String?
+  codeId          String  @db.ObjectId
+  code            Code    @relation(fields: [codeId], references: [id], onDelete: Cascade)
+}
+
+model Code {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  token      String       @unique
+  question   String
+  languageId String?       @db.ObjectId
+  language   LanguageCode? @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  exerciseId String       @unique @db.ObjectId
+  exercise   Exercise     @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  file       FileCode[]
+  testcase   TestCase[]
+}
+
+model TestCase {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  input  String
+  output String
+  codeId String @db.ObjectId
+  code   Code   @relation(fields: [codeId], references: [id], onDelete: Cascade)
 }
 
 model UserProgress {

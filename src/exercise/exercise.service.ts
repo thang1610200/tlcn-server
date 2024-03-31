@@ -111,7 +111,8 @@ export class ExerciseService implements ExerciseServiceInterface {
                         orderBy: {
                             position: "asc"
                         }
-                    }
+                    },
+                    code: true
                 }
             });
 

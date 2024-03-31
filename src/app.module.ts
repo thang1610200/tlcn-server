@@ -27,6 +27,7 @@ import * as path from 'path';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { MessageModule } from './message/message.module';
+import { CodeModule } from './code/code.module';
 @Module({
     imports: [
         DevtoolsModule.register({
@@ -110,6 +111,7 @@ import { MessageModule } from './message/message.module';
         AttachmentModule,
         RegisterInstructorModule,
         MessageModule,
+        CodeModule,
     ],
     controllers: [AppController],
     providers: [AppService, PrismaService],

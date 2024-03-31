@@ -1,9 +1,13 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
-export class CreateQuizzDto {
+export class AddFileNameDto {
     @IsNotEmpty()
     @IsString()
-    question: string;
+    fileName: string;
+
+    @IsNotEmpty()
+    @IsString()
+    code_token: string;
 
     @IsNotEmpty()
     @IsString()
