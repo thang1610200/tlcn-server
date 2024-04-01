@@ -4,7 +4,7 @@ import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguag
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
-import { AddFileNameDto } from './dto/file.dto';
+import { AddFileNameDto, UpdateContentFileDto } from './dto/file.dto';
 
 @Roles('INSTRUCTOR')
 @UseGuards(JwtGuard, RolesGuard)
@@ -35,5 +35,10 @@ export class CodeController {
     @Patch('update-code')
     updateValueCode(@Body() body: UpdateValueCodeDto) {
         return this.codeSerivce.updateValueCode(body);
+    }
+
+    @Patch('update-file-code')
+    updateContentFileCode(@Body() body: UpdateContentFileDto) {
+        return this.codeSerivce.updateContentFile(body);
     }
 }

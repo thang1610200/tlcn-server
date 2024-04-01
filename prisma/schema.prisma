@@ -45,6 +45,28 @@ enum ContentType {
   EXERCISE
 }
 
+enum LanguageType {
+  html
+  css
+  javascript
+  typescript
+  cpp
+  c
+  python
+  java
+}
+
+enum MimeType {
+  html
+  css
+  js
+  ts
+  cpp
+  c
+  java
+  py
+}
+
 model User {
   id                  String               @id @default(auto()) @map("_id") @db.ObjectId
   email               String               @unique
@@ -220,30 +242,32 @@ model Quizz {
   update_at   DateTime @updatedAt
 }
 
-model LanguageCode {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+model LabCode {
+  id       String         @id @default(auto()) @map("_id") @db.ObjectId
   lab      String
-  language String[]
-  mime     String[]
+  language LanguageType[]
+  mime     MimeType[]
   code     Code[]
 }
 
 model FileCode {
-  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
   fileName        String
+  language        LanguageType
+  mime            MimeType
   default_content String?
-  codeId          String  @db.ObjectId
-  code            Code    @relation(fields: [codeId], references: [id], onDelete: Cascade)
+  codeId          String       @db.ObjectId
+  code            Code         @relation(fields: [codeId], references: [id], onDelete: Cascade)
 }
 
 model Code {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  token      String       @unique
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  token      String     @unique
   question   String
-  languageId String?       @db.ObjectId
-  language   LanguageCode? @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  exerciseId String       @unique @db.ObjectId
-  exercise   Exercise     @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  labCodeId String?    @db.ObjectId
+  labCode   LabCode?   @relation(fields: [labCodeId], references: [id], onDelete: Cascade)
+  exerciseId String     @unique @db.ObjectId
+  exercise   Exercise   @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
   file       FileCode[]
   testcase   TestCase[]
 }

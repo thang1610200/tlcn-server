@@ -1,21 +1,40 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CodeServiceInterface } from './interfaces/code.service.interface';
-import { $Enums, Code, FileCode, LanguageCode } from '@prisma/client';
+import { $Enums, Code, FileCode, LabCode } from '@prisma/client';
 import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto } from './dto/code.dto';
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
-import { AddFileNameDto } from './dto/file.dto';
+import { AddFileNameDto, UpdateContentFileDto } from './dto/file.dto';
 
 @Injectable()
 export class CodeService implements CodeServiceInterface {
     constructor(private readonly prismaService: PrismaService,
                 private readonly quizService: QuizzService){}
 
-    async getAllLanguageCode(payload: GetAllLanguageCodeDto): Promise<LanguageCode[]> {
+    async updateContentFile(payload: UpdateContentFileDto): Promise<FileCode> {
+        const code = await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.fileCode.update({
+                where: {
+                    id: payload.fileId,
+                    codeId: code.id
+                },
+                data: {
+                    default_content: payload.content
+                }
+            })
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllLanguageCode(payload: GetAllLanguageCodeDto): Promise<LabCode[]> {
         await this.quizService.findUserByEmail(payload.email);
         
         try {
-            return await this.prismaService.languageCode.findMany();
+            return await this.prismaService.labCode.findMany();
         }
         catch {
             throw new InternalServerErrorException();
@@ -24,12 +43,14 @@ export class CodeService implements CodeServiceInterface {
 
     async addFileName(payload: AddFileNameDto): Promise<FileCode> {
         const code = await this.getDetailCode(payload);
-        
+
         try {
             return await this.prismaService.fileCode.create({
                 data: {
                     fileName: payload.fileName,
-                    codeId: code.id
+                    codeId: code.id,
+                    language: payload.languageCode,
+                    mime: payload.mimeFile
                 }
             });
         }
@@ -69,6 +90,7 @@ export class CodeService implements CodeServiceInterface {
                     token: payload.code_token
                 },
                 include: {
+                    labCode: true,
                     file: true,
                     testcase: true
                 }
