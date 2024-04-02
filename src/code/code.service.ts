@@ -1,15 +1,32 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CodeServiceInterface } from './interfaces/code.service.interface';
-import { $Enums, Code, FileCode, LabCode } from '@prisma/client';
+import { $Enums, Code, FileCode, LabCode, TestCase } from '@prisma/client';
 import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto } from './dto/code.dto';
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
 import { AddFileNameDto, UpdateContentFileDto } from './dto/file.dto';
+import { AddTestCaseDto } from './dto/test-case.dto';
 
 @Injectable()
 export class CodeService implements CodeServiceInterface {
     constructor(private readonly prismaService: PrismaService,
                 private readonly quizService: QuizzService){}
+
+    async addTestCase(payload: AddTestCaseDto): Promise<TestCase> {
+        const code = await this.getDetailCode(payload);
+        try {
+            return await this.prismaService.testCase.create({
+                data: {
+                    input: payload.input,
+                    output: payload.output,
+                    codeId: code.id
+                }
+            })
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     async updateContentFile(payload: UpdateContentFileDto): Promise<FileCode> {
         const code = await this.getDetailCode(payload);

@@ -5,6 +5,7 @@ import { Roles } from 'src/course/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
 import { AddFileNameDto, UpdateContentFileDto } from './dto/file.dto';
+import { AddTestCaseDto } from './dto/test-case.dto';
 
 @Roles('INSTRUCTOR')
 @UseGuards(JwtGuard, RolesGuard)
@@ -40,5 +41,10 @@ export class CodeController {
     @Patch('update-file-code')
     updateContentFileCode(@Body() body: UpdateContentFileDto) {
         return this.codeSerivce.updateContentFile(body);
+    }
+
+    @Post('add-test-case')
+    addTestCase(@Body() body: AddTestCaseDto) {
+        return this.codeSerivce.addTestCase(body);
     }
 }
