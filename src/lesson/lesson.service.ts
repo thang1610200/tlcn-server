@@ -664,6 +664,13 @@ export class LessonService implements LessonServiceInterface {
                                 orderBy: {
                                     position: "asc"
                                 }
+                            },
+                            code: {
+                                include: {
+                                    file: true,
+                                    testcase: true,
+                                    labCode: true
+                                }
                             }
                         }
                     },

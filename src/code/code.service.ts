@@ -1,16 +1,77 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CodeServiceInterface } from './interfaces/code.service.interface';
-import { $Enums, Code, FileCode, LabCode, TestCase } from '@prisma/client';
-import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto } from './dto/code.dto';
+import { $Enums, Code, FileCode, LabCode, TestCase, UserProgress } from '@prisma/client';
+import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto, SubmitCodeDto } from './dto/code.dto';
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
 import { AddFileNameDto, UpdateContentFileDto } from './dto/file.dto';
-import { AddTestCaseDto } from './dto/test-case.dto';
+import { AddTestCaseDto, DeleteTestCaseDto } from './dto/test-case.dto';
 
 @Injectable()
 export class CodeService implements CodeServiceInterface {
     constructor(private readonly prismaService: PrismaService,
                 private readonly quizService: QuizzService){}
+
+    async submitCode(payload: SubmitCodeDto): Promise<UserProgress> {
+        const user = await this.quizService.findUserByEmail(payload.email);
+        const course = await this.quizService.findCourseBySlug(payload.course_slug, user.id);
+        const chapter = await this.quizService.findChapterByToken(payload.chapter_token, course.id);
+        const exercise = await this.quizService.findExcersie(chapter.id, payload.exercise_token);
+
+        try {
+            throw Error('dsd');
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteTestCase(payload: DeleteTestCaseDto): Promise<TestCase> {
+        try {
+            return await this.prismaService.testCase.delete({
+                where: {
+                    id: payload.testcaseId,
+                    codeId: payload.codeId
+                }
+            })
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async updateLabCode(payload: UpdateValueCodeDto): Promise<Code> {
+        const code = await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.$transaction(async (tx) => {
+                const codeUpdate = await tx.code.update({
+                    where: {
+                        id: code.id
+                    },
+                    data: {
+                        ...payload.value
+                    },
+                    include: {
+                        file: true
+                    }
+                });
+
+                if(codeUpdate.file.length > 0) {
+                    await tx.fileCode.deleteMany({
+                        where: {
+                            codeId: codeUpdate.id
+                        }
+                    });
+                }
+
+                return codeUpdate;
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     async addTestCase(payload: AddTestCaseDto): Promise<TestCase> {
         const code = await this.getDetailCode(payload);

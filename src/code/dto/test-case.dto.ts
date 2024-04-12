@@ -29,3 +29,13 @@ export class AddTestCaseDto {
     @IsString()
     output: string;
 }
+
+export class DeleteTestCaseDto {
+    @IsNotEmpty()
+    @IsString()
+    codeId: string;
+
+    @IsNotEmpty()
+    @IsString()
+    testcaseId: string;
+}

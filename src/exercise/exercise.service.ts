@@ -112,7 +112,11 @@ export class ExerciseService implements ExerciseServiceInterface {
                             position: "asc"
                         }
                     },
-                    code: true
+                    code: {
+                        include: {
+                            file: true
+                        }
+                    }
                 }
             });
 

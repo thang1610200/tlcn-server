@@ -74,3 +74,25 @@ export class GetAllLanguageCodeDto {
     @IsEmail()
     email: string;
 }
+
+export class SubmitCodeDto {
+    @IsNotEmpty()
+    @IsEmail()
+    email: string;
+
+    @IsNotEmpty()
+    @IsString()
+    code: string;
+
+    @IsNotEmpty()
+    @IsString()
+    exercise_token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    course_slug: string;
+
+    @IsNotEmpty()
+    @IsString()
+    chapter_token: string;
+}

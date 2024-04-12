@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { CodeService } from './code.service';
 import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto } from './dto/code.dto';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
 import { AddFileNameDto, UpdateContentFileDto } from './dto/file.dto';
-import { AddTestCaseDto } from './dto/test-case.dto';
+import { AddTestCaseDto, DeleteTestCaseDto } from './dto/test-case.dto';
 
 @Roles('INSTRUCTOR')
 @UseGuards(JwtGuard, RolesGuard)
@@ -38,6 +38,11 @@ export class CodeController {
         return this.codeSerivce.updateValueCode(body);
     }
 
+    @Patch('update-lab-code')
+    updateLabCode(@Body() body: UpdateValueCodeDto) {
+        return this.codeSerivce.updateLabCode(body);
+    }
+
     @Patch('update-file-code')
     updateContentFileCode(@Body() body: UpdateContentFileDto) {
         return this.codeSerivce.updateContentFile(body);
@@ -46,5 +51,10 @@ export class CodeController {
     @Post('add-test-case')
     addTestCase(@Body() body: AddTestCaseDto) {
         return this.codeSerivce.addTestCase(body);
+    }
+
+    @Delete('delete-testcase')
+    deleteTestCase(@Query() query: DeleteTestCaseDto) {
+        return this.codeSerivce.deleteTestCase(query);
     }
 }
