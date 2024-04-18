@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { CodeService } from './code.service';
-import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto } from './dto/code.dto';
+import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto, SubmitCodeDto } from './dto/code.dto';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
@@ -56,5 +56,15 @@ export class CodeController {
     @Delete('delete-testcase')
     deleteTestCase(@Query() query: DeleteTestCaseDto) {
         return this.codeSerivce.deleteTestCase(query);
+    }
+
+    @Patch('update-function-name')
+    updateFunctionName(@Body() body: UpdateContentFileDto) {
+        return this.codeSerivce.updateFunctioName(body);
+    }
+
+    @Post('submit-code')
+    submitCode(@Body() body: SubmitCodeDto) {
+        return this.codeSerivce.submitCode(body);
     }
 }

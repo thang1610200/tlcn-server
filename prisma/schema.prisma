@@ -255,6 +255,7 @@ model FileCode {
   fileName        String
   language        LanguageType
   mime            MimeType
+  functionName    String?
   default_content String?
   codeId          String       @db.ObjectId
   code            Code         @relation(fields: [codeId], references: [id], onDelete: Cascade)
