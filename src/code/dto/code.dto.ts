@@ -100,6 +100,10 @@ export class SubmitCodeDto {
     @IsNotEmpty()
     @IsString()
     content_token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    next_content_token: string;
 }
 
 export interface HandleCodeProp {
@@ -113,4 +117,8 @@ export interface HandleCodeProp {
 export interface CheckStatusDto {
     token: string,
     testcase: TestCase[];
+    contentId: string;
+    courseId: string;
+    userId: string;
+    next_content_token: string;
 }

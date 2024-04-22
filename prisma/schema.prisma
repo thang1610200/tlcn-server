@@ -265,8 +265,8 @@ model Code {
   id         String     @id @default(auto()) @map("_id") @db.ObjectId
   token      String     @unique
   question   String
-  labCodeId String?    @db.ObjectId
-  labCode   LabCode?   @relation(fields: [labCodeId], references: [id], onDelete: Cascade)
+  labCodeId  String?    @db.ObjectId
+  labCode    LabCode?   @relation(fields: [labCodeId], references: [id], onDelete: Cascade)
   exerciseId String     @unique @db.ObjectId
   exercise   Exercise   @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
   file       FileCode[]
@@ -295,6 +295,7 @@ model UserProgress {
   updatedAt   DateTime @updatedAt
 
   userProgressQuiz UserProgressQuiz[]
+  userProgressCode UserProgressCode[]
 
   @@unique([userId, contentId])
 }
@@ -307,6 +308,15 @@ model UserProgressQuiz {
   userProgress   UserProgress @relation(fields: [userProgressId], references: [id], onDelete: Cascade)
   isCorrect      Boolean      @default(false)
   createdAt      DateTime     @default(now())
+}
+
+model UserProgressCode {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  codeId         String
+  fileCodeId     String
+  answer         String
+  userProgressId String       @db.ObjectId
+  userProgress   UserProgress @relation(fields: [userProgressId], references: [id], onDelete: Cascade)
 }
 
 model Attachment {

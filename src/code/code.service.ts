@@ -1,6 +1,6 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CodeServiceInterface } from './interfaces/code.service.interface';
-import { $Enums, Code, FileCode, LabCode, TestCase, UserProgress } from '@prisma/client';
+import { $Enums, Code, Course, FileCode, LabCode, TestCase, UserProgress } from '@prisma/client';
 import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto, SubmitCodeDto, HandleCodeProp, CheckStatusDto } from './dto/code.dto';
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
@@ -16,38 +16,100 @@ export class CodeService implements CodeServiceInterface {
                 private readonly httpService: HttpService,
                 private readonly configService: ConfigService){}
 
-    async checkStatusCode(payload: CheckStatusDto): Promise<string> {
+    async findCourse(slug: string): Promise<Course> {
         try {
-            const options = {
-                method: 'GET',
-                url: this.configService.get('RAPID_API_URL_BATCH_SUBMISSION'),
-                params: { base64_encoded: 'false', fields: '*', tokens: payload.token },
-                headers: {
-                    'content-type': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-RapidAPI-Host': this.configService.get('RAPID_API_HOST'),
-                    'X-RapidAPI-Key': this.configService.get('RAPID_API_KEY'),
+            const course = await this.prismaService.course.findFirst({
+                where: {
+                    slug
                 }
-            };
-
-            const response = await this.httpService.request(options);
-
-            var countTrue = 0;
-
-            await response.forEach((value) => {
-                // value.data.submissions.map((item) => {
-                //     console.log(item.stdout.trim());
-                // })
-                payload.testcase.map((item, index) => {
-                    if(item.output === value.data.submissions[index].stdout.trim()) {
-                        countTrue++;
-                    }
-                });
             });
 
-            console.log(countTrue);
+            if(!course){
+                throw new NotFoundException();
+            }
+            return course;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
-            return "d";
+    async checkStatusCode(payload: CheckStatusDto): Promise<any> {
+        try {
+            return new Promise((resolve) => {
+                setTimeout(async () => {
+                    const options = {
+                        method: 'GET',
+                        url: this.configService.get('RAPID_API_URL_BATCH_SUBMISSION'),
+                        params: { base64_encoded: 'false', fields: '*', tokens: payload.token },
+                        headers: {
+                            'content-type': 'application/json',
+                            'Content-Type': 'application/json',
+                            'X-RapidAPI-Host': this.configService.get('RAPID_API_HOST'),
+                            'X-RapidAPI-Key': this.configService.get('RAPID_API_KEY'),
+                        }
+                    };
+        
+                    const response = await this.httpService.request(options);
+        
+                    var countTrue = 0;
+        
+                    await response.forEach((value) => {
+                        payload.testcase.map((item, index) => {
+                            if(item.output === value.data.submissions[index].stdout.trim()) {
+                                countTrue++;
+                            }
+                        });
+                    });
+        
+                    if(countTrue === payload.testcase.length) {
+                        await this.prismaService.$transaction(async (tx) => {
+                            await tx.userProgress.update({
+                                where: {
+                                    userId_contentId: {
+                                        userId: payload.userId,
+                                        contentId: payload.contentId
+                                    },
+                                    courseId: payload.courseId
+                                },
+                                data: {
+                                    isCompleted: true,
+                                }
+                            });
+        
+                            if (payload.next_content_token) {
+                                const content_next = await tx.content.findFirst({
+                                    where: {
+                                        token: payload.next_content_token,
+                                        chapter: {
+                                            courseId: payload.courseId
+                                        }
+                                    }
+                                });
+        
+                                if(!content_next) {
+                                    throw new BadRequestException();
+                                }
+        
+                                await tx.userProgress.create({
+                                    data: {
+                                        courseId: payload.courseId,
+                                        userId: payload.userId,
+                                        contentId: content_next.id
+                                    }
+                                });
+                            }
+                        },{
+                            maxWait: 5000,
+                            timeout: 10000
+                        });
+        
+                        resolve("SUCCESS");
+                    }
+        
+                    resolve("FAIL");
+                },2000);
+            });
         }
         catch {
             throw new InternalServerErrorException();
@@ -58,7 +120,7 @@ export class CodeService implements CodeServiceInterface {
         language_id: string,
         source_code: string
     }[]> {
-        try {
+        //try {
             //const getVar = payload.functionName.match(/\((.*?)\)/g)[0];
 
             //const countVar = getVar.match(/,/g).length + 1;
@@ -75,10 +137,10 @@ export class CodeService implements CodeServiceInterface {
             }
     
             return codeResult;
-        }
-        catch {
-            throw new InternalServerErrorException();
-        }
+       // }
+       // catch {
+        //    throw new InternalServerErrorException();
+        //}
     }
 
     async updateFunctioName(payload: UpdateContentFileDto): Promise<FileCode> {
@@ -104,9 +166,9 @@ export class CodeService implements CodeServiceInterface {
         }
     }
 
-    async submitCode(payload: SubmitCodeDto): Promise<string> {
+    async submitCode(payload: SubmitCodeDto): Promise<any> {
         const user = await this.quizService.findUserByEmail(payload.email);
-        const course = await this.quizService.findCourseBySlug(payload.course_slug, user.id);
+        const course = await this.findCourse(payload.course_slug);
         const content = await this.prismaService.content.findFirst({
             where: {
                 token: payload.content_token,
@@ -117,33 +179,33 @@ export class CodeService implements CodeServiceInterface {
             throw new NotFoundException();
         }
 
-        const exercise = await this.prismaService.exercise.findFirst({
-            where: {
-                contentId: content.id,
-                token: payload.exercise_token
-            },
-            include: {
-                code: {
-                    include: {
-                        labCode: true,
-                        file: true,
-                        testcase: true
+        try {
+            const exercise = await this.prismaService.exercise.findFirst({
+                where: {
+                    contentId: content.id,
+                    token: payload.exercise_token
+                },
+                include: {
+                    code: {
+                        include: {
+                            labCode: true,
+                            file: true,
+                            testcase: true
+                        }
                     }
                 }
-            }
-        })
+            })
+    
+            const handleCode: HandleCodeProp = {
+                lab: exercise.code.labCode.lab, 
+                functionName: exercise.code.file[0].functionName, 
+                code: payload.code,
+                testcaseInput: exercise.code.testcase,
+                language_id: payload.language_id
+            };
+    
+            const submissionBatch = await this.handleCode(handleCode);
 
-        const handleCode: HandleCodeProp = {
-            lab: exercise.code.labCode.lab, 
-            functionName: exercise.code.file[0].functionName, 
-            code: payload.code,
-            testcaseInput: exercise.code.testcase,
-            language_id: payload.language_id
-        };
-
-        const submissionBatch = await this.handleCode(handleCode);
-
-        try {
             const options = {
                 method: 'POST',
                 url: this.configService.get('RAPID_API_URL_BATCH_SUBMISSION'),
@@ -167,20 +229,34 @@ export class CodeService implements CodeServiceInterface {
                 });
             });
 
-            setTimeout(() => {
-                const data: CheckStatusDto = {
-                    token: token.join(","),
-                    testcase: exercise.code.testcase
+            await this.prismaService.userProgress.update({
+                where: {
+                    userId_contentId: {
+                        userId: user.id,
+                        contentId: content.id
+                    }
+                },
+                data: {
+                    userProgressCode: {
+                        create: {
+                            codeId: exercise.code.id,
+                            fileCodeId: exercise.code.file[0].id,
+                            answer: payload.code
+                        }
+                    }
                 }
+            })
 
-                this.checkStatusCode(data)
-            },2000);
+            const data: CheckStatusDto = {
+                    token: token.join(","),
+                    testcase: exercise.code.testcase,
+                    contentId: content.id,
+                    courseId: course.id,
+                    userId: user.id,
+                    next_content_token: payload.next_content_token
+            }
 
-            //await this.checkStatusCode(token.join(','));
-            //console.log(response.forEach)
-            //const token = response
-
-            return "s";
+            return await this.checkStatusCode(data);
         }
         catch(err) {
             console.log(err);

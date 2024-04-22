@@ -685,7 +685,8 @@ export class LessonService implements LessonServiceInterface {
                             userId: user.id
                         },
                         include: {
-                            userProgressQuiz: true
+                            userProgressQuiz: true,
+                            userProgressCode: true
                         }
                     }
                 }

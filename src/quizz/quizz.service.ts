@@ -77,7 +77,7 @@ export class QuizzService implements QuizzServiceInterface {
             }
 
             return user;
-        } catch {
+        } catch{
             throw new InternalServerErrorException();
         }
     }
