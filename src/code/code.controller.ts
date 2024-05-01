@@ -4,8 +4,7 @@ import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguag
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
-import { AddFileNameDto, UpdateContentFileDto } from './dto/file.dto';
-import { AddTestCaseDto, DeleteTestCaseDto } from './dto/test-case.dto';
+import { AddFileNameDto, AddFileTestDto, DeleteFileDto, UpdateContentFileDto } from './dto/file.dto';
 
 @Roles('INSTRUCTOR')
 @UseGuards(JwtGuard, RolesGuard)
@@ -28,6 +27,11 @@ export class CodeController {
         return this.codeService.addFileName(body);
     }
 
+    @Post('add-file-test')
+    addFileTest(@Body() body: AddFileTestDto) {
+        return this.codeService.addFileTest(body);
+    }
+
     @Get('detail-code')
     getDetailCode(@Query() query: GetDetailCodeDto) {
         return this.codeService.getDetailCode(query);
@@ -48,21 +52,15 @@ export class CodeController {
         return this.codeService.updateContentFile(body);
     }
 
-    @Post('add-test-case')
-    addTestCase(@Body() body: AddTestCaseDto) {
-        return this.codeService.addTestCase(body);
+    @Patch('update-file-test')
+    updateContentFileTest(@Body() body: UpdateContentFileDto) {
+        return this.codeService.updateContentTestFile(body);
     }
 
-    @Delete('delete-testcase')
-    deleteTestCase(@Query() query: DeleteTestCaseDto) {
-        return this.codeService.deleteTestCase(query);
+    @Delete('delete-file')
+    deleteFile(@Query() query: DeleteFileDto) {
+        return this.codeService.deleteFile(query);
     }
-
-    @Patch('update-function-name')
-    updateFunctionName(@Body() body: UpdateContentFileDto) {
-        return this.codeService.updateFunctioName(body);
-    }
-
 }
 
 @Roles('LEARNER')

@@ -63,3 +63,55 @@ export class UpdateContentFileDto {
     @IsString()
     content: string;
 }
+
+export class AddFileTestDto {
+    @IsNotEmpty()
+    @IsString()
+    fileName: string;
+
+    @IsNotEmpty()
+    @IsString()
+    code_token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    exercise_token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    course_slug: string;
+
+    @IsNotEmpty()
+    @IsString()
+    chapter_token: string;
+
+    @IsNotEmpty()
+    @IsEmail()
+    email: string;
+}
+
+export class DeleteFileDto {
+    @IsNotEmpty()
+    @IsEmail()
+    email: string;
+
+    @IsNotEmpty()
+    @IsString()
+    code_token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    exercise_token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    course_slug: string;
+
+    @IsNotEmpty()
+    @IsString()
+    chapter_token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    fileId: string;
+}

@@ -4,11 +4,10 @@ import { CodeController, CodeControllerUser } from './code.controller';
 import { QuizzService } from 'src/quizz/quizz.service';
 import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
-import { HttpModule } from '@nestjs/axios';
+import { EvaluateService } from 'src/evaluate/evaluate.service';
 
 @Module({
-  imports: [HttpModule],
-  providers: [CodeService, QuizzService, PrismaService, JwtService],
+  providers: [CodeService, QuizzService, PrismaService, JwtService, EvaluateService],
   controllers: [CodeController, CodeControllerUser]
 })
 export class CodeModule {}

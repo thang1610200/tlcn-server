@@ -1,5 +1,4 @@
-import { TestCase } from "@prisma/client";
-import { IsEmail, IsNotEmpty, IsNumber, IsObject, IsString } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, IsNumber, IsObject, IsString } from "class-validator";
 
 export class AddQuestionCodeDto {
     @IsNotEmpty()
@@ -78,16 +77,8 @@ export class GetAllLanguageCodeDto {
 
 export class SubmitCodeDto {
     @IsNotEmpty()
-    @IsEmail()
-    email: string;
-
-    @IsNotEmpty()
     @IsString()
-    code: string;
-
-    @IsNotEmpty()
-    @IsNumber()
-    language_id: number;
+    code_token: string;
 
     @IsNotEmpty()
     @IsString()
@@ -102,23 +93,19 @@ export class SubmitCodeDto {
     content_token: string;
 
     @IsNotEmpty()
-    @IsString()
+    @IsEmail()
+    email: string;
+
+    @IsNotEmpty()
+    @IsArray()
+    codeFile: string[];
+
     next_content_token: string;
 }
 
-export interface HandleCodeProp {
-    lab: string; 
-    functionName: string; 
-    code: string;
-    testcaseInput: TestCase[];
-    language_id: number;
-}
-
-export interface CheckStatusDto {
-    token: string,
-    testcase: TestCase[];
-    contentId: string;
-    courseId: string;
-    userId: string;
-    next_content_token: string;
+export interface DetailCodeInterface {
+    course_slug: string;
+    content_token: string;
+    exercise_token: string;
+    code_token: string;
 }

@@ -54,6 +54,7 @@ enum LanguageType {
   c
   python
   java
+  php
 }
 
 enum MimeType {
@@ -65,6 +66,7 @@ enum MimeType {
   c
   java
   py
+  php
 }
 
 model User {
@@ -255,7 +257,6 @@ model FileCode {
   fileName        String
   language        LanguageType
   mime            MimeType
-  functionName    String?
   default_content String?
   codeId          String       @db.ObjectId
   code            Code         @relation(fields: [codeId], references: [id], onDelete: Cascade)
@@ -270,16 +271,27 @@ model Code {
   exerciseId String     @unique @db.ObjectId
   exercise   Exercise   @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
   file       FileCode[]
-  testcase   TestCase[]
+  fileTest   FileTest?
+  //testcase   TestCase[]
 }
 
-model TestCase {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  input  String
-  output String
-  codeId String @db.ObjectId
-  code   Code   @relation(fields: [codeId], references: [id], onDelete: Cascade)
+model FileTest {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  fileName        String
+  language        LanguageType
+  mime            MimeType
+  content         String?
+  codeId          String       @unique @db.ObjectId
+  code            Code         @relation(fields: [codeId], references: [id], onDelete: Cascade)
 }
+
+// model TestCase {
+//   id     String @id @default(auto()) @map("_id") @db.ObjectId
+//   input  String
+//   output String
+//   codeId String @db.ObjectId
+//   code   Code   @relation(fields: [codeId], references: [id], onDelete: Cascade)
+// }
 
 model UserProgress {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -317,6 +329,8 @@ model UserProgressCode {
   answer         String
   userProgressId String       @db.ObjectId
   userProgress   UserProgress @relation(fields: [userProgressId], references: [id], onDelete: Cascade)
+
+  @@unique([codeId, fileCodeId, userProgressId])
 }
 
 model Attachment {

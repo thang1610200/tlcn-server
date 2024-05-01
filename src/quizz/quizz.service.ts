@@ -37,7 +37,7 @@ export class QuizzService implements QuizzServiceInterface {
             }
 
             return chapter;
-        } catch(e) {
+        } catch {
             throw new InternalServerErrorException();
         }
     }
@@ -59,7 +59,7 @@ export class QuizzService implements QuizzServiceInterface {
             }
 
             return course;
-        } catch {
+        } catch(err) {
             throw new InternalServerErrorException();
         }
     }

@@ -1,20 +1,275 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CodeServiceInterface } from './interfaces/code.service.interface';
-import { $Enums, Code, Course, FileCode, LabCode, TestCase, UserProgress } from '@prisma/client';
-import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto, SubmitCodeDto, HandleCodeProp, CheckStatusDto } from './dto/code.dto';
+import { $Enums, Code, Course, Exercise, FileCode, FileTest, LabCode, UserProgress } from '@prisma/client';
+import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto, SubmitCodeDto, DetailCodeInterface } from './dto/code.dto';
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
-import { AddFileNameDto, UpdateContentFileDto } from './dto/file.dto';
-import { AddTestCaseDto, DeleteTestCaseDto } from './dto/test-case.dto';
-import { HttpService } from '@nestjs/axios';
-import { ConfigService } from '@nestjs/config';
+import { AddFileNameDto, AddFileTestDto, DeleteFileDto, UpdateContentFileDto } from './dto/file.dto';
+import { EvaluateService } from 'src/evaluate/evaluate.service';
+import { EvaluateCode } from 'src/evaluate/dto/evaluate.dto';
 
 @Injectable()
 export class CodeService implements CodeServiceInterface {
     constructor(private readonly prismaService: PrismaService,
                 private readonly quizService: QuizzService,
-                private readonly httpService: HttpService,
-                private readonly configService: ConfigService){}
+                private readonly evaluateService: EvaluateService
+            ){}
+
+    async deleteFile(payload: DeleteFileDto): Promise<FileCode> {
+        const code = await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.fileCode.delete({
+                where: {
+                    id: payload.fileId,
+                    codeId: code.id
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async detailCode(payload: DetailCodeInterface): Promise<Code & {file: FileCode[]; fileTest: FileTest, labCode: LabCode, exercise: Exercise}> {
+        try {
+            const course = await this.prismaService.course.findFirst({
+                where: {
+                    slug: payload.course_slug
+                }
+            });
+
+            if(!course) {
+                throw new NotFoundException();
+            }
+
+            const content = await this.prismaService.content.findFirst({
+                where: {
+                    token: payload.content_token
+                }
+            });
+
+            const exercise = await this.prismaService.exercise.findFirst({
+                where: {
+                    token: payload.exercise_token,
+                    contentId: content.id
+                }
+            })
+
+            return await this.prismaService.code.findFirst({
+                where: {
+                    token: payload.code_token,
+                    exerciseId: exercise.id
+                },
+                include: {
+                    file: true,
+                    fileTest: true,
+                    labCode: true,
+                    exercise: true
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async submitCode(payload: SubmitCodeDto): Promise<boolean> {
+        const user = await this.prismaService.user.findUnique({
+            where: {
+                email: payload.email
+            }
+        });
+
+        if(!user) {
+            throw new UnauthorizedException();
+        }
+
+        const code = await this.detailCode(payload);
+
+        const codeFile: {
+            codeFile: string;
+            codeFileName: string;
+            codeId: string;
+            fileId: string;
+        }[] = code.file.map((item, index) => {
+            return {
+                codeFileName: `${item.fileName}.${item.mime}`,
+                codeFile: payload.codeFile[index],
+                codeId: item.codeId,
+                fileId: item.id
+            }
+        });
+
+        const data: EvaluateCode = {
+            lang: code.labCode.lab,
+            testFile: btoa(code.fileTest.content),
+            testFileName: `${code.fileTest.fileName}.${code.fileTest.mime}`,
+            code: codeFile
+        }
+
+        try {
+            const statusCode = await this.evaluateService.evaluateFunction(data);
+
+            const userProgress = await this.prismaService.userProgress.findFirst({
+                where: {
+                    userId: user.id,
+                    contentId: code.exercise.contentId,
+                    course: {
+                        slug: payload.course_slug
+                    }
+                }
+            });
+
+            codeFile.forEach(async (item) => {
+                await this.prismaService.userProgressCode.upsert({
+                    where: {
+                        codeId_fileCodeId_userProgressId: {
+                            codeId: item.codeId,
+                            fileCodeId: item.fileId,
+                            userProgressId: userProgress.id
+                        }
+                    },
+                    update: {
+                        answer: atob(item.codeFile)
+                    },
+                    create: {
+                        answer: atob(item.codeFile),
+                        codeId: item.codeId,
+                        fileCodeId: item.fileId,
+                        userProgressId: userProgress.id
+                    }
+                })
+            });
+
+            if(!statusCode) {
+                return false;
+            }
+
+            return await this.prismaService.$transaction(async (tx) => {
+                const userProgressUpdate = await tx.userProgress.update({
+                    where: {
+                        userId_contentId: {
+                            userId: user.id,
+                            contentId: code.exercise.contentId
+                        },
+                        course: {
+                            slug: payload.course_slug
+                        }
+                    },
+                    data: {
+                        isCompleted: true,
+                    }
+                });
+
+                if (payload.next_content_token ) {
+                    const content_next = await tx.content.findFirst({
+                        where: {
+                            token: payload.next_content_token,
+                            chapter: {
+                                course: {
+                                    slug: payload.course_slug
+                                }
+                            }
+                        }
+                    });
+
+                    if(!content_next) {
+                        throw new BadRequestException();
+                    }
+
+                    const nextUserProgress = await tx.userProgress.findFirst({
+                        where: {
+                            course: {
+                                slug: payload.course_slug
+                            },
+                            userId: user.id,
+                            contentId: content_next.id
+                        }
+                    });
+
+                    if(!nextUserProgress) {
+                        await tx.userProgress.create({
+                            data: {
+                                userId: user.id,
+                                contentId: content_next.id,
+                                courseId: userProgressUpdate.courseId
+                            }
+                        });
+                    }
+                }
+
+                return true;
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async updateContentTestFile(payload: UpdateContentFileDto): Promise<FileTest> {
+        const code = await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.fileTest.update({
+                where: {
+                    id: payload.fileId,
+                    codeId: code.id
+                },
+                data: {
+                    content: payload.content
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async addFileTest(payload: AddFileTestDto): Promise<FileTest> {
+        const code = await this.getDetailCode(payload);
+        try {
+            let language;
+            let mime;
+
+            switch(code.labCode.lab){
+                case 'WebDev':
+                    language = 'javascript';
+                    mime = 'js';
+                case 'Javascript':
+                    language = 'javascript';
+                    mime = 'js';
+                case 'Typescript':
+                    language = 'typescript';
+                    mime = 'ts';
+                case 'Python':
+                    language = 'python';
+                    mime = 'py';
+                case 'Java':
+                    language = 'java';
+                    mime = 'java';
+                case 'Php':
+                    language = 'php';
+                    mime = 'php';  
+            }
+
+            if(code.fileTest) {
+                throw new BadRequestException();
+            }
+
+            return await this.prismaService.fileTest.create({
+                data: {
+                    fileName: payload.fileName,
+                    language,
+                    mime,
+                    codeId: code.id
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     async findCourse(slug: string): Promise<Course> {
         try {
@@ -28,250 +283,6 @@ export class CodeService implements CodeServiceInterface {
                 throw new NotFoundException();
             }
             return course;
-        }
-        catch {
-            throw new InternalServerErrorException();
-        }
-    }
-
-    async checkStatusCode(payload: CheckStatusDto): Promise<any> {
-        try {
-            return new Promise((resolve) => {
-                setTimeout(async () => {
-                    const options = {
-                        method: 'GET',
-                        url: this.configService.get('RAPID_API_URL_BATCH_SUBMISSION'),
-                        params: { base64_encoded: 'false', fields: '*', tokens: payload.token },
-                        headers: {
-                            'content-type': 'application/json',
-                            'Content-Type': 'application/json',
-                            'X-RapidAPI-Host': this.configService.get('RAPID_API_HOST'),
-                            'X-RapidAPI-Key': this.configService.get('RAPID_API_KEY'),
-                        }
-                    };
-        
-                    const response = await this.httpService.request(options);
-        
-                    var countTrue = 0;
-        
-                    await response.forEach((value) => {
-                        payload.testcase.map((item, index) => {
-                            if(item.output === value.data.submissions[index].stdout.trim()) {
-                                countTrue++;
-                            }
-                        });
-                    });
-        
-                    if(countTrue === payload.testcase.length) {
-                        await this.prismaService.$transaction(async (tx) => {
-                            await tx.userProgress.update({
-                                where: {
-                                    userId_contentId: {
-                                        userId: payload.userId,
-                                        contentId: payload.contentId
-                                    },
-                                    courseId: payload.courseId
-                                },
-                                data: {
-                                    isCompleted: true,
-                                }
-                            });
-        
-                            if (payload.next_content_token) {
-                                const content_next = await tx.content.findFirst({
-                                    where: {
-                                        token: payload.next_content_token,
-                                        chapter: {
-                                            courseId: payload.courseId
-                                        }
-                                    }
-                                });
-        
-                                if(!content_next) {
-                                    throw new BadRequestException();
-                                }
-        
-                                await tx.userProgress.create({
-                                    data: {
-                                        courseId: payload.courseId,
-                                        userId: payload.userId,
-                                        contentId: content_next.id
-                                    }
-                                });
-                            }
-                        },{
-                            maxWait: 5000,
-                            timeout: 10000
-                        });
-        
-                        resolve("SUCCESS");
-                    }
-        
-                    resolve("FAIL");
-                },2000);
-            });
-        }
-        catch {
-            throw new InternalServerErrorException();
-        }
-    }
-
-    async handleCode(payload: HandleCodeProp): Promise<{
-        language_id: string,
-        source_code: string
-    }[]> {
-        //try {
-            //const getVar = payload.functionName.match(/\((.*?)\)/g)[0];
-
-            //const countVar = getVar.match(/,/g).length + 1;
-    
-            let codeResult = [];
-    
-            if(payload.lab === 'Javascript') {
-                payload.testcaseInput.map((item) => {
-                    codeResult.push({
-                        language_id: payload.language_id,
-                        source_code: `${payload.code} \nconst a = ${payload.functionName.replace(/\(.*\)/, '').trim()} (${item.input});\n console.log(a);`
-                    });
-                })
-            }
-    
-            return codeResult;
-       // }
-       // catch {
-        //    throw new InternalServerErrorException();
-        //}
-    }
-
-    async updateFunctioName(payload: UpdateContentFileDto): Promise<FileCode> {
-        const code = await this.getDetailCode(payload);
-
-        try {
-            const default_content = code.file[0].default_content + "\n" + payload.content
-
-            return await this.prismaService.fileCode.update({
-                where: {
-                    id: payload.fileId,
-                    codeId: code.id
-                },
-                data: {
-                    functionName: payload.content,
-                    default_content
-                }
-            });
-
-        }
-        catch {
-            throw new InternalServerErrorException();
-        }
-    }
-
-    async submitCode(payload: SubmitCodeDto): Promise<any> {
-        const user = await this.quizService.findUserByEmail(payload.email);
-        const course = await this.findCourse(payload.course_slug);
-        const content = await this.prismaService.content.findFirst({
-            where: {
-                token: payload.content_token,
-            }
-        });
-
-        if(!content) {
-            throw new NotFoundException();
-        }
-
-        try {
-            const exercise = await this.prismaService.exercise.findFirst({
-                where: {
-                    contentId: content.id,
-                    token: payload.exercise_token
-                },
-                include: {
-                    code: {
-                        include: {
-                            labCode: true,
-                            file: true,
-                            testcase: true
-                        }
-                    }
-                }
-            })
-    
-            const handleCode: HandleCodeProp = {
-                lab: exercise.code.labCode.lab, 
-                functionName: exercise.code.file[0].functionName, 
-                code: payload.code,
-                testcaseInput: exercise.code.testcase,
-                language_id: payload.language_id
-            };
-    
-            const submissionBatch = await this.handleCode(handleCode);
-
-            const options = {
-                method: 'POST',
-                url: this.configService.get('RAPID_API_URL_BATCH_SUBMISSION'),
-                params: { base64_encoded: 'false', fields: '*' },
-                headers: {
-                    'content-type': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-RapidAPI-Host': this.configService.get('RAPID_API_HOST'),
-                    'X-RapidAPI-Key': this.configService.get('RAPID_API_KEY'),
-                },
-                data: {
-                    submissions:submissionBatch
-                }
-            };
-
-            const response = await this.httpService.request(options);
-            const token = [];
-            await response.forEach((value) => {
-                value.data.forEach((item) => {
-                    token.push(item.token)
-                });
-            });
-
-            await this.prismaService.userProgress.update({
-                where: {
-                    userId_contentId: {
-                        userId: user.id,
-                        contentId: content.id
-                    }
-                },
-                data: {
-                    userProgressCode: {
-                        create: {
-                            codeId: exercise.code.id,
-                            fileCodeId: exercise.code.file[0].id,
-                            answer: payload.code
-                        }
-                    }
-                }
-            })
-
-            const data: CheckStatusDto = {
-                    token: token.join(","),
-                    testcase: exercise.code.testcase,
-                    contentId: content.id,
-                    courseId: course.id,
-                    userId: user.id,
-                    next_content_token: payload.next_content_token
-            }
-
-            return await this.checkStatusCode(data);
-        }
-        catch(err) {
-            console.log(err);
-            throw new InternalServerErrorException();
-        }
-    }
-
-    async deleteTestCase(payload: DeleteTestCaseDto): Promise<TestCase> {
-        try {
-            return await this.prismaService.testCase.delete({
-                where: {
-                    id: payload.testcaseId,
-                    codeId: payload.codeId
-                }
-            })
         }
         catch {
             throw new InternalServerErrorException();
@@ -303,24 +314,14 @@ export class CodeService implements CodeServiceInterface {
                     });
                 }
 
+                await tx.fileTest.delete({
+                    where: {
+                        codeId: codeUpdate.id
+                    }
+                })
+
                 return codeUpdate;
             });
-        }
-        catch {
-            throw new InternalServerErrorException();
-        }
-    }
-
-    async addTestCase(payload: AddTestCaseDto): Promise<TestCase> {
-        const code = await this.getDetailCode(payload);
-        try {
-            return await this.prismaService.testCase.create({
-                data: {
-                    input: payload.input,
-                    output: payload.output,
-                    codeId: code.id
-                }
-            })
         }
         catch {
             throw new InternalServerErrorException();
@@ -339,7 +340,7 @@ export class CodeService implements CodeServiceInterface {
                 data: {
                     default_content: payload.content
                 }
-            })
+            });
         }
         catch {
             throw new InternalServerErrorException();
@@ -359,7 +360,6 @@ export class CodeService implements CodeServiceInterface {
 
     async addFileName(payload: AddFileNameDto): Promise<FileCode> {
         const code = await this.getDetailCode(payload);
-
         try {
             return await this.prismaService.fileCode.create({
                 data: {
@@ -393,7 +393,8 @@ export class CodeService implements CodeServiceInterface {
         }
     }
 
-    async getDetailCode(payload: GetDetailCodeDto): Promise<Code & {file: FileCode[]}> {
+    //instructor
+    async getDetailCode(payload: GetDetailCodeDto): Promise<Code & {file: FileCode[]; fileTest: FileTest, labCode: LabCode, exercise: Exercise}> {
         const user = await this.quizService.findUserByEmail(payload.email);
         const course = await this.quizService.findCourseBySlug(payload.course_slug, user.id);
         const chapter = await this.quizService.findChapterByToken(payload.chapter_token, course.id);
@@ -408,7 +409,8 @@ export class CodeService implements CodeServiceInterface {
                 include: {
                     labCode: true,
                     file: true,
-                    testcase: true
+                    fileTest: true,
+                    exercise: true
                 }
             });
             
@@ -418,7 +420,8 @@ export class CodeService implements CodeServiceInterface {
 
             return code;
         }
-        catch {
+        catch(err) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }

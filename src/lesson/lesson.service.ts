@@ -668,7 +668,6 @@ export class LessonService implements LessonServiceInterface {
                             code: {
                                 include: {
                                     file: true,
-                                    testcase: true,
                                     labCode: true
                                 }
                             }

@@ -253,6 +253,7 @@ export class CourseService implements CourseServiceInterface {
 
             return this.buildResponseCourse(update);
         } catch (err: any) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }
