@@ -8,7 +8,7 @@ import { UpdateVideoLesson } from '../dto/update-video.dto';
 import { UpdateStatusLessonDto } from '../dto/update-status.dto';
 import { DeleteLessonDto } from '../dto/delete-lesson.dto';
 import { UpdateThumbnailVideo } from '../dto/update-thumbnail.dto';
-import { ContentLessonDto } from '../dto/content-lesson.dto';
+import { ContentLessonDto, SummarizationVideoDto } from '../dto/content-lesson.dto';
 import { AddSubtitleLessonDto, AddSubtitleLessonInterface, DeleteSubtitleLessonDto, TranslateSubtitleDto } from '../dto/subtitle.dto';
 
 export interface LessonServiceInterface {
@@ -31,4 +31,5 @@ export interface LessonServiceInterface {
     deleteSubtitleLesson(payload: DeleteSubtitleLessonDto): Promise<Subtitle>;
     generateSubtitleVideo(payload: AddSubtitleLessonDto): Promise<Subtitle>;
     translateSubtitle(payload: TranslateSubtitleDto):Promise<Subtitle>;
+    summarizationVideo(payload: SummarizationVideoDto): Promise<string>;
 }

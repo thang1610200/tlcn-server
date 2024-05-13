@@ -40,6 +40,7 @@ export class UploadProcessor {
     async handler(job: Job<QueueUploadVideo>, result: any): Promise<void> {
         try {
             const payload: any = job.data;
+            console.log(payload);
             const duration = await getVideoDurationInSeconds(payload.data.link);
 
             await this.prismaService.lesson.update({

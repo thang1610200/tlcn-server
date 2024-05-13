@@ -55,6 +55,7 @@ enum LanguageType {
   python
   java
   php
+  cpp_header
 }
 
 enum MimeType {
@@ -67,6 +68,7 @@ enum MimeType {
   java
   py
   php
+  h
 }
 
 model User {

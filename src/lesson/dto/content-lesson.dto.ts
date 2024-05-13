@@ -13,3 +13,13 @@ export class ContentLessonDto {
     @IsNotEmpty()
     email: string;
 }
+
+export class SummarizationVideoDto {
+    @IsNotEmpty()
+    @IsString()
+    content_token: string;
+
+    @IsNotEmpty()
+    @IsString()
+    course_slug: string;
+}

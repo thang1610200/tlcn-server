@@ -16,3 +16,13 @@ export class EvaluateController {
         return this.evaluateService.previewCode(body);
     }
 }
+
+@Controller('evaluate')
+export class EvaluatesController {
+    constructor (private readonly evaluateService: EvaluateService) {}
+
+    @Get('/test')
+    evaluateCode() {
+        return this.evaluateService.test();
+    }
+}

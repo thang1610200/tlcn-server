@@ -32,11 +32,10 @@ export class EvaluateService implements EvaluateServiceInterface {
         try {
             const data: EvaluateCode = {
                 lang: code.labCode.lab,
-                testFile: btoa(code.fileTest.content),
-                testFileName: `${code.fileTest.fileName}.${code.fileTest.mime}`,
+                testFile: code.fileTest.content,
+                testFileName: (code.labCode.lab === 'Javascript' || code.labCode.lab === 'Typescript' || code.labCode.lab === 'WebDev') ? `${code.fileTest.fileName}.spec.${code.fileTest.mime}`:`${code.fileTest.fileName}.${code.fileTest.mime}`,
                 code: codeFile
             }
-
             return await this.evaluateFunction(data);
         }
         catch {
@@ -64,7 +63,7 @@ export class EvaluateService implements EvaluateServiceInterface {
 
         switch(payload.lang) {
             case "Php": 
-                fs.writeFileSync(join(directoryPath, payload.testFileName), atob(payload.testFile), 'utf-8');
+                fs.writeFileSync(join(directoryPath, payload.testFileName), payload.testFile, 'utf-8');
                 payload.code.forEach((item) => {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
@@ -95,7 +94,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                 });
                 break;
             case 'Python':
-                fs.writeFileSync(join(directoryPath, payload.testFileName), atob(payload.testFile), 'utf-8');
+                fs.writeFileSync(join(directoryPath, payload.testFileName), payload.testFile, 'utf-8');
                 payload.code.forEach((item) => {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
@@ -117,6 +116,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     result = true;
                 }
                 catch(err) {
+                    //console.log(err);
                     result = false;
                 }
 
@@ -127,7 +127,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                 break;
             case 'Java':
                 let fileArray = [];
-                fs.writeFileSync(join(directoryPath, payload.testFileName), atob(payload.testFile), 'utf-8');
+                fs.writeFileSync(join(directoryPath, payload.testFileName), payload.testFile, 'utf-8');
                 payload.code.forEach((item) => {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
 
@@ -150,6 +150,135 @@ export class EvaluateService implements EvaluateServiceInterface {
                     result = true;
                 }
                 catch(err) {
+                    result = false;
+                }
+
+                fs.rmSync(directoryPath, {
+                    recursive: true,
+                    force: true
+                });
+                break;
+            case 'Javascript':
+                fs.writeFileSync(join(directoryPath, payload.testFileName), payload.testFile, 'utf-8');
+                payload.code.forEach((item) => {
+                    fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
+                });
+
+                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/code -w /code tlcn-server-coderunner_javascript /bin/bash -c "jest ${payload.testFileName}"`;
+
+                let execEvaluateJavascript = new Promise((resolve, reject) => {
+                    exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
+                        if(err) {
+                            reject(err);
+                        }
+
+                        resolve(stderr);
+                    });
+                });
+
+                try {
+                    await execEvaluateJavascript;
+                    result = true;
+                }
+                catch(err) {
+                    result = false;
+                }
+
+                fs.rmSync(directoryPath, {
+                    recursive: true,
+                    force: true
+                });
+                break;
+            case 'Typescript':
+                fs.writeFileSync(join(directoryPath, payload.testFileName), payload.testFile, 'utf-8');
+                payload.code.forEach((item) => {
+                    fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
+                });
+
+                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/app/code -w /app/code tlcn-server-coderunner_typescript /bin/bash -c "npx jest ${payload.testFileName}"`;
+
+                let execEvaluateTypescript = new Promise((resolve, reject) => {
+                    exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
+                        if(err) {
+                            reject(err);
+                        }
+
+                        resolve(stderr);
+                    });
+                });
+
+                try {
+                    await execEvaluateTypescript;
+                    result = true;
+                }
+                catch(err) {
+                    result = false;
+                }
+
+                fs.rmSync(directoryPath, {
+                    recursive: true,
+                    force: true
+                });
+                break;
+            case 'C++':
+                const fileArrayCpp = [];
+                fs.writeFileSync(join(directoryPath, payload.testFileName), payload.testFile, 'utf-8');
+                payload.code.forEach((item) => {
+                    fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
+
+                    fileArrayCpp.push(item.codeFileName);
+                });
+
+                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/code -w /code tlcn-server-coderunner_cpp /bin/bash -c "g++ -o evaluation ${payload.testFileName} ${fileArrayCpp.join(" ")} -lgtest -lgtest_main -pthread && ./evaluation"`;
+
+                let execEvaluateCpp = new Promise((resolve, reject) => {
+                    exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
+                        if(err) {
+                            reject(err);
+                        }
+                        console.log(stdout);
+                        resolve(stderr);
+                    });
+                });
+
+                try {
+                    console.log(await execEvaluateCpp);
+                    result = true;
+                }
+                catch(err) {
+                    console.log(err);
+                    result = false;
+                }
+
+                fs.rmSync(directoryPath, {
+                    recursive: true,
+                    force: true
+                });
+                break;
+            case 'WebDev':
+                fs.writeFileSync(join(directoryPath, payload.testFileName), payload.testFile, 'utf-8');
+                payload.code.forEach((item) => {
+                    fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
+                });
+
+                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/app/code -w /app/code tlcn-server-coderunner_webdev /bin/bash -c "npx jest ${payload.testFileName}"`;
+
+                let execEvaluateWebDev = new Promise((resolve, reject) => {
+                    exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
+                        if(err) {
+                            reject(err);
+                        }
+
+                        resolve(stderr);
+                    });
+                });
+
+                try {
+                    await execEvaluateWebDev;
+                    result = true;
+                }
+                catch(err) {
+                    //console.log(err);
                     result = false;
                 }
 
@@ -191,6 +320,28 @@ export class EvaluateService implements EvaluateServiceInterface {
         }
         catch {
             throw new InternalServerErrorException();
+        }
+    }
+
+    async test () {
+        let dockerCommand = `docker run --rm -i --network none -w /code tlcn-server-coderunner_javascript /bin/bash -c "jest --version"`;
+
+        let execEvaluateJavascript = new Promise((resolve, reject) => {
+            exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
+                console.log(stderr);
+                if(err) {
+                    reject(err);
+                }
+
+                resolve(stdout);
+            });
+        });
+
+        try {
+            console.log(await execEvaluateJavascript);
+        }
+        catch(err) {
+            console.log(err);
         }
     }
 }

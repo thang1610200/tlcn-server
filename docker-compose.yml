@@ -1,25 +1,25 @@
 version: "3.8"
 services:
-  # nestjs-app:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile
-  #   env_file:
-  #     - ./.env
-  #   volumes:
-  #     - .:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   ports:
-  #     - '4000:4000'
-  #   depends_on:
-  #     - redis
+  nestjs-app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '4000:4000'
+    depends_on:
+      - redis
   
-  # redis:
-  #   image: redis
-  #   ports:
-  #     - 6379:6379
-  #   volumes:
-  #     - redis:/data
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
 
   coderunner_php:
     container_name: coderunner_php
@@ -37,6 +37,30 @@ services:
     container_name: coderunner_java
     build:
       context: ./code/java
+      dockerfile: Dockerfile
+
+  coderunner_javascript:
+    container_name: coderunner_javascript
+    build:
+      context: ./code/javascript
+      dockerfile: Dockerfile
+
+  coderunner_typescript:
+    container_name: coderunner_typescript
+    build:
+      context: ./code/typescript
+      dockerfile: Dockerfile
+
+  coderunner_cpp:
+    container_name: coderunner_cpp
+    build:
+      context: ./code/cpp
+      dockerfile: Dockerfile
+
+  coderunner_webdev:
+    container_name: coderunner_webdev
+    build:
+      context: ./code/webdev
       dockerfile: Dockerfile
 # volumes:
 #   redis:

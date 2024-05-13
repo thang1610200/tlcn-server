@@ -22,4 +22,4 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
 
 ENV PATH="$PATH:$HOME/.config/composer/vendor/bin"
 
-WORKDIR /code
+# WORKDIR /code

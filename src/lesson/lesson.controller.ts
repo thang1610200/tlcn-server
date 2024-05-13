@@ -27,7 +27,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
-import { ContentLessonDto } from './dto/content-lesson.dto';
+import { ContentLessonDto, SummarizationVideoDto } from './dto/content-lesson.dto';
 import { AddSubtitleLessonDto, DeleteSubtitleLessonDto, TranslateSubtitleDto } from './dto/subtitle.dto';
 import { FileTypeValidationPipe } from './pipes/file-type-validation.pipe';
 
@@ -183,5 +183,10 @@ export class LessonControllerUser {
     @Get('detail-lesson')
     contentLesson(@Query() payload: ContentLessonDto) {
         return this.lessonService.contentLesson(payload);
+    }
+
+    @Get('summary-video')
+    summaryVideo(@Query() payload: SummarizationVideoDto) {
+        return this.lessonService.summarizationVideo(payload);
     }
 }

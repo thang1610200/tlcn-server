@@ -18,9 +18,9 @@ import { UpdateStatusLessonDto } from './dto/update-status.dto';
 import { DeleteLessonDto } from './dto/delete-lesson.dto';
 import { Chapter, Content, Course, Lesson, Subtitle, User } from '@prisma/client';
 import { UpdateThumbnailVideo } from './dto/update-thumbnail.dto';
-import { ContentLessonDto } from './dto/content-lesson.dto';
+import { ContentLessonDto, SummarizationVideoDto } from './dto/content-lesson.dto';
 import { AddSubtitleLessonDto, AddSubtitleLessonInterface, DeleteSubtitleLessonDto, TranslateSubtitleDto, TranslateSubtitleQueue } from './dto/subtitle.dto';
-import { AssemblyAI } from 'assemblyai';
+import { AssemblyAI, TranscribeParams } from 'assemblyai';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -32,7 +32,44 @@ export class LessonService implements LessonServiceInterface {
     ) {}
     private readonly client = new AssemblyAI({
         apiKey: this.configService.get('ASSEMBLY_API_KEY'),
-    });   
+    });
+    
+    async summarizationVideo(payload: SummarizationVideoDto): Promise<string> {
+        try {
+            const lesson = await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        token: payload.content_token,
+                        chapter: {
+                            course: {
+                                slug: payload.course_slug
+                            }
+                        },
+                        type: 'LESSON'
+                    }
+                }
+            });
+
+            if(!lesson) {
+                throw new NotFoundException();
+            }
+
+            const params: TranscribeParams = {
+                audio: lesson.videoUrl,
+                summarization: true,
+                summary_model: 'informative',
+                summary_type: 'paragraph'
+            }
+
+            const transcript = await this.client.transcripts.transcribe(params);
+
+            return transcript.summary;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
 
     async translateSubtitle(payload: TranslateSubtitleDto): Promise<Subtitle> {
         const lesson = await this.findLessonByToken(payload);
@@ -449,7 +486,8 @@ export class LessonService implements LessonServiceInterface {
             await this.uploadService.uploadVideoToStorage(data);
 
             return this.buildLessonResponse(update);
-        } catch {
+        } catch(err) {
+            //console.log(err);
             throw new InternalServerErrorException();
         }
     }

@@ -148,7 +148,9 @@ export class UploadService implements UploadServiceInterface {
     }
 
     async uploadVideoToStorage(data: QueueUploadVideo): Promise<object> {
-        const job = await this.uploadQueue.add('update-video', { data });
+        const job = await this.uploadQueue.add('update-video', { data },{
+            removeOnComplete: true
+        });
 
         return { job: job.id };
     }

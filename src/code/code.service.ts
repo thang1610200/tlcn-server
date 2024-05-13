@@ -103,8 +103,8 @@ export class CodeService implements CodeServiceInterface {
 
         const data: EvaluateCode = {
             lang: code.labCode.lab,
-            testFile: btoa(code.fileTest.content),
-            testFileName: `${code.fileTest.fileName}.${code.fileTest.mime}`,
+            testFile: code.fileTest.content,
+            testFileName: (code.labCode.lab === 'Javascript' || code.labCode.lab === 'Typescript' || code.labCode.lab === 'WebDev') ? `${code.fileTest.fileName}.spec.${code.fileTest.mime}`:`${code.fileTest.fileName}.${code.fileTest.mime}`,
             code: codeFile
         }
 
@@ -236,21 +236,31 @@ export class CodeService implements CodeServiceInterface {
                 case 'WebDev':
                     language = 'javascript';
                     mime = 'js';
+                    break;
                 case 'Javascript':
                     language = 'javascript';
                     mime = 'js';
+                    break;
                 case 'Typescript':
                     language = 'typescript';
                     mime = 'ts';
+                    break;
                 case 'Python':
                     language = 'python';
                     mime = 'py';
+                    break;
                 case 'Java':
                     language = 'java';
                     mime = 'java';
+                    break;
                 case 'Php':
                     language = 'php';
-                    mime = 'php';  
+                    mime = 'php'; 
+                    break;
+                case 'C++':
+                    language = 'cpp';
+                    mime = 'cpp'; 
+                    break;      
             }
 
             if(code.fileTest) {
@@ -302,7 +312,8 @@ export class CodeService implements CodeServiceInterface {
                         ...payload.value
                     },
                     include: {
-                        file: true
+                        file: true,
+                        fileTest: true
                     }
                 });
 
@@ -314,16 +325,18 @@ export class CodeService implements CodeServiceInterface {
                     });
                 }
 
-                await tx.fileTest.delete({
-                    where: {
-                        codeId: codeUpdate.id
-                    }
-                })
+                if(codeUpdate.fileTest) {
+                    await tx.fileTest.delete({
+                        where: {
+                            codeId: codeUpdate.id
+                        }
+                    })
+                }
 
                 return codeUpdate;
             });
         }
-        catch {
+        catch{
             throw new InternalServerErrorException();
         }
     }
