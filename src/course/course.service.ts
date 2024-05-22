@@ -7,7 +7,7 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { CourseServiceInterface } from './interfaces/course.service.interface';
 import { CreateTopicDto } from './dto/create-topic.dto';
-import { Course, Topic, User, UserProgress } from '@prisma/client';
+import { Course, Level, Topic, User, UserProgress } from '@prisma/client';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateValueCourse } from './dto/update-course.dto';
 import { CourseResponse } from './dto/course-response.dto';
@@ -20,7 +20,14 @@ import { UploadService } from 'src/upload/upload.service';
 import { FilterCourseDto } from './dto/filter-course-publish.dto';
 import { GetDetailCourseDto } from './dto/get-detail-course.dto';
 import { GetProgressCourseDto } from './dto/get-progress-course.dto';
-import { count } from 'console';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { JsonObject } from '@prisma/client/runtime/library';
+import { isUndefined } from 'lodash';
+
+type PipelineStage = {
+    [key: string]: any;
+};
+
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
@@ -28,6 +35,103 @@ export class CourseService implements CourseServiceInterface {
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
     ) {}
+
+    async countCoursePublish(payload: FilterCourseDto): Promise<number> {
+        try {
+            let pipeline: PipelineStage[] = [
+                {
+                    $match: {
+                        isPublished: true,
+                    },
+                },
+            ];
+            if (!!payload?.topic_slug) {
+                const topicMatch: PipelineStage[] = [
+                    {
+                        $lookup: {
+                            from: 'Topic',
+                            localField: 'topic_id',
+                            foreignField: '_id',
+                            as: 'topic',
+                        },
+                    },
+                    {
+                        $unwind: '$topic',
+                    },
+                    {
+                        $match: {
+                            'topic.slug': {
+                                $in:
+                                    typeof payload.topic_slug === 'string'
+                                        ? [payload.topic_slug]
+                                        : payload.topic_slug,
+                            },
+                        },
+                    },
+                ];
+
+                pipeline = [...topicMatch, ...pipeline];
+            }
+
+            if (!!payload?.level_slug) {
+                const levelMatch: PipelineStage[] = [
+                    {
+                        $lookup: {
+                            from: 'Level',
+                            localField: 'level_id',
+                            foreignField: '_id',
+                            as: 'level',
+                        },
+                    },
+                    {
+                        $unwind: '$level',
+                    },
+                    {
+                        $match: {
+                            'level.slug': {
+                                $in:
+                                    typeof payload.level_slug === 'string'
+                                        ? [payload.level_slug]
+                                        : payload.level_slug,
+                            },
+                        },
+                    },
+                ];
+
+                pipeline = [...levelMatch, ...pipeline];
+            }
+
+            if (!!payload?.title) {
+                const titleMatch: PipelineStage = {
+                    $search: {
+                        index: 'default',
+                        text: {
+                            query: payload.title,
+                            path: 'title',
+                        },
+                    },
+                };
+
+                pipeline.unshift(titleMatch);
+            }
+
+            const result = await this.prismaService.course.aggregateRaw({
+                pipeline,
+            });
+
+            return result.length as number;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllLevelCourse(): Promise<Level[]> {
+        try {
+            return await this.prismaService.level.findMany();
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     slugify(name: string, separator: string = '-'): string {
         return name
@@ -133,8 +237,8 @@ export class CourseService implements CourseServiceInterface {
                 create_at: 'desc',
             },
             include: {
-                userProgress: true
-            }
+                userProgress: true,
+            },
         });
 
         return course;
@@ -258,88 +362,241 @@ export class CourseService implements CourseServiceInterface {
         }
     }
 
-    async getAllCoursePublish(payload: FilterCourseDto): Promise<Course[]> {
-        if (payload.topic_slug.trim() === '') {
-            return await this.filterCoursePublish(payload);
+    async getAllCoursePublish(payload: FilterCourseDto): Promise<any> {
+        let pipeline: PipelineStage[] = [
+            {
+                $match: {
+                    isPublished: true,
+                },
+            },
+            {
+                $lookup: {
+                    from: 'Chapter',
+                    localField: '_id',
+                    foreignField: 'courseId',
+                    as: 'chapters',
+                },
+            },
+            {
+                $unwind: '$chapters',
+            },
+            {
+                $match: {
+                    'chapters.isPublished': true,
+                },
+            },
+            {
+                $lookup: {
+                    from: 'Content',
+                    localField: 'chapters._id',
+                    foreignField: 'chapterId',
+                    as: 'chapters.contents',
+                },
+            },
+            {
+                $unwind: '$chapters.contents',
+            },
+            {
+                $lookup: {
+                    from: 'Lesson',
+                    localField: 'chapters.contents._id',
+                    foreignField: 'contentId',
+                    as: 'chapters.contents.lessons',
+                },
+            },
+            {
+                $lookup: {
+                    from: 'Exercise',
+                    localField: 'chapters.contents._id',
+                    foreignField: 'contentId',
+                    as: 'chapters.contents.exercises',
+                },
+            },
+            {
+                $unwind: {
+                    path: '$chapters.contents.lessons',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $unwind: {
+                    path: '$chapters.contents.exercises',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $match: {
+                    $or: [
+                        { 'chapters.contents.lessons.isPublished': true },
+                        { 'chapters.contents.exercises.isOpen': true },
+                    ],
+                },
+            },
+            {
+                $group: {
+                    _id: '$_id',
+                    title: { $first: '$title' },
+                    slug: { $first: '$slug' },
+                    picture: { $first: '$picture' },
+                    isPublished: { $first: '$isPublished' },
+                    description: { $first: '$description' },
+                    chapters: { $push: '$chapters' },
+                    create_at: { $first: '$create_at' },
+                    total: { $sum: '$chapters.contents.lessons.duration' }
+                },
+            },
+            {
+                $sort: { create_at: 1 },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    title: 1,
+                    chapters: 1,
+                    slug: 1,
+                    picture: 1,
+                    description: 1,
+                    total: 1
+                },
+            },
+            {
+                $skip: 0,
+            },
+            {
+                $limit: 6,
+            },
+        ];
+        if (!!payload?.topic_slug) {
+            const topicMatch: PipelineStage[] = [
+                {
+                    $lookup: {
+                        from: 'Topic',
+                        localField: 'topic_id',
+                        foreignField: '_id',
+                        as: 'topic',
+                    },
+                },
+                {
+                    $unwind: '$topic',
+                },
+                {
+                    $match: {
+                        'topic.slug': {
+                            $in:
+                                typeof payload.topic_slug === 'string'
+                                    ? [payload.topic_slug]
+                                    : payload.topic_slug,
+                        },
+                    },
+                },
+            ];
+
+            pipeline = [...topicMatch, ...pipeline];
         }
 
-        const topic = await this.findByTitleTopic(payload.topic_slug);
-
-        return await this.prismaService.course.findMany({
-            where: {
-                isPublished: true,
-                title: {
-                    contains: payload.title,
-                },
-                topic_id: topic.id,
-            },
-            include: {
-                topic: true,
-                chapters: {
-                    where: {
-                        isPublished: true,
+        if (!!payload?.level_slug) {
+            const levelMatch: PipelineStage[] = [
+                {
+                    $lookup: {
+                        from: 'Level',
+                        localField: 'level_id',
+                        foreignField: '_id',
+                        as: 'level',
                     },
-                    include: {
-                        contents: {
-                            include: {
-                                lesson: {
-                                    where: {
-                                        isPublished: true
-                                    }
-                                },
-                                exercise: {
-                                    where: {
-                                        isOpen: true
-                                    }
-                                }
-                            }
+                },
+                {
+                    $unwind: '$level',
+                },
+                {
+                    $match: {
+                        'level.slug': {
+                            $in:
+                                typeof payload.level_slug === 'string'
+                                    ? [payload.level_slug]
+                                    : payload.level_slug,
                         },
-                    }
-                },
-                owner: true,
-            },
-            orderBy: {
-                create_at: 'desc',
-            },
-        });
-    }
-
-    async filterCoursePublish(payload: FilterCourseDto): Promise<Course[]> {
-        return await this.prismaService.course.findMany({
-            where: {
-                isPublished: true,
-                title: {
-                    contains: payload.title,
-                },
-            },
-            include: {
-                topic: true,
-                chapters: {
-                    where: {
-                        isPublished: true,
                     },
-                    include: {
-                        contents: {
-                            include: {
-                                lesson: {
-                                    where: {
-                                        isPublished: true
-                                    }
-                                },
-                                exercise: {
-                                    where: {
-                                        isOpen: true
-                                    }
-                                }
-                            }
-                        },
-                    }
                 },
-                owner: true,
-            },
-            orderBy: {
-                create_at: 'desc',
-            },
+            ];
+
+            pipeline = [...levelMatch, ...pipeline];
+        }
+
+        if (!!payload?.title) {
+            const titleMatch: PipelineStage = {
+                $search: {
+                    index: 'default',
+                    text: {
+                        query: payload.title,
+                        path: 'title',
+                    },
+                },
+            };
+
+            pipeline.unshift(titleMatch);
+        }
+
+        if (!!payload?.duration) {
+            let durationMatch = [];
+            let duration: string[] = typeof payload.duration === 'string' ? [payload.duration] : payload.duration;
+
+            duration.forEach((item) => {
+                if(item === 'extraShort') {
+                    durationMatch.push({
+                        "total": { $gte: 0, $lte: 3600 }
+                    });
+                }else if (item === 'short') {
+                    durationMatch.push({
+                        "total": { $gte: 3600, $lte: 10800 }
+                    });
+                }else if (item === 'medium') {
+                    durationMatch.push({
+                        "total": { $gte: 10800, $lte: 21600 }
+                    });
+                }else if (item === 'long') {
+                    durationMatch.push({
+                        "total": { $gte: 21600, $lte: 61200 }
+                    });
+                }else if (item === 'extraLong') {
+                    durationMatch.push({
+                        "total": { $gte: 61200 }
+                    });
+                }
+            });
+
+            if(durationMatch.length === 0) {
+                return [];
+            }
+
+            const elementPipeline: PipelineStage =                 {
+                $match: {
+                    $or: durationMatch
+                }
+            };
+
+            pipeline.splice(pipeline.length - 4, 0, elementPipeline);
+        }
+
+        if (!!payload?.page) {
+            if (Number(payload.page) < 1) {
+                return [];
+            }
+
+            const pagination: PipelineStage[] = [
+                {
+                    $skip: (Number(payload.page) - 1) * 6,
+                },
+                {
+                    $limit: 6,
+                },
+            ];
+
+            pipeline.splice(-2, 2);
+            pipeline = [...pipeline, ...pagination];
+        }
+
+        return await this.prismaService.course.aggregateRaw({
+            pipeline,
         });
     }
 
@@ -360,18 +617,18 @@ export class CourseService implements CourseServiceInterface {
                             include: {
                                 lesson: {
                                     where: {
-                                        isPublished: true
-                                    }
+                                        isPublished: true,
+                                    },
                                 },
                                 exercise: {
                                     where: {
-                                        isOpen: true
-                                    }
-                                }
+                                        isOpen: true,
+                                    },
+                                },
                             },
                             orderBy: {
-                                position: "asc"
-                            }
+                                position: 'asc',
+                            },
                         },
                     },
                     orderBy: {
@@ -470,23 +727,23 @@ export class CourseService implements CourseServiceInterface {
                             include: {
                                 lesson: {
                                     where: {
-                                        isPublished: true
-                                    }
+                                        isPublished: true,
+                                    },
                                 },
                                 exercise: {
                                     where: {
-                                        isOpen: true
-                                    }
+                                        isOpen: true,
+                                    },
                                 },
                                 userProgress: {
                                     where: {
-                                        userId: user.id
-                                    }
-                                }
+                                        userId: user.id,
+                                    },
+                                },
                             },
                             orderBy: {
-                                position: "asc"
-                            }
+                                position: 'asc',
+                            },
                         },
                     },
                     orderBy: {
@@ -496,9 +753,9 @@ export class CourseService implements CourseServiceInterface {
                 owner: true,
                 userProgress: {
                     where: {
-                        userId: user.id
-                    }
-                }
+                        userId: user.id,
+                    },
+                },
             },
         });
 
@@ -582,36 +839,34 @@ export class CourseService implements CourseServiceInterface {
             const course = await this.prismaService.userProgress.findMany({
                 where: {
                     course: {
-                        owner_id: owner.id
-                    }
+                        owner_id: owner.id,
+                    },
                 },
-                distinct: ['userId','courseId']
+                distinct: ['userId', 'courseId'],
             });
 
             return course.length;
-        }
-        catch(err: any){
+        } catch (err: any) {
             console.log(err);
             throw new InternalServerErrorException();
         }
     }
 
-    async getAllCourseAdmin(): Promise<Course[]>{
+    async getAllCourseAdmin(): Promise<Course[]> {
         try {
             return await this.prismaService.course.findMany({
                 where: {
-                    isPublished: true
+                    isPublished: true,
                 },
                 include: {
                     owner: true,
-                    userProgress: true
+                    userProgress: true,
                 },
                 orderBy: {
-                    create_at: 'desc'
-                }
+                    create_at: 'desc',
+                },
             });
-        }
-        catch(err: any){
+        } catch (err: any) {
             throw new InternalServerErrorException();
         }
     }

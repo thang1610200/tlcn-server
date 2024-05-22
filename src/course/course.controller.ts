@@ -126,6 +126,13 @@ export class CourseController {
     }
 
     @Roles('INSTRUCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Get('get-level')
+    getAllLevel(){
+        return this.courseService.getAllLevelCourse();
+    }
+
+    @Roles('INSTRUCTOR')
     @UseGuards(JwtGuard)
     @UseInterceptors(FileInterceptor('file'))
     @Patch('update-picture')
@@ -166,6 +173,11 @@ export class CourseController {
     @Get('all-topic-home')
     getAllTopicHome() {
         return this.courseService.findAllTopic();
+    }
+
+    @Get('count-course-publish')
+    countCoursePublish(@Query() query: FilterCourseDto) {
+        return this.courseService.countCoursePublish(query);
     }
 
     @Get('detail-course')

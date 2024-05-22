@@ -1,9 +1,9 @@
-import { IsString } from 'class-validator';
+import { IsArray, IsString } from 'class-validator';
 
-export class FilterCourseDto {
-    @IsString()
-    topic_slug: string;
-
-    @IsString()
-    title: string;
+export interface FilterCourseDto {
+    topic_slug?: string[] | string;
+    title?: string;
+    level_slug?: string[] | string;
+    page?: string;
+    duration?: string[] | string;
 }

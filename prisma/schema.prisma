@@ -71,6 +71,12 @@ enum MimeType {
   h
 }
 
+enum LevelType {
+  BEGINNER
+  INTERMEDIATE
+  EXPERT
+}
+
 model User {
   id                  String               @id @default(auto()) @map("_id") @db.ObjectId
   email               String               @unique
@@ -112,10 +118,19 @@ model Topic {
   course Course[]
 }
 
+model Level {
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug   String
+  name   String
+  course Course[]
+}
+
 model Course {
   id               String         @id @default(auto()) @map("_id") @db.ObjectId
   topic_id         String?        @db.ObjectId
   topic            Topic?         @relation(fields: [topic_id], references: [id])
+  level_id         String?        @db.ObjectId
+  level            Level?         @relation(fields: [level_id], references: [id])
   owner_id         String         @db.ObjectId
   owner            User           @relation(fields: [owner_id], references: [id], onDelete: Cascade)
   title            String         @unique
@@ -278,13 +293,13 @@ model Code {
 }
 
 model FileTest {
-  id              String       @id @default(auto()) @map("_id") @db.ObjectId
-  fileName        String
-  language        LanguageType
-  mime            MimeType
-  content         String?
-  codeId          String       @unique @db.ObjectId
-  code            Code         @relation(fields: [codeId], references: [id], onDelete: Cascade)
+  id       String       @id @default(auto()) @map("_id") @db.ObjectId
+  fileName String
+  language LanguageType
+  mime     MimeType
+  content  String?
+  codeId   String       @unique @db.ObjectId
+  code     Code         @relation(fields: [codeId], references: [id], onDelete: Cascade)
 }
 
 // model TestCase {

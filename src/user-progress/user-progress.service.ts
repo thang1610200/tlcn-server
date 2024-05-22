@@ -234,7 +234,7 @@ export class UserProgressService implements UserProgressServiceInterface {
         }
     }
 
-    async findCourseBySlug(slug: string): Promise<{ id: string; topic_id: string; owner_id: string; chapters: & { contents: Content[] }[]; title: string; description: string; learning_outcome: string[]; requirement: string[]; slug: string; picture: string; isPublished: boolean; create_at: Date; update_at: Date; }> {
+    async findCourseBySlug(slug: string): Promise<{ id: string; topic_id: string; owner_id: string; level_id: string; chapters: & { contents: Content[] }[]; title: string; description: string; learning_outcome: string[]; requirement: string[]; slug: string; picture: string; isPublished: boolean; create_at: Date; update_at: Date; }> {
         const course = await this.prismaService.course.findUnique({
             where: {
                 slug

@@ -1,4 +1,4 @@
-import { Course, Topic, User, UserProgress } from '@prisma/client';
+import { Course, Level, Topic, User, UserProgress } from '@prisma/client';
 import { CreateTopicDto } from '../dto/create-topic.dto';
 import { CreateCourseDto } from '../dto/create-course.dto';
 import { UpdateValueCourse } from '../dto/update-course.dto';
@@ -11,6 +11,7 @@ import { UpdatePictureCourse } from '../dto/update-picture.dto';
 import { FilterCourseDto } from '../dto/filter-course-publish.dto';
 import { GetDetailCourseDto } from '../dto/get-detail-course.dto';
 import { GetProgressCourseDto } from '../dto/get-progress-course.dto';
+import { JsonObject } from '@prisma/client/runtime/library';
 
 export interface CourseServiceInterface {
     slugify(string, separator): string;
@@ -26,8 +27,7 @@ export interface CourseServiceInterface {
     updateStatusCourse(payload: UpdateStatusDto): Promise<CourseResponse>;
     deleteCourse(payload: DeleteCourseDto): Promise<string>;
     updatePictureCourse(payload: UpdatePictureCourse): Promise<CourseResponse>;
-    getAllCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
-    filterCoursePublish(payload: FilterCourseDto): Promise<Course[]>;
+    getAllCoursePublish(payload: FilterCourseDto): Promise<any>;
     getDetailCourse(payload: GetDetailCourseDto): Promise<Course>;
     //getUserProgressCourse(payload: GetProgressCourseDto): Promise<Course>;
     getDetailCourseAuth(payload: GetProgressCourseDto): Promise<Course>;
@@ -36,5 +36,7 @@ export interface CourseServiceInterface {
     countCourseOfUser(payload: GetCourseUserDto): Promise<number>;
     countUserOfInstructor(payload: GetCourseUserDto): Promise<number>;
     findUserByEmail(email: string): Promise<User>;
-    getAllCourseAdmin(): Promise<Course[]>
+    getAllCourseAdmin(): Promise<Course[]>;
+    getAllLevelCourse(): Promise<Level[]>;
+    countCoursePublish(payload: FilterCourseDto): Promise<number>;
 }
