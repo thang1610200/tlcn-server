@@ -9,3 +9,9 @@ export class GetCourseBySlugDto {
     @IsNotEmpty()
     email: string;
 }
+
+export class FindCourseByAi {
+    @IsString()
+    @IsNotEmpty()
+    request: string;
+}

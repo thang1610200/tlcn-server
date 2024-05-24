@@ -22,7 +22,7 @@ import { CreateTopicDto } from './dto/create-topic.dto';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateValueCourse } from './dto/update-course.dto';
 import { GetCourseUserDto } from './dto/get-course-user.dto';
-import { GetCourseBySlugDto } from './dto/get-course-slug.dto';
+import { FindCourseByAi, GetCourseBySlugDto } from './dto/get-course-slug.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { DeleteCourseDto } from './dto/delete-course.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -183,6 +183,11 @@ export class CourseController {
     @Get('detail-course')
     getDetailCourse(@Query() payload: GetDetailCourseDto) {
         return this.courseService.getDetailCourse(payload);
+    }
+
+    @Get('find-course')
+    findCourseByAi(@Query() payload: FindCourseByAi) {
+        return this.courseService.findCourseByAi(payload);
     }
 
     // @Roles('LEARNER')

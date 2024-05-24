@@ -4,7 +4,7 @@ import { CreateCourseDto } from '../dto/create-course.dto';
 import { UpdateValueCourse } from '../dto/update-course.dto';
 import { CourseResponse } from '../dto/course-response.dto';
 import { GetCourseUserDto } from '../dto/get-course-user.dto';
-import { GetCourseBySlugDto } from '../dto/get-course-slug.dto';
+import { FindCourseByAi, GetCourseBySlugDto } from '../dto/get-course-slug.dto';
 import { UpdateStatusDto } from '../dto/update-status.dto';
 import { DeleteCourseDto } from '../dto/delete-course.dto';
 import { UpdatePictureCourse } from '../dto/update-picture.dto';
@@ -39,4 +39,5 @@ export interface CourseServiceInterface {
     getAllCourseAdmin(): Promise<Course[]>;
     getAllLevelCourse(): Promise<Level[]>;
     countCoursePublish(payload: FilterCourseDto): Promise<number>;
+    findCourseByAi(payload: FindCourseByAi): Promise<JsonObject>;
 }

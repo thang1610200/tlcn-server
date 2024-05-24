@@ -12,7 +12,7 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateValueCourse } from './dto/update-course.dto';
 import { CourseResponse } from './dto/course-response.dto';
 import { GetCourseUserDto } from './dto/get-course-user.dto';
-import { GetCourseBySlugDto } from './dto/get-course-slug.dto';
+import { FindCourseByAi, GetCourseBySlugDto } from './dto/get-course-slug.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { DeleteCourseDto } from './dto/delete-course.dto';
 import { UpdatePictureCourse } from './dto/update-picture.dto';
@@ -28,13 +28,42 @@ type PipelineStage = {
     [key: string]: any;
 };
 
-
 @Injectable()
 export class CourseService implements CourseServiceInterface {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
     ) {}
+
+    async findCourseByAi(payload: FindCourseByAi): Promise<JsonObject> {
+        try {
+            const genAI = new GoogleGenerativeAI(
+                'AIzaSyBt00Kkr1PWYXgYorCH6rxowo_1ecSTPy8',
+            );
+            const model = genAI.getGenerativeModel({
+                model: 'text-embedding-004',
+            });
+
+            const resultEmbedding = await model.embedContent(payload.request);
+            const embedding = resultEmbedding.embedding;
+
+            return await this.prismaService.course.aggregateRaw({
+                pipeline: [
+                    {
+                        $vectorSearch: {
+                            index: 'vector_index',
+                            path: 'description_embedding',
+                            queryVector: embedding.values,
+                            numCandidates: 10,
+                            limit: 2,
+                        },
+                    }
+                ],
+            });
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     async countCoursePublish(payload: FilterCourseDto): Promise<number> {
         try {
@@ -442,7 +471,7 @@ export class CourseService implements CourseServiceInterface {
                     description: { $first: '$description' },
                     chapters: { $push: '$chapters' },
                     create_at: { $first: '$create_at' },
-                    total: { $sum: '$chapters.contents.lessons.duration' }
+                    total: { $sum: '$chapters.contents.lessons.duration' },
                 },
             },
             {
@@ -456,7 +485,7 @@ export class CourseService implements CourseServiceInterface {
                     slug: 1,
                     picture: 1,
                     description: 1,
-                    total: 1
+                    total: 1,
                 },
             },
             {
@@ -538,40 +567,43 @@ export class CourseService implements CourseServiceInterface {
 
         if (!!payload?.duration) {
             let durationMatch = [];
-            let duration: string[] = typeof payload.duration === 'string' ? [payload.duration] : payload.duration;
+            let duration: string[] =
+                typeof payload.duration === 'string'
+                    ? [payload.duration]
+                    : payload.duration;
 
             duration.forEach((item) => {
-                if(item === 'extraShort') {
+                if (item === 'extraShort') {
                     durationMatch.push({
-                        "total": { $gte: 0, $lte: 3600 }
+                        total: { $gte: 0, $lte: 3600 },
                     });
-                }else if (item === 'short') {
+                } else if (item === 'short') {
                     durationMatch.push({
-                        "total": { $gte: 3600, $lte: 10800 }
+                        total: { $gte: 3600, $lte: 10800 },
                     });
-                }else if (item === 'medium') {
+                } else if (item === 'medium') {
                     durationMatch.push({
-                        "total": { $gte: 10800, $lte: 21600 }
+                        total: { $gte: 10800, $lte: 21600 },
                     });
-                }else if (item === 'long') {
+                } else if (item === 'long') {
                     durationMatch.push({
-                        "total": { $gte: 21600, $lte: 61200 }
+                        total: { $gte: 21600, $lte: 61200 },
                     });
-                }else if (item === 'extraLong') {
+                } else if (item === 'extraLong') {
                     durationMatch.push({
-                        "total": { $gte: 61200 }
+                        total: { $gte: 61200 },
                     });
                 }
             });
 
-            if(durationMatch.length === 0) {
+            if (durationMatch.length === 0) {
                 return [];
             }
 
-            const elementPipeline: PipelineStage =                 {
+            const elementPipeline: PipelineStage = {
                 $match: {
-                    $or: durationMatch
-                }
+                    $or: durationMatch,
+                },
             };
 
             pipeline.splice(pipeline.length - 4, 0, elementPipeline);
