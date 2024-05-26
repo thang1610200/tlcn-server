@@ -23,6 +23,7 @@ import { GetProgressCourseDto } from './dto/get-progress-course.dto';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { JsonObject } from '@prisma/client/runtime/library';
 import { isUndefined } from 'lodash';
+import { ConfigService } from '@nestjs/config';
 
 type PipelineStage = {
     [key: string]: any;
@@ -33,13 +34,12 @@ export class CourseService implements CourseServiceInterface {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
+        private readonly configService: ConfigService
     ) {}
 
     async findCourseByAi(payload: FindCourseByAi): Promise<JsonObject> {
         try {
-            const genAI = new GoogleGenerativeAI(
-                'AIzaSyBt00Kkr1PWYXgYorCH6rxowo_1ecSTPy8',
-            );
+            const genAI = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
             const model = genAI.getGenerativeModel({
                 model: 'text-embedding-004',
             });

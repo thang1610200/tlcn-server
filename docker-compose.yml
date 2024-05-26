@@ -62,6 +62,6 @@ services:
     build:
       context: ./code/webdev
       dockerfile: Dockerfile
-# volumes:
-#   redis:
-#     driver: local
+volumes:
+  redis:
+    driver: local

@@ -6,10 +6,11 @@ import { ChatgptServiceInterface } from './interfaces/chatgpt.service.interface'
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
 import { OutputFormatMC, OutputFormatTF } from './dto/output-format.dto';
-import { ChatSession, GoogleGenerativeAI } from "@google/generative-ai";
+import { ChatSession, GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 import { parseSync, stringifySync } from 'subtitle';
 import fetch from 'node-fetch';
 import { UploadService } from 'src/upload/upload.service';
+import { ChatbotUserDto } from './dto/chatbot-user.dto';
 
 @Injectable()
 export class ChatgptService implements ChatgptServiceInterface {
@@ -23,6 +24,56 @@ export class ChatgptService implements ChatgptServiceInterface {
         //organization: this.configService.get('ORGANIZATION_ID'),
         apiKey: this.configService.get('OPENAI_API_KEY'),
     });
+
+    private readonly genai = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
+
+    async chatbotUser(payload: ChatbotUserDto): Promise<string> {
+        try {
+            const model = this.genai.getGenerativeModel({
+                model: "gemini-1.5-pro",
+            });
+              
+            const generationConfig = {
+                temperature: 0.4,
+                topP: 0.95,
+                topK: 64,
+                maxOutputTokens: 8192,
+                responseMimeType: "text/plain",
+            };
+
+            const safetySettings = [
+                {
+                  category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                  category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                  category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                  category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+            ];
+
+            const chatSession = model.startChat({
+                generationConfig,
+                safetySettings,
+                history: payload.history
+            });
+            
+            const result = await chatSession.sendMessage(payload.request);
+              
+            return result.response.text();
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     async translateSubtitle(subtitleUrl: string, languageTarget: string): Promise<string> {
         try {
@@ -118,8 +169,6 @@ export class ChatgptService implements ChatgptServiceInterface {
         }
 
     }
-
-    private readonly genai = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
 
     // async strict_output(
     //     system_prompt: string,
