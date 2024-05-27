@@ -38,7 +38,6 @@ export class ChatgptService implements ChatgptServiceInterface {
                 topP: 0.95,
                 topK: 64,
                 maxOutputTokens: 8192,
-                responseMimeType: "text/plain",
             };
 
             const safetySettings = [
@@ -81,7 +80,8 @@ export class ChatgptService implements ChatgptServiceInterface {
               
             return result.response.text();
         }
-        catch {
+        catch(err) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }
