@@ -57,6 +57,13 @@ export class CourseService implements CourseServiceInterface {
                             numCandidates: 10,
                             limit: 2,
                         },
+                    },
+                    {
+                        $project: {
+                            title: 1,
+                            slug: 1,
+                            picture: 1
+                        }
                     }
                 ],
             });

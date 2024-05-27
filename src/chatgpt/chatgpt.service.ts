@@ -6,7 +6,7 @@ import { ChatgptServiceInterface } from './interfaces/chatgpt.service.interface'
 import { PrismaService } from 'src/prisma.service';
 import { QuizzService } from 'src/quizz/quizz.service';
 import { OutputFormatMC, OutputFormatTF } from './dto/output-format.dto';
-import { ChatSession, GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
+import { ChatSession, GoogleGenerativeAI, HarmBlockThreshold, HarmCategory, InputContent } from "@google/generative-ai";
 import { parseSync, stringifySync } from 'subtitle';
 import fetch from 'node-fetch';
 import { UploadService } from 'src/upload/upload.service';
@@ -60,10 +60,21 @@ export class ChatgptService implements ChatgptServiceInterface {
                 },
             ];
 
+            const history: InputContent[] = payload.history.map((item) => {
+                return {
+                    role: item.label,
+                    parts: [
+                        {
+                            text: item.value
+                        }
+                    ]
+                };
+            });
+
             const chatSession = model.startChat({
                 generationConfig,
                 safetySettings,
-                history: payload.history
+                history
             });
             
             const result = await chatSession.sendMessage(payload.request);

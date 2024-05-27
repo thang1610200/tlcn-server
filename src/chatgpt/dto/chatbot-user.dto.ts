@@ -1,5 +1,9 @@
-import { InputContent } from "@google/generative-ai";
 import { IsArray, IsNotEmpty, IsString } from "class-validator";
+
+export interface HistoryInterface {
+    label: string;
+    value: string;
+}
 
 export class ChatbotUserDto {
     @IsString()
@@ -7,5 +11,5 @@ export class ChatbotUserDto {
     request: string;
 
     @IsArray()
-    history: InputContent[];
+    history: HistoryInterface[];
 }

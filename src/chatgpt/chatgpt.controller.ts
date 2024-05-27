@@ -6,12 +6,12 @@ import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
 import { ChatbotUserDto } from './dto/chatbot-user.dto';
 
-@Roles('INSTRUCTOR')
-@UseGuards(JwtGuard, RolesGuard)
 @Controller('chatgpt')
 export class ChatgptController {
     constructor(private readonly chatgptService: ChatgptService) {}
 
+    @Roles('INSTRUCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
     @Post('quizz-list')
     createQuizzList(@Body() payload: CreateListQuizzDto) {
         return this.chatgptService.createQuizzList(payload);
