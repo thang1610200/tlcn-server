@@ -18,7 +18,7 @@ RUN wget -O phpunit.phar https://phar.phpunit.de/phpunit-10.phar && chmod +x php
 
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
-    && composer global require phpunit/phpunit
+    && composer global require phpunit/phpunit 
 
 ENV PATH="$PATH:$HOME/.config/composer/vendor/bin"
 
