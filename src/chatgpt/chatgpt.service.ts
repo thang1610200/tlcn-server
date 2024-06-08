@@ -10,7 +10,7 @@ import { ChatSession, GoogleGenerativeAI, HarmBlockThreshold, HarmCategory, Inpu
 import { parseSync, stringifySync } from 'subtitle';
 import fetch from 'node-fetch';
 import { UploadService } from 'src/upload/upload.service';
-import { ChatbotUserDto } from './dto/chatbot-user.dto';
+import { ChatbotUserDto, SummaryCourseDto } from './dto/chatbot-user.dto';
 
 @Injectable()
 export class ChatgptService implements ChatgptServiceInterface {
@@ -26,6 +26,88 @@ export class ChatgptService implements ChatgptServiceInterface {
     });
 
     private readonly genai = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
+
+    async getSummaryCourse(payload: SummaryCourseDto): Promise<string> {
+        const course = await this.prismaService.course.findFirst({
+            where: {
+                slug: payload.course_slug
+            },
+            select: {
+                title: true,
+                description: true,
+                requirement: true,
+                learning_outcome: true,
+                chapters: {
+                    where: {
+                        isPublished: true
+                    },
+                    select: {
+                        title: true,
+                        description: true,  
+                        contents: {
+                            select: {
+                                lesson: {
+                                    where: {
+                                        isPublished: true
+                                    },
+                                    select: {
+                                        title: true,
+                                        description: true
+                                    }
+                                },
+                                exercise: {
+                                    where: {
+                                        isOpen: true
+                                    },
+                                    select: {
+                                        title: true,
+                                        type: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const generationConfig = {
+            temperature: 0.5,
+            topP: 0.95,
+            topK: 64,
+            responseMimeType: "text/plain",
+        };
+
+        const models = this.genai.getGenerativeModel({model: 'gemini-1.5-pro', generationConfig}, {timeout: 20 * 1000});
+
+        const input = `Tóm tắt khóa học này: ${JSON.stringify(course)}`;
+
+        console.log(input.length);
+
+        const chat = models.startChat({
+            history: [
+                {
+                    role: 'user',
+                    parts: [{
+                        text: 'Bạn là một trợ lý tóm tắt nội dung khóa học. Hãy tóm tắt một cách khách quan, chính xác, tập trung vào những điểm chính, ý tưởng quan trọng và không thêm thông tin không có trong nội dung gốc.'
+                    }]
+                },
+                {
+                    role: 'model',
+                    parts: [{
+                        text: input
+                    }]
+                }
+            ]
+        });
+
+        const result = await chat.sendMessage(input);
+        const response = await result.response;
+
+        let res: string = response.text() ?? '';
+
+        return res;
+    }
 
     async chatbotUser(payload: ChatbotUserDto): Promise<string> {
         try {
@@ -121,7 +203,7 @@ export class ChatgptService implements ChatgptServiceInterface {
                         )}. \nDo not put quotation marks or escape character \\ in the output fields.`;
 
                         const model = this.genai.getGenerativeModel({
-                            model: 'gemini-1.0-pro-001',
+                            model: 'gemini-1.5-pro',
                         },{
                             timeout: 60 * 1000
                         });
@@ -314,7 +396,7 @@ export class ChatgptService implements ChatgptServiceInterface {
         output_format: OutputFormat,
         default_category: string = '',
         output_value_only: boolean = false,
-        model: string = 'gemini-1.0-pro-latest',
+        model: string = 'gemini-1.5-pro',
         temperature: number = 0.9,
         num_tries: number = 3,
     ): Promise<

@@ -361,6 +361,7 @@ export class LessonService implements LessonServiceInterface {
                     token: payload.lesson_token,
                 },
                 include: {
+                    asyncVideo: true,
                     attachment: true,
                     content: {
                         include: {
@@ -463,13 +464,6 @@ export class LessonService implements LessonServiceInterface {
                 payload.file,
             );
 
-            const data = {
-                fileName,
-                file: payload.file,
-                lesson_id: lesson.id,
-                link,
-            };
-
             const update = await this.prismaService.lesson.update({
                 where: {
                     content: {
@@ -478,10 +472,29 @@ export class LessonService implements LessonServiceInterface {
                     token: lesson.token,
                 },
                 data: {
-                    videoUrl: link,
-                    isCompleteVideo: false,
+                    asyncVideo: {
+                        upsert: {
+                            create: {
+                                type: 'PROGRESSING'
+                            },
+                            update: {
+                                type: 'PROGRESSING'
+                            }
+                        }
+                    }
                 },
+                include: {
+                    asyncVideo: true
+                }
             });
+
+            const data = {
+                fileName,
+                file: payload.file,
+                lesson_id: lesson.id,
+                link,
+                asyncVideoId: update.asyncVideo.id
+            };
 
             await this.uploadService.uploadVideoToStorage(data);
 
@@ -746,7 +759,7 @@ export class LessonService implements LessonServiceInterface {
             description: lesson.description,
             isPublished: lesson.isPublished,
             videoUrl: lesson.videoUrl,
-            isCompleteVideo: lesson.isCompleteVideo,
+            //isCompleteVideo: lesson.isCompleteVideo,
             thumbnail: lesson.thumbnail,
             //course_title: lesson.course?.title
         };

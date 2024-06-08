@@ -13,3 +13,9 @@ export class ChatbotUserDto {
     @IsArray()
     history: HistoryInterface[];
 }
+
+export class SummaryCourseDto {
+    @IsNotEmpty()
+    @IsString()
+    course_slug: string;
+}

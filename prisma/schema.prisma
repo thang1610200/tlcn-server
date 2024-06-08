@@ -77,6 +77,13 @@ enum LevelType {
   EXPERT
 }
 
+enum QueueType {
+  PROGRESSING
+  COMPLETED
+  WARNING
+  ERROR
+}
+
 model User {
   id                  String               @id @default(auto()) @map("_id") @db.ObjectId
   email               String               @unique
@@ -160,24 +167,35 @@ model Chapter {
 }
 
 model Lesson {
-  id              String       @id @default(auto()) @map("_id") @db.ObjectId
-  token           String       @unique
-  title           String
-  description     String?
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  token       String       @unique
+  title       String
+  description String?
   //position        Int
-  isPublished     Boolean      @default(false)
-  videoUrl        String?
-  duration        Int?
-  isCompleteVideo Boolean      @default(false)
-  isPreview       Boolean      @default(false)
-  thumbnail       String?
+  isPublished Boolean      @default(false)
+  videoUrl    String?
+  duration    Int?
+  //isCompleteVideo Boolean      @default(false)
+  asyncVideo  AsyncVideo?
+  isPreview   Boolean      @default(false)
+  thumbnail   String?
   //amountToPass    Int       @default(0)
   // exerciseId      String?   @db.ObjectId
   // exercise        Exercise? @relation(fields: [exerciseId], references: [id])
-  contentId       String       @unique @db.ObjectId
-  content         Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  attachment      Attachment[]
-  subtitles       Subtitle[]
+  contentId   String       @unique @db.ObjectId
+  content     Content      @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  attachment  Attachment[]
+  subtitles   Subtitle[]
+}
+
+model AsyncVideo {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  type        QueueType
+  description String?
+  lessonId    String    @unique @db.ObjectId
+  lesson      Lesson    @relation(fields: [lessonId], references: [id])
+  create_at   DateTime  @default(now())
+  update_at   DateTime  @updatedAt
 }
 
 model Subtitle {

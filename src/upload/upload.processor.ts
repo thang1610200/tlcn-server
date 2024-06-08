@@ -25,37 +25,76 @@ export class UploadProcessor {
     async updateVideo(job: Job<QueueUploadVideo>): Promise<any> {
         try {
             const payload: any = job.data;
-            return await this.uploadService.uploadVideoToS3(
+            
+            const result = await this.uploadService.moderateVideo(payload.data.file);
+
+            if(result.Hate > 0 || result.SelfHarm > 0 || result.Sexual > 0 || result.Violence > 0) {
+                return await this.prismaService.asyncVideo.update({
+                    where: {
+                        id: payload.data.asyncVideoId
+                    },
+                    data: {
+                        type: 'WARNING',
+                        description: `{
+                            Hate: ${result.Hate};
+                            SelfHarm: ${result.SelfHarm};
+                            Sexual: ${result.Sexual};
+                            Violence: ${result.Violence}
+                        }`
+                    }
+                });
+            }
+
+            const videoUpload =  await this.uploadService.uploadVideoToS3(
                 payload.data.file,
                 payload.data.fileName,
             );
-        } catch (err: any) {
-            throw new InternalServerErrorException();
-        }
-    }
 
-    @OnQueueCompleted({
-        name: 'update-video'
-    })
-    async handler(job: Job<QueueUploadVideo>, result: any): Promise<void> {
-        try {
-            const payload: any = job.data;
-            console.log(payload);
             const duration = await getVideoDurationInSeconds(payload.data.link);
 
-            await this.prismaService.lesson.update({
+            return await this.prismaService.lesson.update({
                 where: {
                     id: payload.data.lesson_id,
                 },
                 data: {
-                    isCompleteVideo: true,
                     duration,
+                    videoUrl: payload.data.link,
+                    asyncVideo: {
+                        update: {
+                            type: 'COMPLETED'
+                        }
+                    }
                 },
             });
+            
         } catch (err: any) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }
+
+    // @OnQueueCompleted({
+    //     name: 'update-video'
+    // })
+    // async handler(job: Job<QueueUploadVideo>, result: any): Promise<void> {
+    //     try {
+    //         const payload: any = job.data;
+    //         console.log(payload);
+    //         const duration = await getVideoDurationInSeconds(payload.data.link);
+
+    //         await this.prismaService.lesson.update({
+    //             where: {
+    //                 id: payload.data.lesson_id,
+    //             },
+    //             data: {
+    //                 isCompleteVideo: true,
+    //                 duration,
+    //             },
+    //         });
+    //     } catch (err: any) {
+    //         throw new InternalServerErrorException();
+    //     }
+    // }
 
     @OnQueueFailed({
         name: 'update-video'
@@ -68,7 +107,11 @@ export class UploadProcessor {
                 id: payload.data.lesson_id,
             },
             data: {
-                videoUrl: '',
+                asyncVideo: {
+                    update: {
+                        type: 'ERROR'
+                    }
+                }
             },
         });
     }

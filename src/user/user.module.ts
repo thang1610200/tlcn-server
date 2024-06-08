@@ -6,6 +6,7 @@ import { BullModule } from '@nestjs/bull';
 import { ConfigService } from '@nestjs/config';
 import { UploadService } from 'src/upload/upload.service';
 import { JwtService } from '@nestjs/jwt';
+import { HttpModule } from '@nestjs/axios';
 //import { UploadGateway } from 'src/upload/upload.gateway';
 
 @Module({
@@ -13,6 +14,7 @@ import { JwtService } from '@nestjs/jwt';
         BullModule.registerQueue({
             name: 'upload',
         }),
+        HttpModule
     ],
     controllers: [UserController, UserAdminController],
     providers: [

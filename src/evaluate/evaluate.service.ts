@@ -44,6 +44,7 @@ export class EvaluateService implements EvaluateServiceInterface {
     }
 
     async evaluateFunction(payload: EvaluateCode): Promise<boolean> {
+        const volume = 'tlcn-server_nestjs_data';
         const folder = v4();
         const directoryPath = join(
             __dirname,
@@ -60,6 +61,7 @@ export class EvaluateService implements EvaluateServiceInterface {
         //let testFileName;
         let dockerCommand;
         let result: boolean;
+        const directoryWork = join("/evaluate", `/${folder}`, '/code');
 
         switch(payload.lang) {
             case "Php": 
@@ -68,7 +70,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/code -w /code tlcn-server-coderunner_php /bin/bash -c "phpunit ${payload.testFileName}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${volume}:/code -w ${directoryWork} tlcn-server-coderunner_php /bin/bash -c "phpunit ${payload.testFile}"`;
 
                 let execEvaluatePhp = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
@@ -99,7 +101,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/code -w /code tlcn-server-coderunner_python /bin/bash -c "python3 -m unittest ${payload.testFileName}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${volume}:/code -w ${directoryWork} tlcn-server-coderunner_python /bin/bash -c "python3 -m unittest ${payload.testFileName}"`;
 
                 let execEvaluatePython = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
@@ -134,7 +136,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fileArray.push(item.codeFileName);
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/code -w /code tlcn-server-coderunner_java /bin/bash -c "javac -cp $CLASSPATH:. ${payload.testFileName} ${fileArray.join(" ")} && java -cp $CLASSPATH:. junit.textui.TestRunner ${payload.testFileName}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${volume}:/code -w ${directoryWork} tlcn-server-coderunner_java /bin/bash -c "javac -cp $CLASSPATH:. ${payload.testFileName} ${fileArray.join(" ")} && java -cp $CLASSPATH:. junit.textui.TestRunner ${payload.testFileName}"`;
 
                 let execEvaluateJava = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
@@ -164,7 +166,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/code -w /code tlcn-server-coderunner_javascript /bin/bash -c "jest ${payload.testFileName}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${volume}:/code -w ${directoryWork} tlcn-server-coderunner_javascript /bin/bash -c "jest ${payload.testFileName}"`;
 
                 let execEvaluateJavascript = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
@@ -195,7 +197,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/app/code -w /app/code tlcn-server-coderunner_typescript /bin/bash -c "npx jest ${payload.testFileName}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${volume}:/app/code -w ${join("/evaluate", `/${folder}`,'/app' ,'/code')} tlcn-server-coderunner_typescript /bin/bash -c "npx jest ${payload.testFileName}"`;
 
                 let execEvaluateTypescript = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
@@ -229,7 +231,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fileArrayCpp.push(item.codeFileName);
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/code -w /code tlcn-server-coderunner_cpp /bin/bash -c "g++ -o evaluation ${payload.testFileName} ${fileArrayCpp.join(" ")} -lgtest -lgtest_main -pthread && ./evaluation"`;
+                dockerCommand = `docker run --rm -i --network none -v ${volume}:/code -w ${directoryWork} tlcn-server-coderunner_cpp /bin/bash -c "g++ -o evaluation ${payload.testFileName} ${fileArrayCpp.join(" ")} -lgtest -lgtest_main -pthread && ./evaluation"`;
 
                 let execEvaluateCpp = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
@@ -261,7 +263,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/app/code -w /app/code tlcn-server-coderunner_webdev /bin/bash -c "npx jest ${payload.testFileName}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/app/code -w -w ${join("/evaluate", `/${folder}`,'/app' ,'/code')} tlcn-server-coderunner_webdev /bin/bash -c "npx jest ${payload.testFileName}"`;
 
                 let execEvaluateWebDev = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {

@@ -1,4 +1,4 @@
-import { ChatbotUserDto } from '../dto/chatbot-user.dto';
+import { ChatbotUserDto, SummaryCourseDto } from '../dto/chatbot-user.dto';
 import { CreateListQuizzDto, OutputFormat } from '../dto/create-list-quizz.dto';
 import { OutputFormatMC, OutputFormatTF } from '../dto/output-format.dto';
 
@@ -29,4 +29,5 @@ export interface ChatgptServiceInterface {
     ): Promise<string>;
     translateSubtitle(subtitleUrl: string, languageTarget: string): Promise<string>;
     chatbotUser(payload: ChatbotUserDto): Promise<string>;
+    getSummaryCourse(payload: SummaryCourseDto): Promise<string>;
 }

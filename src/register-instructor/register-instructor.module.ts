@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UploadService } from 'src/upload/upload.service';
 import { BullModule } from '@nestjs/bull';
 import { MailingService } from 'src/mailing/mailing.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
     imports: [
@@ -14,7 +15,8 @@ import { MailingService } from 'src/mailing/mailing.service';
         }),
         BullModule.registerQueue({
             name: 'emailSending',
-        })
+        }),
+        HttpModule
     ],
     controllers: [RegisterInstructorController, RegisterInstructorAdminController],
     providers: [

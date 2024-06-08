@@ -7,12 +7,14 @@ import { ConfigService } from '@nestjs/config';
 import { MessageGateway } from './message.gateway';
 import { UploadService } from 'src/upload/upload.service';
 import { BullModule } from '@nestjs/bull';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
     imports: [
         BullModule.registerQueue({
             name: 'upload',
         }),
+        HttpModule
     ],
     providers: [
         MessageService,

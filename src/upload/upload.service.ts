@@ -1,5 +1,5 @@
 import { InjectQueue } from '@nestjs/bull';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Queue } from 'bull';
 //import { Web3Storage, CIDString } from 'web3.storage';
@@ -9,6 +9,10 @@ import { JwtService } from '@nestjs/jwt';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { QueueUploadVideo } from 'src/lesson/dto/queue-upload-video.dto';
 import { TranslateSubtitleQueue } from 'src/lesson/dto/subtitle.dto';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
+import { ModerateVideoInterface } from './dto/moderate-video.interface';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class UploadService implements UploadServiceInterface {
@@ -24,7 +28,36 @@ export class UploadService implements UploadServiceInterface {
         @InjectQueue('upload') private readonly uploadQueue: Queue,
         private readonly configService: ConfigService,
         private readonly jwtService: JwtService,
+        private readonly httpService: HttpService,
+        private readonly prismaService: PrismaService
     ) {}
+
+    async moderateVideo(video: any): Promise<ModerateVideoInterface> {
+        try {
+            console.log(Buffer.from(video.buffer));
+            const formData = new FormData();
+            const file_blob = new Blob([Buffer.from(video.buffer)], { type: video.mimetype });
+            formData.append('video', file_blob, video.originalname);
+            console.log(formData.get('video'));
+            const { data } = await firstValueFrom(
+                this.httpService
+                    .post(`${this.configService.get('MODERATE_URL')}/analyze`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+            );
+            console.log(data);
+
+            const result: ModerateVideoInterface = data.results;
+
+            return result;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
 
     // makeStorageClient(): Web3Storage {
     //     return new Web3Storage({

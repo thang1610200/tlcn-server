@@ -4,6 +4,6 @@ export interface LessonResponse {
     description: string;
     isPublished: boolean;
     videoUrl: string;
-    isCompleteVideo: boolean;
+   // isCompleteVideo: boolean;
     thumbnail: string;
 }

@@ -4,7 +4,7 @@ import { ChatgptService } from './chatgpt.service';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
-import { ChatbotUserDto } from './dto/chatbot-user.dto';
+import { ChatbotUserDto, SummaryCourseDto } from './dto/chatbot-user.dto';
 
 @Controller('chatgpt')
 export class ChatgptController {
@@ -20,5 +20,10 @@ export class ChatgptController {
     @Post('chatbot-user')
     chatbotUser(@Body() payload: ChatbotUserDto) {
         return this.chatgptService.chatbotUser(payload);
+    }
+
+    @Get('summary-course')
+    summaryCourse(@Query() query: SummaryCourseDto){
+        return this.chatgptService.getSummaryCourse(query);
     }
 }

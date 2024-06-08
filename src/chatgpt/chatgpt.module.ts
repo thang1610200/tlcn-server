@@ -6,12 +6,14 @@ import { QuizzService } from 'src/quizz/quizz.service';
 import { JwtService } from '@nestjs/jwt';
 import { UploadService } from 'src/upload/upload.service';
 import { BullModule } from '@nestjs/bull';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
     imports: [
         BullModule.registerQueue({
             name: 'upload',
         }),
+        HttpModule
     ],
     controllers: [ChatgptController],
     providers: [ChatgptService, PrismaService, QuizzService, JwtService, UploadService],

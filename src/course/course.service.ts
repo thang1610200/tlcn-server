@@ -24,6 +24,9 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { JsonObject } from '@prisma/client/runtime/library';
 import { isUndefined } from 'lodash';
 import { ConfigService } from '@nestjs/config';
+import { HttpService } from '@nestjs/axios';
+import { catchError, firstValueFrom } from 'rxjs';
+import { AxiosError } from 'axios';
 
 type PipelineStage = {
     [key: string]: any;
@@ -34,12 +37,15 @@ export class CourseService implements CourseServiceInterface {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
-        private readonly configService: ConfigService
+        private readonly configService: ConfigService,
+        private readonly httpService: HttpService,
     ) {}
 
     async findCourseByAi(payload: FindCourseByAi): Promise<JsonObject> {
         try {
-            const genAI = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
+            const genAI = new GoogleGenerativeAI(
+                this.configService.get('GEMINI_API_KEY'),
+            );
             const model = genAI.getGenerativeModel({
                 model: 'text-embedding-004',
             });
@@ -62,9 +68,9 @@ export class CourseService implements CourseServiceInterface {
                         $project: {
                             title: 1,
                             slug: 1,
-                            picture: 1
-                        }
-                    }
+                            picture: 1,
+                        },
+                    },
                 ],
             });
         } catch {
