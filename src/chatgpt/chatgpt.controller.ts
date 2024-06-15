@@ -4,7 +4,7 @@ import { ChatgptService } from './chatgpt.service';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
-import { ChatbotUserDto, SummaryCourseDto } from './dto/chatbot-user.dto';
+import { ChatbotUserDto, SummaryCourseDto, SupportCodeDto } from './dto/chatbot-user.dto';
 
 @Controller('chatgpt')
 export class ChatgptController {
@@ -25,5 +25,10 @@ export class ChatgptController {
     @Get('summary-course')
     summaryCourse(@Query() query: SummaryCourseDto){
         return this.chatgptService.getSummaryCourse(query);
+    }
+
+    @Get('support-code')
+    supportCode(@Query() query: SupportCodeDto) {
+        return this.chatgptService.supportCode(query);
     }
 }

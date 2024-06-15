@@ -7,7 +7,7 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { CourseServiceInterface } from './interfaces/course.service.interface';
 import { CreateTopicDto } from './dto/create-topic.dto';
-import { Course, Level, Topic, User, UserProgress } from '@prisma/client';
+import { Course, Level, Prisma, Topic, User, UserProgress } from '@prisma/client';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateValueCourse } from './dto/update-course.dto';
 import { CourseResponse } from './dto/course-response.dto';
@@ -22,12 +22,8 @@ import { GetDetailCourseDto } from './dto/get-detail-course.dto';
 import { GetProgressCourseDto } from './dto/get-progress-course.dto';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { JsonObject } from '@prisma/client/runtime/library';
-import { isUndefined } from 'lodash';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
-import { catchError, firstValueFrom } from 'rxjs';
-import { AxiosError } from 'axios';
-
 type PipelineStage = {
     [key: string]: any;
 };
@@ -40,6 +36,89 @@ export class CourseService implements CourseServiceInterface {
         private readonly configService: ConfigService,
         private readonly httpService: HttpService,
     ) {}
+
+    async test(): Promise<any> {
+        return await this.prismaService.userProgress.aggregateRaw({
+            pipeline: [
+                {
+                    $lookup: {
+                        from: 'Course',
+                        localField: 'courseId',
+                        foreignField: '_id',
+                        as: 'course',
+                    },
+                },
+                {
+                    $unwind: '$course',
+                },
+                {
+                    $lookup: {
+                        from: 'Chapter',
+                        localField: 'course._id',
+                        foreignField: 'courseId',
+                        as: 'chapters',
+                    },
+                },
+                // {
+                //     $unwind: '$chapters',
+                // },
+                {
+                    $lookup: {
+                        from: 'User',
+                        localField: 'userId',
+                        foreignField: '_id',
+                        as: 'user',
+                    },
+                },
+                {
+                    $unwind: '$user',
+                },
+                {
+                    $match: {
+                        'course.owner_id': {
+                            '$oid': '65348af5efbb5e8812153b51'
+                        },
+                    },
+                },
+                {
+                    $group: {
+                        "_id": {
+                            courseId: "$course.title",
+                            userId: '$user.email'
+                        },
+                        "data": {
+                            $push: {
+                                $cond: [
+                                    { $eq: ["$isCompleted", true] },
+                                    "$$ROOT",
+                                    null
+                                ],
+                              },
+                        }
+                    }
+                },
+                { 
+                    $project: {
+                      _id: 0,
+                      courseId: '$_id.courseId',
+                      userId: '$_id.userId',
+                      completedData: { 
+                        $ifNull: [
+                          {
+                            $filter: { 
+                              input: '$data',
+                              as: 'data',
+                              cond: { $ne: ['$$data', null] },
+                            },
+                          },
+                          []
+                        ]
+                      },
+                    },
+                  },
+            ]
+        });
+    }
 
     async findCourseByAi(payload: FindCourseByAi): Promise<JsonObject> {
         try {
@@ -813,20 +892,96 @@ export class CourseService implements CourseServiceInterface {
 
     async getAllUserOfInstructor(
         payload: GetCourseUserDto,
-    ): Promise<UserProgress[]> {
+    ): Promise<any> {
         try {
             const owner = await this.findUserByEmail(payload.email);
+
+            // return await this.prismaService.userProgress.aggregateRaw({
+            //     pipeline: [
+            //         {
+            //             $lookup: {
+            //                 from: 'Course',
+            //                 localField: 'courseId',
+            //                 foreignField: '_id',
+            //                 as: 'course',
+            //             },
+            //         },
+            //         {
+            //             $unwind: '$course',
+            //         },
+            //         {
+            //             $lookup: {
+            //                 from: 'User',
+            //                 localField: 'userId',
+            //                 foreignField: '_id',
+            //                 as: 'user',
+            //             },
+            //         },
+            //         {
+            //             $unwind: '$user',
+            //         },
+            //         {
+            //             $match: {
+            //                 'course.owner_id': {
+            //                     '$oid': owner.id
+            //                 },
+            //             },
+            //         },
+            //         {
+            //             $sort: {
+            //                 'createdAt': -1,
+            //             }
+            //         },
+            //         {
+            //             $group: {
+            //                 "_id": {
+            //                     courseId: "$course.title",
+            //                     userId: '$user.email'
+            //                 },
+            //                 //"data": { $push: "$$ROOT" }
+            //                 "data": {
+            //                     $push: {
+            //                         $cond: [
+            //                             { $eq: ["$isCompleted", true] },
+            //                             "$$ROOT",
+            //                             null
+            //                         ],
+            //                       },
+            //                 }
+            //             }
+            //         },
+            //         { 
+            //             $project: {
+            //               _id: 0,
+            //               courseId: '$_id.courseId',
+            //               userId: '$_id.userId',
+            //               completedData: { 
+            //                 $ifNull: [
+            //                   {
+            //                     $filter: { 
+            //                       input: '$data',
+            //                       as: 'data',
+            //                       cond: { $ne: ['$$data', null] },
+            //                     },
+            //                   },
+            //                   []
+            //                 ]
+            //               },
+            //             },
+            //           },
+            //     ]
+            // });
 
             const course = await this.prismaService.userProgress.findMany({
                 where: {
                     course: {
                         owner_id: owner.id,
-                    },
+                    }
                 },
                 distinct: ['userId', 'courseId'],
                 include: {
                     course: true,
-                    user: true,
+                    user: true 
                 },
             });
             return course;

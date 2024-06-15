@@ -19,3 +19,13 @@ export class SummaryCourseDto {
     @IsString()
     course_slug: string;
 }
+
+export class SupportCodeDto {
+    @IsNotEmpty()
+    @IsString()
+    codeTitle: string;
+
+    @IsNotEmpty()
+    @IsString()
+    codeLang: string;
+}

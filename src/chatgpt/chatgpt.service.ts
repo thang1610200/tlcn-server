@@ -10,7 +10,7 @@ import { ChatSession, GoogleGenerativeAI, HarmBlockThreshold, HarmCategory, Inpu
 import { parseSync, stringifySync } from 'subtitle';
 import fetch from 'node-fetch';
 import { UploadService } from 'src/upload/upload.service';
-import { ChatbotUserDto, SummaryCourseDto } from './dto/chatbot-user.dto';
+import { ChatbotUserDto, SummaryCourseDto, SupportCodeDto } from './dto/chatbot-user.dto';
 
 @Injectable()
 export class ChatgptService implements ChatgptServiceInterface {
@@ -26,6 +26,46 @@ export class ChatgptService implements ChatgptServiceInterface {
     });
 
     private readonly genai = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
+
+    async supportCode(payload: SupportCodeDto): Promise<any> {
+        try{
+            const model = this.genai.getGenerativeModel({
+                model: "gemini-1.5-flash",
+            });
+              
+            const generationConfig = {
+                temperature: 0.7,
+                topP: 0.95,
+                topK: 64,
+                maxOutputTokens: 400,
+            };
+
+            const chatSession = model.startChat({
+                generationConfig,
+            });
+
+            const prompt = `Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
+                            Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp, không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
+                            [{
+                                'code': [chỉ viết hàm để trình bày đoạn code],
+                                'explain': [lời giải thích]
+                            }]`
+
+            const result = await chatSession.sendMessage(prompt);
+
+            const response = await result.response;
+
+            let res = response.text() ?? '';
+
+            const regex = /\[\s*\{\s*"code":\s*".*",\s*"explain":\s*".*"\s*}\s*\]/;
+
+            return res.match(regex)[0];
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException()
+        }
+    }
 
     async getSummaryCourse(payload: SummaryCourseDto): Promise<string> {
         const course = await this.prismaService.course.findFirst({
@@ -82,7 +122,7 @@ export class ChatgptService implements ChatgptServiceInterface {
 
         const input = `Tóm tắt khóa học này: ${JSON.stringify(course)}`;
 
-        console.log(input.length);
+        //console.log(input.length);
 
         const chat = models.startChat({
             history: [

@@ -203,4 +203,9 @@ export class CourseController {
     getProgressCourseAuth(@Query() payload: GetProgressCourseDto) {
         return this.courseService.getDetailCourseAuth(payload);
     }
+
+    @Get('test')
+    test() {
+        return this.courseService.test();
+    }
 }
