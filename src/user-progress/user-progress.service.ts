@@ -9,10 +9,442 @@ import {
 import { UserProgressServiceInterface } from './interfaces/user-progress.service.interface';
 import { PrismaService } from 'src/prisma.service';
 import { Content, Course, Lesson, Quizz, User, UserProgress, UserProgressQuiz } from '@prisma/client';
-import { AddAnswerUserProgressDto, AddUserProgressDto, CompleteLessonDto, RetakeQuizDto } from './dto/user-progress.dto';
+import { AddAnswerUserProgressDto, AddUserProgressDto, CompleteLessonDto, RetakeQuizDto, UserAccessDto } from './dto/user-progress.dto';
+
+type PipelineStage = {
+    [key: string]: any;
+}
+
 @Injectable()
 export class UserProgressService implements UserProgressServiceInterface {
     constructor(private readonly prismaService: PrismaService) {}
+
+    async countCourseAccess(payload: UserAccessDto): Promise<number> {
+        try {
+            let pipeline: PipelineStage[] = [
+                {
+                    $lookup: {
+                        from: "UserProgress",
+                        let: { courseId: "$_id" }, 
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$courseId", "$$courseId"] } } },
+                            {
+                                $lookup: {
+                                    from: "User",
+                                    localField: "userId",
+                                    foreignField: "_id",
+                                    as: "user",
+                                }
+                            },
+                            { $unwind: "$user" } 
+                        ],
+                        as: "userProgress"
+                    }
+                },
+                {
+                    $match: {
+                        isPublished: true,
+                        userProgress: {
+                            $elemMatch: {
+                                "user.email": payload.email
+                            }
+                        }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "Chapter",
+                        let: { courseId: "$_id" }, 
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$courseId", "$$courseId"] } } },
+                            {
+                                $match: {
+                                    isPublished: true
+                                }
+                            },
+                            {
+                                $lookup: {
+                                    from: "Content",
+                                    let: { chapterId: "$_id" }, 
+                                    pipeline: [
+                                        { $match: { $expr: { $eq: ["$chapterId", "$$chapterId"] } } },
+                                        {
+                                            $lookup: {
+                                                from: 'Lesson',
+                                                localField: '_id',
+                                                foreignField: 'contentId',
+                                                as: 'lessons',
+                                            },
+                                        },
+                                        {
+                                            $lookup: {
+                                                from: 'Exercise',
+                                                localField: '_id',
+                                                foreignField: 'contentId',
+                                                as: 'exercises',
+                                            },
+                                        },
+                                        {
+                                            $unwind: {
+                                                path: '$lessons',
+                                                preserveNullAndEmptyArrays: true,
+                                            },
+                                        },
+                                        {
+                                            $unwind: {
+                                                path: '$exercises',
+                                                preserveNullAndEmptyArrays: true,
+                                            },
+                                        },
+                                        {
+                                            $match: {
+                                                $or: [
+                                                    { 'lessons.isPublished': true },
+                                                    { 'exercises.isOpen': true },
+                                                ],
+                                            },
+                                        },
+                                    ],
+                                    as: "contents"
+                                }
+                            }
+                        ],
+                        as: "chapters"
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        title: 1,
+                        chapters: 1,
+                        slug: 1,
+                        picture: 1,
+                        description: 1,
+                        userProgress: {
+                            $filter: {
+                                input: "$userProgress",
+                                as: "userProgressItem",
+                                cond: {
+                                    $and: [
+                                        { $eq: ["$$userProgressItem.user.email", payload.email] },
+                                        { $eq: ["$$userProgressItem.isCompleted", true ] }
+                                    ]
+                                }
+                            }
+                        },
+                    },
+                },
+            ];
+
+            if (!!payload?.topic_slug) {
+                const topicMatch: PipelineStage[] = [
+                    {
+                        $lookup: {
+                            from: 'Topic',
+                            localField: 'topic_id',
+                            foreignField: '_id',
+                            as: 'topic',
+                        },
+                    },
+                    {
+                        $unwind: '$topic',
+                    },
+                    {
+                        $match: {
+                            'topic.slug': {
+                                $in:
+                                    typeof payload.topic_slug === 'string'
+                                        ? [payload.topic_slug]
+                                        : payload.topic_slug,
+                            },
+                        },
+                    },
+                ];
+    
+                pipeline = [...topicMatch, ...pipeline];
+            }
+    
+            if (!!payload?.level_slug) {
+                const levelMatch: PipelineStage[] = [
+                    {
+                        $lookup: {
+                            from: 'Level',
+                            localField: 'level_id',
+                            foreignField: '_id',
+                            as: 'level',
+                        },
+                    },
+                    {
+                        $unwind: '$level',
+                    },
+                    {
+                        $match: {
+                            'level.slug': {
+                                $in:
+                                    typeof payload.level_slug === 'string'
+                                        ? [payload.level_slug]
+                                        : payload.level_slug,
+                            },
+                        },
+                    },
+                ];
+    
+                pipeline = [...levelMatch, ...pipeline];
+            }
+
+            if (!!payload?.title) {
+                const titleMatch: PipelineStage = {
+                    $search: {
+                        index: 'default',
+                        text: {
+                            query: payload.title,
+                            path: 'title',
+                        },
+                    },
+                };
+    
+                pipeline.unshift(titleMatch);
+            }
+
+            const course: any = await this.prismaService.course.aggregateRaw({
+                pipeline
+            });
+            
+            return course.length as number;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async courseOfUser(payload: UserAccessDto): Promise<any[]> {
+        try {
+            let pipeline: PipelineStage[] = [
+                {
+                    $lookup: {
+                        from: "UserProgress",
+                        let: { courseId: "$_id" }, 
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$courseId", "$$courseId"] } } },
+                            {
+                                $lookup: {
+                                    from: "User",
+                                    localField: "userId",
+                                    foreignField: "_id",
+                                    as: "user",
+                                }
+                            },
+                            { $unwind: "$user" } 
+                        ],
+                        as: "userProgress"
+                    }
+                },
+                {
+                    $match: {
+                        isPublished: true,
+                        userProgress: {
+                            $elemMatch: {
+                                "user.email": payload.email
+                            }
+                        }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "Chapter",
+                        let: { courseId: "$_id" }, 
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$courseId", "$$courseId"] } } },
+                            {
+                                $match: {
+                                    isPublished: true
+                                }
+                            },
+                            {
+                                $lookup: {
+                                    from: "Content",
+                                    let: { chapterId: "$_id" }, 
+                                    pipeline: [
+                                        { $match: { $expr: { $eq: ["$chapterId", "$$chapterId"] } } },
+                                        {
+                                            $lookup: {
+                                                from: 'Lesson',
+                                                localField: '_id',
+                                                foreignField: 'contentId',
+                                                as: 'lessons',
+                                            },
+                                        },
+                                        {
+                                            $lookup: {
+                                                from: 'Exercise',
+                                                localField: '_id',
+                                                foreignField: 'contentId',
+                                                as: 'exercises',
+                                            },
+                                        },
+                                        {
+                                            $unwind: {
+                                                path: '$lessons',
+                                                preserveNullAndEmptyArrays: true,
+                                            },
+                                        },
+                                        {
+                                            $unwind: {
+                                                path: '$exercises',
+                                                preserveNullAndEmptyArrays: true,
+                                            },
+                                        },
+                                        {
+                                            $match: {
+                                                $or: [
+                                                    { 'lessons.isPublished': true },
+                                                    { 'exercises.isOpen': true },
+                                                ],
+                                            },
+                                        },
+                                    ],
+                                    as: "contents"
+                                }
+                            }
+                        ],
+                        as: "chapters"
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        title: 1,
+                        chapters: 1,
+                        slug: 1,
+                        picture: 1,
+                        description: 1,
+                        userProgress: {
+                            $filter: {
+                                input: "$userProgress",
+                                as: "userProgressItem",
+                                cond: {
+                                    $and: [
+                                        { $eq: ["$$userProgressItem.user.email", payload.email] },
+                                        { $eq: ["$$userProgressItem.isCompleted", true ] }
+                                    ]
+                                }
+                            }
+                        },
+                    },
+                },
+            ];
+
+            if (!!payload?.topic_slug) {
+                const topicMatch: PipelineStage[] = [
+                    {
+                        $lookup: {
+                            from: 'Topic',
+                            localField: 'topic_id',
+                            foreignField: '_id',
+                            as: 'topic',
+                        },
+                    },
+                    {
+                        $unwind: '$topic',
+                    },
+                    {
+                        $match: {
+                            'topic.slug': {
+                                $in:
+                                    typeof payload.topic_slug === 'string'
+                                        ? [payload.topic_slug]
+                                        : payload.topic_slug,
+                            },
+                        },
+                    },
+                ];
+    
+                pipeline = [...topicMatch, ...pipeline];
+            }
+    
+            if (!!payload?.level_slug) {
+                const levelMatch: PipelineStage[] = [
+                    {
+                        $lookup: {
+                            from: 'Level',
+                            localField: 'level_id',
+                            foreignField: '_id',
+                            as: 'level',
+                        },
+                    },
+                    {
+                        $unwind: '$level',
+                    },
+                    {
+                        $match: {
+                            'level.slug': {
+                                $in:
+                                    typeof payload.level_slug === 'string'
+                                        ? [payload.level_slug]
+                                        : payload.level_slug,
+                            },
+                        },
+                    },
+                ];
+    
+                pipeline = [...levelMatch, ...pipeline];
+            }
+
+            if (!!payload?.title) {
+                const titleMatch: PipelineStage = {
+                    $search: {
+                        index: 'default',
+                        text: {
+                            query: payload.title,
+                            path: 'title',
+                        },
+                    },
+                };
+    
+                pipeline.unshift(titleMatch);
+            }
+
+            if (!!payload?.page) {
+                if (Number(payload.page) < 1) {
+                    return [];
+                }
+    
+                const pagination: PipelineStage[] = [
+                    {
+                        $skip: (Number(payload.page) - 1) * 6,
+                    },
+                    {
+                        $limit: 6,
+                    },
+                ];
+    
+                pipeline.splice(-2, 2);
+                pipeline = [...pipeline, ...pagination];
+            }
+
+            const course: any = await this.prismaService.course.aggregateRaw({
+                pipeline
+            });
+    
+            const user_progress = course.map((item) => {
+                const lesson = item.chapters.reduce((accumulator, currentValue) => {
+                    return accumulator + currentValue.contents.length;
+                }, 0);
+    
+                return {
+                    ...item,
+                    percent: Number(item.userProgress.length / lesson),
+                }
+            });
+    
+            return user_progress;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
 
     async retakeQuiz(payload: RetakeQuizDto): Promise<string> {
         const course = await this.findCourseBySlug(payload.course_slug);

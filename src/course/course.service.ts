@@ -24,6 +24,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { JsonObject } from '@prisma/client/runtime/library';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
+
 type PipelineStage = {
     [key: string]: any;
 };
@@ -38,86 +39,192 @@ export class CourseService implements CourseServiceInterface {
     ) {}
 
     async test(): Promise<any> {
-        return await this.prismaService.userProgress.aggregateRaw({
+        // const course = await this.prismaService.course.findMany({
+        //     where: {
+        //         isPublished: true,
+        //         userProgress: {
+        //             some: {
+        //                 user: {
+        //                     email: 'nguyenhuuthang9440@gmail.com'
+        //                 }
+        //             }
+        //         }
+        //     },
+        //     include: {
+        //         chapters: {
+        //             where: {
+        //                 isPublished: true
+        //             },
+        //             include: {
+        //                 contents: {
+        //                     include: {
+        //                         lesson: {
+        //                             where: {
+        //                                 isPublished: true
+        //                             }
+        //                         },
+        //                         exercise: {
+        //                             where: {
+        //                                 isOpen: true
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         },
+        //         userProgress: {
+        //             where: {
+        //                 user: {
+        //                     email: 'nguyenhuuthang9440@gmail.com'
+        //                 },
+        //                 isCompleted: true
+        //             }
+        //         }
+        //     }
+        // });
+
+        // const user_progress = course.map((item) => {
+        //     const lesson = item.chapters.reduce((accumulator, currentValue) => {
+        //         return accumulator + currentValue.contents.length;
+        //     }, 0);
+
+        //     return {
+        //         ...item,
+        //         percent: Number(item.userProgress.length / lesson)
+        //     }
+        // })
+
+        // return user_progress;
+
+        const course: any = await this.prismaService.course.aggregateRaw({
             pipeline: [
                 {
                     $lookup: {
-                        from: 'Course',
-                        localField: 'courseId',
-                        foreignField: '_id',
-                        as: 'course',
-                    },
-                },
-                {
-                    $unwind: '$course',
-                },
-                {
-                    $lookup: {
-                        from: 'Chapter',
-                        localField: 'course._id',
-                        foreignField: 'courseId',
-                        as: 'chapters',
-                    },
-                },
-                // {
-                //     $unwind: '$chapters',
-                // },
-                {
-                    $lookup: {
-                        from: 'User',
-                        localField: 'userId',
-                        foreignField: '_id',
-                        as: 'user',
-                    },
-                },
-                {
-                    $unwind: '$user',
+                        from: "UserProgress",
+                        let: { courseId: "$_id" }, 
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$courseId", "$$courseId"] } } },
+                            {
+                                $lookup: {
+                                    from: "User",
+                                    localField: "userId",
+                                    foreignField: "_id",
+                                    as: "user",
+                                }
+                            },
+                            { $unwind: "$user" } 
+                        ],
+                        as: "userProgress"
+                    }
                 },
                 {
                     $match: {
-                        'course.owner_id': {
-                            '$oid': '65348af5efbb5e8812153b51'
-                        },
-                    },
-                },
-                {
-                    $group: {
-                        "_id": {
-                            courseId: "$course.title",
-                            userId: '$user.email'
-                        },
-                        "data": {
-                            $push: {
-                                $cond: [
-                                    { $eq: ["$isCompleted", true] },
-                                    "$$ROOT",
-                                    null
-                                ],
-                              },
+                        isPublished: true,
+                        userProgress: {
+                            $elemMatch: {
+                                "user.email": "nguyenhuuthang9440@gmail.com"
+                            }
                         }
                     }
                 },
-                { 
-                    $project: {
-                      _id: 0,
-                      courseId: '$_id.courseId',
-                      userId: '$_id.userId',
-                      completedData: { 
-                        $ifNull: [
-                          {
-                            $filter: { 
-                              input: '$data',
-                              as: 'data',
-                              cond: { $ne: ['$$data', null] },
+                {
+                    $lookup: {
+                        from: "Chapter",
+                        let: { courseId: "$_id" }, 
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$courseId", "$$courseId"] } } },
+                            {
+                                $match: {
+                                    isPublished: true
+                                }
                             },
-                          },
-                          []
-                        ]
-                      },
+                            {
+                                $lookup: {
+                                    from: "Content",
+                                    let: { chapterId: "$_id" }, 
+                                    pipeline: [
+                                        { $match: { $expr: { $eq: ["$chapterId", "$$chapterId"] } } },
+                                        {
+                                            $lookup: {
+                                                from: 'Lesson',
+                                                localField: '_id',
+                                                foreignField: 'contentId',
+                                                as: 'lessons',
+                                            },
+                                        },
+                                        {
+                                            $lookup: {
+                                                from: 'Exercise',
+                                                localField: '_id',
+                                                foreignField: 'contentId',
+                                                as: 'exercises',
+                                            },
+                                        },
+                                        {
+                                            $unwind: {
+                                                path: '$lessons',
+                                                preserveNullAndEmptyArrays: true,
+                                            },
+                                        },
+                                        {
+                                            $unwind: {
+                                                path: '$exercises',
+                                                preserveNullAndEmptyArrays: true,
+                                            },
+                                        },
+                                        {
+                                            $match: {
+                                                $or: [
+                                                    { 'lessons.isPublished': true },
+                                                    { 'exercises.isOpen': true },
+                                                ],
+                                            },
+                                        },
+                                    ],
+                                    as: "contents"
+                                }
+                            }
+                        ],
+                        as: "chapters"
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        title: 1,
+                        chapters: 1,
+                        slug: 1,
+                        picture: 1,
+                        description: 1,
+                        userProgress: {
+                            $filter: {
+                                input: "$userProgress",
+                                as: "userProgressItem",
+                                cond: {
+                                    $and: [
+                                        { $eq: ["$$userProgressItem.user.email", "nguyenhuuthang9440@gmail.com"] },
+                                        { $eq: ["$$userProgressItem.isCompleted", true ] }
+                                    ]
+                                }
+                            }
+                        }
                     },
-                  },
+                },
             ]
         });
+
+        const user_progress = course.map((item) => {
+            const lesson = item.chapters.reduce((accumulator, currentValue) => {
+                return accumulator + currentValue.contents.length;
+            }, 0);
+
+            return {
+                ...item,
+                percent: Number(item.userProgress.length / lesson)
+            }
+        });
+
+        return user_progress;
     }
 
     async findCourseByAi(payload: FindCourseByAi): Promise<JsonObject> {
@@ -165,7 +272,84 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                 },
+                {
+                    $lookup: {
+                        from: 'Chapter',
+                        localField: '_id',
+                        foreignField: 'courseId',
+                        as: 'chapters',
+                    },
+                },
+                {
+                    $unwind: '$chapters',
+                },
+                {
+                    $match: {
+                        'chapters.isPublished': true,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'Content',
+                        localField: 'chapters._id',
+                        foreignField: 'chapterId',
+                        as: 'chapters.contents',
+                    },
+                },
+                {
+                    $unwind: '$chapters.contents',
+                },
+                {
+                    $lookup: {
+                        from: 'Lesson',
+                        localField: 'chapters.contents._id',
+                        foreignField: 'contentId',
+                        as: 'chapters.contents.lessons',
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'Exercise',
+                        localField: 'chapters.contents._id',
+                        foreignField: 'contentId',
+                        as: 'chapters.contents.exercises',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$chapters.contents.lessons',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$chapters.contents.exercises',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $match: {
+                        $or: [
+                            { 'chapters.contents.lessons.isPublished': true },
+                            { 'chapters.contents.exercises.isOpen': true },
+                        ],
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$_id',
+                        title: { $first: '$title' },
+                        slug: { $first: '$slug' },
+                        picture: { $first: '$picture' },
+                        isPublished: { $first: '$isPublished' },
+                        description: { $first: '$description' },
+                        chapters: { $push: '$chapters' },
+                        create_at: { $first: '$create_at' },
+                        total: { $sum: '$chapters.contents.lessons.duration' },
+                    },
+                },
             ];
+
             if (!!payload?.topic_slug) {
                 const topicMatch: PipelineStage[] = [
                     {
@@ -234,6 +418,50 @@ export class CourseService implements CourseServiceInterface {
                 };
 
                 pipeline.unshift(titleMatch);
+            }
+
+            if (!!payload?.duration) {
+                let durationMatch = [];
+                let duration: string[] =
+                    typeof payload.duration === 'string'
+                        ? [payload.duration]
+                        : payload.duration;
+    
+                duration.forEach((item) => {
+                    if (item === 'extraShort') {
+                        durationMatch.push({
+                            total: { $gte: 0, $lte: 3600 },
+                        });
+                    } else if (item === 'short') {
+                        durationMatch.push({
+                            total: { $gte: 3600, $lte: 10800 },
+                        });
+                    } else if (item === 'medium') {
+                        durationMatch.push({
+                            total: { $gte: 10800, $lte: 21600 },
+                        });
+                    } else if (item === 'long') {
+                        durationMatch.push({
+                            total: { $gte: 21600, $lte: 61200 },
+                        });
+                    } else if (item === 'extraLong') {
+                        durationMatch.push({
+                            total: { $gte: 61200 },
+                        });
+                    }
+                });
+    
+                if (durationMatch.length === 0) {
+                    return 0;
+                }
+    
+                const elementPipeline: PipelineStage = {
+                    $match: {
+                        $or: durationMatch,
+                    },
+                };
+    
+                pipeline.push(elementPipeline);
             }
 
             const result = await this.prismaService.course.aggregateRaw({

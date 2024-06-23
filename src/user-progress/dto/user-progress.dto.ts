@@ -79,3 +79,12 @@ export class RetakeQuizDto {
     content_token: string;
 }
 
+export interface UserAccessDto {
+    email: string;
+    title?: string;
+    topic_slug?: string[] | string;
+    level_slug?: string[] | string;
+    page?: string;
+    //progress_filter?: string[] | string;
+}
+

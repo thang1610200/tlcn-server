@@ -13,7 +13,7 @@ import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { Roles } from 'src/course/decorators/roles.decorator';
 import { RolesGuard } from 'src/course/guards/role.guard';
 import { UserProgressService } from './user-progress.service';
-import { AddAnswerUserProgressDto, AddUserProgressDto, CompleteLessonDto, RetakeQuizDto } from './dto/user-progress.dto';
+import { AddAnswerUserProgressDto, AddUserProgressDto, CompleteLessonDto, RetakeQuizDto, UserAccessDto } from './dto/user-progress.dto';
 
 @Roles('LEARNER')
 @UseGuards(JwtGuard, RolesGuard)
@@ -59,5 +59,15 @@ export class UserProgressController {
     @Patch('complete-lesson')
     addUserProgressNext(@Body() payload: CompleteLessonDto) {
         return this.userProgressService.completeLesson(payload);
+    }
+
+    @Get('course-access')
+    getCourseAccessOfUser(@Query() payload: UserAccessDto) {
+        return this.userProgressService.courseOfUser(payload);
+    }
+
+    @Get('count-course-access')
+    countCourseAccessOfUser(@Query() payload: UserAccessDto) {
+        return this.userProgressService.countCourseAccess(payload);
     }
 }

@@ -44,10 +44,17 @@ export class ChatgptService implements ChatgptServiceInterface {
                 generationConfig,
             });
 
+            console.log(payload);
+
             const prompt = `Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
-                            Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp, không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
+                            Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp,
+                            và tách mỗi ngôn ngữ tôi yêu cầu ra 1 JSON riêng biệt,
+                            không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
                             [{
-                                'code': [chỉ viết hàm để trình bày đoạn code],
+                                'id': [1 mã IDv4 ngẫu nhiên],
+                                'name': [tên của file code],
+                                'lang': [tên của ngôn ngữ lập trình],
+                                'code': [viết code mà không cần gán các giá trị và in ra dữ liệu để test thử],
                                 'explain': [lời giải thích]
                             }]`
 
@@ -57,7 +64,13 @@ export class ChatgptService implements ChatgptServiceInterface {
 
             let res = response.text() ?? '';
 
-            const regex = /\[\s*\{\s*"code":\s*".*",\s*"explain":\s*".*"\s*}\s*\]/;
+            console.log(res);
+
+            const regex = /\[\s*\{\s*"id":\s*"([^']*)",\s*"name":\s*"([^']*)",\s*"lang":\s*"([^']*)",\s*"code":\s*"([^']*)",\s*"explain":\s*"([^']*)"\s*}\s*\]/;
+
+            //const regex = /\[\s*\{\s*"lang":\s*".*", \s*"code":\s*".*",\s*"explain":\s*".*"\s*}\s*\]/;
+
+            //console.log(res.match(regex)[0]);
 
             return res.match(regex)[0];
         }
