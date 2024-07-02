@@ -182,7 +182,8 @@ export class UploadService implements UploadServiceInterface {
 
     async uploadVideoToStorage(data: QueueUploadVideo): Promise<object> {
         const job = await this.uploadQueue.add('update-video', { data },{
-            removeOnComplete: true
+            removeOnComplete: true,
+            timeout: 500000
         });
 
         return { job: job.id };
@@ -205,7 +206,9 @@ export class UploadService implements UploadServiceInterface {
     }
 
     async translateSubtitleJob(data: TranslateSubtitleQueue): Promise<object> {
-        const job = await this.uploadQueue.add('translate-subtitle', { data });
+        const job = await this.uploadQueue.add('translate-subtitle', { data }, {
+            timeout: 500000
+        });
 
         return { job: job.id };
     }

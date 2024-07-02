@@ -1,4 +1,4 @@
-import { IsArray, IsEmail, IsNotEmpty, IsNumber, IsObject, IsString } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, IsNumber, IsObject, IsString, ValidateIf } from "class-validator";
 
 export class AddQuestionCodeDto {
     @IsNotEmpty()
@@ -100,7 +100,8 @@ export class SubmitCodeDto {
     @IsArray()
     codeFile: string[];
 
-    next_content_token: string;
+    @ValidateIf((o, value) => typeof value === 'string' || typeof value === 'undefined' )
+    next_content_token?: string;
 }
 
 export interface DetailCodeInterface {

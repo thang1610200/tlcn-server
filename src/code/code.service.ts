@@ -202,7 +202,8 @@ export class CodeService implements CodeServiceInterface {
                 return true;
             });
         }
-        catch {
+        catch(err) {
+            console.log(err)
             throw new InternalServerErrorException();
         }
     }

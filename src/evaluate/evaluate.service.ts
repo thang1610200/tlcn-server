@@ -61,7 +61,7 @@ export class EvaluateService implements EvaluateServiceInterface {
         //let testFileName;
         let dockerCommand;
         let result: boolean;
-        const directoryWork = join("/evaluate", `/${folder}`, '/code');
+        const directoryWork = join("/code", "/evaluate", `/${folder}`);
 
         switch(payload.lang) {
             case "Php": 
@@ -70,7 +70,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${volume}:/code -w ${directoryWork} tlcn-server-coderunner_php /bin/bash -c "phpunit ${payload.testFile}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${volume}:/code -w ${directoryWork} tlcn-server-coderunner_php /bin/bash -c "phpunit ${payload.testFileName}"`;
 
                 let execEvaluatePhp = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
@@ -197,7 +197,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${volume}:/app/code -w ${join("/evaluate", `/${folder}`,'/app' ,'/code')} tlcn-server-coderunner_typescript /bin/bash -c "npx jest ${payload.testFileName}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${volume}:/app/code -w ${join('/app' ,'/code', "/evaluate", `/${folder}`)} tlcn-server-coderunner_typescript /bin/bash -c "npx jest ${payload.testFileName}"`;
 
                 let execEvaluateTypescript = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {
@@ -263,7 +263,7 @@ export class EvaluateService implements EvaluateServiceInterface {
                     fs.writeFileSync(join(directoryPath, item.codeFileName), atob(item.codeFile), 'utf-8');
                 });
 
-                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/app/code -w -w ${join("/evaluate", `/${folder}`,'/app' ,'/code')} tlcn-server-coderunner_webdev /bin/bash -c "npx jest ${payload.testFileName}"`;
+                dockerCommand = `docker run --rm -i --network none -v ${directoryPath}:/app/code -w -w ${join('/app' ,'/code', "/evaluate", `/${folder}`)} tlcn-server-coderunner_webdev /bin/bash -c "npx jest ${payload.testFileName}"`;
 
                 let execEvaluateWebDev = new Promise((resolve, reject) => {
                     exec(dockerCommand, (err: ExecException, stdout: string, stderr: string) => {

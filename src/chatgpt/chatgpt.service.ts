@@ -27,59 +27,112 @@ export class ChatgptService implements ChatgptServiceInterface {
 
     private readonly genai = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
 
-    async supportCode(payload: SupportCodeDto): Promise<any> {
-        try{
-            const model = this.genai.getGenerativeModel({
-                model: "gemini-1.5-flash",
-            });
+    // async supportCode(payload: SupportCodeDto): Promise<any> {
+    //     try{
+    //         const model = this.genai.getGenerativeModel({
+    //             model: "gemini-1.5-flash",
+    //         });
               
-            const generationConfig = {
-                temperature: 0.7,
-                topP: 0.95,
-                topK: 64,
-                maxOutputTokens: 400,
-            };
+    //         const generationConfig = {
+    //             temperature: 0.7,
+    //             topP: 0.95,
+    //             topK: 64,
+    //             maxOutputTokens: 400,
+    //         };
 
-            const chatSession = model.startChat({
-                generationConfig,
-            });
+    //         const chatSession = model.startChat({
+    //             generationConfig,
+    //         });
 
-            console.log(payload);
+    //         const prompt = `Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
+    //                         Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp,
+    //                         và tách mỗi ngôn ngữ tôi yêu cầu ra 1 JSON riêng biệt,
+    //                         không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
+    //                         [{
+    //                             'id': [1 mã IDv4 ngẫu nhiên],
+    //                             'name': [tên của file code],
+    //                             'lang': [tên của ngôn ngữ lập trình],
+    //                             'code': [viết code mà không cần gán các giá trị và in ra dữ liệu để test thử],
+    //                             'explain': [lời giải thích]
+    //                         }]`
 
-            const prompt = `Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
-                            Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp,
-                            và tách mỗi ngôn ngữ tôi yêu cầu ra 1 JSON riêng biệt,
-                            không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
-                            [{
-                                'id': [1 mã IDv4 ngẫu nhiên],
-                                'name': [tên của file code],
-                                'lang': [tên của ngôn ngữ lập trình],
-                                'code': [viết code mà không cần gán các giá trị và in ra dữ liệu để test thử],
-                                'explain': [lời giải thích]
-                            }]`
+    //         const result = await chatSession.sendMessage(prompt);
 
-            const result = await chatSession.sendMessage(prompt);
+    //         const response = await result.response;
 
-            const response = await result.response;
+    //         let res = response.text() ?? '';
 
-            let res = response.text() ?? '';
+    //         const regex = /\[\s*\{\s*"id":\s*"([^']*)",\s*"name":\s*"([^']*)",\s*"lang":\s*"([^']*)",\s*"code":\s*"([^']*)",\s*"explain":\s*"([^']*)"\s*}\s*\]/;
 
-            console.log(res);
+    //         //const regex = /\[\s*\{\s*"lang":\s*".*", \s*"code":\s*".*",\s*"explain":\s*".*"\s*}\s*\]/;
 
-            const regex = /\[\s*\{\s*"id":\s*"([^']*)",\s*"name":\s*"([^']*)",\s*"lang":\s*"([^']*)",\s*"code":\s*"([^']*)",\s*"explain":\s*"([^']*)"\s*}\s*\]/;
+    //         //console.log(res.match(regex)[0]);
 
-            //const regex = /\[\s*\{\s*"lang":\s*".*", \s*"code":\s*".*",\s*"explain":\s*".*"\s*}\s*\]/;
+    //         return res.match(regex)[0];
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //         throw new InternalServerErrorException()
+    //     }
+    // }
 
-            //console.log(res.match(regex)[0]);
-
-            return res.match(regex)[0];
-        }
-        catch(err) {
-            console.log(err);
-            throw new InternalServerErrorException()
+    async supportCode(payload: SupportCodeDto): Promise<any> {
+        const maxRetries = 3;
+        let attempts = 0;
+    
+        while (attempts < maxRetries) {
+            try {
+                const model = this.genai.getGenerativeModel({
+                    model: "gemini-1.5-flash",
+                });
+    
+                const generationConfig = {
+                    temperature: 0.7
+                };
+    
+                const chatSession = model.startChat({
+                    generationConfig,
+                });
+    
+                const prompt = `Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
+                                Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp,
+                                và tách mỗi ngôn ngữ tôi yêu cầu ra 1 JSON riêng biệt,
+                                không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
+                                [{
+                                    "id": [1 mã IDv4 ngẫu nhiên],
+                                    "name": [tên của file code],
+                                    "lang": [tên của ngôn ngữ lập trình],
+                                    "code": [viết code mà không cần gán các giá trị và in ra dữ liệu để test thử],
+                                    "explain": [lời giải thích]
+                                }]`;
+    
+                const result = await chatSession.sendMessage(prompt);
+                const response = await result.response;
+                let res = response.text() ?? '';
+                res = res.replace(/(\w)"(\w)/g, "$1'$2");
+    
+                const regex = /\[\s*\{\s*"id":\s*"([^']*)",\s*"name":\s*"([^']*)",\s*"lang":\s*"([^']*)",\s*"code":\s*"([^']*)",\s*"explain":\s*"([^']*)"\s*}\s*\]/;
+                const match = res.match(regex);
+                console.log(match);
+    
+                if (match && match[0]) {
+                    return match[0];
+                } else {
+                    attempts++;
+                    if (attempts >= maxRetries) {
+                        throw new Error("Response did not contain the expected JSON format after multiple attempts.");
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+                attempts++;
+                if (attempts >= maxRetries) {
+                    throw new InternalServerErrorException();
+                }
+            }
         }
     }
-
+    
     async getSummaryCourse(payload: SummaryCourseDto): Promise<string> {
         const course = await this.prismaService.course.findFirst({
             where: {
@@ -256,7 +309,7 @@ export class ChatgptService implements ChatgptServiceInterface {
                         )}. \nDo not put quotation marks or escape character \\ in the output fields.`;
 
                         const model = this.genai.getGenerativeModel({
-                            model: 'gemini-1.5-pro',
+                            model: 'gemini-1.0-pro',
                         },{
                             timeout: 60 * 1000
                         });
@@ -277,7 +330,8 @@ export class ChatgptService implements ChatgptServiceInterface {
                         });
                         break;
                     }
-                    catch {
+                    catch (err) {
+                        console.log(err);
                         throw new InternalServerErrorException();
                     }
                 }
@@ -291,17 +345,22 @@ export class ChatgptService implements ChatgptServiceInterface {
 
                     res = JSON.parse(res).Input;
 
+                    console.log(res);
+
                     previousSubtitles.push({ role: 'model', parts: JSON.stringify({ ...input, Input: res }) });
                     previousSubtitles.push({ role: 'user', parts: JSON.stringify(input) });
 
                     subtitle[i].data['text'] = res;
                 }
-                catch {
+                catch(err) {
+                    console.log(err);
                     throw new InternalServerErrorException();
                 }
             }
 
             const output_file = stringifySync(subtitle, {format: 'WebVTT'});
+
+            console.log(output_file);
 
             const fileAWS = {
                 originalname: 'translate-learning.vtt',
@@ -310,11 +369,104 @@ export class ChatgptService implements ChatgptServiceInterface {
 
             return await this.uploadService.uploadAttachmentToS3(fileAWS);
         }
-        catch {
+        catch(err) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
 
     }
+
+    // async translateSubtitle(subtitleUrl: string, languageTarget: string): Promise<string> {
+    //     try {
+    //         const file = await fetch(subtitleUrl);
+    //         const buffer = await file.buffer();
+
+    //         const output_format = {
+    //             "Input": "Translation of subtitles"
+    //         }
+
+    //         let subtitle = parseSync(buffer.toString());
+
+    //         subtitle = subtitle.filter(line => line.type === 'cue');
+
+    //         let previousSubtitles = [];
+
+    //         for (let i = 0; i < subtitle.length; i++) {
+    //             let text: string = subtitle[i].data['text'];
+
+    //             let input: {
+    //                 Input: string,
+    //                 Next?: string
+    //             } = { Input: text };
+
+    //             if (subtitle[i + 1]) {
+    //                 input.Next = subtitle[i + 1].data['text'];
+    //             }
+
+    //             for(;;) {
+    //                 try {
+    //                     let output_format_prompt: string = `\nYou are to output the following in json format: ${JSON.stringify(
+    //                         output_format,
+    //                     )}. \nDo not put quotation marks or escape character \\ in the output fields.`;
+
+    //                     var completion = await this.openai.chat.completions.create({
+    //                         model: "gpt-3.5-turbo",
+    //                         messages: [
+    //                           {
+    //                             role: "system",
+    //                             content: `You are a program responsible for translating subtitles. Your task is to output the specified target language based on the input text. Please do not create the following subtitles on your own. Please do not output any text other than the translation. You will receive the subtitles as array that needs to be translated, as well as the previous translation results and next subtitle. You need to review the previous and next subtitles to translate the current subtitle to suit the context.If you need to merge the subtitles with the following line, simply repeat the translation. Please transliterate the person's name into the local language. Target language: ${languageTarget}`
+    //                             + output_format_prompt
+    //                           },
+    //                           ...previousSubtitles.slice(-4),
+    //                           {
+    //                             role: "user",
+    //                             content: JSON.stringify(input)
+    //                           }
+    //                         ],
+    //                     }, {timeout: 60 * 1000 });
+    //                     break;
+    //                 }
+    //                 catch (err) {
+    //                     console.log(err);
+    //                     throw new InternalServerErrorException();
+    //                 }
+    //             }
+
+    //             try {
+    //                 let result = completion.choices[0].message.content;
+
+    //                 result = JSON.parse(result).Input;
+
+    //                 console.log(result);
+
+    //                 previousSubtitles.push({ role: 'model', parts: JSON.stringify({ ...input, Input: result }) });
+    //                 previousSubtitles.push({ role: 'user', parts: JSON.stringify(input) });
+
+    //                 subtitle[i].data['text'] = result;
+    //             }
+    //             catch(err) {
+    //                 console.log(err);
+    //                 throw new InternalServerErrorException();
+    //             }
+    //         }
+
+    //         const output_file = stringifySync(subtitle, {format: 'WebVTT'});
+
+    //         console.log(output_file);
+
+    //         const fileAWS = {
+    //             originalname: 'translate-learning.vtt',
+    //             buffer: Buffer.from(output_file)
+    //         }
+
+    //         return await this.uploadService.uploadAttachmentToS3(fileAWS);
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //         throw new InternalServerErrorException();
+    //     }
+
+    // }
 
     // async strict_output(
     //     system_prompt: string,

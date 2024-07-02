@@ -86,7 +86,7 @@ import { EvaluateModule } from './evaluate/evaluate.module';
                 redis: {
                     host: configService.get('REDIS_HOST'),
                     port: configService.get('REDIS_PORT'),
-                },
+                }
             }),
             inject: [ConfigService],
         }),

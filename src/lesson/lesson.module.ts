@@ -11,7 +11,7 @@ import { HttpModule } from '@nestjs/axios';
 @Module({
     imports: [
         BullModule.registerQueue({
-            name: 'upload',
+            name: 'upload'
         }),
         HttpModule
     ],
