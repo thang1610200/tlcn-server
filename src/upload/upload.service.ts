@@ -44,7 +44,8 @@ export class UploadService implements UploadServiceInterface {
                     .post(`${this.configService.get('MODERATE_URL')}/analyze`, formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
-                        }
+                        },
+                        timeout: 500000
                     })
             );
             console.log(data);

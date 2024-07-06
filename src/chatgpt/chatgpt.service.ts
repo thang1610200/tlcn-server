@@ -11,6 +11,9 @@ import { parseSync, stringifySync } from 'subtitle';
 import fetch from 'node-fetch';
 import { UploadService } from 'src/upload/upload.service';
 import { ChatbotUserDto, SummaryCourseDto, SupportCodeDto } from './dto/chatbot-user.dto';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
+import { uuid as v4 } from 'uuidv4';
 
 @Injectable()
 export class ChatgptService implements ChatgptServiceInterface {
@@ -18,7 +21,8 @@ export class ChatgptService implements ChatgptServiceInterface {
         private readonly configService: ConfigService,
         private readonly prismaService: PrismaService,
         private readonly quizzService: QuizzService,
-        private readonly uploadService: UploadService
+        private readonly uploadService: UploadService,
+        private readonly httpService: HttpService,
     ) {}
     private readonly openai = new OpenAI({
         //organization: this.configService.get('ORGANIZATION_ID'),
@@ -94,16 +98,27 @@ export class ChatgptService implements ChatgptServiceInterface {
                     generationConfig,
                 });
     
-                const prompt = `Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
-                                Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp,
-                                và tách mỗi ngôn ngữ tôi yêu cầu ra 1 JSON riêng biệt,
-                                không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
+                // const prompt = `Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
+                //                 Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp,
+                //                 và tách mỗi ngôn ngữ tôi yêu cầu ra 1 JSON riêng biệt,
+                //                 không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
+                //                 [{
+                //                     "id": [1 mã IDv4 ngẫu nhiên],
+                //                     "name": [tên của file code],
+                //                     "lang": [tên của ngôn ngữ lập trình],
+                //                     "code": [viết code mà không cần gán các giá trị và in ra dữ liệu để test thử],
+                //                     "explain": [lời giải thích]
+                //                 }]`;
+                const prompt = `Gemini, I'm working on a programming assignment with the following task: ${payload.codeTitle} using the programming language ${payload.codeLang}.
+                                I would like you to help me solve this problem in the most optimal way and output the content directly in JSON format.
+                                Separate each language I request into a separate JSON,
+                                excluding any other formatting, according to the following format:
                                 [{
-                                    "id": [1 mã IDv4 ngẫu nhiên],
-                                    "name": [tên của file code],
-                                    "lang": [tên của ngôn ngữ lập trình],
-                                    "code": [viết code mà không cần gán các giá trị và in ra dữ liệu để test thử],
-                                    "explain": [lời giải thích]
+                                    "id": [a random UUIDv4],
+                                    "name": [name of the code file],
+                                    "lang": [name of the programming language],
+                                    "code": [write the code without assigning values and printing data for testing],
+                                    "explain": [explanation]
                                 }]`;
     
                 const result = await chatSession.sendMessage(prompt);
@@ -279,88 +294,39 @@ export class ChatgptService implements ChatgptServiceInterface {
             const file = await fetch(subtitleUrl);
             const buffer = await file.buffer();
 
-            const output_format = {
-                "Input": "Translation of subtitles"
-            }
-
             let subtitle = parseSync(buffer.toString());
 
             subtitle = subtitle.filter(line => line.type === 'cue');
 
-            let previousSubtitles = [];
-
             for (let i = 0; i < subtitle.length; i++) {
                 let text: string = subtitle[i].data['text'];
 
-                let input: {
-                    Input: string,
-                    Next?: string
-                } = { Input: text };
-
-                if (subtitle[i + 1]) {
-                    input.Next = subtitle[i + 1].data['text'];
-                }
-                let completion: ChatSession;
-
-                for(;;) {
-                    try {
-                        let output_format_prompt: string = `\nYou are to output the following in json format: ${JSON.stringify(
-                            output_format,
-                        )}. \nDo not put quotation marks or escape character \\ in the output fields.`;
-
-                        const model = this.genai.getGenerativeModel({
-                            model: 'gemini-1.0-pro',
-                        },{
-                            timeout: 60 * 1000
-                        });
-
-                        completion = model.startChat({
-                            history: [
-                                {
-                                    role: 'user',
-                                    parts: JSON.stringify(input)
-                                },
-                                ...previousSubtitles.slice(-4),
-                                {
-                                    role: 'model',
-                                    parts: `You are a program responsible for translating subtitles. Your task is to output the specified target language based on the input text. Please do not create the following subtitles on your own. Please do not output any text other than the translation. You will receive the subtitles as array that needs to be translated, as well as the previous translation results and next subtitle. You need to review the previous and next subtitles to translate the current subtitle to suit the context.If you need to merge the subtitles with the following line, simply repeat the translation. Please transliterate the person's name into the local language. Target language: ${languageTarget}`
-                                    + output_format_prompt
-                                }
-                            ]
-                        });
-                        break;
-                    }
-                    catch (err) {
-                        console.log(err);
-                        throw new InternalServerErrorException();
-                    }
-                }
-
-                try {
-                    const result = await completion.sendMessage(JSON.stringify(input));
-
-                    const response = await result.response;
-        
-                    let res: string = response.text() ?? '';
-
-                    res = JSON.parse(res).Input;
-
-                    console.log(res);
-
-                    previousSubtitles.push({ role: 'model', parts: JSON.stringify({ ...input, Input: res }) });
-                    previousSubtitles.push({ role: 'user', parts: JSON.stringify(input) });
-
-                    subtitle[i].data['text'] = res;
-                }
-                catch(err) {
-                    console.log(err);
-                    throw new InternalServerErrorException();
-                }
+                const { data } = await firstValueFrom(
+                    this.httpService.request({
+                        baseURL: this.configService.get('ENDPOINT_TRANSLATE'),
+                        url: '/translate',
+                        method: 'post',
+                        headers: {
+                            'Ocp-Apim-Subscription-Key': this.configService.get('KEY_TRANSLATE'),
+                            'Ocp-Apim-Subscription-Region': this.configService.get('LOCATION_TRANSLATE'),
+                            'Content-type': 'application/json',
+                            'X-ClientTraceId': v4()
+                        },
+                        params: {
+                            'api-version': '3.0',
+                            'to': languageTarget
+                        },
+                        data: [{
+                            'text': text
+                        }],
+                        responseType: 'json'
+                    })
+                );
+                subtitle[i].data['text'] = data[0].translations[0].text;
             }
-
             const output_file = stringifySync(subtitle, {format: 'WebVTT'});
 
-            console.log(output_file);
+           /// console.log(output_file);
 
             const fileAWS = {
                 originalname: 'translate-learning.vtt',
@@ -373,8 +339,109 @@ export class ChatgptService implements ChatgptServiceInterface {
             console.log(err);
             throw new InternalServerErrorException();
         }
-
     }
+
+    // async translateSubtitle(subtitleUrl: string, languageTarget: string): Promise<string> {
+    //     try {
+    //         const file = await fetch(subtitleUrl);
+    //         const buffer = await file.buffer();
+
+    //         const output_format = {
+    //             "Input": "Translation of subtitles"
+    //         }
+
+    //         let subtitle = parseSync(buffer.toString());
+
+    //         subtitle = subtitle.filter(line => line.type === 'cue');
+
+    //         let previousSubtitles = [];
+
+    //         for (let i = 0; i < subtitle.length; i++) {
+    //             let text: string = subtitle[i].data['text'];
+
+    //             let input: {
+    //                 Input: string,
+    //                 Next?: string
+    //             } = { Input: text };
+
+    //             if (subtitle[i + 1]) {
+    //                 input.Next = subtitle[i + 1].data['text'];
+    //             }
+    //             let completion: ChatSession;
+
+    //             for(;;) {
+    //                 try {
+    //                     let output_format_prompt: string = `\nYou are to output the following in json format: ${JSON.stringify(
+    //                         output_format,
+    //                     )}. \nDo not put quotation marks or escape character \\ in the output fields.`;
+
+    //                     const model = this.genai.getGenerativeModel({
+    //                         model: 'gemini-1.5-pro',
+    //                     },{
+    //                         timeout: 60 * 1000
+    //                     });
+
+    //                     completion = model.startChat({
+    //                         history: [
+    //                             {
+    //                                 role: 'user',
+    //                                 parts: JSON.stringify(input)
+    //                             },
+    //                             ...previousSubtitles.slice(-4),
+    //                             {
+    //                                 role: 'model',
+    //                                 parts: `You are a program responsible for translating subtitles. Your task is to output the specified target language based on the input text. Please do not create the following subtitles on your own. Please do not output any text other than the translation. You will receive the subtitles as array that needs to be translated, as well as the previous translation results and next subtitle. You need to review the previous and next subtitles to translate the current subtitle to suit the context.If you need to merge the subtitles with the following line, simply repeat the translation. Please transliterate the person's name into the local language. Target language: ${languageTarget}`
+    //                                 + output_format_prompt
+    //                             }
+    //                         ]
+    //                     });
+    //                     break;
+    //                 }
+    //                 catch (err) {
+    //                     console.log(err);
+    //                     throw new InternalServerErrorException();
+    //                 }
+    //             }
+
+    //             try {
+    //                 const result = await completion.sendMessage(JSON.stringify(input));
+
+    //                 const response = await result.response;
+        
+    //                 let res: string = response.text() ?? '';
+
+    //                 res = JSON.parse(res).Input;
+
+    //                 console.log(res);
+
+    //                 previousSubtitles.push({ role: 'model', parts: JSON.stringify({ ...input, Input: res }) });
+    //                 previousSubtitles.push({ role: 'user', parts: JSON.stringify(input) });
+
+    //                 subtitle[i].data['text'] = res;
+    //             }
+    //             catch(err) {
+    //                 console.log(err);
+    //                 throw new InternalServerErrorException();
+    //             }
+    //         }
+
+    //         const output_file = stringifySync(subtitle, {format: 'WebVTT'});
+
+    //         console.log(output_file);
+
+    //         const fileAWS = {
+    //             originalname: 'translate-learning.vtt',
+    //             buffer: Buffer.from(output_file)
+    //         }
+
+    //         return await this.uploadService.uploadAttachmentToS3(fileAWS);
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //         throw new InternalServerErrorException();
+    //     }
+
+    // }
 
     // async translateSubtitle(subtitleUrl: string, languageTarget: string): Promise<string> {
     //     try {

@@ -121,7 +121,7 @@ export class UploadProcessor {
         try {
             const payload: any = job.data;
             
-            const fileUrl = await this.chatgptService.translateSubtitle(payload.data.subtitleUrl, payload.data.language);
+            const fileUrl = await this.chatgptService.translateSubtitle(payload.data.subtitleUrl, payload.data.language_code);
 
             return await this.prismaService.subtitle.create({
                 data: {
