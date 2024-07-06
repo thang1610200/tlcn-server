@@ -3,4 +3,5 @@ export interface QueueUploadVideo {
     file: any;
     fileName: string;
     link: string;
+    duration: number;
 }

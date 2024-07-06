@@ -493,7 +493,8 @@ export class LessonService implements LessonServiceInterface {
                 file: payload.file,
                 lesson_id: lesson.id,
                 link,
-                asyncVideoId: update.asyncVideo.id
+                asyncVideoId: update.asyncVideo.id,
+                duration: payload.duration
             };
 
             await this.uploadService.uploadVideoToStorage(data);

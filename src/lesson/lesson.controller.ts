@@ -21,7 +21,7 @@ import { Roles } from 'src/course/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/course/guards/role.guard';
 import { ReorderLessonDto } from './dto/reorder-lesson.dto';
-import { GetLessonDto } from './dto/get-lesson.dto';
+import { GetLessonDto, UploadVideoDto } from './dto/get-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateStatusLessonDto } from './dto/update-status.dto';
@@ -103,7 +103,7 @@ export class LessonController {
             }),
         )
         file: Express.Multer.File,
-        @Body() body: GetLessonDto,
+        @Body() body: UploadVideoDto,
     ) {
         const payload = {
             file,
@@ -111,6 +111,7 @@ export class LessonController {
             course_slug: body.course_slug,
             chapter_token: body.chapter_token,
             lesson_token: body.lesson_token,
+            duration: body.duration
         };
         return this.lessonService.updateVideoLesson(payload);
     }

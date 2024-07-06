@@ -9,7 +9,6 @@ import { Job } from 'bull';
 import { InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { QueueUploadVideo } from 'src/lesson/dto/queue-upload-video.dto';
-import getVideoDurationInSeconds from 'get-video-duration';
 import { TranslateSubtitleQueue } from 'src/lesson/dto/subtitle.dto';
 import { ChatgptService } from 'src/chatgpt/chatgpt.service';
 
@@ -50,14 +49,12 @@ export class UploadProcessor {
                 payload.data.fileName,
             );
 
-            const duration = await getVideoDurationInSeconds(payload.data.link);
-
             return await this.prismaService.lesson.update({
                 where: {
                     id: payload.data.lesson_id,
                 },
                 data: {
-                    duration,
+                    duration: payload.data.duration,
                     videoUrl: payload.data.link,
                     asyncVideo: {
                         update: {

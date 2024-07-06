@@ -4,4 +4,5 @@ export interface UpdateVideoLesson {
     chapter_token: string;
     lesson_token: string;
     file: any;
+    duration: number;
 }
