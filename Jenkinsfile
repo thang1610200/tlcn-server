@@ -16,8 +16,10 @@ pipeline{
             }
         }
         stage('Docker Build & Push'){
-            withCredentials([file(credentialsId: 'Server', keyFileVariable: 'PRIVATE_KEY_FILE')]) {
-                sh ('PRIVATE_KEY_FILE')
+            steps {
+                withCredentials([file(credentialsId: 'Server', keyFileVariable: 'PRIVATE_KEY_FILE')]) {
+                    sh ('PRIVATE_KEY_FILE')
+                }
             }
         }
         // stage("Docker Build & Push"){
