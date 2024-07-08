@@ -161,19 +161,15 @@
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                <a href="#deleteUserProgressQuiz" >deleteUserProgressQuiz</a>
+                                <a href="#countCourseAccessOfUser" >countCourseAccessOfUser</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                <a href="#getUserProgress" >getUserProgress</a>
+                                <a href="#getCourseAccessOfUser" >getCourseAccessOfUser</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                <a href="#getUserProgressQuiz" >getUserProgressQuiz</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                <a href="#updateProgressExercise" >updateProgressExercise</a>
+                                <a href="#retakeQuiz" >retakeQuiz</a>
                             </li>
                         </ul>
                     </td>
@@ -221,8 +217,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="49"
-                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:49</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:50</a></div>
                         </td>
                     </tr>
 
@@ -291,14 +287,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Put(&#x27;add-user-progress&#x27;)<br /></code>
+                    <code>@Post(&#x27;add-user-progress&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="44"
-                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:44</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:45</a></div>
                         </td>
                     </tr>
 
@@ -359,7 +355,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addUserProgressNext(payload: <a href="../classes/AddUserProgressNextDto.html" target="_self">AddUserProgressNextDto</a>)</code>
+                    <code>addUserProgressNext(payload: <a href="../classes/CompleteLessonDto.html" target="_self">CompleteLessonDto</a>)</code>
                 </td>
             </tr>
 
@@ -367,14 +363,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;user-progress-next&#x27;)<br /></code>
+                    <code>@Patch(&#x27;complete-lesson&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="59"
-                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:59</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="60"
+                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:60</a></div>
                         </td>
                     </tr>
 
@@ -397,7 +393,7 @@
                                         <tr>
                                                 <td>payload</td>
                                             <td>
-                                                            <code><a href="../classes/AddUserProgressNextDto.html" target="_self" >AddUserProgressNextDto</a></code>
+                                                            <code><a href="../classes/CompleteLessonDto.html" target="_self" >CompleteLessonDto</a></code>
                                             </td>
 
                                             <td>
@@ -424,18 +420,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="deleteUserProgressQuiz"></a>
+                    <a name="countCourseAccessOfUser"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                        <span ><b>deleteUserProgressQuiz</b></span>
-                        <a href="#deleteUserProgressQuiz"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>countCourseAccessOfUser</b></span>
+                        <a href="#countCourseAccessOfUser"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteUserProgressQuiz(payload: <a href="../classes/GetUserProgressQuizDto.html" target="_self">GetUserProgressQuizDto</a>)</code>
+                    <code>countCourseAccessOfUser(payload: <a href="../interfaces/UserAccessDto.html" target="_self">UserAccessDto</a>)</code>
                 </td>
             </tr>
 
@@ -443,14 +439,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Delete(&#x27;delete-progress-quiz&#x27;)<br /></code>
+                    <code>@Get(&#x27;count-course-access&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="39"
-                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:39</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="70"
+                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:70</a></div>
                         </td>
                     </tr>
 
@@ -473,7 +469,7 @@
                                         <tr>
                                                 <td>payload</td>
                                             <td>
-                                                            <code><a href="../classes/GetUserProgressQuizDto.html" target="_self" >GetUserProgressQuizDto</a></code>
+                                                            <code><a href="../interfaces/UserAccessDto.html" target="_self" >UserAccessDto</a></code>
                                             </td>
 
                                             <td>
@@ -500,18 +496,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getUserProgress"></a>
+                    <a name="getCourseAccessOfUser"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                        <span ><b>getUserProgress</b></span>
-                        <a href="#getUserProgress"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>getCourseAccessOfUser</b></span>
+                        <a href="#getCourseAccessOfUser"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getUserProgress(payload: <a href="../classes/GetUserProgressDto.html" target="_self">GetUserProgressDto</a>)</code>
+                    <code>getCourseAccessOfUser(payload: <a href="../interfaces/UserAccessDto.html" target="_self">UserAccessDto</a>)</code>
                 </td>
             </tr>
 
@@ -519,14 +515,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;get-user-progress&#x27;)<br /></code>
+                    <code>@Get(&#x27;course-access&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="29"
-                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:29</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:65</a></div>
                         </td>
                     </tr>
 
@@ -549,7 +545,7 @@
                                         <tr>
                                                 <td>payload</td>
                                             <td>
-                                                            <code><a href="../classes/GetUserProgressDto.html" target="_self" >GetUserProgressDto</a></code>
+                                                            <code><a href="../interfaces/UserAccessDto.html" target="_self" >UserAccessDto</a></code>
                                             </td>
 
                                             <td>
@@ -576,18 +572,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getUserProgressQuiz"></a>
+                    <a name="retakeQuiz"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                        <span ><b>getUserProgressQuiz</b></span>
-                        <a href="#getUserProgressQuiz"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>retakeQuiz</b></span>
+                        <a href="#retakeQuiz"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getUserProgressQuiz(payload: <a href="../classes/GetUserProgressQuizDto.html" target="_self">GetUserProgressQuizDto</a>)</code>
+                    <code>retakeQuiz(query: <a href="../classes/RetakeQuizDto.html" target="_self">RetakeQuizDto</a>)</code>
                 </td>
             </tr>
 
@@ -595,14 +591,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;get-progress-quiz&#x27;)<br /></code>
+                    <code>@Delete(&#x27;retake-quiz&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="34"
-                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:34</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:40</a></div>
                         </td>
                     </tr>
 
@@ -623,85 +619,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>payload</td>
+                                                <td>query</td>
                                             <td>
-                                                            <code><a href="../classes/GetUserProgressQuizDto.html" target="_self" >GetUserProgressQuizDto</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="updateProgressExercise"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                        <span ><b>updateProgressExercise</b></span>
-                        <a href="#updateProgressExercise"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateProgressExercise(payload: <a href="../classes/UpdateProgressExerciseDto.html" target="_self">UpdateProgressExerciseDto</a>)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@Post(&#x27;add-pass-user&#x27;)<br /></code>
-                </td>
-            </tr>
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/user-progress/user-progress.controller.ts:54</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>payload</td>
-                                            <td>
-                                                            <code><a href="../classes/UpdateProgressExerciseDto.html" target="_self" >UpdateProgressExerciseDto</a></code>
+                                                            <code><a href="../classes/RetakeQuizDto.html" target="_self" >RetakeQuizDto</a></code>
                                             </td>
 
                                             <td>
@@ -733,6 +653,7 @@
     Controller,
     Delete,
     Get,
+    Patch,
     Post,
     Put,
     Query,
@@ -742,12 +663,7 @@ import { JwtGuard } from &#x27;src/auth/guards/jwt.guard&#x27;;
 import { Roles } from &#x27;src/course/decorators/roles.decorator&#x27;;
 import { RolesGuard } from &#x27;src/course/guards/role.guard&#x27;;
 import { UserProgressService } from &#x27;./user-progress.service&#x27;;
-import { GetUserProgressDto } from &#x27;./dto/get-user-progress.dto&#x27;;
-import { AddUserProgressDto } from &#x27;./dto/add-user-progress.dto&#x27;;
-import { AddAnswerUserProgressDto } from &#x27;./dto/add-answer-progress-quiz.dto&#x27;;
-import { GetUserProgressQuizDto } from &#x27;./dto/get-user-progress-quiz.dto&#x27;;
-import { UpdateProgressExerciseDto } from &#x27;./dto/update-progress-exercise.dto&#x27;;
-import { AddUserProgressNextDto } from &#x27;./dto/add-user-progress-next.dto&#x27;;
+import { AddAnswerUserProgressDto, AddUserProgressDto, CompleteLessonDto, RetakeQuizDto, UserAccessDto } from &#x27;./dto/user-progress.dto&#x27;;
 
 @Roles(&#x27;LEARNER&#x27;)
 @UseGuards(JwtGuard, RolesGuard)
@@ -755,22 +671,27 @@ import { AddUserProgressNextDto } from &#x27;./dto/add-user-progress-next.dto&#x
 export class UserProgressController {
     constructor(private readonly userProgressService: UserProgressService) {}
 
-    @Get(&#x27;get-user-progress&#x27;)
-    getUserProgress(@Query() payload: GetUserProgressDto) {
-        return this.userProgressService.getUserProgress(payload);
+    // @Get(&#x27;get-user-progress-quiz&#x27;)
+    // getUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
+    //     return this.userProgressService.getUserProgressQuiz(payload);
+    // }
+
+    // @Get(&#x27;get-progress-quiz&#x27;)
+    // getUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
+    //     return this.userProgressService.getUserProgressQuiz(payload);
+    // }
+
+    // @Delete(&#x27;delete-progress-quiz&#x27;)
+    // deleteUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
+    //     return this.userProgressService.deleteAllProgressQuiz(payload);
+    // }
+
+    @Delete(&#x27;retake-quiz&#x27;)
+    retakeQuiz(@Query() query: RetakeQuizDto) {
+        return this.userProgressService.retakeQuiz(query);
     }
 
-    @Get(&#x27;get-progress-quiz&#x27;)
-    getUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
-        return this.userProgressService.getUserProgressQuiz(payload);
-    }
-
-    @Delete(&#x27;delete-progress-quiz&#x27;)
-    deleteUserProgressQuiz(@Query() payload: GetUserProgressQuizDto) {
-        return this.userProgressService.deleteAllProgressQuiz(payload);
-    }
-
-    @Put(&#x27;add-user-progress&#x27;)
+    @Post(&#x27;add-user-progress&#x27;)
     addUserProgress(@Body() payload: AddUserProgressDto) {
         return this.userProgressService.addUserProgress(payload);
     }
@@ -780,14 +701,24 @@ export class UserProgressController {
         return this.userProgressService.addAnswerProgressQuiz(payload);
     }
 
-    @Post(&#x27;add-pass-user&#x27;)
-    updateProgressExercise(@Body() payload: UpdateProgressExerciseDto) {
-        return this.userProgressService.updatePrgressExerciseUser(payload);
+    // @Post(&#x27;add-pass-user&#x27;)
+    // updateProgressExercise(@Body() payload: UpdateProgressExerciseDto) {
+    //     return this.userProgressService.updatePrgressExerciseUser(payload);
+    // }
+
+    @Patch(&#x27;complete-lesson&#x27;)
+    addUserProgressNext(@Body() payload: CompleteLessonDto) {
+        return this.userProgressService.completeLesson(payload);
     }
 
-    @Post(&#x27;user-progress-next&#x27;)
-    addUserProgressNext(@Body() payload: AddUserProgressNextDto) {
-        return this.userProgressService.addUserProgressNext(payload);
+    @Get(&#x27;course-access&#x27;)
+    getCourseAccessOfUser(@Query() payload: UserAccessDto) {
+        return this.userProgressService.courseOfUser(payload);
+    }
+
+    @Get(&#x27;count-course-access&#x27;)
+    countCourseAccessOfUser(@Query() payload: UserAccessDto) {
+        return this.userProgressService.countCourseAccess(payload);
     }
 }
 </code></pre>

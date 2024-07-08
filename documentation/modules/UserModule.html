@@ -259,13 +259,15 @@ import { BullModule } from &#x27;@nestjs/bull&#x27;;
 import { ConfigService } from &#x27;@nestjs/config&#x27;;
 import { UploadService } from &#x27;src/upload/upload.service&#x27;;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;;
-import { UploadGateway } from &#x27;src/upload/upload.gateway&#x27;;
+import { HttpModule } from &#x27;@nestjs/axios&#x27;;
+//import { UploadGateway } from &#x27;src/upload/upload.gateway&#x27;;
 
 @Module({
     imports: [
         BullModule.registerQueue({
             name: &#x27;upload&#x27;,
         }),
+        HttpModule
     ],
     controllers: [UserController, UserAdminController],
     providers: [
@@ -274,7 +276,7 @@ import { UploadGateway } from &#x27;src/upload/upload.gateway&#x27;;
         ConfigService,
         UploadService,
         JwtService,
-        UploadGateway,
+       // UploadGateway,
     ],
 })
 export class UserModule {}

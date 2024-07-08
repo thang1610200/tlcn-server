@@ -143,10 +143,106 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#accessChannelGeneral" >accessChannelGeneral</a>
+                            </li>
+                            <li>
+                                <a href="#buildChannelResponse" >buildChannelResponse</a>
+                            </li>
+                            <li>
                                 <a href="#buildServerResponse" >buildServerResponse</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#checkInviteCode" >checkInviteCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#checkUserServer" >checkUserServer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createChannel" >createChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createMediaRoom" >createMediaRoom</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createNewConversation" >createNewConversation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#createServer" >createServer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteChannel" >deleteChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteServer" >deleteServer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#detailChannel" >detailChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#editChannel" >editChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findConversation" >findConversation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findServerByName" >findServerByName</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findUserByEmail" >findUserByEmail</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#generateInviteCode" >generateInviteCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#generateNewInviteCode" >generateNewInviteCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getChannelServer" >getChannelServer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getOrCreateConversation" >getOrCreateConversation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getServerUser" >getServerUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#isCodeExist" >isCodeExist</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#kickMember" >kickMember</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#leaveServer" >leaveServer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateRoleMember" >updateRoleMember</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateServer" >updateServer</a>
                             </li>
                         </ul>
                     </td>
@@ -166,12 +262,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>)</code>
+<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>, configService: ConfigService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/thread/thread.service.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/thread/thread.service.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -200,6 +296,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>uploadService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UploadService.html" target="_self" >UploadService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>configService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -214,6 +334,142 @@
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="accessChannelGeneral"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>accessChannelGeneral</b></span>
+                        <a href="#accessChannelGeneral"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>accessChannelGeneral(payload: <a href="../classes/AccessChannelGeneralDto.html" target="_self">AccessChannelGeneralDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="578"
+                                    class="link-to-prism">src/thread/thread.service.ts:578</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/AccessChannelGeneralDto.html" target="_self" >AccessChannelGeneralDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ChannelResponse.html" target="_self" >Promise&lt;ChannelResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildChannelResponse"></a>
+                    <span class="name">
+                        <span ><b>buildChannelResponse</b></span>
+                        <a href="#buildChannelResponse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>buildChannelResponse(payload: Channel)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="730"
+                                    class="link-to-prism">src/thread/thread.service.ts:730</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                        <code>Channel</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ChannelResponse.html" target="_self" >ChannelResponse</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -234,8 +490,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="13"
-                                    class="link-to-prism">src/thread/thread.service.ts:13</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="719"
+                                    class="link-to-prism">src/thread/thread.service.ts:719</a></div>
                         </td>
                     </tr>
 
@@ -285,8 +541,366 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="checkInviteCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>checkInviteCode</b></span>
+                        <a href="#checkInviteCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkInviteCode(payload: <a href="../classes/CheckInviteCodeDto.html" target="_self">CheckInviteCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="219"
+                                    class="link-to-prism">src/thread/thread.service.ts:219</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CheckInviteCodeDto.html" target="_self" >CheckInviteCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkUserServer"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>checkUserServer</b></span>
+                        <a href="#checkUserServer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkUserServer(payload: <a href="../classes/GenerateInviteCodeDto.html" target="_self">GenerateInviteCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="293"
+                                    class="link-to-prism">src/thread/thread.service.ts:293</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GenerateInviteCodeDto.html" target="_self" >GenerateInviteCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createChannel</b></span>
+                        <a href="#createChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createChannel(payload: <a href="../classes/CreateChannelDto.html" target="_self">CreateChannelDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="421"
+                                    class="link-to-prism">src/thread/thread.service.ts:421</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateChannelDto.html" target="_self" >CreateChannelDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMediaRoom"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createMediaRoom</b></span>
+                        <a href="#createMediaRoom"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMediaRoom(payload: <a href="../classes/CreateMediaRoomDto.html" target="_self">CreateMediaRoomDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/thread/thread.service.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateMediaRoomDto.html" target="_self" >CreateMediaRoomDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;object&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createNewConversation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createNewConversation</b></span>
+                        <a href="#createNewConversation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createNewConversation(memberOwnerId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, memberGuestId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="666"
+                                    class="link-to-prism">src/thread/thread.service.ts:666</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>memberOwnerId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>memberGuestId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Conversation&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createServer"></a>
                     <span class="name">
+                            <span class="modifier">Async</span>
                         <span ><b>createServer</b></span>
                         <a href="#createServer"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -294,15 +908,580 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>createServer()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createServer(payload: <a href="../interfaces/CreateServerInterface.html" target="_self">CreateServerInterface</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="10"
-                                    class="link-to-prism">src/thread/thread.service.ts:10</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/thread/thread.service.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CreateServerInterface.html" target="_self" >CreateServerInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteChannel</b></span>
+                        <a href="#deleteChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteChannel(payload: <a href="../classes/DeleteChannelDto.html" target="_self">DeleteChannelDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="544"
+                                    class="link-to-prism">src/thread/thread.service.ts:544</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/DeleteChannelDto.html" target="_self" >DeleteChannelDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteServer"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteServer</b></span>
+                        <a href="#deleteServer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteServer(payload: <a href="../classes/LeaveServerDto.html" target="_self">LeaveServerDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="487"
+                                    class="link-to-prism">src/thread/thread.service.ts:487</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/LeaveServerDto.html" target="_self" >LeaveServerDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="detailChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>detailChannel</b></span>
+                        <a href="#detailChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>detailChannel(payload: <a href="../classes/DetailChannelDto.html" target="_self">DetailChannelDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="613"
+                                    class="link-to-prism">src/thread/thread.service.ts:613</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/DetailChannelDto.html" target="_self" >DetailChannelDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Channel&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>editChannel</b></span>
+                        <a href="#editChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>editChannel(payload: <a href="../classes/EditChannelDto.html" target="_self">EditChannelDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="504"
+                                    class="link-to-prism">src/thread/thread.service.ts:504</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/EditChannelDto.html" target="_self" >EditChannelDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findConversation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findConversation</b></span>
+                        <a href="#findConversation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findConversation(memberOwnerId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, memberGuestId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="638"
+                                    class="link-to-prism">src/thread/thread.service.ts:638</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>memberOwnerId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>memberGuestId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Conversation&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findServerByName"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findServerByName</b></span>
+                        <a href="#findServerByName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findServerByName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/thread/thread.service.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Server&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findUserByEmail"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findUserByEmail</b></span>
+                        <a href="#findUserByEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findUserByEmail(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="107"
+                                    class="link-to-prism">src/thread/thread.service.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;User&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateInviteCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>generateInviteCode</b></span>
+                        <a href="#generateInviteCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateInviteCode()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/thread/thread.service.ts:189</a></div>
                         </td>
                     </tr>
 
@@ -311,9 +1490,630 @@
                 <td class="col-md-4">
 
                         <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateNewInviteCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>generateNewInviteCode</b></span>
+                        <a href="#generateNewInviteCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateNewInviteCode(payload: <a href="../classes/GenerateInviteCodeDto.html" target="_self">GenerateInviteCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="199"
+                                    class="link-to-prism">src/thread/thread.service.ts:199</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GenerateInviteCodeDto.html" target="_self" >GenerateInviteCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Server&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getChannelServer"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getChannelServer</b></span>
+                        <a href="#getChannelServer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getChannelServer(payload: <a href="../classes/GetChannelServerDto.html" target="_self">GetChannelServerDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="56"
+                                    class="link-to-prism">src/thread/thread.service.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetChannelServerDto.html" target="_self" >GetChannelServerDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Server&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOrCreateConversation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getOrCreateConversation</b></span>
+                        <a href="#getOrCreateConversation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOrCreateConversation(payload: <a href="../classes/CreateConversationDto.html" target="_self">CreateConversationDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="693"
+                                    class="link-to-prism">src/thread/thread.service.ts:693</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateConversationDto.html" target="_self" >CreateConversationDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Conversation&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getServerUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getServerUser</b></span>
+                        <a href="#getServerUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getServerUser(payload: <a href="../classes/GetServerDto.html" target="_self">GetServerDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="173"
+                                    class="link-to-prism">src/thread/thread.service.ts:173</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetServerDto.html" target="_self" >GetServerDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Server[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isCodeExist"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>isCodeExist</b></span>
+                        <a href="#isCodeExist"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isCodeExist(inviteCode: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/thread/thread.service.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>inviteCode</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="kickMember"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>kickMember</b></span>
+                        <a href="#kickMember"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>kickMember(payload: <a href="../classes/KickMemberDto.html" target="_self">KickMemberDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="371"
+                                    class="link-to-prism">src/thread/thread.service.ts:371</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/KickMemberDto.html" target="_self" >KickMemberDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Server&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="leaveServer"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>leaveServer</b></span>
+                        <a href="#leaveServer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>leaveServer(payload: <a href="../classes/LeaveServerDto.html" target="_self">LeaveServerDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="459"
+                                    class="link-to-prism">src/thread/thread.service.ts:459</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/LeaveServerDto.html" target="_self" >LeaveServerDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateRoleMember"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateRoleMember</b></span>
+                        <a href="#updateRoleMember"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateRoleMember(payload: <a href="../classes/UpdateRoleMemberDto.html" target="_self">UpdateRoleMemberDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="316"
+                                    class="link-to-prism">src/thread/thread.service.ts:316</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateRoleMemberDto.html" target="_self" >UpdateRoleMemberDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Server&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateServer"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateServer</b></span>
+                        <a href="#updateServer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateServer(payload: <a href="../interfaces/UpdateServerInterface.html" target="_self">UpdateServerInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="269"
+                                    class="link-to-prism">src/thread/thread.service.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/UpdateServerInterface.html" target="_self" >UpdateServerInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ServerResponse.html" target="_self" >Promise&lt;ServerResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -324,27 +2124,741 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, InternalServerErrorException } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    BadRequestException,
+    ConflictException,
+    Injectable,
+    InternalServerErrorException,
+    NotFoundException,
+    UnauthorizedException,
+} from &#x27;@nestjs/common&#x27;;
 import { ThreadServiceInterface } from &#x27;./interface/thread.service.interface&#x27;;
 import { PrismaService } from &#x27;src/prisma.service&#x27;;
 import { ServerResponse } from &#x27;./dto/server-response.dto&#x27;;
-import { Server } from &#x27;@prisma/client&#x27;;
+import { Channel, Conversation, MemberRole, Server, User } from &#x27;@prisma/client&#x27;;
+import { CreateServerInterface } from &#x27;./dto/create-server-interface.dto&#x27;;
+import { UploadService } from &#x27;src/upload/upload.service&#x27;;
+import * as randomstring from &#x27;randomstring&#x27;;
+import { GetServerDto, LeaveServerDto } from &#x27;./dto/get-server.dto&#x27;;
+import { GetChannelServerDto } from &#x27;./dto/get-channel-server&#x27;;
+import { GenerateInviteCodeDto } from &#x27;./dto/generate-invitecode.dto&#x27;;
+import { CheckInviteCodeDto } from &#x27;./dto/check-invitecode.dto&#x27;;
+import { UpdateServerInterface } from &#x27;./dto/update-server-interface.dto&#x27;;
+import { UpdateRoleMemberDto } from &#x27;./dto/update-role.dto&#x27;;
+import { KickMemberDto } from &#x27;./dto/kick-member.dto&#x27;;
+import {
+    AccessChannelGeneralDto,
+    ChannelResponse,
+    CreateChannelDto,
+    DeleteChannelDto,
+    DetailChannelDto,
+    EditChannelDto,
+} from &#x27;./dto/channel.dto&#x27;;
+import { CreateConversationDto } from &#x27;./dto/conversation.dto&#x27;;
+import { CreateMediaRoomDto } from &#x27;./dto/livekit.dto&#x27;;
+import { ConfigService } from &#x27;@nestjs/config&#x27;;
+import { AccessToken } from &#x27;livekit-server-sdk&#x27;;
 
 @Injectable()
 export class ThreadService implements ThreadServiceInterface {
-    constructor(private readonly prismaService: PrismaService) {}
-    createServer(): Promise&lt;ServerResponse&gt; {
-        throw new Error(&#x27;Method not implemented.&#x27;);
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly uploadService: UploadService,
+        private readonly configService: ConfigService
+    ) {}
+
+    async createMediaRoom(payload: CreateMediaRoomDto): Promise&lt;object&gt; {
+        const apiKey &#x3D; this.configService.get(&#x27;LIVEKIT_API_KEY&#x27;);
+        const apiSecret &#x3D; this.configService.get(&#x27;LIVEKIT_API_SECRET&#x27;);
+        const wsUrl &#x3D; this.configService.get(&#x27;NEXT_PUBLIC_LIVEKIT_URL&#x27;);
+      
+        const at &#x3D; new AccessToken(apiKey, apiSecret, { identity: payload.username });
+      
+        at.addGrant({ room: payload.room, roomJoin: true, canPublish: true, canSubscribe: true });
+      
+        return { token: at.toJwt() };
     }
+
+    async getChannelServer(payload: GetChannelServerDto): Promise&lt;Server&gt; {
+        const server &#x3D; await this.prismaService.server.findUnique({
+            where: {
+                token: payload.serverToken,
+                members: {
+                    some: {
+                        user: {
+                            email: payload.email,
+                        },
+                    },
+                },
+            },
+            include: {
+                user: true,
+                channels: {
+                    orderBy: {
+                        createAt: &#x27;asc&#x27;,
+                    },
+                },
+                members: {
+                    include: {
+                        user: true,
+                    },
+                    orderBy: {
+                        role: &#x27;asc&#x27;,
+                    },
+                },
+            },
+        });
+
+        if (!server) {
+            throw new BadRequestException();
+        }
+
+        return server;
+    }
+
+    async findServerByName(name: string): Promise&lt;Server&gt; {
+        const server &#x3D; await this.prismaService.server.findFirst({
+            where: {
+                name,
+            },
+        });
+
+        if (server) {
+            throw new ConflictException();
+        }
+
+        return server;
+    }
+
+    async findUserByEmail(email: string): Promise&lt;User&gt; {
+        const user &#x3D; await this.prismaService.user.findUnique({
+            where: {
+                email,
+            },
+        });
+
+        if (!user) {
+            throw new UnauthorizedException();
+        }
+
+        return user;
+    }
+
+    async isCodeExist(inviteCode: string): Promise&lt;boolean&gt; {
+        const code &#x3D; await this.prismaService.server.findUnique({
+            where: {
+                inviteCode,
+            },
+        });
+
+        return code !&#x3D;&#x3D; null;
+    }
+
+    async createServer(
+        payload: CreateServerInterface,
+    ): Promise&lt;ServerResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        await this.findServerByName(payload.name);
+
+        const imgUrl &#x3D; await this.uploadService.uploadAvatarToS3(payload.image);
+
+        const inviteCode &#x3D; await this.generateInviteCode();
+
+        const createServer &#x3D; await this.prismaService.server.create({
+            data: {
+                name: payload.name,
+                imageUrl: imgUrl,
+                inviteCode,
+                token: new Date().getTime().toString(),
+                userId: user.id,
+                channels: {
+                    create: [
+                        {
+                            token: new Date().getTime().toString(),
+                            name: &#x27;general&#x27;,
+                            userId: user.id,
+                        },
+                    ],
+                },
+                members: {
+                    create: [
+                        {
+                            token: new Date().getTime().toString(),
+                            userId: user.id,
+                            role: MemberRole.ADMIN,
+                        },
+                    ],
+                },
+            },
+        });
+
+        return this.buildServerResponse(createServer);
+    }
+
+    async getServerUser(payload: GetServerDto): Promise&lt;Server[]&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const server &#x3D; await this.prismaService.server.findMany({
+            where: {
+                members: {
+                    some: {
+                        userId: user.id,
+                    },
+                },
+            },
+        });
+
+        return server;
+    }
+
+    async generateInviteCode(): Promise&lt;string&gt; {
+        let inviteCode: string;
+
+        do {
+            inviteCode &#x3D; randomstring.generate(8);
+        } while (await this.isCodeExist(inviteCode));
+
+        return inviteCode;
+    }
+
+    async generateNewInviteCode(
+        payload: GenerateInviteCodeDto,
+    ): Promise&lt;Server&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const inviteCode &#x3D; await this.generateInviteCode();
+
+        const server &#x3D; await this.prismaService.server.update({
+            where: {
+                userId: user.id,
+                token: payload.serverToken,
+            },
+            data: {
+                inviteCode,
+            },
+        });
+
+        return server;
+    }
+
+    async checkInviteCode(
+        payload: CheckInviteCodeDto,
+    ): Promise&lt;ServerResponse&gt; {
+        // kiểm tra xem inviteCode đúng không
+        const existingInviteCode &#x3D; await this.prismaService.server.findFirst({
+            where: {
+                inviteCode: payload.inviteCode,
+            },
+        });
+
+        if (!existingInviteCode) {
+            throw new NotFoundException();
+        }
+
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        // kiểm tra người dùng đã trong server này chưa
+        const existingSever &#x3D; await this.prismaService.server.findFirst({
+            where: {
+                inviteCode: payload.inviteCode,
+                members: {
+                    some: {
+                        userId: user.id,
+                    },
+                },
+            },
+        });
+
+        // nếu user chưa join server thì cập nhật vào.
+        if (!existingSever) {
+            await this.prismaService.server.update({
+                where: {
+                    inviteCode: payload.inviteCode,
+                },
+                data: {
+                    members: {
+                        create: [
+                            {
+                                token: new Date().getTime().toString(),
+                                userId: user.id,
+                            },
+                        ],
+                    },
+                },
+            });
+        }
+
+        return this.buildServerResponse(existingInviteCode);
+    }
+
+    async updateServer(
+        payload: UpdateServerInterface,
+    ): Promise&lt;ServerResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const imgUrl &#x3D; await this.uploadService.uploadAvatarToS3(payload.image);
+
+        try {
+            const server &#x3D; await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                },
+                data: {
+                    name: payload.name,
+                    imageUrl: imgUrl,
+                },
+            });
+
+            return this.buildServerResponse(server);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async checkUserServer(
+        payload: GenerateInviteCodeDto,
+    ): Promise&lt;ServerResponse&gt; {
+        const server &#x3D; await this.prismaService.server.findFirst({
+            where: {
+                token: payload.serverToken,
+                members: {
+                    some: {
+                        user: {
+                            email: payload.email,
+                        },
+                    },
+                },
+            },
+        });
+
+        if (!server) {
+            throw new NotFoundException();
+        }
+
+        return server;
+    }
+
+    async updateRoleMember(payload: UpdateRoleMemberDto): Promise&lt;Server&gt; {
+        const member &#x3D; await this.findUserByEmail(payload.emailMember);
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        try {
+            const server &#x3D; await this.prismaService.server.findUnique({
+                where: {
+                    token: payload.serverToken,
+                },
+            });
+
+            const serverUpdate &#x3D; await this.prismaService.server.update({
+                where: {
+                    userId: user.id,
+                    token: payload.serverToken,
+                },
+                data: {
+                    members: {
+                        update: {
+                            where: {
+                                serverId_userId: {
+                                    userId: member.id,
+                                    serverId: server.id,
+                                },
+                            },
+                            data: {
+                                role: payload.role,
+                            },
+                        },
+                    },
+                },
+                include: {
+                    user: true,
+                    channels: {
+                        orderBy: {
+                            createAt: &#x27;asc&#x27;,
+                        },
+                    },
+                    members: {
+                        include: {
+                            user: true,
+                        },
+                        orderBy: {
+                            role: &#x27;asc&#x27;,
+                        },
+                    },
+                },
+            });
+
+            return serverUpdate;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async kickMember(payload: KickMemberDto): Promise&lt;Server&gt; {
+        const member &#x3D; await this.findUserByEmail(payload.emailMember);
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        try {
+            const server &#x3D; await this.prismaService.server.findUnique({
+                where: {
+                    token: payload.serverToken,
+                },
+            });
+
+            const serverUpdate &#x3D; await this.prismaService.server.update({
+                where: {
+                    userId: user.id,
+                    token: payload.serverToken,
+                },
+                data: {
+                    members: {
+                        delete: {
+                            serverId_userId: {
+                                serverId: server.id,
+                                userId: member.id,
+                            },
+                        },
+                    },
+                },
+                include: {
+                    user: true,
+                    channels: {
+                        orderBy: {
+                            createAt: &#x27;asc&#x27;,
+                        },
+                    },
+                    members: {
+                        include: {
+                            user: true,
+                        },
+                        orderBy: {
+                            role: &#x27;asc&#x27;,
+                        },
+                    },
+                },
+            });
+
+            return serverUpdate;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async createChannel(payload: CreateChannelDto): Promise&lt;ServerResponse&gt; {
+        if (payload.name &#x3D;&#x3D;&#x3D; &#x27;general&#x27;) {
+            throw new BadRequestException(&quot;Name cannot be &#x27;general&#x27;&quot;);
+        }
+
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        try {
+            const server &#x3D; await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            userId: user.id,
+                            role: {
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+                            },
+                        },
+                    },
+                },
+                data: {
+                    channels: {
+                        create: {
+                            token: new Date().getTime().toString(),
+                            userId: user.id,
+                            name: payload.name,
+                            type: payload.type,
+                        },
+                    },
+                },
+            });
+
+            return this.buildServerResponse(server);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async leaveServer(payload: LeaveServerDto): Promise&lt;ServerResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        try {
+            const server &#x3D; await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            userId: user.id,
+                        },
+                    },
+                },
+                data: {
+                    members: {
+                        deleteMany: {
+                            userId: user.id,
+                        },
+                    },
+                },
+            });
+
+            return this.buildServerResponse(server);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteServer(payload: LeaveServerDto): Promise&lt;ServerResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        try {
+            const server &#x3D; await this.prismaService.server.delete({
+                where: {
+                    token: payload.serverToken,
+                    userId: user.id,
+                },
+            });
+
+            return this.buildServerResponse(server);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async editChannel(payload: EditChannelDto): Promise&lt;ServerResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        try {
+            const server &#x3D; await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            userId: user.id,
+                            role: {
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+                            },
+                        },
+                    },
+                },
+                data: {
+                    channels: {
+                        update: {
+                            where: {
+                                token: payload.channelToken,
+                                NOT: {
+                                    name: &#x27;general&#x27;,
+                                },
+                            },
+                            data: {
+                                name: payload.name,
+                                type: payload.type,
+                            },
+                        },
+                    },
+                },
+            });
+
+            return this.buildServerResponse(server);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteChannel(payload: DeleteChannelDto): Promise&lt;ServerResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        try {
+            const server &#x3D; await this.prismaService.server.update({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            userId: user.id,
+                            role: {
+                                in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+                            },
+                        },
+                    },
+                },
+                data: {
+                    channels: {
+                        delete: {
+                            token: payload.channelToken,
+                            NOT: {
+                                name: &#x27;general&#x27;,
+                            },
+                        },
+                    },
+                },
+            });
+
+            return this.buildServerResponse(server);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async accessChannelGeneral(
+        payload: AccessChannelGeneralDto,
+    ): Promise&lt;ChannelResponse&gt; {
+        try {
+            const server &#x3D; await this.prismaService.server.findUnique({
+                where: {
+                    token: payload.serverToken,
+                    members: {
+                        some: {
+                            user: {
+                                email: payload.email
+                            }
+                        },
+                    },
+                },
+                include: {
+                    channels: {
+                        where: {
+                            name: &#x27;general&#x27;,
+                        },
+                        orderBy: {
+                            createAt: &#x27;asc&#x27;,
+                        },
+                    },
+                },
+            });
+
+            const initialChannel &#x3D; server?.channels[0];
+
+            return this.buildChannelResponse(initialChannel);
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async detailChannel(payload: DetailChannelDto): Promise&lt;Channel&gt; {
+        try {
+            const channel &#x3D; await this.prismaService.channel.findUnique({
+                where: {
+                    token: payload.channelToken,
+                },
+                include: {
+                    server: {
+                        include: {
+                            members: {
+                                include: {
+                                    user: true
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            return channel;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findConversation(memberOwnerId: string, memberGuestId: string): Promise&lt;Conversation&gt; {
+        try {
+            return await this.prismaService.conversation.findFirst({
+                where: {
+                    AND: {
+                        memberOwnerId,
+                        memberGuestId
+                    }
+                },
+                include: {
+                    memberOwner: {
+                        include: {
+                            user: true
+                        }
+                    },
+                    memberGuest: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+        }
+        catch(err) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async createNewConversation(memberOwnerId: string, memberGuestId: string): Promise&lt;Conversation&gt; {
+        try {
+            return await this.prismaService.conversation.create({
+                data: {
+                    memberOwnerId,
+                    memberGuestId
+                },
+                include: {
+                    memberOwner: {
+                        include: {
+                            user: true
+                        }
+                    },
+                    memberGuest: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getOrCreateConversation(payload: CreateConversationDto): Promise&lt;Conversation&gt; {
+        const memberOwner &#x3D; await this.prismaService.member.findFirst({
+            where: {
+                server: {
+                    token: payload.serverToken
+                },
+                user: {
+                    email: payload.emailOwner
+                }
+            }
+        });
+
+        const memberGuest &#x3D; await this.prismaService.member.findUnique({
+            where: {
+                token: payload.memberTokenGuest
+            }
+        });
+
+        const conversation &#x3D; await this.findConversation(memberOwner.id, memberGuest.id) || await this.findConversation(memberGuest.id, memberOwner.id);
+        if(!conversation) {
+            return await this.createNewConversation(memberOwner.id, memberGuest.id);
+        }
+
+        return conversation;
+    }
+
     buildServerResponse(payload: Server): ServerResponse {
         return {
             token: payload.token,
             name: payload.name,
-            imageUrl: payload.imageUrl,
             inviteCode: payload.inviteCode,
+            imageUrl: payload.imageUrl,
             createAt: payload.createAt,
-            updateAt: payload.updateAt
-        }
+            updateAt: payload.updateAt,
+        };
+    }
+
+    buildChannelResponse(payload: Channel): ChannelResponse {
+        return {
+            token: payload.token,
+            name: payload.name,
+            type: payload.type,
+        };
     }
 }
 </code></pre>

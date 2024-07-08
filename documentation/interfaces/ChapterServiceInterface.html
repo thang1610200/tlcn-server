@@ -184,6 +184,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="#updatePositionChapter" 
+>
+                                        updatePositionChapter
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="#updateStatusChapter" 
 >
                                         updateStatusChapter
@@ -625,6 +631,85 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="updatePositionChapter"></a>
+                    <span class="name">
+                        <span ><b>updatePositionChapter</b></span>
+                        <a href="#updatePositionChapter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updatePositionChapter(courseId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, position: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="23"
+                                    class="link-to-prism">src/chapter/interfaces/chapter.service.interface.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>courseId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updateStatusChapter"></a>
                     <span class="name">
                         <span ><b>updateStatusChapter</b></span>
@@ -783,6 +868,7 @@ export interface ChapterServiceInterface {
         payload: UpdateStatusChapterDto,
     ): Promise&lt;ChapterResponse&gt;;
     deleteChapter(payload: DeleteChapterDto): Promise&lt;string&gt;;
+    updatePositionChapter(courseId: string, position: number): Promise&lt;string&gt;;
 }
 </code></pre>
     </div>

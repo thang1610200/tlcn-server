@@ -111,7 +111,7 @@ export class LessonController {
             course_slug: body.course_slug,
             chapter_token: body.chapter_token,
             lesson_token: body.lesson_token,
-            duration: body.duration
+            duration: Number(body.duration)
         };
         return this.lessonService.updateVideoLesson(payload);
     }

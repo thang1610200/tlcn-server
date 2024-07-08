@@ -149,11 +149,25 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#addSubtitleLesson" >addSubtitleLesson</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                 <a href="#createLesson" >createLesson</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                 <a href="#deleteLesson" >deleteLesson</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#deleteSubtitleLesson" >deleteSubtitleLesson</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#generateSubtitle" >generateSubtitle</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -165,9 +179,17 @@
                             </li>
                             <li>
                                     <span class="modifier"></span>
+                                <a href="#translateSubtitle" >translateSubtitle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updatePictureCourse" >updatePictureCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#updatePreviewLesson" >updatePreviewLesson</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -204,6 +226,96 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="addSubtitleLesson"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>addSubtitleLesson</b></span>
+                        <a href="#addSubtitleLesson"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addSubtitleLesson(file: Express.Multer.File, body: <a href="../classes/AddSubtitleLessonDto.html" target="_self">AddSubtitleLessonDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseInterceptors(undefined)<br />@Post(&#x27;add-subtitle&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>file</td>
+                                            <td>
+                                                        <code>Express.Multer.File</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>body</td>
+                                            <td>
+                                                            <code><a href="../classes/AddSubtitleLessonDto.html" target="_self" >AddSubtitleLessonDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createLesson"></a>
                     <span class="name">
                             <span class="modifier"></span>
@@ -229,8 +341,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="39"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:39</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="41"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:41</a></div>
                         </td>
                     </tr>
 
@@ -305,8 +417,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="59"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:59</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:76</a></div>
                         </td>
                     </tr>
 
@@ -330,6 +442,158 @@
                                                 <td>payload</td>
                                             <td>
                                                             <code><a href="../classes/DeleteLessonDto.html" target="_self" >DeleteLessonDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteSubtitleLesson"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>deleteSubtitleLesson</b></span>
+                        <a href="#deleteSubtitleLesson"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteSubtitleLesson(payload: <a href="../classes/DeleteSubtitleLessonDto.html" target="_self">DeleteSubtitleLessonDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Delete(&#x27;delete-subtitle&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/DeleteSubtitleLessonDto.html" target="_self" >DeleteSubtitleLessonDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateSubtitle"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>generateSubtitle</b></span>
+                        <a href="#generateSubtitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateSubtitle(payload: <a href="../classes/AddSubtitleLessonDto.html" target="_self">AddSubtitleLessonDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;generate-subtitle&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="56"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/AddSubtitleLessonDto.html" target="_self" >AddSubtitleLessonDto</a></code>
                                             </td>
 
                                             <td>
@@ -381,8 +645,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="130"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:130</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="174"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:174</a></div>
                         </td>
                     </tr>
 
@@ -457,8 +721,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="44"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:44</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="46"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:46</a></div>
                         </td>
                     </tr>
 
@@ -508,6 +772,82 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="translateSubtitle"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>translateSubtitle</b></span>
+                        <a href="#translateSubtitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>translateSubtitle(payload: <a href="../classes/TranslateSubtitleDto.html" target="_self">TranslateSubtitleDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;translate-subtitle&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/TranslateSubtitleDto.html" target="_self" >TranslateSubtitleDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updatePictureCourse"></a>
                     <span class="name">
                             <span class="modifier"></span>
@@ -521,7 +861,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updatePictureCourse(file: Express.Multer.File, body: <a href="../classes/GetLessonDto.html" target="_self">GetLessonDto</a>)</code>
+                    <code>updatePictureCourse(file: Express.Multer.File, body: <a href="../classes/UploadVideoDto.html" target="_self">UploadVideoDto</a>)</code>
                 </td>
             </tr>
 
@@ -535,8 +875,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="65"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:65</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="87"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:87</a></div>
                         </td>
                     </tr>
 
@@ -571,7 +911,7 @@
                                         <tr>
                                                 <td>body</td>
                                             <td>
-                                                            <code><a href="../classes/GetLessonDto.html" target="_self" >GetLessonDto</a></code>
+                                                            <code><a href="../classes/UploadVideoDto.html" target="_self" >UploadVideoDto</a></code>
                                             </td>
 
                                             <td>
@@ -585,6 +925,82 @@
                             </div>
                         <div class="io-description">
                             <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePreviewLesson"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>updatePreviewLesson</b></span>
+                        <a href="#updatePreviewLesson"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePreviewLesson(payload: <a href="../classes/UpdateStatusLessonDto.html" target="_self">UpdateStatusLessonDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Patch(&#x27;update-preview&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="71"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateStatusLessonDto.html" target="_self" >UpdateStatusLessonDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                         </div>
                             <div class="io-description">
@@ -623,8 +1039,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:54</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:66</a></div>
                         </td>
                     </tr>
 
@@ -701,8 +1117,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="98"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:98</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:142</a></div>
                         </td>
                     </tr>
 
@@ -789,8 +1205,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="49"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:49</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="51"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:51</a></div>
                         </td>
                     </tr>
 
@@ -863,13 +1279,15 @@ import { Roles } from &#x27;src/course/decorators/roles.decorator&#x27;;
 import { JwtGuard } from &#x27;src/auth/guards/jwt.guard&#x27;;
 import { RolesGuard } from &#x27;src/course/guards/role.guard&#x27;;
 import { ReorderLessonDto } from &#x27;./dto/reorder-lesson.dto&#x27;;
-import { GetLessonDto } from &#x27;./dto/get-lesson.dto&#x27;;
+import { GetLessonDto, UploadVideoDto } from &#x27;./dto/get-lesson.dto&#x27;;
 import { UpdateLessonDto } from &#x27;./dto/update-lesson.dto&#x27;;
 import { FileInterceptor } from &#x27;@nestjs/platform-express&#x27;;
 import { UpdateStatusLessonDto } from &#x27;./dto/update-status.dto&#x27;;
 import { DeleteLessonDto } from &#x27;./dto/delete-lesson.dto&#x27;;
 import { UpdateThumbnailVideo } from &#x27;./dto/update-thumbnail.dto&#x27;;
-import { ContentLessonDto } from &#x27;./dto/content-lesson.dto&#x27;;
+import { ContentLessonDto, SummarizationVideoDto } from &#x27;./dto/content-lesson.dto&#x27;;
+import { AddSubtitleLessonDto, DeleteSubtitleLessonDto, TranslateSubtitleDto } from &#x27;./dto/subtitle.dto&#x27;;
+import { FileTypeValidationPipe } from &#x27;./pipes/file-type-validation.pipe&#x27;;
 
 @Roles(&#x27;INSTRUCTOR&#x27;)
 @UseGuards(JwtGuard, RolesGuard)
@@ -892,14 +1310,34 @@ export class LessonController {
         return this.lessonService.updateValueLesson(payload);
     }
 
+    @Post(&#x27;generate-subtitle&#x27;)
+    generateSubtitle(@Body() payload: AddSubtitleLessonDto) {
+        return this.lessonService.generateSubtitleVideo(payload);
+    }
+
+    @Post(&#x27;translate-subtitle&#x27;)
+    translateSubtitle(@Body() payload: TranslateSubtitleDto) {
+        return this.lessonService.translateSubtitle(payload);
+    }
+
     @Patch(&#x27;update-status&#x27;)
     updateStatusLesson(@Body() payload: UpdateStatusLessonDto) {
         return this.lessonService.updateStatusLesson(payload);
     }
 
+    @Patch(&#x27;update-preview&#x27;)
+    updatePreviewLesson(@Body() payload: UpdateStatusLessonDto) {
+        return this.lessonService.updatePreviewLesson(payload);
+    }
+
     @Delete(&#x27;delete-lesson&#x27;)
     deleteLesson(@Query() payload: DeleteLessonDto) {
         return this.lessonService.deleteLesson(payload);
+    }
+
+    @Delete(&#x27;delete-subtitle&#x27;)
+    deleteSubtitleLesson(@Query() payload: DeleteSubtitleLessonDto) {
+        return this.lessonService.deleteSubtitleLesson(payload);
     }
 
     @UseInterceptors(FileInterceptor(&#x27;file&#x27;))
@@ -923,7 +1361,7 @@ export class LessonController {
             }),
         )
         file: Express.Multer.File,
-        @Body() body: GetLessonDto,
+        @Body() body: UploadVideoDto,
     ) {
         const payload &#x3D; {
             file,
@@ -931,8 +1369,30 @@ export class LessonController {
             course_slug: body.course_slug,
             chapter_token: body.chapter_token,
             lesson_token: body.lesson_token,
+            duration: Number(body.duration)
         };
         return this.lessonService.updateVideoLesson(payload);
+    }
+
+    @UseInterceptors(FileInterceptor(&#x27;file&#x27;))
+    @Post(&#x27;add-subtitle&#x27;)
+    async addSubtitleLesson(
+        @UploadedFile(
+            new FileTypeValidationPipe()
+        )
+        file: Express.Multer.File,
+        @Body() body: AddSubtitleLessonDto,
+    ) {
+        const payload &#x3D; {
+            file,
+            email: body.email,
+            course_slug: body.course_slug,
+            chapter_token: body.chapter_token,
+            lesson_token: body.lesson_token,
+            language: body.language,
+            language_code: body.language_code
+        };
+        return this.lessonService.addSubtitleLesson(payload);
     }
 
     @UseInterceptors(FileInterceptor(&#x27;file&#x27;))
@@ -982,6 +1442,11 @@ export class LessonControllerUser {
     @Get(&#x27;detail-lesson&#x27;)
     contentLesson(@Query() payload: ContentLessonDto) {
         return this.lessonService.contentLesson(payload);
+    }
+
+    @Get(&#x27;summary-video&#x27;)
+    summaryVideo(@Query() payload: SummarizationVideoDto) {
+        return this.lessonService.summarizationVideo(payload);
     }
 }
 </code></pre>

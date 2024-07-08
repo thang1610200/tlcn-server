@@ -345,7 +345,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IsEmail, IsNotEmpty, IsString } from &#x27;class-validator&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IsEmail, IsNotEmpty, IsNumber, IsString } from &#x27;class-validator&#x27;;
 
 export class GetLessonDto {
     @IsString()
@@ -363,6 +363,27 @@ export class GetLessonDto {
     @IsString()
     @IsNotEmpty()
     lesson_token: string;
+}
+
+export class UploadVideoDto {
+    @IsString()
+    @IsNotEmpty()
+    course_slug: string;
+
+    @IsString()
+    @IsEmail()
+    email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    chapter_token: string;
+
+    @IsString()
+    @IsNotEmpty()
+    lesson_token: string;
+
+    @IsNumber()
+    duration: string;
 }
 </code></pre>
     </div>

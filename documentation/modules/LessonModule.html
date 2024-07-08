@@ -258,15 +258,18 @@ import { PrismaService } from &#x27;src/prisma.service&#x27;;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;;
 import { UploadService } from &#x27;src/upload/upload.service&#x27;;
 import { BullModule } from &#x27;@nestjs/bull&#x27;;
+import { ConfigService } from &#x27;@nestjs/config&#x27;;
+import { HttpModule } from &#x27;@nestjs/axios&#x27;;
 
 @Module({
     imports: [
         BullModule.registerQueue({
-            name: &#x27;upload&#x27;,
+            name: &#x27;upload&#x27;
         }),
+        HttpModule
     ],
     controllers: [LessonController, LessonControllerUser],
-    providers: [LessonService, PrismaService, JwtService, UploadService],
+    providers: [LessonService, PrismaService, JwtService, UploadService, ConfigService],
 })
 export class LessonModule {}
 </code></pre>

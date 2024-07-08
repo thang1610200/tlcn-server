@@ -167,6 +167,14 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#moderateVideo" >moderateVideo</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#translateSubtitleJob" >translateSubtitleJob</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#uploadAttachmentToS3" >uploadAttachmentToS3</a>
                             </li>
                             <li>
@@ -203,12 +211,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(uploadQueue: Queue, configService: ConfigService, jwtService: JwtService)</code>
+<code>constructor(uploadQueue: Queue, configService: ConfigService, jwtService: JwtService, httpService: HttpService, prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/upload/upload.service.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/upload/upload.service.ts:25</a></div>
                             </td>
                         </tr>
 
@@ -261,6 +269,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>httpService</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>prismaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PrismaService.html" target="_self" >PrismaService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -295,8 +327,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="131"
-                                    class="link-to-prism">src/upload/upload.service.ts:131</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="166"
+                                    class="link-to-prism">src/upload/upload.service.ts:166</a></div>
                         </td>
                     </tr>
 
@@ -364,8 +396,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="34"
-                                    class="link-to-prism">src/upload/upload.service.ts:34</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/upload/upload.service.ts:69</a></div>
                         </td>
                     </tr>
 
@@ -415,6 +447,144 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="moderateVideo"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>moderateVideo</b></span>
+                        <a href="#moderateVideo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>moderateVideo(video: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="35"
+                                    class="link-to-prism">src/upload/upload.service.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>video</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ModerateVideoInterface.html" target="_self" >Promise&lt;ModerateVideoInterface&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translateSubtitleJob"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>translateSubtitleJob</b></span>
+                        <a href="#translateSubtitleJob"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>translateSubtitleJob(data: <a href="../interfaces/TranslateSubtitleQueue.html" target="_self">TranslateSubtitleQueue</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="209"
+                                    class="link-to-prism">src/upload/upload.service.ts:209</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TranslateSubtitleQueue.html" target="_self" >TranslateSubtitleQueue</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;object&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="uploadAttachmentToS3"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -433,8 +603,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="100"
-                                    class="link-to-prism">src/upload/upload.service.ts:100</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="135"
+                                    class="link-to-prism">src/upload/upload.service.ts:135</a></div>
                         </td>
                     </tr>
 
@@ -502,8 +672,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="79"
-                                    class="link-to-prism">src/upload/upload.service.ts:79</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="114"
+                                    class="link-to-prism">src/upload/upload.service.ts:114</a></div>
                         </td>
                     </tr>
 
@@ -571,8 +741,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="120"
-                                    class="link-to-prism">src/upload/upload.service.ts:120</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="155"
+                                    class="link-to-prism">src/upload/upload.service.ts:155</a></div>
                         </td>
                     </tr>
 
@@ -652,8 +822,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="149"
-                                    class="link-to-prism">src/upload/upload.service.ts:149</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="184"
+                                    class="link-to-prism">src/upload/upload.service.ts:184</a></div>
                         </td>
                     </tr>
 
@@ -721,8 +891,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="155"
-                                    class="link-to-prism">src/upload/upload.service.ts:155</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="193"
+                                    class="link-to-prism">src/upload/upload.service.ts:193</a></div>
                         </td>
                     </tr>
 
@@ -800,7 +970,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/upload/upload.service.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/upload/upload.service.ts:19</a></div>
                         </td>
                     </tr>
 
@@ -814,7 +984,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { InjectQueue } from &#x27;@nestjs/bull&#x27;;
-import { Injectable, UnauthorizedException } from &#x27;@nestjs/common&#x27;;
+import { Injectable, InternalServerErrorException, UnauthorizedException } from &#x27;@nestjs/common&#x27;;
 import { ConfigService } from &#x27;@nestjs/config&#x27;;
 import { Queue } from &#x27;bull&#x27;;
 //import { Web3Storage, CIDString } from &#x27;web3.storage&#x27;;
@@ -823,6 +993,11 @@ import * as sharp from &#x27;sharp&#x27;;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;;
 import { PutObjectCommand, S3Client } from &#x27;@aws-sdk/client-s3&#x27;;
 import { QueueUploadVideo } from &#x27;src/lesson/dto/queue-upload-video.dto&#x27;;
+import { TranslateSubtitleQueue } from &#x27;src/lesson/dto/subtitle.dto&#x27;;
+import { HttpService } from &#x27;@nestjs/axios&#x27;;
+import { firstValueFrom } from &#x27;rxjs&#x27;;
+import { ModerateVideoInterface } from &#x27;./dto/moderate-video.interface&#x27;;
+import { PrismaService } from &#x27;src/prisma.service&#x27;;
 
 @Injectable()
 export class UploadService implements UploadServiceInterface {
@@ -838,7 +1013,37 @@ export class UploadService implements UploadServiceInterface {
         @InjectQueue(&#x27;upload&#x27;) private readonly uploadQueue: Queue,
         private readonly configService: ConfigService,
         private readonly jwtService: JwtService,
+        private readonly httpService: HttpService,
+        private readonly prismaService: PrismaService
     ) {}
+
+    async moderateVideo(video: any): Promise&lt;ModerateVideoInterface&gt; {
+        try {
+            console.log(Buffer.from(video.buffer));
+            const formData &#x3D; new FormData();
+            const file_blob &#x3D; new Blob([Buffer.from(video.buffer)], { type: video.mimetype });
+            formData.append(&#x27;video&#x27;, file_blob, video.originalname);
+            console.log(formData.get(&#x27;video&#x27;));
+            const { data } &#x3D; await firstValueFrom(
+                this.httpService
+                    .post(&#x60;${this.configService.get(&#x27;MODERATE_URL&#x27;)}/analyze&#x60;, formData, {
+                        headers: {
+                            &#x27;Content-Type&#x27;: &#x27;multipart/form-data&#x27;
+                        },
+                        timeout: 500000
+                    })
+            );
+            console.log(data);
+
+            const result: ModerateVideoInterface &#x3D; data.results;
+
+            return result;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
 
     // makeStorageClient(): Web3Storage {
     //     return new Web3Storage({
@@ -962,7 +1167,10 @@ export class UploadService implements UploadServiceInterface {
     }
 
     async uploadVideoToStorage(data: QueueUploadVideo): Promise&lt;object&gt; {
-        const job &#x3D; await this.uploadQueue.add(&#x27;update-video&#x27;, { data });
+        const job &#x3D; await this.uploadQueue.add(&#x27;update-video&#x27;, { data },{
+            removeOnComplete: true,
+            timeout: 500000
+        });
 
         return { job: job.id };
     }
@@ -981,6 +1189,14 @@ export class UploadService implements UploadServiceInterface {
         } catch (err) {
             throw new UnauthorizedException();
         }
+    }
+
+    async translateSubtitleJob(data: TranslateSubtitleQueue): Promise&lt;object&gt; {
+        const job &#x3D; await this.uploadQueue.add(&#x27;translate-subtitle&#x27;, { data }, {
+            timeout: 500000
+        });
+
+        return { job: job.id };
     }
 }
 </code></pre>

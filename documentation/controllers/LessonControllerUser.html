@@ -151,6 +151,10 @@
                                     <span class="modifier"></span>
                                 <a href="#contentLesson" >contentLesson</a>
                             </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#summaryVideo" >summaryVideo</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -197,8 +201,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="141"
-                                    class="link-to-prism">src/lesson/lesson.controller.ts:141</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="185"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:185</a></div>
                         </td>
                     </tr>
 
@@ -222,6 +226,82 @@
                                                 <td>payload</td>
                                             <td>
                                                             <code><a href="../classes/ContentLessonDto.html" target="_self" >ContentLessonDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="summaryVideo"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>summaryVideo</b></span>
+                        <a href="#summaryVideo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>summaryVideo(payload: <a href="../classes/SummarizationVideoDto.html" target="_self">SummarizationVideoDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;summary-video&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="190"
+                                    class="link-to-prism">src/lesson/lesson.controller.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/SummarizationVideoDto.html" target="_self" >SummarizationVideoDto</a></code>
                                             </td>
 
                                             <td>
@@ -271,13 +351,15 @@ import { Roles } from &#x27;src/course/decorators/roles.decorator&#x27;;
 import { JwtGuard } from &#x27;src/auth/guards/jwt.guard&#x27;;
 import { RolesGuard } from &#x27;src/course/guards/role.guard&#x27;;
 import { ReorderLessonDto } from &#x27;./dto/reorder-lesson.dto&#x27;;
-import { GetLessonDto } from &#x27;./dto/get-lesson.dto&#x27;;
+import { GetLessonDto, UploadVideoDto } from &#x27;./dto/get-lesson.dto&#x27;;
 import { UpdateLessonDto } from &#x27;./dto/update-lesson.dto&#x27;;
 import { FileInterceptor } from &#x27;@nestjs/platform-express&#x27;;
 import { UpdateStatusLessonDto } from &#x27;./dto/update-status.dto&#x27;;
 import { DeleteLessonDto } from &#x27;./dto/delete-lesson.dto&#x27;;
 import { UpdateThumbnailVideo } from &#x27;./dto/update-thumbnail.dto&#x27;;
-import { ContentLessonDto } from &#x27;./dto/content-lesson.dto&#x27;;
+import { ContentLessonDto, SummarizationVideoDto } from &#x27;./dto/content-lesson.dto&#x27;;
+import { AddSubtitleLessonDto, DeleteSubtitleLessonDto, TranslateSubtitleDto } from &#x27;./dto/subtitle.dto&#x27;;
+import { FileTypeValidationPipe } from &#x27;./pipes/file-type-validation.pipe&#x27;;
 
 @Roles(&#x27;INSTRUCTOR&#x27;)
 @UseGuards(JwtGuard, RolesGuard)
@@ -300,14 +382,34 @@ export class LessonController {
         return this.lessonService.updateValueLesson(payload);
     }
 
+    @Post(&#x27;generate-subtitle&#x27;)
+    generateSubtitle(@Body() payload: AddSubtitleLessonDto) {
+        return this.lessonService.generateSubtitleVideo(payload);
+    }
+
+    @Post(&#x27;translate-subtitle&#x27;)
+    translateSubtitle(@Body() payload: TranslateSubtitleDto) {
+        return this.lessonService.translateSubtitle(payload);
+    }
+
     @Patch(&#x27;update-status&#x27;)
     updateStatusLesson(@Body() payload: UpdateStatusLessonDto) {
         return this.lessonService.updateStatusLesson(payload);
     }
 
+    @Patch(&#x27;update-preview&#x27;)
+    updatePreviewLesson(@Body() payload: UpdateStatusLessonDto) {
+        return this.lessonService.updatePreviewLesson(payload);
+    }
+
     @Delete(&#x27;delete-lesson&#x27;)
     deleteLesson(@Query() payload: DeleteLessonDto) {
         return this.lessonService.deleteLesson(payload);
+    }
+
+    @Delete(&#x27;delete-subtitle&#x27;)
+    deleteSubtitleLesson(@Query() payload: DeleteSubtitleLessonDto) {
+        return this.lessonService.deleteSubtitleLesson(payload);
     }
 
     @UseInterceptors(FileInterceptor(&#x27;file&#x27;))
@@ -331,7 +433,7 @@ export class LessonController {
             }),
         )
         file: Express.Multer.File,
-        @Body() body: GetLessonDto,
+        @Body() body: UploadVideoDto,
     ) {
         const payload &#x3D; {
             file,
@@ -339,8 +441,30 @@ export class LessonController {
             course_slug: body.course_slug,
             chapter_token: body.chapter_token,
             lesson_token: body.lesson_token,
+            duration: Number(body.duration)
         };
         return this.lessonService.updateVideoLesson(payload);
+    }
+
+    @UseInterceptors(FileInterceptor(&#x27;file&#x27;))
+    @Post(&#x27;add-subtitle&#x27;)
+    async addSubtitleLesson(
+        @UploadedFile(
+            new FileTypeValidationPipe()
+        )
+        file: Express.Multer.File,
+        @Body() body: AddSubtitleLessonDto,
+    ) {
+        const payload &#x3D; {
+            file,
+            email: body.email,
+            course_slug: body.course_slug,
+            chapter_token: body.chapter_token,
+            lesson_token: body.lesson_token,
+            language: body.language,
+            language_code: body.language_code
+        };
+        return this.lessonService.addSubtitleLesson(payload);
     }
 
     @UseInterceptors(FileInterceptor(&#x27;file&#x27;))
@@ -390,6 +514,11 @@ export class LessonControllerUser {
     @Get(&#x27;detail-lesson&#x27;)
     contentLesson(@Query() payload: ContentLessonDto) {
         return this.lessonService.contentLesson(payload);
+    }
+
+    @Get(&#x27;summary-video&#x27;)
+    summaryVideo(@Query() payload: SummarizationVideoDto) {
+        return this.lessonService.summarizationVideo(payload);
     }
 }
 </code></pre>

@@ -1,0 +1,2582 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tlcn-server documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">tlcn-server documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >MessageService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/message/message.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#checkRoleChannel" >checkRoleChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createDirectMessage" >createDirectMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createMessageChannel" >createMessageChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteMessageChannel" >deleteMessageChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteMessageConversation" >deleteMessageConversation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#editMessageChannel" >editMessageChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#editMessageConversation" >editMessageConversation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findChannelByToken" >findChannelByToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findConversation" >findConversation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findDirectMessage" >findDirectMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findMemberByToken" >findMemberByToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findMessage" >findMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findServerByToken" >findServerByToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findUserByEmail" >findUserByEmail</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#paginationMessage" >paginationMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#paginationMessageConversation" >paginationMessageConversation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#uploadFileChannel" >uploadFileChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#uploadFileConversation" >uploadFileConversation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#verifyAccessToken" >verifyAccessToken</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, jwtService: JwtService, configService: ConfigService, uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/message/message.service.ts:34</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>prismaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PrismaService.html" target="_self" >PrismaService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>jwtService</td>
+                                                  
+                                                        <td>
+                                                                    <code>JwtService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>configService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>uploadService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UploadService.html" target="_self" >UploadService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkRoleChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>checkRoleChannel</b></span>
+                        <a href="#checkRoleChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkRoleChannel(messageId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, channelToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, serverToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="286"
+                                    class="link-to-prism">src/message/message.service.ts:286</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>messageId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>channelToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>serverToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createDirectMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createDirectMessage</b></span>
+                        <a href="#createDirectMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createDirectMessage(payload: <a href="../classes/CreateDirectMessageDto.html" target="_self">CreateDirectMessageDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="731"
+                                    class="link-to-prism">src/message/message.service.ts:731</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateDirectMessageDto.html" target="_self" >CreateDirectMessageDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;DirectMessage&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMessageChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createMessageChannel</b></span>
+                        <a href="#createMessageChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMessageChannel(payload: <a href="../classes/createMessageChannelDto.html" target="_self">createMessageChannelDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="481"
+                                    class="link-to-prism">src/message/message.service.ts:481</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/createMessageChannelDto.html" target="_self" >createMessageChannelDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteMessageChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteMessageChannel</b></span>
+                        <a href="#deleteMessageChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteMessageChannel(payload: <a href="../classes/DeleteMessageChannelDto.html" target="_self">DeleteMessageChannelDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="318"
+                                    class="link-to-prism">src/message/message.service.ts:318</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/DeleteMessageChannelDto.html" target="_self" >DeleteMessageChannelDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteMessageConversation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteMessageConversation</b></span>
+                        <a href="#deleteMessageConversation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteMessageConversation(payload: <a href="../classes/DeleteMessageConversationDto.html" target="_self">DeleteMessageConversationDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="41"
+                                    class="link-to-prism">src/message/message.service.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/DeleteMessageConversationDto.html" target="_self" >DeleteMessageConversationDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;DirectMessage&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editMessageChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>editMessageChannel</b></span>
+                        <a href="#editMessageChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>editMessageChannel(payload: <a href="../classes/EditMessageChannelDto.html" target="_self">EditMessageChannelDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="666"
+                                    class="link-to-prism">src/message/message.service.ts:666</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/EditMessageChannelDto.html" target="_self" >EditMessageChannelDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editMessageConversation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>editMessageConversation</b></span>
+                        <a href="#editMessageConversation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>editMessageConversation(payload: <a href="../classes/EditMessageConversationDto.html" target="_self">EditMessageConversationDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/message/message.service.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/EditMessageConversationDto.html" target="_self" >EditMessageConversationDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;DirectMessage&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findChannelByToken"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findChannelByToken</b></span>
+                        <a href="#findChannelByToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findChannelByToken(channelToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, serverToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="524"
+                                    class="link-to-prism">src/message/message.service.ts:524</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>serverToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Channel&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findConversation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findConversation</b></span>
+                        <a href="#findConversation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findConversation(conversationId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="209"
+                                    class="link-to-prism">src/message/message.service.ts:209</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>conversationId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findDirectMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findDirectMessage</b></span>
+                        <a href="#findDirectMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findDirectMessage(directMessageId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, conversationId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/message/message.service.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>directMessageId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>conversationId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;DirectMessage&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findMemberByToken"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findMemberByToken</b></span>
+                        <a href="#findMemberByToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findMemberByToken(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, serverToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="562"
+                                    class="link-to-prism">src/message/message.service.ts:562</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>serverToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Member&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findMessage</b></span>
+                        <a href="#findMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findMessage(messageId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, channelId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="367"
+                                    class="link-to-prism">src/message/message.service.ts:367</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>messageId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>channelId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Message&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findServerByToken"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findServerByToken</b></span>
+                        <a href="#findServerByToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findServerByToken(serverToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="393"
+                                    class="link-to-prism">src/message/message.service.ts:393</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>serverToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findUserByEmail"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findUserByEmail</b></span>
+                        <a href="#findUserByEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findUserByEmail(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="548"
+                                    class="link-to-prism">src/message/message.service.ts:548</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;User&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginationMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>paginationMessage</b></span>
+                        <a href="#paginationMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>paginationMessage(payload: <a href="../classes/PaginationMessageDto.html" target="_self">PaginationMessageDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="601"
+                                    class="link-to-prism">src/message/message.service.ts:601</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/PaginationMessageDto.html" target="_self" >PaginationMessageDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginationMessageConversation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>paginationMessageConversation</b></span>
+                        <a href="#paginationMessageConversation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>paginationMessageConversation(payload: <a href="../classes/PaginationMessageConversationDto.html" target="_self">PaginationMessageConversationDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/message/message.service.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/PaginationMessageConversationDto.html" target="_self" >PaginationMessageConversationDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadFileChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>uploadFileChannel</b></span>
+                        <a href="#uploadFileChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>uploadFileChannel(payload: <a href="../interfaces/UploadFileChannelInterface.html" target="_self">UploadFileChannelInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="432"
+                                    class="link-to-prism">src/message/message.service.ts:432</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/UploadFileChannelInterface.html" target="_self" >UploadFileChannelInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadFileConversation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>uploadFileConversation</b></span>
+                        <a href="#uploadFileConversation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>uploadFileConversation(payload: <a href="../interfaces/UploadFileConversationInterface.html" target="_self">UploadFileConversationInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="252"
+                                    class="link-to-prism">src/message/message.service.ts:252</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/UploadFileConversationInterface.html" target="_self" >UploadFileConversationInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;DirectMessage&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="verifyAccessToken"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>verifyAccessToken</b></span>
+                        <a href="#verifyAccessToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>verifyAccessToken(token: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="715"
+                                    class="link-to-prism">src/message/message.service.ts:715</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>token</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    Injectable,
+    InternalServerErrorException,
+    NotFoundException,
+    UnauthorizedException,
+} from &#x27;@nestjs/common&#x27;;
+import { PrismaService } from &#x27;src/prisma.service&#x27;;
+import {
+    DeleteMessageChannelDto,
+    EditMessageChannelDto,
+    PaginationMessageDto,
+    UploadFileChannelInterface,
+    createMessageChannelDto,
+} from &#x27;./dto/message.dto&#x27;;
+import {
+    Channel,
+    Conversation,
+    DirectMessage,
+    Member,
+    MemberRole,
+    Message,
+    Server,
+    User,
+} from &#x27;@prisma/client&#x27;;
+import { MessageServiceInterface } from &#x27;./interface/message.service.interface&#x27;;
+import { JwtService } from &#x27;@nestjs/jwt&#x27;;
+import { ConfigService } from &#x27;@nestjs/config&#x27;;
+import { WsException } from &#x27;@nestjs/websockets&#x27;;
+import { UploadService } from &#x27;src/upload/upload.service&#x27;;
+import { CreateDirectMessageDto, DeleteMessageConversationDto, EditMessageConversationDto, PaginationMessageConversationDto, UploadFileConversationInterface } from &#x27;./dto/direct-message.dto&#x27;;
+
+const MESSAGES_BATCH &#x3D; 10;
+@Injectable()
+export class MessageService implements MessageServiceInterface {
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
+        private readonly uploadService: UploadService,
+    ) {}
+    async deleteMessageConversation(payload: DeleteMessageConversationDto): Promise&lt;DirectMessage&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const conversation &#x3D; await this.findConversation(payload.conversationId, user.id);
+        const directMessage &#x3D; await this.findDirectMessage(payload.directMessageId, conversation.id);
+
+        const member &#x3D; conversation.memberOwner.userId &#x3D;&#x3D;&#x3D; user.id ? conversation.memberOwner : conversation.memberGuest;
+
+        const isMessageOwner &#x3D; directMessage.memberId &#x3D;&#x3D;&#x3D; member.id;
+        const isAdmin &#x3D; member.role &#x3D;&#x3D;&#x3D; MemberRole.ADMIN;
+        const isModerator &#x3D; member.role &#x3D;&#x3D;&#x3D; MemberRole.MODERATOR;
+        const canModify &#x3D; isMessageOwner || isAdmin || isModerator;
+    
+        if (!canModify) {
+            throw new UnauthorizedException();
+        }
+
+        try {
+            const directMessageUpdated &#x3D; await this.prismaService.directMessage.update({
+                where: {
+                    id: directMessage.id
+                },
+                data: {
+                    fileUrl: null,
+                    content: &quot;This message has been deleted.&quot;,
+                    deleted: true,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            return directMessageUpdated;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findDirectMessage(directMessageId: string, conversationId: string): Promise&lt;DirectMessage&gt; {
+        try {
+            const directMessage &#x3D; await this.prismaService.directMessage.findFirst({
+                where: {
+                    id: directMessageId,
+                    conversationId
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            if(!directMessage || directMessage.deleted) {
+                throw new NotFoundException();
+            }
+
+            return directMessage;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async editMessageConversation(payload: EditMessageConversationDto): Promise&lt;DirectMessage&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const conversation &#x3D; await this.findConversation(payload.conversationId, user.id);
+        const directMessage &#x3D; await this.findDirectMessage(payload.directMessageId, conversation.id);
+
+        const member &#x3D; conversation.memberOwner.userId &#x3D;&#x3D;&#x3D; user.id ? conversation.memberOwner : conversation.memberGuest;
+
+        const isMessageOwner &#x3D; directMessage.memberId &#x3D;&#x3D;&#x3D; member.id;
+        const isAdmin &#x3D; member.role &#x3D;&#x3D;&#x3D; MemberRole.ADMIN;
+        const isModerator &#x3D; member.role &#x3D;&#x3D;&#x3D; MemberRole.MODERATOR;
+        const canModify &#x3D; isMessageOwner || isAdmin || isModerator;
+    
+        if (!canModify || !isMessageOwner) {
+            throw new UnauthorizedException();
+        }
+
+        try {
+            const directMessageUpdated &#x3D; await this.prismaService.directMessage.update({
+                where: {
+                    id: directMessage.id
+                },
+                data: {
+                    content: payload.content
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            return directMessageUpdated;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async paginationMessageConversation(payload: PaginationMessageConversationDto): Promise&lt;{item: DirectMessage[]; nextCursor: string; }&gt; {
+        try {
+            let messages: DirectMessage[] &#x3D; [];
+
+            if (payload.cursor) {
+                messages &#x3D; await this.prismaService.directMessage.findMany({
+                    take: MESSAGES_BATCH,
+                    skip: 1,
+                    cursor: {
+                        id: payload.cursor,
+                    },
+                    where: {
+                        conversationId: payload.conversationId
+                    },
+                    include: {
+                        member: {
+                            include: {
+                                user: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createAt: &#x27;desc&#x27;,
+                    },
+                });
+            } else {
+                messages &#x3D; await this.prismaService.directMessage.findMany({
+                    take: MESSAGES_BATCH,
+                    where: {
+                        conversationId: payload.conversationId,
+                    },
+                    include: {
+                        member: {
+                            include: {
+                                user: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createAt: &#x27;desc&#x27;,
+                    },
+                });
+            }
+
+            let nextCursor &#x3D; null;
+
+            if (messages.length &#x3D;&#x3D;&#x3D; MESSAGES_BATCH) {
+                nextCursor &#x3D; messages[MESSAGES_BATCH - 1].id;
+            }
+
+            return {
+                item: messages,
+                nextCursor,
+            };
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findConversation(conversationId: string, userId: string): Promise&lt;{ id: string; memberOwnerId: string; memberOwner: Member; memberGuestId: string; memberGuest: Member }&gt; {
+        try {
+            const conversation &#x3D; await this.prismaService.conversation.findFirst({
+                where: {
+                    id: conversationId,
+                    OR: [
+                        {
+                            memberOwner: {
+                                userId
+                            }
+                        },
+                        {
+                            memberGuest: {
+                                userId
+                            }
+                        }
+                    ]
+                },
+                include: {
+                    memberOwner: {
+                        include: {
+                            user: true
+                        }
+                    },
+                    memberGuest: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            if(!conversation) {
+                throw new NotFoundException();
+            }
+
+            return conversation;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async uploadFileConversation(payload: UploadFileConversationInterface): Promise&lt;DirectMessage&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const conversation &#x3D; await this.findConversation(payload.conversationId, user.id);
+
+        try {
+            const member &#x3D; conversation.memberOwner.userId &#x3D;&#x3D;&#x3D; user.id ? conversation.memberOwner : conversation.memberGuest;
+
+            const fileUrl &#x3D; await this.uploadService.uploadAttachmentToS3(
+                payload.file,
+            );
+
+            const message &#x3D; await this.prismaService.directMessage.create({
+                data: {
+                    content: fileUrl,
+                    fileUrl,
+                    conversationId: conversation.id,
+                    memberId: member.id
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            return message;
+        }   
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async checkRoleChannel(
+        messageId: string,
+        channelToken: string,
+        serverToken: string,
+        email: string,
+    ): Promise&lt;{ message: Message; isMessageOwner: boolean }&gt; {
+        const user &#x3D; await this.findUserByEmail(email);
+        const server &#x3D; await this.findServerByToken(serverToken, user.id);
+        const channel &#x3D; await this.findChannelByToken(
+            channelToken,
+            serverToken,
+        );
+        const member &#x3D; server.members.find((data) &#x3D;&gt; {
+            return data.userId &#x3D;&#x3D;&#x3D; user.id;
+        });
+        const message &#x3D; await this.findMessage(messageId, channel.id);
+
+        const isMessageOwner &#x3D; message.memberId &#x3D;&#x3D;&#x3D; member.id;
+        const isAdmin &#x3D; member.role &#x3D;&#x3D;&#x3D; MemberRole.ADMIN;
+        const isModerator &#x3D; member.role &#x3D;&#x3D;&#x3D; MemberRole.MODERATOR;
+        const canModify &#x3D; isMessageOwner || isAdmin || isModerator;
+
+        if (!canModify) {
+            throw new UnauthorizedException();
+        }
+
+        return {
+            message,
+            isMessageOwner,
+        };
+    }
+
+    async deleteMessageChannel(
+        payload: DeleteMessageChannelDto,
+    ): Promise&lt;{
+        id: string;
+        content: string;
+        fileUrl: string;
+        member: Member &amp; {
+            user: User
+        };
+        memberId: string;
+        channel: Channel;
+        channelId: string;
+        deleted: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }&gt; {
+        const { message } &#x3D; await this.checkRoleChannel(
+            payload.messageId,
+            payload.channelToken,
+            payload.serverToken,
+            payload.email,
+        );
+
+        try {
+            const messageDeleted &#x3D; await this.prismaService.message.update({
+                where: {
+                    id: message.id,
+                },
+                data: {
+                    fileUrl: null,
+                    content: &#x27;This message has been deleted.&#x27;,
+                    deleted: true,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                    channel: true
+                },
+            });
+
+            return messageDeleted;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findMessage(messageId: string, channelId: string): Promise&lt;Message&gt; {
+        try {
+            const message &#x3D; await this.prismaService.message.findFirst({
+                where: {
+                    id: messageId,
+                    channelId,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                },
+            });
+
+            if (!message || message.deleted) {
+                throw new NotFoundException();
+            }
+
+            return message;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findServerByToken(
+        serverToken: string,
+        userId: string,
+    ): Promise&lt;{
+        id: string;
+        token: string;
+        name: string;
+        imageUrl: string;
+        members: Member[];
+        inviteCode: string;
+        userId: string;
+        createAt: Date;
+        updateAt: Date;
+    }&gt; {
+        try {
+            const server &#x3D; await this.prismaService.server.findFirst({
+                where: {
+                    token: serverToken,
+                    members: {
+                        some: {
+                            userId,
+                        },
+                    },
+                },
+                include: {
+                    members: true,
+                },
+            });
+
+            if (!server) {
+                throw new NotFoundException();
+            }
+
+            return server;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async uploadFileChannel(payload: UploadFileChannelInterface): Promise&lt;{
+        id: string;
+        content: string;
+        fileUrl: string;
+        memberId: string;
+        member: Member;
+        channelId: string;
+        channel: Channel;
+        deleted: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }&gt; {
+        const channel &#x3D; await this.findChannelByToken(
+            payload.channelToken,
+            payload.serverToken,
+        );
+        const member &#x3D; await this.findMemberByToken(
+            payload.email,
+            payload.serverToken,
+        );
+
+        try {
+            const fileUrl &#x3D; await this.uploadService.uploadAttachmentToS3(
+                payload.file,
+            );
+
+            const message &#x3D; await this.prismaService.message.create({
+                data: {
+                    content: fileUrl,
+                    fileUrl,
+                    channelId: channel.id,
+                    memberId: member.id,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                    channel: true,
+                },
+            });
+
+            return message;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async createMessageChannel(payload: createMessageChannelDto): Promise&lt;{
+        id: string;
+        content: string;
+        fileUrl: string;
+        memberId: string;
+        member: Member;
+        channelId: string;
+        channel: Channel;
+        deleted: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }&gt; {
+        const channel &#x3D; await this.findChannelByToken(
+            payload.channelToken,
+            payload.serverToken,
+        );
+        const member &#x3D; await this.findMemberByToken(
+            payload.email,
+            payload.serverToken,
+        );
+        try {
+            const message &#x3D; await this.prismaService.message.create({
+                data: {
+                    content: payload.content,
+                    channelId: channel.id,
+                    memberId: member.id,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                    channel: true,
+                },
+            });
+
+            return message;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findChannelByToken(
+        channelToken: string,
+        serverToken: string,
+    ): Promise&lt;Channel&gt; {
+        try {
+            const channel &#x3D; await this.prismaService.channel.findUnique({
+                where: {
+                    token: channelToken,
+                    server: {
+                        token: serverToken,
+                    },
+                },
+            });
+
+            if (!channel) {
+                throw new NotFoundException();
+            }
+
+            return channel;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findUserByEmail(email: string): Promise&lt;User&gt; {
+        const user &#x3D; await this.prismaService.user.findUnique({
+            where: {
+                email,
+            },
+        });
+
+        if (!user) {
+            throw new UnauthorizedException();
+        }
+
+        return user;
+    }
+
+    async findMemberByToken(
+        email: string,
+        serverToken: string,
+    ): Promise&lt;Member&gt; {
+        const user &#x3D; await this.findUserByEmail(email);
+
+        try {
+            const server &#x3D; await this.prismaService.server.findFirst({
+                where: {
+                    token: serverToken,
+                    members: {
+                        some: {
+                            userId: user.id,
+                        },
+                    },
+                },
+                include: {
+                    members: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                },
+            });
+
+            if (!server) {
+                throw new NotFoundException();
+            }
+
+            const member &#x3D; server.members.find((member) &#x3D;&gt; {
+                return member.userId &#x3D;&#x3D;&#x3D; user.id;
+            });
+
+            return member;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async paginationMessage(
+        payload: PaginationMessageDto,
+    ): Promise&lt;{ item: Message[]; nextCursor: string }&gt; {
+        try {
+            let messages: Message[] &#x3D; [];
+
+            if (payload.cursor) {
+                messages &#x3D; await this.prismaService.message.findMany({
+                    take: MESSAGES_BATCH,
+                    skip: 1,
+                    cursor: {
+                        id: payload.cursor,
+                    },
+                    where: {
+                        channel: {
+                            token: payload.channelToken,
+                        },
+                    },
+                    include: {
+                        member: {
+                            include: {
+                                user: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createAt: &#x27;desc&#x27;,
+                    },
+                });
+            } else {
+                messages &#x3D; await this.prismaService.message.findMany({
+                    take: MESSAGES_BATCH,
+                    where: {
+                        channel: {
+                            token: payload.channelToken,
+                        },
+                    },
+                    include: {
+                        member: {
+                            include: {
+                                user: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createAt: &#x27;desc&#x27;,
+                    },
+                });
+            }
+
+            let nextCursor &#x3D; null;
+
+            if (messages.length &#x3D;&#x3D;&#x3D; MESSAGES_BATCH) {
+                nextCursor &#x3D; messages[MESSAGES_BATCH - 1].id;
+            }
+
+            return {
+                item: messages,
+                nextCursor,
+            };
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async editMessageChannel(payload: EditMessageChannelDto): Promise&lt;{
+        id: string;
+        content: string;
+        fileUrl: string;
+        memberId: string;
+        member: Member &amp; {
+            user: User;
+        };
+        channelId: string;
+        channel: Channel;
+        deleted: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }&gt; {
+        const { message, isMessageOwner } &#x3D; await this.checkRoleChannel(
+            payload.messageId,
+            payload.channelToken,
+            payload.serverToken,
+            payload.email,
+        );
+
+        if (!isMessageOwner) {
+            throw new UnauthorizedException();
+        }
+
+        try {
+            const messageUpdated &#x3D; await this.prismaService.message.update({
+                where: {
+                    id: message.id,
+                },
+                data: {
+                    content: payload.content,
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true,
+                        },
+                    },
+                    channel: true,
+                },
+            });
+
+            return messageUpdated;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async verifyAccessToken(token: string): Promise&lt;string&gt; {
+        if (!token) {
+            throw new WsException(&#x27;Unauthorized&#x27;);
+        }
+
+        try {
+            const payload &#x3D; await this.jwtService.verifyAsync(token, {
+                secret: this.configService.get(&#x27;jwtSecretKey&#x27;),
+            });
+
+            return payload.email;
+        } catch (err) {
+            throw new WsException(&#x27;Unauthorized&#x27;);
+        }
+    }
+
+    async createDirectMessage(payload: CreateDirectMessageDto): Promise&lt;DirectMessage&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const conversation &#x3D; await this.findConversation(payload.conversationId, user.id);
+
+        try {
+            const member &#x3D; conversation.memberOwner.userId &#x3D;&#x3D;&#x3D; user.id ? conversation.memberOwner : conversation.memberGuest;
+
+            const message &#x3D; await this.prismaService.directMessage.create({
+                data: {
+                    content: payload.content,
+                    conversationId: conversation.id,
+                    memberId: member.id
+                },
+                include: {
+                    member: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            });
+
+            return message;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'MessageService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

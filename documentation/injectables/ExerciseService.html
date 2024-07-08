@@ -159,7 +159,11 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#findExerciseByToken" >findExerciseByToken</a>
+                                <a href="#findChapterByToken" >findChapterByToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findCourseBySlug" >findCourseBySlug</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -180,6 +184,10 @@
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#updateExercise" >updateExercise</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updatePositionExercises" >updatePositionExercises</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -208,7 +216,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/exercise/exercise.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/exercise/exercise.service.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -273,8 +281,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="163"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:163</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="280"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:280</a></div>
                         </td>
                     </tr>
 
@@ -340,8 +348,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="241"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:241</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="386"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:386</a></div>
                         </td>
                     </tr>
 
@@ -409,8 +417,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="103"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:103</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="148"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:148</a></div>
                         </td>
                     </tr>
 
@@ -446,7 +454,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../interfaces/ExerciseResponse.html" target="_self" >Promise&lt;ExerciseResponse&gt;</a></code>
+                            <b>Returns : </b>    <code>Promise&lt;Content&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -478,8 +486,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="226"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:226</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="344"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:344</a></div>
                         </td>
                     </tr>
 
@@ -529,26 +537,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findExerciseByToken"></a>
+                    <a name="findChapterByToken"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
-                        <span ><b>findExerciseByToken</b></span>
-                        <a href="#findExerciseByToken"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findChapterByToken</b></span>
+                        <a href="#findChapterByToken"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findExerciseByToken(token: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, instructorId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>findChapterByToken(chapterToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, courseId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="73"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:73</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="23"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:23</a></div>
                         </td>
                     </tr>
 
@@ -569,7 +577,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>token</td>
+                                                <td>chapterToken</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                             </td>
@@ -581,7 +589,7 @@
 
                                         </tr>
                                         <tr>
-                                                <td>instructorId</td>
+                                                <td>courseId</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                             </td>
@@ -596,7 +604,88 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;Exercise&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;Chapter&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findCourseBySlug"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findCourseBySlug</b></span>
+                        <a href="#findCourseBySlug"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findCourseBySlug(courseSlug: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="43"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>courseSlug</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -628,8 +717,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="59"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:59</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="134"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:134</a></div>
                         </td>
                     </tr>
 
@@ -697,8 +786,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="22"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:22</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -766,8 +855,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="37"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:37</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:79</a></div>
                         </td>
                     </tr>
 
@@ -835,8 +924,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="53"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:53</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="96"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:96</a></div>
                         </td>
                     </tr>
 
@@ -904,8 +993,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="120"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:120</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="193"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:193</a></div>
                         </td>
                     </tr>
 
@@ -955,6 +1044,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="updatePositionExercises"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updatePositionExercises</b></span>
+                        <a href="#updatePositionExercises"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePositionExercises(contentId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="247"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:247</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contentId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updateStatusExercise"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -973,8 +1131,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="140"
-                                    class="link-to-prism">src/exercise/exercise.service.ts:140</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="220"
+                                    class="link-to-prism">src/exercise/exercise.service.ts:220</a></div>
                         </td>
                     </tr>
 
@@ -1028,12 +1186,13 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
     Injectable,
+    InternalServerErrorException,
     NotFoundException,
     UnauthorizedException,
     UnprocessableEntityException,
 } from &#x27;@nestjs/common&#x27;;
 import { ExerciseServiceInterface } from &#x27;./interfaces/exercise.service.interface&#x27;;
-import { Exercise, User } from &#x27;@prisma/client&#x27;;
+import { Chapter, Content, Course, Exercise, User } from &#x27;@prisma/client&#x27;;
 import { CreateExerciseDto } from &#x27;./dto/create-exercise.dto&#x27;;
 import { ExerciseResponse } from &#x27;./dto/exercise-response.dto&#x27;;
 import { PrismaService } from &#x27;src/prisma.service&#x27;;
@@ -1047,41 +1206,115 @@ import { UpdateStatusExerciseDto } from &#x27;./dto/update-status-exercise.dto&#
 export class ExerciseService implements ExerciseServiceInterface {
     constructor(private readonly prismaService: PrismaService) {}
 
+    async findChapterByToken(chapterToken: string, courseId: string): Promise&lt;Chapter&gt; {
+        try {
+            const chapter &#x3D; await this.prismaService.chapter.findFirst({
+                where: {
+                    courseId: courseId,
+                    token: chapterToken,
+                },
+            });
+    
+            if (!chapter) {
+                throw new UnprocessableEntityException();
+            }
+
+            return chapter;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findCourseBySlug(courseSlug: string, userId: string): Promise&lt;Course&gt; {
+        try {
+            const course &#x3D; await this.prismaService.course.findFirst({
+                where: {
+                    owner_id: userId,
+                    slug: courseSlug,
+                },
+            });
+    
+            if (!course) {
+                throw new UnauthorizedException();
+            }
+
+            return course;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
     async getAllExercise(payload: GetAllExerciseDto): Promise&lt;Exercise[]&gt; {
-        const user &#x3D; await this.findInstructorByEmail(payload.email);
+        throw new Error();
+        // const user &#x3D; await this.findInstructorByEmail(payload.email);
 
-        const exercise &#x3D; await this.prismaService.exercise.findMany({
-            where: {
-                instructorId: user.id,
-            },
-            orderBy: {
-                create_at: &#x27;desc&#x27;,
-            },
-        });
+        // const exercise &#x3D; await this.prismaService.exercise.findMany({
+        //     where: {
+        //         instructorId: user.id,
+        //     },
+        //     orderBy: {
+        //         create_at: &#x27;desc&#x27;,
+        //     },
+        // });
 
-        return exercise;
+        // return exercise;
     }
 
     async getAllExerciseOpen(payload: GetAllExerciseDto): Promise&lt;Exercise[]&gt; {
-        const user &#x3D; await this.findInstructorByEmail(payload.email);
+        // const user &#x3D; await this.findInstructorByEmail(payload.email);
 
-        const exercise &#x3D; await this.prismaService.exercise.findMany({
-            where: {
-                instructorId: user.id,
-                isOpen: true,
-            },
-            orderBy: {
-                create_at: &#x27;desc&#x27;,
-            },
-        });
+        // const exercise &#x3D; await this.prismaService.exercise.findMany({
+        //     where: {
+        //         instructorId: user.id,
+        //         isOpen: true,
+        //     },
+        //     orderBy: {
+        //         create_at: &#x27;desc&#x27;,
+        //     },
+        // });
 
-        return exercise;
+        // return exercise;
+        throw new Error();
     }
 
     async getDetailExercise(payload: GetDetailExerciseDto): Promise&lt;Exercise&gt; {
         const user &#x3D; await this.findInstructorByEmail(payload.email);
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
 
-        return await this.findExerciseByToken(payload.token, user.id);
+        try {
+            const exercise &#x3D; await this.prismaService.exercise.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id
+                    },
+                    token: payload.token
+                },
+                include: {
+                    quizz: {
+                        orderBy: {
+                            position: &quot;asc&quot;
+                        }
+                    },
+                    code: {
+                        include: {
+                            file: true
+                        }
+                    }
+                }
+            });
+
+            if(!exercise){
+                throw new NotFoundException();
+            }
+
+            return exercise;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async findInstructorByEmail(email: string): Promise&lt;User&gt; {
@@ -1098,172 +1331,242 @@ export class ExerciseService implements ExerciseServiceInterface {
         return user;
     }
 
-    async findExerciseByToken(
-        token: string,
-        instructorId: string,
-    ): Promise&lt;Exercise&gt; {
-        const exercise &#x3D; await this.prismaService.exercise.findFirst({
-            where: {
-                instructorId,
-                token,
-            },
-            include: {
-                quizz: {
-                    orderBy: {
-                        position: &#x27;asc&#x27;,
-                    },
-                },
-                lesson: {
-                    orderBy: {
-                        position: &#x27;asc&#x27;,
-                    },
-                },
-            },
-        });
-
-        if (!exercise) {
-            throw new NotFoundException();
-        }
-
-        return exercise;
-    }
-
     async createExercise(
         payload: CreateExerciseDto,
-    ): Promise&lt;ExerciseResponse&gt; {
+    ): Promise&lt;Content&gt; {
         const user &#x3D; await this.findInstructorByEmail(payload.email);
 
-        const exercise &#x3D; await this.prismaService.exercise.create({
-            data: {
-                token: new Date().getTime().toString(),
-                title: payload.title,
-                type: payload.type,
-                instructorId: user.id,
-            },
-        });
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
 
-        return this.builResponseExercise(exercise);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
+        
+        try {
+            const lastContent &#x3D; await this.prismaService.content.findFirst({
+                where: {
+                    chapterId: chapter.id
+                },
+                orderBy: {
+                    position: &#x27;desc&#x27;,
+                },
+            });
+    
+            const newPosition &#x3D; lastContent ? lastContent.position + 1 : 1;
+    
+            const content &#x3D; await this.prismaService.content.create({
+                data: {
+                    token: new Date().getTime().toString(),
+                    type: payload.typeContent,
+                    chapterId: chapter.id,
+                    position: newPosition,
+                    exercise: {
+                        create: {
+                            title: payload.title,
+                            token: new Date().getTime().toString(),
+                            type: payload.typeExercise
+                        }
+                    }
+                }
+            });
+    
+    
+            return content;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateExercise(
         payload: UpdateExerciseDto,
     ): Promise&lt;ExerciseResponse&gt; {
         const user &#x3D; await this.findInstructorByEmail(payload.email);
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
 
-        const exercise &#x3D; await this.findExerciseByToken(payload.token, user.id);
+        try {
+            const exerciseUpdate &#x3D; await this.prismaService.exercise.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id
+                    },
+                    token: payload.token
+                },
+                data: {
+                    ...payload.value,
+                },
+            });
 
-        const exerciseUpdate &#x3D; await this.prismaService.exercise.update({
-            where: {
-                instructorId: user.id,
-                token: exercise.token,
-            },
-            data: {
-                ...payload.value,
-            },
-        });
-
-        return this.builResponseExercise(exerciseUpdate);
+            return this.builResponseExercise(exerciseUpdate);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateStatusExercise(
         payload: UpdateStatusExerciseDto,
     ): Promise&lt;ExerciseResponse&gt; {
         const user &#x3D; await this.findInstructorByEmail(payload.email);
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
 
-        const exercise &#x3D; await this.findExerciseByToken(
-            payload.exercise_token,
-            user.id,
-        );
+        try {
+            const exerciseUpdate &#x3D; await this.prismaService.exercise.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id
+                    },
+                    token: payload.token
+                },
+                data: {
+                    isOpen: !payload.status
+                },
+            });
 
-        const exerciseUpdate &#x3D; await this.prismaService.exercise.update({
-            where: {
-                instructorId: user.id,
-                token: exercise.token,
-            },
-            data: {
-                isOpen: !exercise.isOpen,
-            },
-        });
-
-        return this.builResponseExercise(exerciseUpdate);
+            return this.builResponseExercise(exerciseUpdate);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
-    async addExerciseToLesson(payload: AddExerciseLessonDto): Promise&lt;string&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
+    async updatePositionExercises(contentId: string): Promise&lt;string&gt; {
+        const contentDeleted &#x3D; await this.prismaService.content.delete({
             where: {
-                email: payload.email,
+                id: contentId,
             },
         });
 
-        const course &#x3D; await this.prismaService.course.findFirst({
+        const contents &#x3D; await this.prismaService.content.findMany({
             where: {
-                owner_id: user.id,
-                slug: payload.course_slug,
+                chapterId: contentDeleted.chapterId,
+                position: {
+                    gt: contentDeleted.position,
+                },
             },
+            orderBy: {
+                position: &quot;asc&quot;
+            }
         });
 
-        if (!course) {
-            throw new UnprocessableEntityException();
-        }
-
-        const chapter &#x3D; await this.prismaService.chapter.findFirst({
-            where: {
-                courseId: course.id,
-                token: payload.chapter_token,
-            },
-        });
-
-        if (!chapter) {
-            throw new UnprocessableEntityException();
-        }
-
-        const lesson &#x3D; await this.prismaService.lesson.findFirst({
-            where: {
-                chapterId: chapter.id,
-                token: payload.lesson_token,
-            },
-        });
-
-        if (!lesson) {
-            throw new UnprocessableEntityException();
-        }
-
-        const exercise &#x3D; await this.prismaService.exercise.findFirst({
-            where: {
-                instructorId: user.id,
-                id: payload.exerciseId,
-            },
-        });
-
-        if (!exercise) {
-            throw new UnprocessableEntityException();
-        }
-
-        await this.prismaService.lesson.update({
-            where: {
-                token: lesson.token,
-            },
-            data: {
-                exerciseId: exercise.id,
-            },
+        contents.forEach(async (item) &#x3D;&gt; {
+            await this.prismaService.content.update({
+                where: {
+                    id: item.id,
+                },
+                data: {
+                    position: item.position - 1,
+                },
+            });
         });
 
         return &#x27;SUCCESS&#x27;;
+    }
+
+    async addExerciseToLesson(payload: AddExerciseLessonDto): Promise&lt;string&gt; {
+        throw new Error(&quot;ds&quot;);
+        // const user &#x3D; await this.prismaService.user.findUnique({
+        //     where: {
+        //         email: payload.email,
+        //     },
+        // });
+
+        // const course &#x3D; await this.prismaService.course.findFirst({
+        //     where: {
+        //         owner_id: user.id,
+        //         slug: payload.course_slug,
+        //     },
+        // });
+
+        // if (!course) {
+        //     throw new UnprocessableEntityException();
+        // }
+
+        // const chapter &#x3D; await this.prismaService.chapter.findFirst({
+        //     where: {
+        //         courseId: course.id,
+        //         token: payload.chapter_token,
+        //     },
+        // });
+
+        // if (!chapter) {
+        //     throw new UnprocessableEntityException();
+        // }
+
+        // const lesson &#x3D; await this.prismaService.lesson.findFirst({
+        //     where: {
+        //         chapterId: chapter.id,
+        //         token: payload.lesson_token,
+        //     },
+        // });
+
+        // if (!lesson) {
+        //     throw new UnprocessableEntityException();
+        // }
+
+        // const exercise &#x3D; await this.prismaService.exercise.findFirst({
+        //     where: {
+        //         instructorId: user.id,
+        //         id: payload.exerciseId,
+        //     },
+        // });
+
+        // if (!exercise) {
+        //     throw new UnprocessableEntityException();
+        // }
+
+        // await this.prismaService.lesson.update({
+        //     where: {
+        //         token: lesson.token,
+        //     },
+        //     data: {
+        //         exerciseId: exercise.id,
+        //     },
+        // });
+
+        // return &#x27;SUCCESS&#x27;;
     }
 
     async deleteExercise(payload: GetDetailExerciseDto): Promise&lt;string&gt; {
         const user &#x3D; await this.findInstructorByEmail(payload.email);
 
-        const exercise &#x3D; await this.findExerciseByToken(payload.token, user.id);
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
 
-        await this.prismaService.exercise.delete({
-            where: {
-                instructorId: user.id,
-                token: exercise.token,
-            },
-        });
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
 
-        return &#x27;SUCCESS&#x27;;
+        try {
+            const exercise &#x3D; await this.prismaService.exercise.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.token,
+                },
+            });
+
+            if (!exercise) {
+                throw new UnprocessableEntityException();
+            }
+
+            const exerciseDeleted &#x3D; await this.prismaService.exercise.delete({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    id: exercise.id
+                },
+            });
+
+            return this.updatePositionExercises(exerciseDeleted.contentId);
+        } catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     builResponseExercise(payload: Exercise): ExerciseResponse {

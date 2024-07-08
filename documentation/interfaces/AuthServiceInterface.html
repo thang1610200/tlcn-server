@@ -1133,7 +1133,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>storeRefreshToken(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, refreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+<code>storeRefreshToken(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../interfaces/UserResponse.html" target="_self">UserResponse</a>)</code>
                 </td>
             </tr>
 
@@ -1174,21 +1174,9 @@
 
                                         </tr>
                                         <tr>
-                                                <td>refreshToken</td>
+                                                <td>user</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                        <tr>
-                                                <td>time</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                            <code><a href="../interfaces/UserResponse.html" target="_self" >UserResponse</a></code>
                                             </td>
 
                                             <td>
@@ -1545,7 +1533,7 @@ export interface AuthServiceInterface {
     sendEmailResetPassowrd(data: UserResetPassword): Promise&lt;void&gt;;
     loginAdmin(payload: LoginAdminDto): Promise&lt;{ user: UserResponse; backendTokens: object }&gt;;
     validateAdmin(email: string, password: string): Promise&lt;User&gt;;
-    storeRefreshToken (id: string, refreshToken: string, time: number): Promise&lt;string&gt;;
+    storeRefreshToken (id: string, user: UserResponse): Promise&lt;string&gt;;
 }
 </code></pre>
     </div>

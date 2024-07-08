@@ -133,6 +133,22 @@
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#client" >client</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -142,6 +158,10 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addSubtitleLesson" >addSubtitleLesson</a>
+                            </li>
                             <li>
                                 <a href="#buildLessonResponse" >buildLessonResponse</a>
                             </li>
@@ -159,11 +179,47 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#deleteSubtitleLesson" >deleteSubtitleLesson</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findChapterByToken" >findChapterByToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findCourseBySlug" >findCourseBySlug</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#findLessonByToken" >findLessonByToken</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#findUserByEmail" >findUserByEmail</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#generateSubtitleVideo" >generateSubtitleVideo</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#reorderLesson" >reorderLesson</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#summarizationVideo" >summarizationVideo</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#translateSubtitle" >translateSubtitle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updatePositionLessons" >updatePositionLessons</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updatePreviewLesson" >updatePreviewLesson</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -199,12 +255,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>)</code>
+<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>, configService: ConfigService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/lesson/lesson.service.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/lesson/lesson.service.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -245,6 +301,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>configService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -259,6 +327,75 @@
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addSubtitleLesson"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addSubtitleLesson</b></span>
+                        <a href="#addSubtitleLesson"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addSubtitleLesson(payload: <a href="../interfaces/AddSubtitleLessonInterface.html" target="_self">AddSubtitleLessonInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="155"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:155</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/AddSubtitleLessonInterface.html" target="_self" >AddSubtitleLessonInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Subtitle&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -279,8 +416,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="493"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:493</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="756"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:756</a></div>
                         </td>
                     </tr>
 
@@ -348,8 +485,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="432"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:432</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="696"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:696</a></div>
                         </td>
                     </tr>
 
@@ -385,7 +522,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;Lesson&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;Content&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -417,8 +554,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="28"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:28</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:273</a></div>
                         </td>
                     </tr>
 
@@ -454,7 +591,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../interfaces/LessonResponse.html" target="_self" >Promise&lt;LessonResponse&gt;</a></code>
+                            <b>Returns : </b>    <code>Promise&lt;Content&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -486,8 +623,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="319"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:319</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="603"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:603</a></div>
                         </td>
                     </tr>
 
@@ -537,6 +674,237 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="deleteSubtitleLesson"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteSubtitleLesson</b></span>
+                        <a href="#deleteSubtitleLesson"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteSubtitleLesson(payload: <a href="../classes/DeleteSubtitleLessonDto.html" target="_self">DeleteSubtitleLessonDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="139"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:139</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/DeleteSubtitleLessonDto.html" target="_self" >DeleteSubtitleLessonDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Subtitle&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findChapterByToken"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findChapterByToken</b></span>
+                        <a href="#findChapterByToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findChapterByToken(chapterToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, courseId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="211"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:211</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>chapterToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>courseId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Chapter&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findCourseBySlug"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findCourseBySlug</b></span>
+                        <a href="#findCourseBySlug"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findCourseBySlug(courseSlug: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="233"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:233</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>courseSlug</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="findLessonByToken"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -555,8 +923,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="95"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:95</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="342"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:342</a></div>
                         </td>
                     </tr>
 
@@ -606,6 +974,144 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="findUserByEmail"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findUserByEmail</b></span>
+                        <a href="#findUserByEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findUserByEmail(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="255"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:255</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;User&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateSubtitleVideo"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>generateSubtitleVideo</b></span>
+                        <a href="#generateSubtitleVideo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateSubtitleVideo(payload: <a href="../classes/AddSubtitleLessonDto.html" target="_self">AddSubtitleLessonDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="105"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:105</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/AddSubtitleLessonDto.html" target="_self" >AddSubtitleLessonDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Subtitle&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="reorderLesson"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -624,8 +1130,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="80"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:80</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="327"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:327</a></div>
                         </td>
                     </tr>
 
@@ -675,6 +1181,282 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="summarizationVideo"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>summarizationVideo</b></span>
+                        <a href="#summarizationVideo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>summarizationVideo(payload: <a href="../classes/SummarizationVideoDto.html" target="_self">SummarizationVideoDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="37"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/SummarizationVideoDto.html" target="_self" >SummarizationVideoDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translateSubtitle"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>translateSubtitle</b></span>
+                        <a href="#translateSubtitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>translateSubtitle(payload: <a href="../classes/TranslateSubtitleDto.html" target="_self">TranslateSubtitleDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/TranslateSubtitleDto.html" target="_self" >TranslateSubtitleDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Subtitle&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePositionLessons"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updatePositionLessons</b></span>
+                        <a href="#updatePositionLessons"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePositionLessons(contentId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="178"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:178</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>contentId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePreviewLesson"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updatePreviewLesson</b></span>
+                        <a href="#updatePreviewLesson"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePreviewLesson(payload: <a href="../classes/UpdateStatusLessonDto.html" target="_self">UpdateStatusLessonDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="556"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:556</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateStatusLessonDto.html" target="_self" >UpdateStatusLessonDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/LessonResponse.html" target="_self" >Promise&lt;LessonResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updateStatusLesson"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -693,8 +1475,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="264"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:264</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="509"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:509</a></div>
                         </td>
                     </tr>
 
@@ -762,8 +1544,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="369"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:369</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="645"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:645</a></div>
                         </td>
                     </tr>
 
@@ -831,8 +1613,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="142"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:142</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="389"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:389</a></div>
                         </td>
                     </tr>
 
@@ -900,8 +1682,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="195"
-                                    class="link-to-prism">src/lesson/lesson.service.ts:195</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="434"
+                                    class="link-to-prism">src/lesson/lesson.service.ts:434</a></div>
                         </td>
                     </tr>
 
@@ -948,6 +1730,41 @@
         </tbody>
     </table>
 </section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="client"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>client</b></span>
+                        <a href="#client"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new AssemblyAI({
+        apiKey: this.configService.get(&#x27;ASSEMBLY_API_KEY&#x27;),
+    })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/lesson/lesson.service.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
 
     </div>
 
@@ -955,6 +1772,8 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
     Injectable,
+    InternalServerErrorException,
+    NotFoundException,
     UnauthorizedException,
     UnprocessableEntityException,
 } from &#x27;@nestjs/common&#x27;;
@@ -969,72 +1788,317 @@ import { UpdateVideoLesson } from &#x27;./dto/update-video.dto&#x27;;
 import { UploadService } from &#x27;src/upload/upload.service&#x27;;
 import { UpdateStatusLessonDto } from &#x27;./dto/update-status.dto&#x27;;
 import { DeleteLessonDto } from &#x27;./dto/delete-lesson.dto&#x27;;
-import { Lesson } from &#x27;@prisma/client&#x27;;
+import { Chapter, Content, Course, Lesson, Subtitle, User } from &#x27;@prisma/client&#x27;;
 import { UpdateThumbnailVideo } from &#x27;./dto/update-thumbnail.dto&#x27;;
-import { ContentLessonDto } from &#x27;./dto/content-lesson.dto&#x27;;
+import { ContentLessonDto, SummarizationVideoDto } from &#x27;./dto/content-lesson.dto&#x27;;
+import { AddSubtitleLessonDto, AddSubtitleLessonInterface, DeleteSubtitleLessonDto, TranslateSubtitleDto, TranslateSubtitleQueue } from &#x27;./dto/subtitle.dto&#x27;;
+import { AssemblyAI, TranscribeParams } from &#x27;assemblyai&#x27;;
+import { ConfigService } from &#x27;@nestjs/config&#x27;;
 
 @Injectable()
 export class LessonService implements LessonServiceInterface {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
+        private readonly configService: ConfigService
     ) {}
+    private readonly client &#x3D; new AssemblyAI({
+        apiKey: this.configService.get(&#x27;ASSEMBLY_API_KEY&#x27;),
+    });
+    
+    async summarizationVideo(payload: SummarizationVideoDto): Promise&lt;string&gt; {
+        try {
+            const lesson &#x3D; await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        token: payload.content_token,
+                        chapter: {
+                            course: {
+                                slug: payload.course_slug
+                            }
+                        },
+                        type: &#x27;LESSON&#x27;
+                    }
+                }
+            });
 
-    async createLesson(payload: CreateLessonDto): Promise&lt;LessonResponse&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email,
-            },
-        });
+            if(!lesson) {
+                throw new NotFoundException();
+            }
 
-        const course &#x3D; await this.prismaService.course.findFirst({
-            where: {
-                owner_id: user.id,
-                slug: payload.course_slug,
-            },
-        });
+            const params: TranscribeParams &#x3D; {
+                audio: lesson.videoUrl,
+                summarization: true,
+                summary_model: &#x27;informative&#x27;,
+                summary_type: &#x27;paragraph&#x27;
+            }
 
-        if (!course) {
-            throw new UnauthorizedException();
+            const transcript &#x3D; await this.client.transcripts.transcribe(params);
+
+            return transcript.summary;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async translateSubtitle(payload: TranslateSubtitleDto): Promise&lt;Subtitle&gt; {
+        const lesson &#x3D; await this.findLessonByToken(payload);
+
+        try {
+            const subtitle &#x3D; await this.prismaService.subtitle.findFirst({
+                where: {
+                    id: payload.subtitleId,
+                    lessonId: lesson.id
+                }
+            });
+
+            if(!subtitle) {
+                throw new NotFoundException();
+            }
+
+            const data: TranslateSubtitleQueue &#x3D; {
+                lessonId: lesson.id,
+                subtitleUrl: subtitle.file,
+                language: payload.language,
+                language_code: payload.language_code
+            }
+
+            await this.uploadService.translateSubtitleJob(data);
+
+            return subtitle;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async generateSubtitleVideo(payload: AddSubtitleLessonDto): Promise&lt;Subtitle&gt; {
+        const lesson &#x3D; await this.findLessonByToken(payload);
+
+        const fileTranscript &#x3D; {
+            audio_url: lesson.videoUrl,
+            language_code: payload.language_code
         }
 
-        const chapter &#x3D; await this.prismaService.chapter.findFirst({
+        const transcript &#x3D; await this.client.transcripts.transcribe(fileTranscript);
+
+        let vtt &#x3D; await this.client.transcripts.subtitles(transcript.id, &#x27;vtt&#x27;);
+
+        const fileAWS &#x3D; {
+            originalname: &#x27;transcript-learning.vtt&#x27;,
+            buffer: Buffer.from(vtt)
+        }
+
+        try {
+            const file &#x3D; await this.uploadService.uploadAttachmentToS3(fileAWS);
+
+            return await this.prismaService.subtitle.create({
+                data: {
+                    lessonId: lesson.id,
+                    language: payload.language,
+                    language_code: payload.language_code,
+                    file
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async deleteSubtitleLesson(payload: DeleteSubtitleLessonDto): Promise&lt;Subtitle&gt; {
+        const lesson &#x3D; await this.findLessonByToken(payload);
+
+        try {
+            return await this.prismaService.subtitle.delete({
+                where: {
+                    lessonId: lesson.id,
+                    id: payload.subtitleId
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async addSubtitleLesson(payload: AddSubtitleLessonInterface): Promise&lt;Subtitle&gt; {
+        const lesson &#x3D; await this.findLessonByToken(payload);
+
+        try {
+            const file &#x3D; await this.uploadService.uploadAttachmentToS3(payload.file);
+
+            const subtitle &#x3D; await this.prismaService.subtitle.create({
+                data: {
+                    lessonId: lesson.id,
+                    language: payload.language,
+                    language_code: payload.language_code,
+                    file
+                }
+            });
+
+            return subtitle;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async updatePositionLessons(contentId: string): Promise&lt;string&gt; {
+        const contentDeleted &#x3D; await this.prismaService.content.delete({
             where: {
-                courseId: course.id,
-                token: payload.chapter_token,
+                id: contentId,
             },
         });
 
-        if (!chapter) {
-            throw new UnprocessableEntityException();
-        }
-
-        const lastLesson &#x3D; await this.prismaService.lesson.findFirst({
+        const contents &#x3D; await this.prismaService.content.findMany({
             where: {
-                chapterId: chapter.id,
+                chapterId: contentDeleted.chapterId,
+                position: {
+                    gt: contentDeleted.position,
+                },
             },
             orderBy: {
-                position: &#x27;desc&#x27;,
-            },
+                position: &quot;asc&quot;
+            }
         });
 
-        const newPosition &#x3D; lastLesson ? lastLesson.position + 1 : 1;
-
-        const lesson &#x3D; await this.prismaService.lesson.create({
-            data: {
-                title: payload.title,
-                chapterId: chapter.id,
-                position: newPosition,
-                token: new Date().getTime().toString(),
-            },
+        contents.forEach(async (item) &#x3D;&gt; {
+            await this.prismaService.content.update({
+                where: {
+                    id: item.id,
+                },
+                data: {
+                    position: item.position - 1,
+                },
+            });
         });
 
-        return this.buildLessonResponse(lesson);
+        return &#x27;SUCCESS&#x27;;
+    }
+
+    async findChapterByToken(
+        chapterToken: string,
+        courseId: string,
+    ): Promise&lt;Chapter&gt; {
+        try {
+            const chapter &#x3D; await this.prismaService.chapter.findFirst({
+                where: {
+                    courseId: courseId,
+                    token: chapterToken,
+                },
+            });
+
+            if (!chapter) {
+                throw new UnprocessableEntityException();
+            }
+
+            return chapter;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findCourseBySlug(
+        courseSlug: string,
+        userId: string,
+    ): Promise&lt;Course&gt; {
+        try {
+            const course &#x3D; await this.prismaService.course.findFirst({
+                where: {
+                    owner_id: userId,
+                    slug: courseSlug,
+                },
+            });
+
+            if (!course) {
+                throw new UnauthorizedException();
+            }
+
+            return course;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findUserByEmail(email: string): Promise&lt;User&gt; {
+        try {
+            const user &#x3D; await this.prismaService.user.findUnique({
+                where: {
+                    email,
+                },
+            });
+
+            if (!user) {
+                throw new UnauthorizedException();
+            }
+
+            return user;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async createLesson(payload: CreateLessonDto): Promise&lt;Content&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
+
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
+
+        try {
+            const lastContent &#x3D; await this.prismaService.content.findFirst({
+                where: {
+                    chapterId: chapter.id,
+                },
+                orderBy: {
+                    position: &#x27;desc&#x27;,
+                },
+            });
+
+            const newPosition &#x3D; lastContent ? lastContent.position + 1 : 1;
+
+            const content &#x3D; await this.prismaService.content.create({
+                data: {
+                    token: new Date().getTime().toString(),
+                    type: payload.type,
+                    chapterId: chapter.id,
+                    position: newPosition,
+                    lesson: {
+                        create: {
+                            title: payload.title,
+                            token: new Date().getTime().toString(),
+                        }
+                    }
+                }
+            });
+
+            // const lesson &#x3D; await this.prismaService.lesson.create({
+            //     data: {
+            //         title: payload.title,
+            //         token: new Date().getTime().toString(),
+            //         contentId: content.id,
+            //     },
+            // });
+
+            return content;
+        } catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async reorderLesson(payload: ReorderLessonDto): Promise&lt;string&gt; {
         for (let item of payload.list) {
-            await this.prismaService.lesson.update({
+            await this.prismaService.content.update({
                 where: {
                     id: item.id,
                 },
@@ -1048,401 +2112,417 @@ export class LessonService implements LessonServiceInterface {
     }
 
     async findLessonByToken(payload: GetLessonDto): Promise&lt;Lesson&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email,
-            },
-        });
+        const user &#x3D; await this.findUserByEmail(payload.email);
 
-        const course &#x3D; await this.prismaService.course.findFirst({
-            where: {
-                owner_id: user.id,
-                slug: payload.course_slug,
-            },
-        });
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
 
-        if (!course) {
-            throw new UnauthorizedException();
-        }
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
 
-        const chapter &#x3D; await this.prismaService.chapter.findFirst({
-            where: {
-                courseId: course.id,
-                token: payload.chapter_token,
-            },
-        });
-
-        if (!chapter) {
-            throw new UnprocessableEntityException();
-        }
-
-        const lesson &#x3D; await this.prismaService.lesson.findFirst({
-            where: {
-                chapterId: chapter.id,
-                token: payload.lesson_token,
-            },
-            include: {
-                exercise: {
-                    include: {
-                        quizz: true,
+        try {
+            const lesson &#x3D; await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
                     },
+                    token: payload.lesson_token,
                 },
-                attachment: true
-            },
-        });
+                include: {
+                    asyncVideo: true,
+                    attachment: true,
+                    content: {
+                        include: {
+                            chapter: {
+                                include: {
+                                    course: true,
+                                },
+                            },
+                        },
+                    },
+                    subtitles: true
+                },
+            });
 
-        return lesson;
+            if (!lesson) {
+                throw new UnprocessableEntityException();
+            }
+
+            return lesson;
+        } catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateValueLesson(payload: UpdateLessonDto): Promise&lt;LessonResponse&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email,
-            },
-        });
+        const user &#x3D; await this.findUserByEmail(payload.email);
 
-        const course &#x3D; await this.prismaService.course.findFirst({
-            where: {
-                owner_id: user.id,
-                slug: payload.course_slug,
-            },
-        });
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
 
-        if (!course) {
-            throw new UnprocessableEntityException();
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
+
+        try {
+            const lesson &#x3D; await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.lesson_token,
+                },
+            });
+
+            if (!lesson) {
+                throw new UnprocessableEntityException();
+            }
+
+            const update &#x3D; await this.prismaService.lesson.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.lesson_token,
+                },
+                data: {
+                    ...payload.value,
+                },
+            });
+
+            return this.buildLessonResponse(update);
+        } catch {
+            throw new InternalServerErrorException();
         }
-
-        const chapter &#x3D; await this.prismaService.chapter.findFirst({
-            where: {
-                courseId: course.id,
-                token: payload.chapter_token,
-            },
-        });
-
-        if (!chapter) {
-            throw new UnprocessableEntityException();
-        }
-
-        const lesson &#x3D; await this.prismaService.lesson.findFirst({
-            where: {
-                chapterId: chapter.id,
-                token: payload.lesson_token,
-            },
-        });
-
-        if (!lesson) {
-            throw new UnprocessableEntityException();
-        }
-
-        const update &#x3D; await this.prismaService.lesson.update({
-            where: {
-                chapterId: chapter.id,
-                token: payload.lesson_token,
-            },
-            data: {
-                ...payload.value,
-            },
-        });
-
-        return this.buildLessonResponse(update);
     }
 
     async updateVideoLesson(
         payload: UpdateVideoLesson,
     ): Promise&lt;LessonResponse&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email,
-            },
-        });
+        const user &#x3D; await this.findUserByEmail(payload.email);
 
-        const course &#x3D; await this.prismaService.course.findFirst({
-            where: {
-                owner_id: user.id,
-                slug: payload.course_slug,
-            },
-        });
-
-        if (!course) {
-            throw new UnauthorizedException();
-        }
-
-        const chapter &#x3D; await this.prismaService.chapter.findFirst({
-            where: {
-                courseId: course.id,
-                token: payload.chapter_token,
-            },
-        });
-
-        if (!chapter) {
-            throw new UnprocessableEntityException();
-        }
-
-        const lesson &#x3D; await this.prismaService.lesson.findFirst({
-            where: {
-                chapterId: chapter.id,
-                token: payload.lesson_token,
-            },
-        });
-
-        if (!lesson) {
-            throw new UnprocessableEntityException();
-        }
-
-        const { fileName, link } &#x3D; this.uploadService.createFileNameVideo(
-            payload.file,
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
         );
 
-        const data &#x3D; {
-            fileName,
-            file: payload.file,
-            lesson_id: lesson.id,
-            link,
-        };
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
 
-        const update &#x3D; await this.prismaService.lesson.update({
-            where: {
-                chapterId: chapter.id,
-                token: lesson.token,
-            },
-            data: {
-                videoUrl: link,
-                isCompleteVideo: false,
-            },
-        });
+        try {
+            const lesson &#x3D; await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.lesson_token,
+                },
+            });
 
-        await this.uploadService.uploadVideoToStorage(data);
+            if (!lesson) {
+                throw new UnprocessableEntityException();
+            }
 
-        return this.buildLessonResponse(update);
+            const { fileName, link } &#x3D; this.uploadService.createFileNameVideo(
+                payload.file,
+            );
+
+            const update &#x3D; await this.prismaService.lesson.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: lesson.token,
+                },
+                data: {
+                    asyncVideo: {
+                        upsert: {
+                            create: {
+                                type: &#x27;PROGRESSING&#x27;
+                            },
+                            update: {
+                                type: &#x27;PROGRESSING&#x27;
+                            }
+                        }
+                    }
+                },
+                include: {
+                    asyncVideo: true
+                }
+            });
+
+            const data &#x3D; {
+                fileName,
+                file: payload.file,
+                lesson_id: lesson.id,
+                link,
+                asyncVideoId: update.asyncVideo.id,
+                duration: payload.duration
+            };
+
+            await this.uploadService.uploadVideoToStorage(data);
+
+            return this.buildLessonResponse(update);
+        } catch(err) {
+            //console.log(err);
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateStatusLesson(
         payload: UpdateStatusLessonDto,
     ): Promise&lt;LessonResponse&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email,
-            },
-        });
+        const user &#x3D; await this.findUserByEmail(payload.email);
 
-        const course &#x3D; await this.prismaService.course.findFirst({
-            where: {
-                owner_id: user.id,
-                slug: payload.course_slug,
-            },
-        });
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
 
-        if (!course) {
-            throw new UnauthorizedException();
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
+
+        try {
+            const lesson &#x3D; await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.lesson_token,
+                },
+            });
+
+            if (!lesson) {
+                throw new UnprocessableEntityException();
+            }
+
+            const update &#x3D; await this.prismaService.lesson.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: lesson.token,
+                },
+                data: {
+                    isPublished: !payload.status,
+                },
+            });
+
+            return this.buildLessonResponse(update);
+        } catch {
+            throw new InternalServerErrorException();
         }
+    }
 
-        const chapter &#x3D; await this.prismaService.chapter.findFirst({
-            where: {
-                courseId: course.id,
-                token: payload.chapter_token,
-            },
-        });
+    async updatePreviewLesson(
+        payload: UpdateStatusLessonDto,
+    ): Promise&lt;LessonResponse&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
 
-        if (!chapter) {
-            throw new UnprocessableEntityException();
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
+
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
+
+        try {
+            const lesson &#x3D; await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.lesson_token,
+                },
+            });
+
+            if (!lesson) {
+                throw new UnprocessableEntityException();
+            }
+
+            const update &#x3D; await this.prismaService.lesson.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: lesson.token,
+                },
+                data: {
+                    isPreview: !payload.status,
+                },
+            });
+
+            return this.buildLessonResponse(update);
+        } catch {
+            throw new InternalServerErrorException();
         }
-
-        const lesson &#x3D; await this.prismaService.lesson.findFirst({
-            where: {
-                chapterId: chapter.id,
-                token: payload.lesson_token,
-            },
-        });
-
-        if (!lesson) {
-            throw new UnprocessableEntityException();
-        }
-
-        const update &#x3D; await this.prismaService.lesson.update({
-            where: {
-                chapterId: chapter.id,
-                token: lesson.token,
-            },
-            data: {
-                isPublished: !payload.status,
-            },
-        });
-
-        return this.buildLessonResponse(update);
     }
 
     async deleteLesson(payload: DeleteLessonDto): Promise&lt;string&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email,
-            },
-        });
+        const user &#x3D; await this.findUserByEmail(payload.email);
 
-        const course &#x3D; await this.prismaService.course.findFirst({
-            where: {
-                owner_id: user.id,
-                slug: payload.course_slug,
-            },
-        });
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
+        );
 
-        if (!course) {
-            throw new UnauthorizedException();
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
+
+        try {
+            const lesson &#x3D; await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.lesson_token,
+                },
+            });
+
+            if (!lesson) {
+                throw new UnprocessableEntityException();
+            }
+
+            const lessonDeleted &#x3D; await this.prismaService.lesson.delete({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: lesson.token,
+                },
+            });
+
+            return this.updatePositionLessons(lessonDeleted.contentId);
+        } catch {
+            throw new InternalServerErrorException();
         }
-
-        const chapter &#x3D; await this.prismaService.chapter.findFirst({
-            where: {
-                courseId: course.id,
-                token: payload.chapter_token,
-            },
-        });
-
-        if (!chapter) {
-            throw new UnprocessableEntityException();
-        }
-
-        const lesson &#x3D; await this.prismaService.lesson.findFirst({
-            where: {
-                chapterId: chapter.id,
-                token: payload.lesson_token,
-            },
-        });
-
-        if (!lesson) {
-            throw new UnprocessableEntityException();
-        }
-
-        await this.prismaService.lesson.delete({
-            where: {
-                chapterId: chapter.id,
-                token: lesson.token,
-            },
-        });
-
-        return &#x27;Success&#x27;;
     }
 
     async updateThumbnail(
         payload: UpdateThumbnailVideo,
     ): Promise&lt;LessonResponse&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email,
-            },
-        });
+        const user &#x3D; await this.findUserByEmail(payload.email);
 
-        if (!user) {
-            throw new UnauthorizedException();
-        }
-
-        const course &#x3D; await this.prismaService.course.findFirst({
-            where: {
-                owner_id: user.id,
-                slug: payload.course_slug,
-            },
-        });
-
-        if (!course) {
-            throw new UnauthorizedException();
-        }
-
-        const chapter &#x3D; await this.prismaService.chapter.findFirst({
-            where: {
-                courseId: course.id,
-                token: payload.chapter_token,
-            },
-        });
-
-        if (!chapter) {
-            throw new UnprocessableEntityException();
-        }
-
-        const lesson &#x3D; await this.prismaService.lesson.findFirst({
-            where: {
-                chapterId: chapter.id,
-                token: payload.lesson_token,
-            },
-        });
-
-        if (!lesson) {
-            throw new UnprocessableEntityException();
-        }
-
-        const fileName &#x3D; await this.uploadService.uploadAvatarToS3(
-            payload.file,
+        const course &#x3D; await this.findCourseBySlug(
+            payload.course_slug,
+            user.id,
         );
 
-        const update &#x3D; await this.prismaService.lesson.update({
-            where: {
-                chapterId: chapter.id,
-                token: lesson.token,
-            },
-            data: {
-                thumbnail: fileName,
-            },
-        });
+        const chapter &#x3D; await this.findChapterByToken(
+            payload.chapter_token,
+            course.id,
+        );
 
-        return this.buildLessonResponse(update);
+        try {
+            const lesson &#x3D; await this.prismaService.lesson.findFirst({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: payload.lesson_token,
+                },
+            });
+
+            if (!lesson) {
+                throw new UnprocessableEntityException();
+            }
+
+            const fileName &#x3D; await this.uploadService.uploadAvatarToS3(
+                payload.file,
+            );
+
+            const update &#x3D; await this.prismaService.lesson.update({
+                where: {
+                    content: {
+                        chapterId: chapter.id,
+                    },
+                    token: lesson.token,
+                },
+                data: {
+                    thumbnail: fileName,
+                },
+            });
+
+            return this.buildLessonResponse(update);
+        } catch {
+            throw new InternalServerErrorException();
+        }
     }
 
-    async contentLesson(payload: ContentLessonDto): Promise&lt;Lesson&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email: payload.email,
-            },
-        });
+    async contentLesson(payload: ContentLessonDto): Promise&lt;Content&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
 
-        if (!user) {
-            throw new UnauthorizedException();
-        }
-
-        const course &#x3D; await this.prismaService.course.findFirst({
-            where: {
-                slug: payload.course_slug,
-            },
-        });
-
-        if (!course) {
-            throw new UnauthorizedException();
-        }
-
-        const lesson &#x3D; await this.prismaService.lesson.findUnique({
-            where: {
-                token: payload.lesson_token,
-            },
-            include: {
-                attachment: true,
-                exercise: {
-                    where: {
-                        isOpen: true,
-                    },
-                    include: {
-                        quizz: {
-                            where: {
-                                isPublished: true,
-                            },
-                        },
-                    },
+        try {
+            const content &#x3D; await this.prismaService.content.findUnique({
+                where: {
+                    token: payload.content_token,
+                    chapter: {
+                        course: {
+                            slug: payload.course_slug
+                        }
+                    }
                 },
-                userProgress: {
-                    where: {
-                        userId: user.id,
-                    },
-                    include: {
-                        userProgressQuiz: {
-                            orderBy: {
-                                createdAt: &#x27;desc&#x27;,
+                include: {
+                    exercise: {
+                        include: {
+                            quizz: {
+                                where: {
+                                    isPublished: true
+                                },
+                                orderBy: {
+                                    position: &quot;asc&quot;
+                                }
                             },
-                        },
+                            code: {
+                                include: {
+                                    file: true,
+                                    labCode: true
+                                }
+                            }
+                        }
                     },
-                },
-            },
-        });
+                    lesson: {
+                        include: {
+                            attachment: true,
+                            subtitles: true
+                        }
+                    },
+                    userProgress: {
+                        where: {
+                            userId: user.id
+                        },
+                        include: {
+                            userProgressQuiz: true,
+                            userProgressCode: true
+                        }
+                    }
+                }
+            });
 
-        if (!lesson) {
-            throw new UnauthorizedException();
+            if (!content) {
+                throw new NotFoundException();
+            }
+
+            return content;
+        } catch {
+            throw new InternalServerErrorException();
         }
-
-        return lesson;
     }
 
     buildLessonResponse(lesson: Lesson): LessonResponse {
@@ -1450,12 +2530,10 @@ export class LessonService implements LessonServiceInterface {
             title: lesson.title,
             token: lesson.token,
             description: lesson.description,
-            position: lesson.position,
             isPublished: lesson.isPublished,
             videoUrl: lesson.videoUrl,
-            isCompleteVideo: lesson.isCompleteVideo,
+            //isCompleteVideo: lesson.isCompleteVideo,
             thumbnail: lesson.thumbnail,
-            exerciseId: lesson.exerciseId,
             //course_title: lesson.course?.title
         };
     }

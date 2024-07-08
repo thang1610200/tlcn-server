@@ -274,6 +274,7 @@ import { JwtService } from &#x27;@nestjs/jwt&#x27;;
 import { UploadService } from &#x27;src/upload/upload.service&#x27;;
 import { BullModule } from &#x27;@nestjs/bull&#x27;;
 import { MailingService } from &#x27;src/mailing/mailing.service&#x27;;
+import { HttpModule } from &#x27;@nestjs/axios&#x27;;
 
 @Module({
     imports: [
@@ -282,7 +283,8 @@ import { MailingService } from &#x27;src/mailing/mailing.service&#x27;;
         }),
         BullModule.registerQueue({
             name: &#x27;emailSending&#x27;,
-        })
+        }),
+        HttpModule
     ],
     controllers: [RegisterInstructorController, RegisterInstructorAdminController],
     providers: [

@@ -122,41 +122,53 @@
 <text text-anchor="start" x="429.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_ThreadModule</title>
-<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="89,-70 89,-195 407,-195 407,-70 89,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="11.5,-70 11.5,-195 484.5,-195 484.5,-70 11.5,-70"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_ThreadModule_providers</title>
-<polygon fill="none" stroke="black" points="97,-78 97,-130 399,-130 399,-78 97,-78"/>
+<polygon fill="none" stroke="black" points="19.5,-78 19.5,-130 476.5,-130 476.5,-78 19.5,-78"/>
 </g>
 <!-- PrismaService -->
 <g id="node1" class="node">
 <title>PrismaService</title>
-<ellipse fill="#fdb462" stroke="black" cx="324" cy="-104" rx="66.63" ry="18"/>
-<text text-anchor="middle" x="324" y="-99.8" font-family="Times,serif" font-size="14.00">PrismaService</text>
+<ellipse fill="#fdb462" stroke="black" cx="401.5" cy="-104" rx="66.63" ry="18"/>
+<text text-anchor="middle" x="401.5" y="-99.8" font-family="Times,serif" font-size="14.00">PrismaService</text>
 </g>
 <!-- ThreadModule -->
-<g id="node3" class="node">
+<g id="node4" class="node">
 <title>ThreadModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="297.69,-187 294.69,-191 273.69,-191 270.69,-187 198.31,-187 198.31,-151 297.69,-151 297.69,-187"/>
-<text text-anchor="middle" x="248" y="-164.8" font-family="Times,serif" font-size="14.00">ThreadModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="299.19,-187 296.19,-191 275.19,-191 272.19,-187 199.81,-187 199.81,-151 299.19,-151 299.19,-187"/>
+<text text-anchor="middle" x="249.5" y="-164.8" font-family="Times,serif" font-size="14.00">ThreadModule</text>
 </g>
 <!-- PrismaService&#45;&gt;ThreadModule -->
 <g id="edge1" class="edge">
 <title>PrismaService&#45;&gt;ThreadModule</title>
-<path fill="none" stroke="black" d="M277.39,-117.15C277.39,-117.15 277.39,-140.69 277.39,-140.69"/>
-<polygon fill="black" stroke="black" points="273.89,-140.69 277.39,-150.69 280.89,-140.69 273.89,-140.69"/>
+<path fill="none" stroke="black" d="M401.5,-122.11C401.5,-141.34 401.5,-169 401.5,-169 401.5,-169 309.27,-169 309.27,-169"/>
+<polygon fill="black" stroke="black" points="309.27,-165.5 299.27,-169 309.27,-172.5 309.27,-165.5"/>
 </g>
 <!-- ThreadService -->
 <g id="node2" class="node">
 <title>ThreadService</title>
-<ellipse fill="#fdb462" stroke="black" cx="172" cy="-104" rx="67.17" ry="18"/>
-<text text-anchor="middle" x="172" y="-99.8" font-family="Times,serif" font-size="14.00">ThreadService</text>
+<ellipse fill="#fdb462" stroke="black" cx="249.5" cy="-104" rx="67.17" ry="18"/>
+<text text-anchor="middle" x="249.5" y="-99.8" font-family="Times,serif" font-size="14.00">ThreadService</text>
 </g>
 <!-- ThreadService&#45;&gt;ThreadModule -->
 <g id="edge2" class="edge">
 <title>ThreadService&#45;&gt;ThreadModule</title>
-<path fill="none" stroke="black" d="M218.87,-117.15C218.87,-117.15 218.87,-140.69 218.87,-140.69"/>
-<polygon fill="black" stroke="black" points="215.37,-140.69 218.87,-150.69 222.37,-140.69 215.37,-140.69"/>
+<path fill="none" stroke="black" d="M249.5,-122.11C249.5,-122.11 249.5,-140.99 249.5,-140.99"/>
+<polygon fill="black" stroke="black" points="246,-140.99 249.5,-150.99 253,-140.99 246,-140.99"/>
+</g>
+<!-- UploadService -->
+<g id="node3" class="node">
+<title>UploadService</title>
+<ellipse fill="#fdb462" stroke="black" cx="95.5" cy="-104" rx="68.34" ry="18"/>
+<text text-anchor="middle" x="95.5" y="-99.8" font-family="Times,serif" font-size="14.00">UploadService</text>
+</g>
+<!-- UploadService&#45;&gt;ThreadModule -->
+<g id="edge3" class="edge">
+<title>UploadService&#45;&gt;ThreadModule</title>
+<path fill="none" stroke="black" d="M95.5,-122.11C95.5,-141.34 95.5,-169 95.5,-169 95.5,-169 189.5,-169 189.5,-169"/>
+<polygon fill="black" stroke="black" points="189.5,-172.5 199.5,-169 189.5,-165.5 189.5,-172.5"/>
 </g>
 </g>
 </svg>
@@ -213,6 +225,9 @@
                         <li class="list-group-item">
                             <a href="../injectables/ThreadService.html">ThreadService</a>
                         </li>
+                        <li class="list-group-item">
+                            <a href="../injectables/UploadService.html">UploadService</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-sm-3">
@@ -237,10 +252,20 @@
 import { ThreadController } from &#x27;./thread.controller&#x27;;
 import { ThreadService } from &#x27;./thread.service&#x27;;
 import { PrismaService } from &#x27;src/prisma.service&#x27;;
+import { UploadService } from &#x27;src/upload/upload.service&#x27;;
+import { BullModule } from &#x27;@nestjs/bull&#x27;;
+import { JwtService } from &#x27;@nestjs/jwt&#x27;;
+import { HttpModule } from &#x27;@nestjs/axios&#x27;;
 
 @Module({
+  imports: [
+    BullModule.registerQueue({
+      name: &#x27;upload&#x27;,
+    }),
+    HttpModule
+  ],
   controllers: [ThreadController],
-  providers: [ThreadService, PrismaService]
+  providers: [ThreadService, PrismaService, UploadService, JwtService]
 })
 export class ThreadModule {}
 </code></pre>

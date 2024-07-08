@@ -160,9 +160,33 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#addUserProgressNext" 
+                                    <a href="#completeExercise" 
 >
-                                        addUserProgressNext
+                                        completeExercise
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#completeLesson" 
+>
+                                        completeLesson
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#countCourseAccess" 
+>
+                                        countCourseAccess
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#courseOfUser" 
+>
+                                        courseOfUser
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#findContentOfCourse" 
+>
+                                        findContentOfCourse
                                     </a>
                                 </li>
                                 <li>
@@ -172,9 +196,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#findLessonByToken" 
+                                    <a href="#findQuizByToken" 
 >
-                                        findLessonByToken
+                                        findQuizByToken
                                     </a>
                                 </li>
                                 <li>
@@ -184,15 +208,15 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#getUserProgress" 
+                                    <a href="#getUserProgressByCourse" 
 >
-                                        getUserProgress
+                                        getUserProgressByCourse
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#getUserProgressQuiz" 
+                                    <a href="#retakeQuiz" 
 >
-                                        getUserProgressQuiz
+                                        retakeQuiz
                                     </a>
                                 </li>
                             </ul>
@@ -227,8 +251,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="18"
-                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:18</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="16"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:16</a></div>
                         </td>
                     </tr>
 
@@ -294,8 +318,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="13"
-                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:13</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="14"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -331,7 +355,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;UserProgress&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -345,24 +369,103 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="addUserProgressNext"></a>
+                    <a name="completeExercise"></a>
                     <span class="name">
-                        <span ><b>addUserProgressNext</b></span>
-                        <a href="#addUserProgressNext"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>completeExercise</b></span>
+                        <a href="#completeExercise"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>addUserProgressNext(payload: <a href="../classes/AddUserProgressNextDto.html" target="_self">AddUserProgressNextDto</a>)</code>
+<code>completeExercise(user_progress_id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, number_correct: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="14"
-                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:14</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="10"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:10</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user_progress_id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>number_correct</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="completeLesson"></a>
+                    <span class="name">
+                        <span ><b>completeLesson</b></span>
+                        <a href="#completeLesson"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>completeLesson(payload: <a href="../classes/CompleteLessonDto.html" target="_self">CompleteLessonDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="15"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -385,7 +488,7 @@
                                         <tr>
                                                 <td>payload</td>
                                             <td>
-                                                            <code><a href="../classes/AddUserProgressNextDto.html" target="_self" >AddUserProgressNextDto</a></code>
+                                                            <code><a href="../classes/CompleteLessonDto.html" target="_self" >CompleteLessonDto</a></code>
                                             </td>
 
                                             <td>
@@ -398,7 +501,220 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;UserProgress&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="countCourseAccess"></a>
+                    <span class="name">
+                        <span ><b>countCourseAccess</b></span>
+                        <a href="#countCourseAccess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>countCourseAccess(payload: <a href="../interfaces/UserAccessDto.html" target="_self">UserAccessDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="19"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/UserAccessDto.html" target="_self" >UserAccessDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;number&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="courseOfUser"></a>
+                    <span class="name">
+                        <span ><b>courseOfUser</b></span>
+                        <a href="#courseOfUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>courseOfUser(payload: <a href="../interfaces/UserAccessDto.html" target="_self">UserAccessDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="18"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/UserAccessDto.html" target="_self" >UserAccessDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findContentOfCourse"></a>
+                    <span class="name">
+                        <span ><b>findContentOfCourse</b></span>
+                        <a href="#findContentOfCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>findContentOfCourse(token: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, courseId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="11"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:11</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>token</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>courseId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Content&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -428,8 +744,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="12"
-                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:12</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="13"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -479,24 +795,24 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findLessonByToken"></a>
+                    <a name="findQuizByToken"></a>
                     <span class="name">
-                        <span ><b>findLessonByToken</b></span>
-                        <a href="#findLessonByToken"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findQuizByToken</b></span>
+                        <a href="#findQuizByToken"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>findLessonByToken(token: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>findQuizByToken(quiz_token: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="10"
-                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:10</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="17"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:17</a></div>
                         </td>
                     </tr>
 
@@ -517,7 +833,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>token</td>
+                                                <td>quiz_token</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                             </td>
@@ -532,7 +848,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;Lesson&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;Quizz&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -562,8 +878,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="11"
-                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:11</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="12"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:12</a></div>
                         </td>
                     </tr>
 
@@ -613,16 +929,95 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getUserProgress"></a>
+                    <a name="getUserProgressByCourse"></a>
                     <span class="name">
-                        <span ><b>getUserProgress</b></span>
-                        <a href="#getUserProgress"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>getUserProgressByCourse</b></span>
+                        <a href="#getUserProgressByCourse"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getUserProgress(payload: <a href="../classes/GetUserProgressDto.html" target="_self">GetUserProgressDto</a>)</code>
+<code>getUserProgressByCourse(courseId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="5"
+                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:5</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>courseId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;UserProgress[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="retakeQuiz"></a>
+                    <span class="name">
+                        <span ><b>retakeQuiz</b></span>
+                        <a href="#retakeQuiz"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>retakeQuiz(payload: <a href="../classes/RetakeQuizDto.html" target="_self">RetakeQuizDto</a>)</code>
                 </td>
             </tr>
 
@@ -653,7 +1048,7 @@
                                         <tr>
                                                 <td>payload</td>
                                             <td>
-                                                            <code><a href="../classes/GetUserProgressDto.html" target="_self" >GetUserProgressDto</a></code>
+                                                            <code><a href="../classes/RetakeQuizDto.html" target="_self" >RetakeQuizDto</a></code>
                                             </td>
 
                                             <td>
@@ -666,74 +1061,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;UserProgress&gt;</code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getUserProgressQuiz"></a>
-                    <span class="name">
-                        <span ><b>getUserProgressQuiz</b></span>
-                        <a href="#getUserProgressQuiz"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>getUserProgressQuiz(payload: <a href="../classes/GetUserProgressQuizDto.html" target="_self">GetUserProgressQuizDto</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="15"
-                                    class="link-to-prism">src/user-progress/interfaces/user-progress.service.interface.ts:15</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>payload</td>
-                                            <td>
-                                                            <code><a href="../classes/GetUserProgressQuizDto.html" target="_self" >GetUserProgressQuizDto</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;UserProgressQuiz[]&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -749,26 +1077,29 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Course, Lesson, User, UserProgress, UserProgressQuiz } from &#x27;@prisma/client&#x27;;
-import { GetUserProgressDto } from &#x27;../dto/get-user-progress.dto&#x27;;
-import { AddUserProgressDto } from &#x27;../dto/add-user-progress.dto&#x27;;
-import { AddAnswerUserProgressDto } from &#x27;../dto/add-answer-progress-quiz.dto&#x27;;
-import { GetUserProgressQuizDto } from &#x27;../dto/get-user-progress-quiz.dto&#x27;;
-import { AddUserProgressNextDto } from &#x27;../dto/add-user-progress-next.dto&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Content, Course, Lesson, Quizz, User, UserProgress, UserProgressQuiz } from &#x27;@prisma/client&#x27;;
+import { AddAnswerUserProgressDto, AddUserProgressDto, CompleteLessonDto, RetakeQuizDto, UserAccessDto } from &#x27;../dto/user-progress.dto&#x27;;
 
 export interface UserProgressServiceInterface {
-    getUserProgress(payload: GetUserProgressDto): Promise&lt;UserProgress&gt;;
-    findLessonByToken(token: string): Promise&lt;Lesson&gt;;
+    getUserProgressByCourse(courseId: string, userId: string): Promise&lt;UserProgress[]&gt;;
+    // getUserProgress(payload: GetUserProgressDto): Promise&lt;UserProgress&gt;;
+    // findLessonByToken(token: string): Promise&lt;Lesson&gt;;
+    //getUserProgressQuiz(payload: GetUserProgressQuizDto): Promise&lt;UserProgressQuiz[]&gt;;
+    retakeQuiz(payload: RetakeQuizDto): Promise&lt;string&gt;;
+    completeExercise(user_progress_id: string, number_correct: number): Promise&lt;boolean&gt;;
+    findContentOfCourse(token: string, courseId: string): Promise&lt;Content&gt;;
     findUserByEmail(email: string): Promise&lt;User&gt;;
     findCourseBySlug(slug: string): Promise&lt;Course&gt;;
-    addUserProgress(payload: AddUserProgressDto): Promise&lt;UserProgress&gt;;
-    addUserProgressNext(payload: AddUserProgressNextDto): Promise&lt;string&gt;;
-    getUserProgressQuiz(
-        payload: GetUserProgressQuizDto,
-    ): Promise&lt;UserProgressQuiz[]&gt;;
-    addAnswerProgressQuiz(
-        payload: AddAnswerUserProgressDto,
-    ): Promise&lt;UserProgressQuiz&gt;;
+    addUserProgress(payload: AddUserProgressDto): Promise&lt;Course&gt;;
+    completeLesson(payload: CompleteLessonDto): Promise&lt;UserProgress&gt;;
+    addAnswerProgressQuiz(payload: AddAnswerUserProgressDto): Promise&lt;UserProgressQuiz&gt;;
+    findQuizByToken(quiz_token: string): Promise&lt;Quizz&gt;;
+    courseOfUser(payload: UserAccessDto): Promise&lt;any[]&gt;;
+    countCourseAccess(payload: UserAccessDto): Promise&lt;number&gt;;
+    // addUserProgressNext(payload: AddUserProgressNextDto): Promise&lt;string&gt;;
+    // getUserProgressQuiz(
+    //     payload: GetUserProgressQuizDto,
+    // ): Promise&lt;UserProgressQuiz[]&gt;;
 }
 </code></pre>
     </div>

@@ -187,6 +187,14 @@ export class CreateListQuizzDto {
     @IsNotEmpty()
     exercise_token: string;
 
+    @IsString()
+    @IsNotEmpty()
+    chapter_token: string;
+
+    @IsString()
+    @IsNotEmpty()
+    course_slug: string;
+
     @IsEmail()
     email: string;
 }

@@ -155,6 +155,10 @@
                             </li>
                             <li>
                                     <span class="modifier"></span>
+                                <a href="#countCoursePublish" >countCoursePublish</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                 <a href="#countUserOfInstructor" >countUserOfInstructor</a>
@@ -185,6 +189,10 @@
                             </li>
                             <li>
                                     <span class="modifier"></span>
+                                <a href="#findCourseByAi" >findCourseByAi</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                 <a href="#getAllCourse" >getAllCourse</a>
@@ -198,6 +206,12 @@
                             <li>
                                     <span class="modifier"></span>
                                 <a href="#getAllCoursePublish" >getAllCoursePublish</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                <a href="#getAllLevel" >getAllLevel</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -229,13 +243,11 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                <a href="#getProgressCourse" >getProgressCourse</a>
+                                <a href="#getProgressCourseAuth" >getProgressCourseAuth</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                <a href="#getProgressCourseAuth" >getProgressCourseAuth</a>
+                                <a href="#test" >test</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -330,6 +342,82 @@
                                                 <td>payload</td>
                                             <td>
                                                             <code><a href="../classes/GetCourseUserDto.html" target="_self" >GetCourseUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="countCoursePublish"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>countCoursePublish</b></span>
+                        <a href="#countCoursePublish"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>countCoursePublish(query: <a href="../interfaces/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;count-course-publish&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="179"
+                                    class="link-to-prism">src/course/course.controller.ts:179</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../interfaces/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
                                             </td>
 
                                             <td>
@@ -716,6 +804,82 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="findCourseByAi"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>findCourseByAi</b></span>
+                        <a href="#findCourseByAi"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findCourseByAi(payload: <a href="../classes/FindCourseByAi.html" target="_self">FindCourseByAi</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;find-course&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/course/course.controller.ts:189</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/FindCourseByAi.html" target="_self" >FindCourseByAi</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getAllCourse"></a>
                     <span class="name">
                             <span class="modifier"></span>
@@ -853,7 +1017,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllCoursePublish(payload: <a href="../classes/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
+                    <code>getAllCoursePublish(payload: <a href="../interfaces/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
                 </td>
             </tr>
 
@@ -867,8 +1031,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="162"
-                                    class="link-to-prism">src/course/course.controller.ts:162</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/course/course.controller.ts:169</a></div>
                         </td>
                     </tr>
 
@@ -891,7 +1055,7 @@
                                         <tr>
                                                 <td>payload</td>
                                             <td>
-                                                            <code><a href="../classes/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
+                                                            <code><a href="../interfaces/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
                                             </td>
 
                                             <td>
@@ -910,6 +1074,54 @@
                             <div class="io-description">
                                 
                             </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllLevel"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>getAllLevel</b></span>
+                        <a href="#getAllLevel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllLevel()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Roles(&#x27;INSTRUCTOR&#x27;)<br />@UseGuards(JwtGuard, RolesGuard)<br />@Get(&#x27;get-level&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/course/course.controller.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -943,8 +1155,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="167"
-                                    class="link-to-prism">src/course/course.controller.ts:167</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="174"
+                                    class="link-to-prism">src/course/course.controller.ts:174</a></div>
                         </td>
                     </tr>
 
@@ -1223,8 +1435,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="172"
-                                    class="link-to-prism">src/course/course.controller.ts:172</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="184"
+                                    class="link-to-prism">src/course/course.controller.ts:184</a></div>
                         </td>
                     </tr>
 
@@ -1248,84 +1460,6 @@
                                                 <td>payload</td>
                                             <td>
                                                             <code><a href="../classes/GetDetailCourseDto.html" target="_self" >GetDetailCourseDto</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getProgressCourse"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                        <span ><b>getProgressCourse</b></span>
-                        <a href="#getProgressCourse"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getProgressCourse(payload: <a href="../classes/GetProgressCourseDto.html" target="_self">GetProgressCourseDto</a>)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@Roles(&#x27;LEARNER&#x27;)<br />@UseGuards(JwtGuard, RolesGuard)<br />@Get(&#x27;progress-course&#x27;)<br /></code>
-                </td>
-            </tr>
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="179"
-                                    class="link-to-prism">src/course/course.controller.ts:179</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>payload</td>
-                                            <td>
-                                                            <code><a href="../classes/GetProgressCourseDto.html" target="_self" >GetProgressCourseDto</a></code>
                                             </td>
 
                                             <td>
@@ -1379,8 +1513,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="186"
-                                    class="link-to-prism">src/course/course.controller.ts:186</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="203"
+                                    class="link-to-prism">src/course/course.controller.ts:203</a></div>
                         </td>
                     </tr>
 
@@ -1422,6 +1556,52 @@
                             <div class="io-description">
                                 
                             </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="test"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>test</b></span>
+                        <a href="#test"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>test()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;test&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="208"
+                                    class="link-to-prism">src/course/course.controller.ts:208</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1537,8 +1717,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="132"
-                                    class="link-to-prism">src/course/course.controller.ts:132</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="139"
+                                    class="link-to-prism">src/course/course.controller.ts:139</a></div>
                         </td>
                     </tr>
 
@@ -1702,7 +1882,7 @@ import { CreateTopicDto } from &#x27;./dto/create-topic.dto&#x27;;
 import { CreateCourseDto } from &#x27;./dto/create-course.dto&#x27;;
 import { UpdateValueCourse } from &#x27;./dto/update-course.dto&#x27;;
 import { GetCourseUserDto } from &#x27;./dto/get-course-user.dto&#x27;;
-import { GetCourseBySlugDto } from &#x27;./dto/get-course-slug.dto&#x27;;
+import { FindCourseByAi, GetCourseBySlugDto } from &#x27;./dto/get-course-slug.dto&#x27;;
 import { UpdateStatusDto } from &#x27;./dto/update-status.dto&#x27;;
 import { DeleteCourseDto } from &#x27;./dto/delete-course.dto&#x27;;
 import { FileInterceptor } from &#x27;@nestjs/platform-express&#x27;;
@@ -1806,6 +1986,13 @@ export class CourseController {
     }
 
     @Roles(&#x27;INSTRUCTOR&#x27;)
+    @UseGuards(JwtGuard, RolesGuard)
+    @Get(&#x27;get-level&#x27;)
+    getAllLevel(){
+        return this.courseService.getAllLevelCourse();
+    }
+
+    @Roles(&#x27;INSTRUCTOR&#x27;)
     @UseGuards(JwtGuard)
     @UseInterceptors(FileInterceptor(&#x27;file&#x27;))
     @Patch(&#x27;update-picture&#x27;)
@@ -1848,23 +2035,38 @@ export class CourseController {
         return this.courseService.findAllTopic();
     }
 
+    @Get(&#x27;count-course-publish&#x27;)
+    countCoursePublish(@Query() query: FilterCourseDto) {
+        return this.courseService.countCoursePublish(query);
+    }
+
     @Get(&#x27;detail-course&#x27;)
     getDetailCourse(@Query() payload: GetDetailCourseDto) {
         return this.courseService.getDetailCourse(payload);
     }
 
-    @Roles(&#x27;LEARNER&#x27;)
-    @UseGuards(JwtGuard, RolesGuard)
-    @Get(&#x27;progress-course&#x27;)
-    getProgressCourse(@Query() payload: GetProgressCourseDto) {
-        return this.courseService.getUserProgressCourse(payload);
+    @Get(&#x27;find-course&#x27;)
+    findCourseByAi(@Query() payload: FindCourseByAi) {
+        return this.courseService.findCourseByAi(payload);
     }
+
+    // @Roles(&#x27;LEARNER&#x27;)
+    // @UseGuards(JwtGuard, RolesGuard)
+    // @Get(&#x27;progress-course&#x27;)
+    // getProgressCourse(@Query() payload: GetProgressCourseDto) {
+    //     return this.courseService.getUserProgressCourse(payload);
+    // }
 
     @Roles(&#x27;LEARNER&#x27;)
     @UseGuards(JwtGuard, RolesGuard)
     @Get(&#x27;detail-course-auth&#x27;)
     getProgressCourseAuth(@Query() payload: GetProgressCourseDto) {
         return this.courseService.getDetailCourseAuth(payload);
+    }
+
+    @Get(&#x27;test&#x27;)
+    test() {
+        return this.courseService.test();
     }
 }
 </code></pre>

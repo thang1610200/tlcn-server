@@ -36,5 +36,5 @@ export class UploadVideoDto {
     lesson_token: string;
 
     @IsNumber()
-    duration: number;
+    duration: string;
 }

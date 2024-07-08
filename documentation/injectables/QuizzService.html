@@ -155,7 +155,19 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#findChapterByToken" >findChapterByToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findCourseBySlug" >findCourseBySlug</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#findExcersie" >findExcersie</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findUserByEmail" >findUserByEmail</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -164,6 +176,10 @@
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#reorderQuizz" >reorderQuizz</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updatePositionQuizs" >updatePositionQuizs</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -196,7 +212,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/quizz/quizz.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/quizz/quizz.service.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -259,8 +275,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="213"
-                                    class="link-to-prism">src/quizz/quizz.service.ts:213</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="321"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:321</a></div>
                         </td>
                     </tr>
 
@@ -328,8 +344,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="48"
-                                    class="link-to-prism">src/quizz/quizz.service.ts:48</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:110</a></div>
                         </td>
                     </tr>
 
@@ -397,8 +413,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="186"
-                                    class="link-to-prism">src/quizz/quizz.service.ts:186</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="289"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:289</a></div>
                         </td>
                     </tr>
 
@@ -448,26 +464,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findExcersie"></a>
+                    <a name="findChapterByToken"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
-                        <span ><b>findExcersie</b></span>
-                        <a href="#findExcersie"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findChapterByToken</b></span>
+                        <a href="#findChapterByToken"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findExcersie(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, exercise_token: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>findChapterByToken(chapterToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, courseId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="20"
-                                    class="link-to-prism">src/quizz/quizz.service.ts:20</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="23"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:23</a></div>
                         </td>
                     </tr>
 
@@ -488,7 +504,169 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>email</td>
+                                                <td>chapterToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>courseId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Chapter&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findCourseBySlug"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findCourseBySlug</b></span>
+                        <a href="#findCourseBySlug"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findCourseBySlug(courseSlug: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>courseSlug</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findExcersie"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findExcersie</b></span>
+                        <a href="#findExcersie"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findExcersie(chapterId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, exercise_token: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>chapterId</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                             </td>
@@ -529,6 +707,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="findUserByEmail"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findUserByEmail</b></span>
+                        <a href="#findUserByEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findUserByEmail(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;User&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getDetailQuizz"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -547,8 +794,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="97"
-                                    class="link-to-prism">src/quizz/quizz.service.ts:97</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="165"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:165</a></div>
                         </td>
                     </tr>
 
@@ -616,8 +863,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="77"
-                                    class="link-to-prism">src/quizz/quizz.service.ts:77</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:145</a></div>
                         </td>
                     </tr>
 
@@ -667,6 +914,87 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="updatePositionQuizs"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updatePositionQuizs</b></span>
+                        <a href="#updatePositionQuizs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePositionQuizs(exerciseId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, position: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="262"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:262</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>exerciseId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>position</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updateStatusQuizz"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -685,8 +1013,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="154"
-                                    class="link-to-prism">src/quizz/quizz.service.ts:154</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="225"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:225</a></div>
                         </td>
                     </tr>
 
@@ -754,8 +1082,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="124"
-                                    class="link-to-prism">src/quizz/quizz.service.ts:124</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="190"
+                                    class="link-to-prism">src/quizz/quizz.service.ts:190</a></div>
                         </td>
                     </tr>
 
@@ -808,12 +1136,15 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    BadRequestException,
     Injectable,
+    InternalServerErrorException,
     NotFoundException,
     UnauthorizedException,
+    UnprocessableEntityException,
 } from &#x27;@nestjs/common&#x27;;
 import { QuizzServiceInterface } from &#x27;./interfaces/quizz.service.interface&#x27;;
-import { Exercise, Prisma, Quizz } from &#x27;@prisma/client&#x27;;
+import { Chapter, Course, Exercise, Prisma, Quizz, User } from &#x27;@prisma/client&#x27;;
 import { CreateQuizzDto } from &#x27;./dto/create-quizz.dto&#x27;;
 import { QuizzResponse } from &#x27;./dto/response-quizz.dto&#x27;;
 import { PrismaService } from &#x27;src/prisma.service&#x27;;
@@ -826,197 +1157,302 @@ import { UpdateStatusQuizzDto } from &#x27;./dto/update-status-quizz.dto&#x27;;
 export class QuizzService implements QuizzServiceInterface {
     constructor(private readonly prismaService: PrismaService) {}
 
+    async findChapterByToken(
+        chapterToken: string,
+        courseId: string,
+    ): Promise&lt;Chapter&gt; {
+        try {
+            const chapter &#x3D; await this.prismaService.chapter.findFirst({
+                where: {
+                    courseId,
+                    token: chapterToken,
+                },
+            });
+
+            if (!chapter) {
+                throw new UnprocessableEntityException();
+            }
+
+            return chapter;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findCourseBySlug(
+        courseSlug: string,
+        userId: string,
+    ): Promise&lt;Course&gt; {
+        try {
+            const course &#x3D; await this.prismaService.course.findFirst({
+                where: {
+                    owner_id: userId,
+                    slug: courseSlug,
+                },
+            });
+
+            if (!course) {
+                throw new UnauthorizedException();
+            }
+
+            return course;
+        } catch(err) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findUserByEmail(email: string): Promise&lt;User&gt; {
+        try {
+            const user &#x3D; await this.prismaService.user.findUnique({
+                where: {
+                    email,
+                },
+            });
+
+            if (!user) {
+                throw new UnauthorizedException();
+            }
+
+            return user;
+        } catch{
+            throw new InternalServerErrorException();
+        }
+    }
+
     async findExcersie(
-        email: string,
+        chapterId: string,
         exercise_token: string,
     ): Promise&lt;Exercise&gt; {
-        const user &#x3D; await this.prismaService.user.findUnique({
-            where: {
-                email,
-            },
-        });
+        try {
+            const exercise &#x3D; await this.prismaService.exercise.findFirst({
+                where: {
+                    token: exercise_token,
+                    content: {
+                        chapterId
+                    }
+                }
+            });
 
-        if (!user) {
-            throw new UnauthorizedException();
+            if(!exercise) {
+                throw new BadRequestException();
+            }
+
+            return exercise;
         }
-
-        const exercise &#x3D; await this.prismaService.exercise.findFirst({
-            where: {
-                token: exercise_token,
-                instructorId: user.id,
-            },
-        });
-
-        if (!exercise) {
-            throw new NotFoundException();
+        catch {
+            throw new InternalServerErrorException();
         }
-
-        return exercise;
     }
 
     async createQuizz(payload: CreateQuizzDto): Promise&lt;QuizzResponse&gt; {
-        const exercise &#x3D; await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
+    
+        const exercise &#x3D; await this.findExcersie(chapter.id, payload.exercise_token);
 
-        const lastQuizz &#x3D; await this.prismaService.quizz.findFirst({
-            where: {
-                exerciseId: exercise.id,
-            },
-            orderBy: {
-                position: &#x27;desc&#x27;,
-            },
-        });
-
-        const newPosition &#x3D; lastQuizz ? lastQuizz.position + 1 : 1;
-
-        const quizz &#x3D; await this.prismaService.quizz.create({
-            data: {
-                token: new Date().getTime().toString(),
-                question: payload.question,
-                position: newPosition,
-                exerciseId: exercise.id,
-            },
-        });
-
-        return this.buildQuizzResponse(quizz);
+        try {
+            const lastQuizz &#x3D; await this.prismaService.quizz.findFirst({
+                where: {
+                    exerciseId: exercise.id,
+                },
+                orderBy: {
+                    position: &#x27;desc&#x27;,
+                },
+            });
+    
+            const newPosition &#x3D; lastQuizz ? lastQuizz.position + 1 : 1;
+    
+            const quizz &#x3D; await this.prismaService.quizz.create({
+                data: {
+                    token: new Date().getTime().toString(),
+                    question: payload.question,
+                    position: newPosition,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            return this.buildQuizzResponse(quizz);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async reorderQuizz(payload: ReorderQuizzDto): Promise&lt;string&gt; {
-        const exercise &#x3D; await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
-
-        for (let item of payload.list) {
-            await this.prismaService.quizz.update({
-                where: {
-                    token: item.token,
-                },
-                data: {
-                    position: item.position,
-                },
-            });
+        try {
+            for (let item of payload.list) {
+                await this.prismaService.quizz.update({
+                    where: {
+                        token: item.token,
+                    },
+                    data: {
+                        position: item.position,
+                    },
+                });
+            }
+    
+            return &#x27;Success&#x27;;
         }
-
-        return &#x27;Success&#x27;;
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async getDetailQuizz(payload: DetailQuizzDto): Promise&lt;Quizz&gt; {
-        const exercise &#x3D; await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
+        const exercise &#x3D; await this.findExcersie(chapter.id, payload.exercise_token);
 
-        const quizz &#x3D; await this.prismaService.quizz.findFirst({
-            where: {
-                token: payload.token,
-                exerciseId: exercise.id,
-            },
-            include: {
-                exercise: {
-                    include: {
-                        lesson: true
-                    }
+        try {
+            const quizz &#x3D; await this.prismaService.quizz.findFirst({
+                where: {
+                    token: payload.quiz_token,
+                    exerciseId: exercise.id
                 }
+            });
+    
+            if (!quizz) {
+                throw new NotFoundException();
             }
-        });
-
-        if (!quizz) {
-            throw new NotFoundException();
+    
+            return quizz;
         }
-
-        return quizz;
+        catch{
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateValueQuizz(payload: UpdateQuizzDto): Promise&lt;QuizzResponse&gt; {
-        const exercise &#x3D; await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
+        const exercise &#x3D; await this.findExcersie(chapter.id, payload.exercise_token);
 
-        const quizz &#x3D; await this.prismaService.quizz.findFirst({
-            where: {
-                token: payload.token,
-                exerciseId: exercise.id,
-            },
-        });
-
-        if (!quizz) {
-            throw new NotFoundException();
+        try {
+            const quizz &#x3D; await this.prismaService.quizz.findFirst({
+                where: {
+                    token: payload.quiz_token,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            if (!quizz) {
+                throw new NotFoundException();
+            }
+    
+            const updateQuizz &#x3D; await this.prismaService.quizz.update({
+                where: {
+                    token: quizz.token,
+                    exerciseId: exercise.id,
+                },
+                data: {
+                    ...payload.value
+                },
+            });
+    
+            return this.buildQuizzResponse(updateQuizz);
         }
-
-        const quizzUpdate &#x3D; await this.prismaService.quizz.update({
-            where: {
-                token: quizz.token,
-                exerciseId: exercise.id,
-            },
-            data: {
-                ...payload.value,
-            },
-        });
-
-        return this.buildQuizzResponse(quizzUpdate);
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     async updateStatusQuizz(
         payload: UpdateStatusQuizzDto,
     ): Promise&lt;QuizzResponse&gt; {
-        const exercise &#x3D; await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
+        const exercise &#x3D; await this.findExcersie(chapter.id, payload.exercise_token);
 
-        const quizz &#x3D; await this.prismaService.quizz.findFirst({
-            where: {
-                token: payload.token,
-                exerciseId: exercise.id,
-            },
-        });
-
-        if (!quizz) {
-            throw new NotFoundException();
+        try {
+            const quizz &#x3D; await this.prismaService.quizz.findFirst({
+                where: {
+                    token: payload.quiz_token,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            if (!quizz) {
+                throw new NotFoundException();
+            }
+    
+            const updateQuizz &#x3D; await this.prismaService.quizz.update({
+                where: {
+                    token: quizz.token,
+                    exerciseId: exercise.id,
+                },
+                data: {
+                    isPublished: !quizz.isPublished,
+                },
+            });
+    
+            return this.buildQuizzResponse(updateQuizz);
         }
-
-        const updateQuizz &#x3D; await this.prismaService.quizz.update({
-            where: {
-                token: quizz.token,
-                exerciseId: exercise.id,
-            },
-            data: {
-                isPublished: !quizz.isPublished,
-            },
-        });
-
-        return this.buildQuizzResponse(updateQuizz);
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
-    async deleteQuizz(payload: DetailQuizzDto): Promise&lt;string&gt; {
-        const exercise &#x3D; await this.findExcersie(
-            payload.email,
-            payload.exercise_token,
-        );
-
-        const quizz &#x3D; await this.prismaService.quizz.findFirst({
+    async updatePositionQuizs(exerciseId: string, position: number): Promise&lt;string&gt; {
+        const quizs &#x3D; await this.prismaService.quizz.findMany({
             where: {
-                token: payload.token,
-                exerciseId: exercise.id,
+                exerciseId,
+                position: {
+                    gt: position,
+                },
             },
+            orderBy: {
+                position: &quot;asc&quot;
+            }
         });
 
-        if (!quizz) {
-            throw new NotFoundException();
-        }
-
-        await this.prismaService.quizz.delete({
-            where: {
-                token: quizz.token,
-                exerciseId: exercise.id,
-            },
+        quizs.forEach(async (item) &#x3D;&gt; {
+            await this.prismaService.quizz.update({
+                where: {
+                    id: item.id,
+                },
+                data: {
+                    position: item.position - 1,
+                },
+            });
         });
 
         return &#x27;SUCCESS&#x27;;
+    }
+
+    async deleteQuizz(payload: DetailQuizzDto): Promise&lt;string&gt; {
+        const user &#x3D; await this.findUserByEmail(payload.email);
+        const course &#x3D; await this.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.findChapterByToken(payload.chapter_token, course.id);
+        const exercise &#x3D; await this.findExcersie(chapter.id, payload.exercise_token);
+
+        try {
+            const quizz &#x3D; await this.prismaService.quizz.findFirst({
+                where: {
+                    token: payload.quiz_token,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            if (!quizz) {
+                throw new NotFoundException();
+            }
+    
+            const quizDeleted &#x3D; await this.prismaService.quizz.delete({
+                where: {
+                    token: quizz.token,
+                    exerciseId: exercise.id,
+                },
+            });
+    
+            return await this.updatePositionQuizs(exercise.id, quizDeleted.position);
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
     }
 
     buildQuizzResponse(quizz: Quizz): QuizzResponse {

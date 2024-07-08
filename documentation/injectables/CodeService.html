@@ -1,0 +1,1727 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tlcn-server documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">tlcn-server documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >CodeService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/code/code.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addFileName" >addFileName</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addFileTest" >addFileTest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addQuestionCode" >addQuestionCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteFile" >deleteFile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#detailCode" >detailCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findCourse" >findCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllLanguageCode" >getAllLanguageCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getDetailCode" >getDetailCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#submitCode" >submitCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateContentFile" >updateContentFile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateContentTestFile" >updateContentTestFile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateLabCode" >updateLabCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateValueCode" >updateValueCode</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, quizService: <a href="../injectables/QuizzService.html" target="_self">QuizzService</a>, evaluateService: <a href="../injectables/EvaluateService.html" target="_self">EvaluateService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/code/code.service.ts:12</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>prismaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PrismaService.html" target="_self" >PrismaService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>quizService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/QuizzService.html" target="_self" >QuizzService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>evaluateService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EvaluateService.html" target="_self" >EvaluateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addFileName"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addFileName</b></span>
+                        <a href="#addFileName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addFileName(payload: <a href="../classes/AddFileNameDto.html" target="_self">AddFileNameDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="375"
+                                    class="link-to-prism">src/code/code.service.ts:375</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/AddFileNameDto.html" target="_self" >AddFileNameDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;FileCode&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addFileTest"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addFileTest</b></span>
+                        <a href="#addFileTest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addFileTest(payload: <a href="../classes/AddFileTestDto.html" target="_self">AddFileTestDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="230"
+                                    class="link-to-prism">src/code/code.service.ts:230</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/AddFileTestDto.html" target="_self" >AddFileTestDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;FileTest&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addQuestionCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addQuestionCode</b></span>
+                        <a href="#addQuestionCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addQuestionCode(payload: <a href="../classes/AddQuestionCodeDto.html" target="_self">AddQuestionCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="443"
+                                    class="link-to-prism">src/code/code.service.ts:443</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/AddQuestionCodeDto.html" target="_self" >AddQuestionCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Code&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteFile"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteFile</b></span>
+                        <a href="#deleteFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteFile(payload: <a href="../classes/DeleteFileDto.html" target="_self">DeleteFileDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="18"
+                                    class="link-to-prism">src/code/code.service.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/DeleteFileDto.html" target="_self" >DeleteFileDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;FileCode&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="detailCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>detailCode</b></span>
+                        <a href="#detailCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>detailCode(payload: <a href="../interfaces/DetailCodeInterface.html" target="_self">DetailCodeInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="34"
+                                    class="link-to-prism">src/code/code.service.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/DetailCodeInterface.html" target="_self" >DetailCodeInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findCourse</b></span>
+                        <a href="#findCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findCourse(slug: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="285"
+                                    class="link-to-prism">src/code/code.service.ts:285</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>slug</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllLanguageCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getAllLanguageCode</b></span>
+                        <a href="#getAllLanguageCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllLanguageCode(payload: <a href="../classes/GetAllLanguageCodeDto.html" target="_self">GetAllLanguageCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="364"
+                                    class="link-to-prism">src/code/code.service.ts:364</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetAllLanguageCodeDto.html" target="_self" >GetAllLanguageCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;LabCode[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDetailCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getDetailCode</b></span>
+                        <a href="#getDetailCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDetailCode(payload: <a href="../classes/GetDetailCodeDto.html" target="_self">GetDetailCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="411"
+                                    class="link-to-prism">src/code/code.service.ts:411</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/GetDetailCodeDto.html" target="_self" >GetDetailCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>submitCode</b></span>
+                        <a href="#submitCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>submitCode(payload: <a href="../classes/SubmitCodeDto.html" target="_self">SubmitCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/code/code.service.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/SubmitCodeDto.html" target="_self" >SubmitCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateContentFile"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateContentFile</b></span>
+                        <a href="#updateContentFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateContentFile(payload: <a href="../classes/UpdateContentFileDto.html" target="_self">UpdateContentFileDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="345"
+                                    class="link-to-prism">src/code/code.service.ts:345</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateContentFileDto.html" target="_self" >UpdateContentFileDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;FileCode&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateContentTestFile"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateContentTestFile</b></span>
+                        <a href="#updateContentTestFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateContentTestFile(payload: <a href="../classes/UpdateContentFileDto.html" target="_self">UpdateContentFileDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="211"
+                                    class="link-to-prism">src/code/code.service.ts:211</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateContentFileDto.html" target="_self" >UpdateContentFileDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;FileTest&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateLabCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateLabCode</b></span>
+                        <a href="#updateLabCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateLabCode(payload: <a href="../classes/UpdateValueCodeDto.html" target="_self">UpdateValueCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="303"
+                                    class="link-to-prism">src/code/code.service.ts:303</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateValueCodeDto.html" target="_self" >UpdateValueCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Code&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateValueCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateValueCode</b></span>
+                        <a href="#updateValueCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateValueCode(payload: <a href="../classes/UpdateValueCodeDto.html" target="_self">UpdateValueCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="392"
+                                    class="link-to-prism">src/code/code.service.ts:392</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateValueCodeDto.html" target="_self" >UpdateValueCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Code&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from &#x27;@nestjs/common&#x27;;
+import { CodeServiceInterface } from &#x27;./interfaces/code.service.interface&#x27;;
+import { $Enums, Code, Course, Exercise, FileCode, FileTest, LabCode, UserProgress } from &#x27;@prisma/client&#x27;;
+import { AddQuestionCodeDto, GetDetailCodeDto, UpdateValueCodeDto, GetAllLanguageCodeDto, SubmitCodeDto, DetailCodeInterface } from &#x27;./dto/code.dto&#x27;;
+import { PrismaService } from &#x27;src/prisma.service&#x27;;
+import { QuizzService } from &#x27;src/quizz/quizz.service&#x27;;
+import { AddFileNameDto, AddFileTestDto, DeleteFileDto, UpdateContentFileDto } from &#x27;./dto/file.dto&#x27;;
+import { EvaluateService } from &#x27;src/evaluate/evaluate.service&#x27;;
+import { EvaluateCode } from &#x27;src/evaluate/dto/evaluate.dto&#x27;;
+
+@Injectable()
+export class CodeService implements CodeServiceInterface {
+    constructor(private readonly prismaService: PrismaService,
+                private readonly quizService: QuizzService,
+                private readonly evaluateService: EvaluateService
+            ){}
+
+    async deleteFile(payload: DeleteFileDto): Promise&lt;FileCode&gt; {
+        const code &#x3D; await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.fileCode.delete({
+                where: {
+                    id: payload.fileId,
+                    codeId: code.id
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async detailCode(payload: DetailCodeInterface): Promise&lt;Code &amp; {file: FileCode[]; fileTest: FileTest, labCode: LabCode, exercise: Exercise}&gt; {
+        try {
+            const course &#x3D; await this.prismaService.course.findFirst({
+                where: {
+                    slug: payload.course_slug
+                }
+            });
+
+            if(!course) {
+                throw new NotFoundException();
+            }
+
+            const content &#x3D; await this.prismaService.content.findFirst({
+                where: {
+                    token: payload.content_token
+                }
+            });
+
+            const exercise &#x3D; await this.prismaService.exercise.findFirst({
+                where: {
+                    token: payload.exercise_token,
+                    contentId: content.id
+                }
+            })
+
+            return await this.prismaService.code.findFirst({
+                where: {
+                    token: payload.code_token,
+                    exerciseId: exercise.id
+                },
+                include: {
+                    file: true,
+                    fileTest: true,
+                    labCode: true,
+                    exercise: true
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async submitCode(payload: SubmitCodeDto): Promise&lt;boolean&gt; {
+        const user &#x3D; await this.prismaService.user.findUnique({
+            where: {
+                email: payload.email
+            }
+        });
+
+        if(!user) {
+            throw new UnauthorizedException();
+        }
+
+        const code &#x3D; await this.detailCode(payload);
+
+        const codeFile: {
+            codeFile: string;
+            codeFileName: string;
+            codeId: string;
+            fileId: string;
+        }[] &#x3D; code.file.map((item, index) &#x3D;&gt; {
+            return {
+                codeFileName: &#x60;${item.fileName}.${item.mime}&#x60;,
+                codeFile: payload.codeFile[index],
+                codeId: item.codeId,
+                fileId: item.id
+            }
+        });
+
+        const data: EvaluateCode &#x3D; {
+            lang: code.labCode.lab,
+            testFile: code.fileTest.content,
+            testFileName: (code.labCode.lab &#x3D;&#x3D;&#x3D; &#x27;Javascript&#x27; || code.labCode.lab &#x3D;&#x3D;&#x3D; &#x27;Typescript&#x27; || code.labCode.lab &#x3D;&#x3D;&#x3D; &#x27;WebDev&#x27;) ? &#x60;${code.fileTest.fileName}.spec.${code.fileTest.mime}&#x60;:&#x60;${code.fileTest.fileName}.${code.fileTest.mime}&#x60;,
+            code: codeFile
+        }
+
+        try {
+            const statusCode &#x3D; await this.evaluateService.evaluateFunction(data);
+
+            const userProgress &#x3D; await this.prismaService.userProgress.findFirst({
+                where: {
+                    userId: user.id,
+                    contentId: code.exercise.contentId,
+                    course: {
+                        slug: payload.course_slug
+                    }
+                }
+            });
+
+            codeFile.forEach(async (item) &#x3D;&gt; {
+                await this.prismaService.userProgressCode.upsert({
+                    where: {
+                        codeId_fileCodeId_userProgressId: {
+                            codeId: item.codeId,
+                            fileCodeId: item.fileId,
+                            userProgressId: userProgress.id
+                        }
+                    },
+                    update: {
+                        answer: atob(item.codeFile)
+                    },
+                    create: {
+                        answer: atob(item.codeFile),
+                        codeId: item.codeId,
+                        fileCodeId: item.fileId,
+                        userProgressId: userProgress.id
+                    }
+                })
+            });
+
+            if(!statusCode) {
+                return false;
+            }
+
+            return await this.prismaService.$transaction(async (tx) &#x3D;&gt; {
+                const userProgressUpdate &#x3D; await tx.userProgress.update({
+                    where: {
+                        userId_contentId: {
+                            userId: user.id,
+                            contentId: code.exercise.contentId
+                        },
+                        course: {
+                            slug: payload.course_slug
+                        }
+                    },
+                    data: {
+                        isCompleted: true,
+                    }
+                });
+
+                if (payload.next_content_token ) {
+                    const content_next &#x3D; await tx.content.findFirst({
+                        where: {
+                            token: payload.next_content_token,
+                            chapter: {
+                                course: {
+                                    slug: payload.course_slug
+                                }
+                            }
+                        }
+                    });
+
+                    if(!content_next) {
+                        throw new BadRequestException();
+                    }
+
+                    const nextUserProgress &#x3D; await tx.userProgress.findFirst({
+                        where: {
+                            course: {
+                                slug: payload.course_slug
+                            },
+                            userId: user.id,
+                            contentId: content_next.id
+                        }
+                    });
+
+                    if(!nextUserProgress) {
+                        await tx.userProgress.create({
+                            data: {
+                                userId: user.id,
+                                contentId: content_next.id,
+                                courseId: userProgressUpdate.courseId
+                            }
+                        });
+                    }
+                }
+
+                return true;
+            });
+        }
+        catch(err) {
+            console.log(err)
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async updateContentTestFile(payload: UpdateContentFileDto): Promise&lt;FileTest&gt; {
+        const code &#x3D; await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.fileTest.update({
+                where: {
+                    id: payload.fileId,
+                    codeId: code.id
+                },
+                data: {
+                    content: payload.content
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async addFileTest(payload: AddFileTestDto): Promise&lt;FileTest&gt; {
+        const code &#x3D; await this.getDetailCode(payload);
+        try {
+            let language;
+            let mime;
+
+            switch(code.labCode.lab){
+                case &#x27;WebDev&#x27;:
+                    language &#x3D; &#x27;javascript&#x27;;
+                    mime &#x3D; &#x27;js&#x27;;
+                    break;
+                case &#x27;Javascript&#x27;:
+                    language &#x3D; &#x27;javascript&#x27;;
+                    mime &#x3D; &#x27;js&#x27;;
+                    break;
+                case &#x27;Typescript&#x27;:
+                    language &#x3D; &#x27;typescript&#x27;;
+                    mime &#x3D; &#x27;ts&#x27;;
+                    break;
+                case &#x27;Python&#x27;:
+                    language &#x3D; &#x27;python&#x27;;
+                    mime &#x3D; &#x27;py&#x27;;
+                    break;
+                case &#x27;Java&#x27;:
+                    language &#x3D; &#x27;java&#x27;;
+                    mime &#x3D; &#x27;java&#x27;;
+                    break;
+                case &#x27;Php&#x27;:
+                    language &#x3D; &#x27;php&#x27;;
+                    mime &#x3D; &#x27;php&#x27;; 
+                    break;
+                case &#x27;C++&#x27;:
+                    language &#x3D; &#x27;cpp&#x27;;
+                    mime &#x3D; &#x27;cpp&#x27;; 
+                    break;      
+            }
+
+            if(code.fileTest) {
+                throw new BadRequestException();
+            }
+
+            return await this.prismaService.fileTest.create({
+                data: {
+                    fileName: payload.fileName,
+                    language,
+                    mime,
+                    codeId: code.id
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async findCourse(slug: string): Promise&lt;Course&gt; {
+        try {
+            const course &#x3D; await this.prismaService.course.findFirst({
+                where: {
+                    slug
+                }
+            });
+
+            if(!course){
+                throw new NotFoundException();
+            }
+            return course;
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async updateLabCode(payload: UpdateValueCodeDto): Promise&lt;Code&gt; {
+        const code &#x3D; await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.$transaction(async (tx) &#x3D;&gt; {
+                const codeUpdate &#x3D; await tx.code.update({
+                    where: {
+                        id: code.id
+                    },
+                    data: {
+                        ...payload.value
+                    },
+                    include: {
+                        file: true,
+                        fileTest: true
+                    }
+                });
+
+                if(codeUpdate.file.length &gt; 0) {
+                    await tx.fileCode.deleteMany({
+                        where: {
+                            codeId: codeUpdate.id
+                        }
+                    });
+                }
+
+                if(codeUpdate.fileTest) {
+                    await tx.fileTest.delete({
+                        where: {
+                            codeId: codeUpdate.id
+                        }
+                    })
+                }
+
+                return codeUpdate;
+            });
+        }
+        catch{
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async updateContentFile(payload: UpdateContentFileDto): Promise&lt;FileCode&gt; {
+        const code &#x3D; await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.fileCode.update({
+                where: {
+                    id: payload.fileId,
+                    codeId: code.id
+                },
+                data: {
+                    default_content: payload.content
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllLanguageCode(payload: GetAllLanguageCodeDto): Promise&lt;LabCode[]&gt; {
+        await this.quizService.findUserByEmail(payload.email);
+        
+        try {
+            return await this.prismaService.labCode.findMany();
+        }
+        catch(err) {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async addFileName(payload: AddFileNameDto): Promise&lt;FileCode&gt; {
+        const code &#x3D; await this.getDetailCode(payload);
+        try {
+            return await this.prismaService.fileCode.create({
+                data: {
+                    fileName: payload.fileName,
+                    codeId: code.id,
+                    language: payload.languageCode,
+                    mime: payload.mimeFile
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+    
+    async updateValueCode(payload: UpdateValueCodeDto): Promise&lt;Code&gt; {
+        const code &#x3D; await this.getDetailCode(payload);
+
+        try {
+            return await this.prismaService.code.update({
+                where: {
+                    id: code.id
+                },
+                data: {
+                    ...payload.value
+                }
+            })
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    //instructor
+    async getDetailCode(payload: GetDetailCodeDto): Promise&lt;Code &amp; {file: FileCode[]; fileTest: FileTest, labCode: LabCode, exercise: Exercise}&gt; {
+        const user &#x3D; await this.quizService.findUserByEmail(payload.email);
+        const course &#x3D; await this.quizService.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.quizService.findChapterByToken(payload.chapter_token, course.id);
+        const exercise &#x3D; await this.quizService.findExcersie(chapter.id, payload.exercise_token);
+
+        try {
+            const code &#x3D; await this.prismaService.code.findFirst({
+                where: {
+                    exerciseId: exercise.id,
+                    token: payload.code_token
+                },
+                include: {
+                    labCode: true,
+                    file: true,
+                    fileTest: true,
+                    exercise: true
+                }
+            });
+            
+            if(!code) {
+                throw new NotFoundException();
+            }
+
+            return code;
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async addQuestionCode(payload: AddQuestionCodeDto): Promise&lt;Code&gt; {
+        const user &#x3D; await this.quizService.findUserByEmail(payload.email);
+        const course &#x3D; await this.quizService.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.quizService.findChapterByToken(payload.chapter_token, course.id);
+        const exercise &#x3D; await this.quizService.findExcersie(chapter.id, payload.exercise_token);
+
+        try {
+            return await this.prismaService.code.create({
+                data: {
+                    token: new Date().getTime().toString(),
+                    question: payload.question,
+                    exerciseId: exercise.id
+                }
+            });
+        }
+        catch {
+            throw new InternalServerErrorException();
+        }
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'CodeService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

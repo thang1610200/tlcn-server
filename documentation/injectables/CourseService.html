@@ -151,6 +151,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#countCoursePublish" >countCoursePublish</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#countUserOfInstructor" >countUserOfInstructor</a>
                             </li>
                             <li>
@@ -167,10 +171,6 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#filterCoursePublish" >filterCoursePublish</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Async</span>
                                 <a href="#findAllTopic" >findAllTopic</a>
                             </li>
                             <li>
@@ -180,6 +180,10 @@
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#findByTitleTopic" >findByTitleTopic</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findCourseByAi" >findCourseByAi</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -196,6 +200,10 @@
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllCoursePublish" >getAllCoursePublish</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllLevelCourse" >getAllLevelCourse</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -218,11 +226,11 @@
                                 <a href="#getDetailCourseAuth" >getDetailCourseAuth</a>
                             </li>
                             <li>
-                                    <span class="modifier">Async</span>
-                                <a href="#getUserProgressCourse" >getUserProgressCourse</a>
+                                <a href="#slugify" >slugify</a>
                             </li>
                             <li>
-                                <a href="#slugify" >slugify</a>
+                                    <span class="modifier">Async</span>
+                                <a href="#test" >test</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -254,12 +262,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>)</code>
+<code>constructor(prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>, configService: ConfigService, httpService: HttpService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/course/course.service.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/course/course.service.ts:33</a></div>
                             </td>
                         </tr>
 
@@ -293,6 +301,30 @@
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/UploadService.html" target="_self" >UploadService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>configService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>httpService</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -334,8 +366,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="579"
-                                    class="link-to-prism">src/course/course.service.ts:579</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1302"
+                                    class="link-to-prism">src/course/course.service.ts:1302</a></div>
                         </td>
                     </tr>
 
@@ -403,8 +435,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="522"
-                                    class="link-to-prism">src/course/course.service.ts:522</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1247"
+                                    class="link-to-prism">src/course/course.service.ts:1247</a></div>
                         </td>
                     </tr>
 
@@ -454,6 +486,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="countCoursePublish"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>countCoursePublish</b></span>
+                        <a href="#countCoursePublish"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>countCoursePublish(payload: <a href="../interfaces/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="267"
+                                    class="link-to-prism">src/course/course.service.ts:267</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;number&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="countUserOfInstructor"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -472,8 +573,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="538"
-                                    class="link-to-prism">src/course/course.service.ts:538</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1263"
+                                    class="link-to-prism">src/course/course.service.ts:1263</a></div>
                         </td>
                     </tr>
 
@@ -541,8 +642,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="61"
-                                    class="link-to-prism">src/course/course.service.ts:61</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="514"
+                                    class="link-to-prism">src/course/course.service.ts:514</a></div>
                         </td>
                     </tr>
 
@@ -610,8 +711,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="44"
-                                    class="link-to-prism">src/course/course.service.ts:44</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="497"
+                                    class="link-to-prism">src/course/course.service.ts:497</a></div>
                         </td>
                     </tr>
 
@@ -679,8 +780,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="196"
-                                    class="link-to-prism">src/course/course.service.ts:196</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="649"
+                                    class="link-to-prism">src/course/course.service.ts:649</a></div>
                         </td>
                     </tr>
 
@@ -730,75 +831,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="filterCoursePublish"></a>
-                    <span class="name">
-                            <span class="modifier">Async</span>
-                        <span ><b>filterCoursePublish</b></span>
-                        <a href="#filterCoursePublish"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>filterCoursePublish(payload: <a href="../classes/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="297"
-                                    class="link-to-prism">src/course/course.service.ts:297</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>payload</td>
-                                            <td>
-                                                            <code><a href="../classes/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;Course[]&gt;</code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="findAllTopic"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -817,8 +849,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="95"
-                                    class="link-to-prism">src/course/course.service.ts:95</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="548"
+                                    class="link-to-prism">src/course/course.service.ts:548</a></div>
                         </td>
                     </tr>
 
@@ -856,8 +888,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="87"
-                                    class="link-to-prism">src/course/course.service.ts:87</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="540"
+                                    class="link-to-prism">src/course/course.service.ts:540</a></div>
                         </td>
                     </tr>
 
@@ -925,8 +957,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="79"
-                                    class="link-to-prism">src/course/course.service.ts:79</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="532"
+                                    class="link-to-prism">src/course/course.service.ts:532</a></div>
                         </td>
                     </tr>
 
@@ -976,6 +1008,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="findCourseByAi"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findCourseByAi</b></span>
+                        <a href="#findCourseByAi"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findCourseByAi(payload: <a href="../classes/FindCourseByAi.html" target="_self">FindCourseByAi</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="230"
+                                    class="link-to-prism">src/course/course.service.ts:230</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/FindCourseByAi.html" target="_self" >FindCourseByAi</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;JsonObject&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="findUserByEmail"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -994,8 +1095,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="364"
-                                    class="link-to-prism">src/course/course.service.ts:364</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1001"
+                                    class="link-to-prism">src/course/course.service.ts:1001</a></div>
                         </td>
                     </tr>
 
@@ -1063,8 +1164,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="125"
-                                    class="link-to-prism">src/course/course.service.ts:125</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="578"
+                                    class="link-to-prism">src/course/course.service.ts:578</a></div>
                         </td>
                     </tr>
 
@@ -1132,8 +1233,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="559"
-                                    class="link-to-prism">src/course/course.service.ts:559</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1283"
+                                    class="link-to-prism">src/course/course.service.ts:1283</a></div>
                         </td>
                     </tr>
 
@@ -1164,15 +1265,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllCoursePublish(payload: <a href="../classes/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
+                    <code>getAllCoursePublish(payload: <a href="../interfaces/FilterCourseDto.html" target="_self">FilterCourseDto</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="260"
-                                    class="link-to-prism">src/course/course.service.ts:260</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="714"
+                                    class="link-to-prism">src/course/course.service.ts:714</a></div>
                         </td>
                     </tr>
 
@@ -1195,7 +1296,7 @@
                                         <tr>
                                                 <td>payload</td>
                                             <td>
-                                                            <code><a href="../classes/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
+                                                            <code><a href="../interfaces/FilterCourseDto.html" target="_self" >FilterCourseDto</a></code>
                                             </td>
 
                                             <td>
@@ -1208,12 +1309,51 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;Course[]&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
 
                         </div>
                             <div class="io-description">
                                 
                             </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllLevelCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getAllLevelCourse</b></span>
+                        <a href="#getAllLevelCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllLevelCourse()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="477"
+                                    class="link-to-prism">src/course/course.service.ts:477</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Level[]&gt;</code>
+
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -1240,8 +1380,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="496"
-                                    class="link-to-prism">src/course/course.service.ts:496</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1221"
+                                    class="link-to-prism">src/course/course.service.ts:1221</a></div>
                         </td>
                     </tr>
 
@@ -1309,8 +1449,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="472"
-                                    class="link-to-prism">src/course/course.service.ts:472</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1121"
+                                    class="link-to-prism">src/course/course.service.ts:1121</a></div>
                         </td>
                     </tr>
 
@@ -1346,7 +1486,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;UserProgress[]&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -1378,8 +1518,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="143"
-                                    class="link-to-prism">src/course/course.service.ts:143</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="596"
+                                    class="link-to-prism">src/course/course.service.ts:596</a></div>
                         </td>
                     </tr>
 
@@ -1447,8 +1587,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="327"
-                                    class="link-to-prism">src/course/course.service.ts:327</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="955"
+                                    class="link-to-prism">src/course/course.service.ts:955</a></div>
                         </td>
                     </tr>
 
@@ -1516,77 +1656,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="426"
-                                    class="link-to-prism">src/course/course.service.ts:426</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>payload</td>
-                                            <td>
-                                                            <code><a href="../classes/GetProgressCourseDto.html" target="_self" >GetProgressCourseDto</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;Course&gt;</code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getUserProgressCourse"></a>
-                    <span class="name">
-                            <span class="modifier">Async</span>
-                        <span ><b>getUserProgressCourse</b></span>
-                        <a href="#getUserProgressCourse"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getUserProgressCourse(payload: <a href="../classes/GetProgressCourseDto.html" target="_self">GetProgressCourseDto</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="378"
-                                    class="link-to-prism">src/course/course.service.ts:378</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="1063"
+                                    class="link-to-prism">src/course/course.service.ts:1063</a></div>
                         </td>
                     </tr>
 
@@ -1652,8 +1723,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="32"
-                                    class="link-to-prism">src/course/course.service.ts:32</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="485"
+                                    class="link-to-prism">src/course/course.service.ts:485</a></div>
                         </td>
                     </tr>
 
@@ -1721,6 +1792,45 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="test"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>test</b></span>
+                        <a href="#test"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>test()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="41"
+                                    class="link-to-prism">src/course/course.service.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updateCourse"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -1739,8 +1849,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="99"
-                                    class="link-to-prism">src/course/course.service.ts:99</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="552"
+                                    class="link-to-prism">src/course/course.service.ts:552</a></div>
                         </td>
                     </tr>
 
@@ -1808,8 +1918,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="220"
-                                    class="link-to-prism">src/course/course.service.ts:220</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="673"
+                                    class="link-to-prism">src/course/course.service.ts:673</a></div>
                         </td>
                     </tr>
 
@@ -1877,8 +1987,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="167"
-                                    class="link-to-prism">src/course/course.service.ts:167</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="620"
+                                    class="link-to-prism">src/course/course.service.ts:620</a></div>
                         </td>
                     </tr>
 
@@ -1939,12 +2049,12 @@
 import { PrismaService } from &#x27;src/prisma.service&#x27;;
 import { CourseServiceInterface } from &#x27;./interfaces/course.service.interface&#x27;;
 import { CreateTopicDto } from &#x27;./dto/create-topic.dto&#x27;;
-import { Course, Topic, User, UserProgress } from &#x27;@prisma/client&#x27;;
+import { Course, Level, Prisma, Topic, User, UserProgress } from &#x27;@prisma/client&#x27;;
 import { CreateCourseDto } from &#x27;./dto/create-course.dto&#x27;;
 import { UpdateValueCourse } from &#x27;./dto/update-course.dto&#x27;;
 import { CourseResponse } from &#x27;./dto/course-response.dto&#x27;;
 import { GetCourseUserDto } from &#x27;./dto/get-course-user.dto&#x27;;
-import { GetCourseBySlugDto } from &#x27;./dto/get-course-slug.dto&#x27;;
+import { FindCourseByAi, GetCourseBySlugDto } from &#x27;./dto/get-course-slug.dto&#x27;;
 import { UpdateStatusDto } from &#x27;./dto/update-status.dto&#x27;;
 import { DeleteCourseDto } from &#x27;./dto/delete-course.dto&#x27;;
 import { UpdatePictureCourse } from &#x27;./dto/update-picture.dto&#x27;;
@@ -1952,14 +2062,467 @@ import { UploadService } from &#x27;src/upload/upload.service&#x27;;
 import { FilterCourseDto } from &#x27;./dto/filter-course-publish.dto&#x27;;
 import { GetDetailCourseDto } from &#x27;./dto/get-detail-course.dto&#x27;;
 import { GetProgressCourseDto } from &#x27;./dto/get-progress-course.dto&#x27;;
-import { count } from &#x27;console&#x27;;
+import { GoogleGenerativeAI } from &#x27;@google/generative-ai&#x27;;
+import { JsonObject } from &#x27;@prisma/client/runtime/library&#x27;;
+import { ConfigService } from &#x27;@nestjs/config&#x27;;
+import { HttpService } from &#x27;@nestjs/axios&#x27;;
+
+type PipelineStage &#x3D; {
+    [key: string]: any;
+};
 
 @Injectable()
 export class CourseService implements CourseServiceInterface {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly uploadService: UploadService,
+        private readonly configService: ConfigService,
+        private readonly httpService: HttpService,
     ) {}
+
+    async test(): Promise&lt;any&gt; {
+        // const course &#x3D; await this.prismaService.course.findMany({
+        //     where: {
+        //         isPublished: true,
+        //         userProgress: {
+        //             some: {
+        //                 user: {
+        //                     email: &#x27;nguyenhuuthang9440@gmail.com&#x27;
+        //                 }
+        //             }
+        //         }
+        //     },
+        //     include: {
+        //         chapters: {
+        //             where: {
+        //                 isPublished: true
+        //             },
+        //             include: {
+        //                 contents: {
+        //                     include: {
+        //                         lesson: {
+        //                             where: {
+        //                                 isPublished: true
+        //                             }
+        //                         },
+        //                         exercise: {
+        //                             where: {
+        //                                 isOpen: true
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         },
+        //         userProgress: {
+        //             where: {
+        //                 user: {
+        //                     email: &#x27;nguyenhuuthang9440@gmail.com&#x27;
+        //                 },
+        //                 isCompleted: true
+        //             }
+        //         }
+        //     }
+        // });
+
+        // const user_progress &#x3D; course.map((item) &#x3D;&gt; {
+        //     const lesson &#x3D; item.chapters.reduce((accumulator, currentValue) &#x3D;&gt; {
+        //         return accumulator + currentValue.contents.length;
+        //     }, 0);
+
+        //     return {
+        //         ...item,
+        //         percent: Number(item.userProgress.length / lesson)
+        //     }
+        // })
+
+        // return user_progress;
+
+        const course: any &#x3D; await this.prismaService.course.aggregateRaw({
+            pipeline: [
+                {
+                    $lookup: {
+                        from: &quot;UserProgress&quot;,
+                        let: { courseId: &quot;$_id&quot; }, 
+                        pipeline: [
+                            { $match: { $expr: { $eq: [&quot;$courseId&quot;, &quot;$$courseId&quot;] } } },
+                            {
+                                $lookup: {
+                                    from: &quot;User&quot;,
+                                    localField: &quot;userId&quot;,
+                                    foreignField: &quot;_id&quot;,
+                                    as: &quot;user&quot;,
+                                }
+                            },
+                            { $unwind: &quot;$user&quot; } 
+                        ],
+                        as: &quot;userProgress&quot;
+                    }
+                },
+                {
+                    $match: {
+                        isPublished: true,
+                        userProgress: {
+                            $elemMatch: {
+                                &quot;user.email&quot;: &quot;nguyenhuuthang9440@gmail.com&quot;
+                            }
+                        }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: &quot;Chapter&quot;,
+                        let: { courseId: &quot;$_id&quot; }, 
+                        pipeline: [
+                            { $match: { $expr: { $eq: [&quot;$courseId&quot;, &quot;$$courseId&quot;] } } },
+                            {
+                                $match: {
+                                    isPublished: true
+                                }
+                            },
+                            {
+                                $lookup: {
+                                    from: &quot;Content&quot;,
+                                    let: { chapterId: &quot;$_id&quot; }, 
+                                    pipeline: [
+                                        { $match: { $expr: { $eq: [&quot;$chapterId&quot;, &quot;$$chapterId&quot;] } } },
+                                        {
+                                            $lookup: {
+                                                from: &#x27;Lesson&#x27;,
+                                                localField: &#x27;_id&#x27;,
+                                                foreignField: &#x27;contentId&#x27;,
+                                                as: &#x27;lessons&#x27;,
+                                            },
+                                        },
+                                        {
+                                            $lookup: {
+                                                from: &#x27;Exercise&#x27;,
+                                                localField: &#x27;_id&#x27;,
+                                                foreignField: &#x27;contentId&#x27;,
+                                                as: &#x27;exercises&#x27;,
+                                            },
+                                        },
+                                        {
+                                            $unwind: {
+                                                path: &#x27;$lessons&#x27;,
+                                                preserveNullAndEmptyArrays: true,
+                                            },
+                                        },
+                                        {
+                                            $unwind: {
+                                                path: &#x27;$exercises&#x27;,
+                                                preserveNullAndEmptyArrays: true,
+                                            },
+                                        },
+                                        {
+                                            $match: {
+                                                $or: [
+                                                    { &#x27;lessons.isPublished&#x27;: true },
+                                                    { &#x27;exercises.isOpen&#x27;: true },
+                                                ],
+                                            },
+                                        },
+                                    ],
+                                    as: &quot;contents&quot;
+                                }
+                            }
+                        ],
+                        as: &quot;chapters&quot;
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        title: 1,
+                        chapters: 1,
+                        slug: 1,
+                        picture: 1,
+                        description: 1,
+                        userProgress: {
+                            $filter: {
+                                input: &quot;$userProgress&quot;,
+                                as: &quot;userProgressItem&quot;,
+                                cond: {
+                                    $and: [
+                                        { $eq: [&quot;$$userProgressItem.user.email&quot;, &quot;nguyenhuuthang9440@gmail.com&quot;] },
+                                        { $eq: [&quot;$$userProgressItem.isCompleted&quot;, true ] }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                },
+            ]
+        });
+
+        const user_progress &#x3D; course.map((item) &#x3D;&gt; {
+            const lesson &#x3D; item.chapters.reduce((accumulator, currentValue) &#x3D;&gt; {
+                return accumulator + currentValue.contents.length;
+            }, 0);
+
+            return {
+                ...item,
+                percent: Number(item.userProgress.length / lesson)
+            }
+        });
+
+        return user_progress;
+    }
+
+    async findCourseByAi(payload: FindCourseByAi): Promise&lt;JsonObject&gt; {
+        try {
+            const genAI &#x3D; new GoogleGenerativeAI(
+                this.configService.get(&#x27;GEMINI_API_KEY&#x27;),
+            );
+            const model &#x3D; genAI.getGenerativeModel({
+                model: &#x27;text-embedding-004&#x27;,
+            });
+
+            const resultEmbedding &#x3D; await model.embedContent(payload.request);
+            const embedding &#x3D; resultEmbedding.embedding;
+
+            return await this.prismaService.course.aggregateRaw({
+                pipeline: [
+                    {
+                        $vectorSearch: {
+                            index: &#x27;vector_index&#x27;,
+                            path: &#x27;description_embedding&#x27;,
+                            queryVector: embedding.values,
+                            numCandidates: 10,
+                            limit: 2,
+                        },
+                    },
+                    {
+                        $project: {
+                            title: 1,
+                            slug: 1,
+                            picture: 1,
+                        },
+                    },
+                ],
+            });
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async countCoursePublish(payload: FilterCourseDto): Promise&lt;number&gt; {
+        try {
+            let pipeline: PipelineStage[] &#x3D; [
+                {
+                    $match: {
+                        isPublished: true,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: &#x27;Chapter&#x27;,
+                        localField: &#x27;_id&#x27;,
+                        foreignField: &#x27;courseId&#x27;,
+                        as: &#x27;chapters&#x27;,
+                    },
+                },
+                {
+                    $unwind: &#x27;$chapters&#x27;,
+                },
+                {
+                    $match: {
+                        &#x27;chapters.isPublished&#x27;: true,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: &#x27;Content&#x27;,
+                        localField: &#x27;chapters._id&#x27;,
+                        foreignField: &#x27;chapterId&#x27;,
+                        as: &#x27;chapters.contents&#x27;,
+                    },
+                },
+                {
+                    $unwind: &#x27;$chapters.contents&#x27;,
+                },
+                {
+                    $lookup: {
+                        from: &#x27;Lesson&#x27;,
+                        localField: &#x27;chapters.contents._id&#x27;,
+                        foreignField: &#x27;contentId&#x27;,
+                        as: &#x27;chapters.contents.lessons&#x27;,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: &#x27;Exercise&#x27;,
+                        localField: &#x27;chapters.contents._id&#x27;,
+                        foreignField: &#x27;contentId&#x27;,
+                        as: &#x27;chapters.contents.exercises&#x27;,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: &#x27;$chapters.contents.lessons&#x27;,
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: &#x27;$chapters.contents.exercises&#x27;,
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $match: {
+                        $or: [
+                            { &#x27;chapters.contents.lessons.isPublished&#x27;: true },
+                            { &#x27;chapters.contents.exercises.isOpen&#x27;: true },
+                        ],
+                    },
+                },
+                {
+                    $group: {
+                        _id: &#x27;$_id&#x27;,
+                        title: { $first: &#x27;$title&#x27; },
+                        slug: { $first: &#x27;$slug&#x27; },
+                        picture: { $first: &#x27;$picture&#x27; },
+                        isPublished: { $first: &#x27;$isPublished&#x27; },
+                        description: { $first: &#x27;$description&#x27; },
+                        chapters: { $push: &#x27;$chapters&#x27; },
+                        create_at: { $first: &#x27;$create_at&#x27; },
+                        total: { $sum: &#x27;$chapters.contents.lessons.duration&#x27; },
+                    },
+                },
+            ];
+
+            if (!!payload?.topic_slug) {
+                const topicMatch: PipelineStage[] &#x3D; [
+                    {
+                        $lookup: {
+                            from: &#x27;Topic&#x27;,
+                            localField: &#x27;topic_id&#x27;,
+                            foreignField: &#x27;_id&#x27;,
+                            as: &#x27;topic&#x27;,
+                        },
+                    },
+                    {
+                        $unwind: &#x27;$topic&#x27;,
+                    },
+                    {
+                        $match: {
+                            &#x27;topic.slug&#x27;: {
+                                $in:
+                                    typeof payload.topic_slug &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+                                        ? [payload.topic_slug]
+                                        : payload.topic_slug,
+                            },
+                        },
+                    },
+                ];
+
+                pipeline &#x3D; [...topicMatch, ...pipeline];
+            }
+
+            if (!!payload?.level_slug) {
+                const levelMatch: PipelineStage[] &#x3D; [
+                    {
+                        $lookup: {
+                            from: &#x27;Level&#x27;,
+                            localField: &#x27;level_id&#x27;,
+                            foreignField: &#x27;_id&#x27;,
+                            as: &#x27;level&#x27;,
+                        },
+                    },
+                    {
+                        $unwind: &#x27;$level&#x27;,
+                    },
+                    {
+                        $match: {
+                            &#x27;level.slug&#x27;: {
+                                $in:
+                                    typeof payload.level_slug &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+                                        ? [payload.level_slug]
+                                        : payload.level_slug,
+                            },
+                        },
+                    },
+                ];
+
+                pipeline &#x3D; [...levelMatch, ...pipeline];
+            }
+
+            if (!!payload?.title) {
+                const titleMatch: PipelineStage &#x3D; {
+                    $search: {
+                        index: &#x27;default&#x27;,
+                        text: {
+                            query: payload.title,
+                            path: &#x27;title&#x27;,
+                        },
+                    },
+                };
+
+                pipeline.unshift(titleMatch);
+            }
+
+            if (!!payload?.duration) {
+                let durationMatch &#x3D; [];
+                let duration: string[] &#x3D;
+                    typeof payload.duration &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+                        ? [payload.duration]
+                        : payload.duration;
+    
+                duration.forEach((item) &#x3D;&gt; {
+                    if (item &#x3D;&#x3D;&#x3D; &#x27;extraShort&#x27;) {
+                        durationMatch.push({
+                            total: { $gte: 0, $lte: 3600 },
+                        });
+                    } else if (item &#x3D;&#x3D;&#x3D; &#x27;short&#x27;) {
+                        durationMatch.push({
+                            total: { $gte: 3600, $lte: 10800 },
+                        });
+                    } else if (item &#x3D;&#x3D;&#x3D; &#x27;medium&#x27;) {
+                        durationMatch.push({
+                            total: { $gte: 10800, $lte: 21600 },
+                        });
+                    } else if (item &#x3D;&#x3D;&#x3D; &#x27;long&#x27;) {
+                        durationMatch.push({
+                            total: { $gte: 21600, $lte: 61200 },
+                        });
+                    } else if (item &#x3D;&#x3D;&#x3D; &#x27;extraLong&#x27;) {
+                        durationMatch.push({
+                            total: { $gte: 61200 },
+                        });
+                    }
+                });
+    
+                if (durationMatch.length &#x3D;&#x3D;&#x3D; 0) {
+                    return 0;
+                }
+    
+                const elementPipeline: PipelineStage &#x3D; {
+                    $match: {
+                        $or: durationMatch,
+                    },
+                };
+    
+                pipeline.push(elementPipeline);
+            }
+
+            const result &#x3D; await this.prismaService.course.aggregateRaw({
+                pipeline,
+            });
+
+            return result.length as number;
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async getAllLevelCourse(): Promise&lt;Level[]&gt; {
+        try {
+            return await this.prismaService.level.findMany();
+        } catch {
+            throw new InternalServerErrorException();
+        }
+    }
 
     slugify(name: string, separator: string &#x3D; &#x27;-&#x27;): string {
         return name
@@ -2065,8 +2628,8 @@ export class CourseService implements CourseServiceInterface {
                 create_at: &#x27;desc&#x27;,
             },
             include: {
-                userProgress: true
-            }
+                userProgress: true,
+            },
         });
 
         return course;
@@ -2185,74 +2748,249 @@ export class CourseService implements CourseServiceInterface {
 
             return this.buildResponseCourse(update);
         } catch (err: any) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }
 
-    async getAllCoursePublish(payload: FilterCourseDto): Promise&lt;Course[]&gt; {
-        if (payload.topic_slug.trim() &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
-            return await this.filterCoursePublish(payload);
+    async getAllCoursePublish(payload: FilterCourseDto): Promise&lt;any&gt; {
+        let pipeline: PipelineStage[] &#x3D; [
+            {
+                $match: {
+                    isPublished: true,
+                },
+            },
+            {
+                $lookup: {
+                    from: &#x27;Chapter&#x27;,
+                    localField: &#x27;_id&#x27;,
+                    foreignField: &#x27;courseId&#x27;,
+                    as: &#x27;chapters&#x27;,
+                },
+            },
+            {
+                $unwind: &#x27;$chapters&#x27;,
+            },
+            {
+                $match: {
+                    &#x27;chapters.isPublished&#x27;: true,
+                },
+            },
+            {
+                $lookup: {
+                    from: &#x27;Content&#x27;,
+                    localField: &#x27;chapters._id&#x27;,
+                    foreignField: &#x27;chapterId&#x27;,
+                    as: &#x27;chapters.contents&#x27;,
+                },
+            },
+            {
+                $unwind: &#x27;$chapters.contents&#x27;,
+            },
+            {
+                $lookup: {
+                    from: &#x27;Lesson&#x27;,
+                    localField: &#x27;chapters.contents._id&#x27;,
+                    foreignField: &#x27;contentId&#x27;,
+                    as: &#x27;chapters.contents.lessons&#x27;,
+                },
+            },
+            {
+                $lookup: {
+                    from: &#x27;Exercise&#x27;,
+                    localField: &#x27;chapters.contents._id&#x27;,
+                    foreignField: &#x27;contentId&#x27;,
+                    as: &#x27;chapters.contents.exercises&#x27;,
+                },
+            },
+            {
+                $unwind: {
+                    path: &#x27;$chapters.contents.lessons&#x27;,
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $unwind: {
+                    path: &#x27;$chapters.contents.exercises&#x27;,
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $match: {
+                    $or: [
+                        { &#x27;chapters.contents.lessons.isPublished&#x27;: true },
+                        { &#x27;chapters.contents.exercises.isOpen&#x27;: true },
+                    ],
+                },
+            },
+            {
+                $group: {
+                    _id: &#x27;$_id&#x27;,
+                    title: { $first: &#x27;$title&#x27; },
+                    slug: { $first: &#x27;$slug&#x27; },
+                    picture: { $first: &#x27;$picture&#x27; },
+                    isPublished: { $first: &#x27;$isPublished&#x27; },
+                    description: { $first: &#x27;$description&#x27; },
+                    chapters: { $push: &#x27;$chapters&#x27; },
+                    create_at: { $first: &#x27;$create_at&#x27; },
+                    total: { $sum: &#x27;$chapters.contents.lessons.duration&#x27; },
+                },
+            },
+            {
+                $sort: { create_at: 1 },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    title: 1,
+                    chapters: 1,
+                    slug: 1,
+                    picture: 1,
+                    description: 1,
+                    total: 1,
+                },
+            },
+            {
+                $skip: 0,
+            },
+            {
+                $limit: 6,
+            },
+        ];
+        if (!!payload?.topic_slug) {
+            const topicMatch: PipelineStage[] &#x3D; [
+                {
+                    $lookup: {
+                        from: &#x27;Topic&#x27;,
+                        localField: &#x27;topic_id&#x27;,
+                        foreignField: &#x27;_id&#x27;,
+                        as: &#x27;topic&#x27;,
+                    },
+                },
+                {
+                    $unwind: &#x27;$topic&#x27;,
+                },
+                {
+                    $match: {
+                        &#x27;topic.slug&#x27;: {
+                            $in:
+                                typeof payload.topic_slug &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+                                    ? [payload.topic_slug]
+                                    : payload.topic_slug,
+                        },
+                    },
+                },
+            ];
+
+            pipeline &#x3D; [...topicMatch, ...pipeline];
         }
 
-        const topic &#x3D; await this.findByTitleTopic(payload.topic_slug);
-
-        return await this.prismaService.course.findMany({
-            where: {
-                isPublished: true,
-                title: {
-                    contains: payload.title,
-                },
-                topic_id: topic.id,
-            },
-            include: {
-                topic: true,
-                chapters: {
-                    where: {
-                        isPublished: true,
+        if (!!payload?.level_slug) {
+            const levelMatch: PipelineStage[] &#x3D; [
+                {
+                    $lookup: {
+                        from: &#x27;Level&#x27;,
+                        localField: &#x27;level_id&#x27;,
+                        foreignField: &#x27;_id&#x27;,
+                        as: &#x27;level&#x27;,
                     },
-                    include: {
-                        lessons: {
-                            where: {
-                                isPublished: true
-                            }
-                        }
-                    }
                 },
-                owner: true,
-            },
-            orderBy: {
-                create_at: &#x27;desc&#x27;,
-            },
-        });
-    }
-
-    async filterCoursePublish(payload: FilterCourseDto): Promise&lt;Course[]&gt; {
-        return await this.prismaService.course.findMany({
-            where: {
-                isPublished: true,
-                title: {
-                    contains: payload.title,
+                {
+                    $unwind: &#x27;$level&#x27;,
                 },
-            },
-            include: {
-                topic: true,
-                chapters: {
-                    where: {
-                        isPublished: true,
+                {
+                    $match: {
+                        &#x27;level.slug&#x27;: {
+                            $in:
+                                typeof payload.level_slug &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+                                    ? [payload.level_slug]
+                                    : payload.level_slug,
+                        },
                     },
-                    include: {
-                        lessons: {
-                            where: {
-                                isPublished: true
-                            }
-                        }
-                    }
                 },
-                owner: true,
-            },
-            orderBy: {
-                create_at: &#x27;desc&#x27;,
-            },
+            ];
+
+            pipeline &#x3D; [...levelMatch, ...pipeline];
+        }
+
+        if (!!payload?.title) {
+            const titleMatch: PipelineStage &#x3D; {
+                $search: {
+                    index: &#x27;default&#x27;,
+                    text: {
+                        query: payload.title,
+                        path: &#x27;title&#x27;,
+                    },
+                },
+            };
+
+            pipeline.unshift(titleMatch);
+        }
+
+        if (!!payload?.duration) {
+            let durationMatch &#x3D; [];
+            let duration: string[] &#x3D;
+                typeof payload.duration &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+                    ? [payload.duration]
+                    : payload.duration;
+
+            duration.forEach((item) &#x3D;&gt; {
+                if (item &#x3D;&#x3D;&#x3D; &#x27;extraShort&#x27;) {
+                    durationMatch.push({
+                        total: { $gte: 0, $lte: 3600 },
+                    });
+                } else if (item &#x3D;&#x3D;&#x3D; &#x27;short&#x27;) {
+                    durationMatch.push({
+                        total: { $gte: 3600, $lte: 10800 },
+                    });
+                } else if (item &#x3D;&#x3D;&#x3D; &#x27;medium&#x27;) {
+                    durationMatch.push({
+                        total: { $gte: 10800, $lte: 21600 },
+                    });
+                } else if (item &#x3D;&#x3D;&#x3D; &#x27;long&#x27;) {
+                    durationMatch.push({
+                        total: { $gte: 21600, $lte: 61200 },
+                    });
+                } else if (item &#x3D;&#x3D;&#x3D; &#x27;extraLong&#x27;) {
+                    durationMatch.push({
+                        total: { $gte: 61200 },
+                    });
+                }
+            });
+
+            if (durationMatch.length &#x3D;&#x3D;&#x3D; 0) {
+                return [];
+            }
+
+            const elementPipeline: PipelineStage &#x3D; {
+                $match: {
+                    $or: durationMatch,
+                },
+            };
+
+            pipeline.splice(pipeline.length - 4, 0, elementPipeline);
+        }
+
+        if (!!payload?.page) {
+            if (Number(payload.page) &lt; 1) {
+                return [];
+            }
+
+            const pagination: PipelineStage[] &#x3D; [
+                {
+                    $skip: (Number(payload.page) - 1) * 6,
+                },
+                {
+                    $limit: 6,
+                },
+            ];
+
+            pipeline.splice(-2, 2);
+            pipeline &#x3D; [...pipeline, ...pagination];
+        }
+
+        return await this.prismaService.course.aggregateRaw({
+            pipeline,
         });
     }
 
@@ -2269,9 +3007,18 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                     include: {
-                        lessons: {
-                            where: {
-                                isPublished: true,
+                        contents: {
+                            include: {
+                                lesson: {
+                                    where: {
+                                        isPublished: true,
+                                    },
+                                },
+                                exercise: {
+                                    where: {
+                                        isOpen: true,
+                                    },
+                                },
                             },
                             orderBy: {
                                 position: &#x27;asc&#x27;,
@@ -2307,53 +3054,53 @@ export class CourseService implements CourseServiceInterface {
         return users;
     }
 
-    async getUserProgressCourse(
-        payload: GetProgressCourseDto,
-    ): Promise&lt;Course&gt; {
-        const user &#x3D; await this.findUserByEmail(payload.email);
+    // async getUserProgressCourse(
+    //     payload: GetProgressCourseDto,
+    // ): Promise&lt;Course&gt; {
+    //     const user &#x3D; await this.findUserByEmail(payload.email);
 
-        const course &#x3D; await this.prismaService.course.findUnique({
-            where: {
-                slug: payload.course_slug,
-                isPublished: true,
-            },
-            include: {
-                topic: true,
-                chapters: {
-                    where: {
-                        isPublished: true,
-                    },
-                    include: {
-                        lessons: {
-                            where: {
-                                isPublished: true,
-                            },
-                            orderBy: {
-                                position: &#x27;asc&#x27;,
-                            },
-                            include: {
-                                userProgress: {
-                                    where: {
-                                        userId: user.id,
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    orderBy: {
-                        position: &#x27;asc&#x27;,
-                    },
-                },
-                owner: true,
-            },
-        });
+    //     const course &#x3D; await this.prismaService.course.findUnique({
+    //         where: {
+    //             slug: payload.course_slug,
+    //             isPublished: true,
+    //         },
+    //         include: {
+    //             topic: true,
+    //             chapters: {
+    //                 where: {
+    //                     isPublished: true,
+    //                 },
+    //                 include: {
+    //                     // lessons: {
+    //                     //     where: {
+    //                     //         isPublished: true,
+    //                     //     },
+    //                     //     orderBy: {
+    //                     //         position: &#x27;asc&#x27;,
+    //                     //     },
+    //                     //     include: {
+    //                     //         userProgress: {
+    //                     //             where: {
+    //                     //                 userId: user.id,
+    //                     //             },
+    //                     //         },
+    //                     //     },
+    //                     // },
+    //                 },
+    //                 orderBy: {
+    //                     position: &#x27;asc&#x27;,
+    //                 },
+    //             },
+    //             owner: true,
+    //         },
+    //     });
 
-        if (!course) {
-            throw new UnprocessableEntityException();
-        }
+    //     if (!course) {
+    //         throw new UnprocessableEntityException();
+    //     }
 
-        return course;
-    }
+    //     return course;
+    // }
 
     async getDetailCourseAuth(payload: GetProgressCourseDto): Promise&lt;Course&gt; {
         const user &#x3D; await this.findUserByEmail(payload.email);
@@ -2370,19 +3117,26 @@ export class CourseService implements CourseServiceInterface {
                         isPublished: true,
                     },
                     include: {
-                        lessons: {
-                            where: {
-                                isPublished: true,
-                            },
-                            orderBy: {
-                                position: &#x27;asc&#x27;,
-                            },
+                        contents: {
                             include: {
+                                lesson: {
+                                    where: {
+                                        isPublished: true,
+                                    },
+                                },
+                                exercise: {
+                                    where: {
+                                        isOpen: true,
+                                    },
+                                },
                                 userProgress: {
                                     where: {
                                         userId: user.id,
                                     },
                                 },
+                            },
+                            orderBy: {
+                                position: &#x27;asc&#x27;,
                             },
                         },
                     },
@@ -2391,6 +3145,11 @@ export class CourseService implements CourseServiceInterface {
                     },
                 },
                 owner: true,
+                userProgress: {
+                    where: {
+                        userId: user.id,
+                    },
+                },
             },
         });
 
@@ -2403,20 +3162,96 @@ export class CourseService implements CourseServiceInterface {
 
     async getAllUserOfInstructor(
         payload: GetCourseUserDto,
-    ): Promise&lt;UserProgress[]&gt; {
+    ): Promise&lt;any&gt; {
         try {
             const owner &#x3D; await this.findUserByEmail(payload.email);
+
+            // return await this.prismaService.userProgress.aggregateRaw({
+            //     pipeline: [
+            //         {
+            //             $lookup: {
+            //                 from: &#x27;Course&#x27;,
+            //                 localField: &#x27;courseId&#x27;,
+            //                 foreignField: &#x27;_id&#x27;,
+            //                 as: &#x27;course&#x27;,
+            //             },
+            //         },
+            //         {
+            //             $unwind: &#x27;$course&#x27;,
+            //         },
+            //         {
+            //             $lookup: {
+            //                 from: &#x27;User&#x27;,
+            //                 localField: &#x27;userId&#x27;,
+            //                 foreignField: &#x27;_id&#x27;,
+            //                 as: &#x27;user&#x27;,
+            //             },
+            //         },
+            //         {
+            //             $unwind: &#x27;$user&#x27;,
+            //         },
+            //         {
+            //             $match: {
+            //                 &#x27;course.owner_id&#x27;: {
+            //                     &#x27;$oid&#x27;: owner.id
+            //                 },
+            //             },
+            //         },
+            //         {
+            //             $sort: {
+            //                 &#x27;createdAt&#x27;: -1,
+            //             }
+            //         },
+            //         {
+            //             $group: {
+            //                 &quot;_id&quot;: {
+            //                     courseId: &quot;$course.title&quot;,
+            //                     userId: &#x27;$user.email&#x27;
+            //                 },
+            //                 //&quot;data&quot;: { $push: &quot;$$ROOT&quot; }
+            //                 &quot;data&quot;: {
+            //                     $push: {
+            //                         $cond: [
+            //                             { $eq: [&quot;$isCompleted&quot;, true] },
+            //                             &quot;$$ROOT&quot;,
+            //                             null
+            //                         ],
+            //                       },
+            //                 }
+            //             }
+            //         },
+            //         { 
+            //             $project: {
+            //               _id: 0,
+            //               courseId: &#x27;$_id.courseId&#x27;,
+            //               userId: &#x27;$_id.userId&#x27;,
+            //               completedData: { 
+            //                 $ifNull: [
+            //                   {
+            //                     $filter: { 
+            //                       input: &#x27;$data&#x27;,
+            //                       as: &#x27;data&#x27;,
+            //                       cond: { $ne: [&#x27;$$data&#x27;, null] },
+            //                     },
+            //                   },
+            //                   []
+            //                 ]
+            //               },
+            //             },
+            //           },
+            //     ]
+            // });
 
             const course &#x3D; await this.prismaService.userProgress.findMany({
                 where: {
                     course: {
                         owner_id: owner.id,
-                    },
+                    }
                 },
                 distinct: [&#x27;userId&#x27;, &#x27;courseId&#x27;],
                 include: {
                     course: true,
-                    user: true,
+                    user: true 
                 },
             });
             return course;
@@ -2474,36 +3309,34 @@ export class CourseService implements CourseServiceInterface {
             const course &#x3D; await this.prismaService.userProgress.findMany({
                 where: {
                     course: {
-                        owner_id: owner.id
-                    }
+                        owner_id: owner.id,
+                    },
                 },
-                distinct: [&#x27;userId&#x27;,&#x27;courseId&#x27;]
+                distinct: [&#x27;userId&#x27;, &#x27;courseId&#x27;],
             });
 
             return course.length;
-        }
-        catch(err: any){
+        } catch (err: any) {
             console.log(err);
             throw new InternalServerErrorException();
         }
     }
 
-    async getAllCourseAdmin(): Promise&lt;Course[]&gt;{
+    async getAllCourseAdmin(): Promise&lt;Course[]&gt; {
         try {
             return await this.prismaService.course.findMany({
                 where: {
-                    isPublished: true
+                    isPublished: true,
                 },
                 include: {
                     owner: true,
-                    userProgress: true
+                    userProgress: true,
                 },
                 orderBy: {
-                    create_at: &#x27;desc&#x27;
-                }
+                    create_at: &#x27;desc&#x27;,
+                },
             });
-        }
-        catch(err: any){
+        } catch (err: any) {
             throw new InternalServerErrorException();
         }
     }

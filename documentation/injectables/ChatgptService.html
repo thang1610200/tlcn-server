@@ -144,6 +144,11 @@
                             <li>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Readonly</span>
+                                <a href="#genai" >genai</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
                                 <a href="#openai" >openai</a>
                             </li>
                         </ul>
@@ -168,11 +173,27 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#chatbotUser" >chatbotUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#createQuizzList" >createQuizzList</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#getSummaryCourse" >getSummaryCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#strict_output" >strict_output</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#supportCode" >supportCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#translateSubtitle" >translateSubtitle</a>
                             </li>
                         </ul>
                     </td>
@@ -192,12 +213,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(configService: ConfigService, prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, quizzService: <a href="../injectables/QuizzService.html" target="_self">QuizzService</a>)</code>
+<code>constructor(configService: ConfigService, prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, quizzService: <a href="../injectables/QuizzService.html" target="_self">QuizzService</a>, uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>, httpService: HttpService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/chatgpt/chatgpt.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/chatgpt/chatgpt.service.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -250,6 +271,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>uploadService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UploadService.html" target="_self" >UploadService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>httpService</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -286,8 +331,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="192"
-                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:192</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="845"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:845</a></div>
                         </td>
                     </tr>
 
@@ -367,8 +412,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="149"
-                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:149</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="798"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:798</a></div>
                         </td>
                     </tr>
 
@@ -430,6 +475,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="chatbotUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>chatbotUser</b></span>
+                        <a href="#chatbotUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>chatbotUser(payload: <a href="../classes/ChatbotUserDto.html" target="_self">ChatbotUserDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="233"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:233</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/ChatbotUserDto.html" target="_self" >ChatbotUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createQuizzList"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -448,8 +562,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="240"
-                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:240</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="897"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:897</a></div>
                         </td>
                     </tr>
 
@@ -499,6 +613,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getSummaryCourse"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getSummaryCourse</b></span>
+                        <a href="#getSummaryCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getSummaryCourse(payload: <a href="../classes/SummaryCourseDto.html" target="_self">SummaryCourseDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:151</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/SummaryCourseDto.html" target="_self" >SummaryCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="strict_output"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -517,8 +700,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="23"
-                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:23</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="665"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:665</a></div>
                         </td>
                     </tr>
 
@@ -622,7 +805,7 @@
                                             </td>
 
                                             <td>
-                                                    <code>&#x27;gpt-3.5-turbo&#x27;</code>
+                                                    <code>&#x27;gemini-1.5-pro&#x27;</code>
                                             </td>
 
                                         </tr>
@@ -637,7 +820,7 @@
                                             </td>
 
                                             <td>
-                                                    <code>1</code>
+                                                    <code>0.9</code>
                                             </td>
 
                                         </tr>
@@ -670,12 +853,189 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="supportCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>supportCode</b></span>
+                        <a href="#supportCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>supportCode(payload: <a href="../classes/SupportCodeDto.html" target="_self">SupportCodeDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/SupportCodeDto.html" target="_self" >SupportCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translateSubtitle"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>translateSubtitle</b></span>
+                        <a href="#translateSubtitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>translateSubtitle(subtitleUrl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, languageTarget: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="292"
+                                    class="link-to-prism">src/chatgpt/chatgpt.service.ts:292</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>subtitleUrl</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>languageTarget</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
             <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="genai"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>genai</b></span>
+                        <a href="#genai"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new GoogleGenerativeAI(this.configService.get(&#x27;GEMINI_API_KEY&#x27;))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/chatgpt/chatgpt.service.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -699,7 +1059,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/chatgpt/chatgpt.service.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/chatgpt/chatgpt.service.ts:27</a></div>
                         </td>
                     </tr>
 
@@ -720,6 +1080,14 @@ import { ChatgptServiceInterface } from &#x27;./interfaces/chatgpt.service.inter
 import { PrismaService } from &#x27;src/prisma.service&#x27;;
 import { QuizzService } from &#x27;src/quizz/quizz.service&#x27;;
 import { OutputFormatMC, OutputFormatTF } from &#x27;./dto/output-format.dto&#x27;;
+import { ChatSession, GoogleGenerativeAI, HarmBlockThreshold, HarmCategory, InputContent } from &quot;@google/generative-ai&quot;;
+import { parseSync, stringifySync } from &#x27;subtitle&#x27;;
+import fetch from &#x27;node-fetch&#x27;;
+import { UploadService } from &#x27;src/upload/upload.service&#x27;;
+import { ChatbotUserDto, SummaryCourseDto, SupportCodeDto } from &#x27;./dto/chatbot-user.dto&#x27;;
+import { HttpService } from &#x27;@nestjs/axios&#x27;;
+import { firstValueFrom } from &#x27;rxjs&#x27;;
+import { uuid as v4 } from &#x27;uuidv4&#x27;;
 
 @Injectable()
 export class ChatgptService implements ChatgptServiceInterface {
@@ -727,12 +1095,646 @@ export class ChatgptService implements ChatgptServiceInterface {
         private readonly configService: ConfigService,
         private readonly prismaService: PrismaService,
         private readonly quizzService: QuizzService,
+        private readonly uploadService: UploadService,
+        private readonly httpService: HttpService,
     ) {}
-
     private readonly openai &#x3D; new OpenAI({
         //organization: this.configService.get(&#x27;ORGANIZATION_ID&#x27;),
         apiKey: this.configService.get(&#x27;OPENAI_API_KEY&#x27;),
     });
+
+    private readonly genai &#x3D; new GoogleGenerativeAI(this.configService.get(&#x27;GEMINI_API_KEY&#x27;));
+
+    // async supportCode(payload: SupportCodeDto): Promise&lt;any&gt; {
+    //     try{
+    //         const model &#x3D; this.genai.getGenerativeModel({
+    //             model: &quot;gemini-1.5-flash&quot;,
+    //         });
+              
+    //         const generationConfig &#x3D; {
+    //             temperature: 0.7,
+    //             topP: 0.95,
+    //             topK: 64,
+    //             maxOutputTokens: 400,
+    //         };
+
+    //         const chatSession &#x3D; model.startChat({
+    //             generationConfig,
+    //         });
+
+    //         const prompt &#x3D; &#x60;Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
+    //                         Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp,
+    //                         và tách mỗi ngôn ngữ tôi yêu cầu ra 1 JSON riêng biệt,
+    //                         không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
+    //                         [{
+    //                             &#x27;id&#x27;: [1 mã IDv4 ngẫu nhiên],
+    //                             &#x27;name&#x27;: [tên của file code],
+    //                             &#x27;lang&#x27;: [tên của ngôn ngữ lập trình],
+    //                             &#x27;code&#x27;: [viết code mà không cần gán các giá trị và in ra dữ liệu để test thử],
+    //                             &#x27;explain&#x27;: [lời giải thích]
+    //                         }]&#x60;
+
+    //         const result &#x3D; await chatSession.sendMessage(prompt);
+
+    //         const response &#x3D; await result.response;
+
+    //         let res &#x3D; response.text() ?? &#x27;&#x27;;
+
+    //         const regex &#x3D; /\[\s*\{\s*&quot;id&quot;:\s*&quot;([^&#x27;]*)&quot;,\s*&quot;name&quot;:\s*&quot;([^&#x27;]*)&quot;,\s*&quot;lang&quot;:\s*&quot;([^&#x27;]*)&quot;,\s*&quot;code&quot;:\s*&quot;([^&#x27;]*)&quot;,\s*&quot;explain&quot;:\s*&quot;([^&#x27;]*)&quot;\s*}\s*\]/;
+
+    //         //const regex &#x3D; /\[\s*\{\s*&quot;lang&quot;:\s*&quot;.*&quot;, \s*&quot;code&quot;:\s*&quot;.*&quot;,\s*&quot;explain&quot;:\s*&quot;.*&quot;\s*}\s*\]/;
+
+    //         //console.log(res.match(regex)[0]);
+
+    //         return res.match(regex)[0];
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //         throw new InternalServerErrorException()
+    //     }
+    // }
+
+    async supportCode(payload: SupportCodeDto): Promise&lt;any&gt; {
+        const maxRetries &#x3D; 3;
+        let attempts &#x3D; 0;
+    
+        while (attempts &lt; maxRetries) {
+            try {
+                const model &#x3D; this.genai.getGenerativeModel({
+                    model: &quot;gemini-1.5-flash&quot;,
+                });
+    
+                const generationConfig &#x3D; {
+                    temperature: 0.7
+                };
+    
+                const chatSession &#x3D; model.startChat({
+                    generationConfig,
+                });
+    
+                // const prompt &#x3D; &#x60;Gemini, mình đang làm bài tập lập trình với đề bài sau: ${payload.codeTitle} sử dụng ngôn ngữ lập trình ${payload.codeLang}
+                //                 Mình muốn bạn giúp mình giải quyết bài toán này 1 cách tối ưu nhất và hãy xuất ra nội dung JSON trực tiếp,
+                //                 và tách mỗi ngôn ngữ tôi yêu cầu ra 1 JSON riêng biệt,
+                //                 không bao gồm bất kỳ phần định dạng nào khác theo định dạng sau: 
+                //                 [{
+                //                     &quot;id&quot;: [1 mã IDv4 ngẫu nhiên],
+                //                     &quot;name&quot;: [tên của file code],
+                //                     &quot;lang&quot;: [tên của ngôn ngữ lập trình],
+                //                     &quot;code&quot;: [viết code mà không cần gán các giá trị và in ra dữ liệu để test thử],
+                //                     &quot;explain&quot;: [lời giải thích]
+                //                 }]&#x60;;
+                const prompt &#x3D; &#x60;Gemini, I&#x27;m working on a programming assignment with the following task: ${payload.codeTitle} using the programming language ${payload.codeLang}.
+                                I would like you to help me solve this problem in the most optimal way and output the content directly in JSON format.
+                                Separate each language I request into a separate JSON,
+                                excluding any other formatting, according to the following format:
+                                [{
+                                    &quot;id&quot;: [a random UUIDv4],
+                                    &quot;name&quot;: [name of the code file],
+                                    &quot;lang&quot;: [name of the programming language],
+                                    &quot;code&quot;: [write the code without assigning values and printing data for testing],
+                                    &quot;explain&quot;: [explanation]
+                                }]&#x60;;
+    
+                const result &#x3D; await chatSession.sendMessage(prompt);
+                const response &#x3D; await result.response;
+                let res &#x3D; response.text() ?? &#x27;&#x27;;
+                res &#x3D; res.replace(/(\w)&quot;(\w)/g, &quot;$1&#x27;$2&quot;);
+    
+                const regex &#x3D; /\[\s*\{\s*&quot;id&quot;:\s*&quot;([^&#x27;]*)&quot;,\s*&quot;name&quot;:\s*&quot;([^&#x27;]*)&quot;,\s*&quot;lang&quot;:\s*&quot;([^&#x27;]*)&quot;,\s*&quot;code&quot;:\s*&quot;([^&#x27;]*)&quot;,\s*&quot;explain&quot;:\s*&quot;([^&#x27;]*)&quot;\s*}\s*\]/;
+                const match &#x3D; res.match(regex);
+                console.log(match);
+    
+                if (match &amp;&amp; match[0]) {
+                    return match[0];
+                } else {
+                    attempts++;
+                    if (attempts &gt;&#x3D; maxRetries) {
+                        throw new Error(&quot;Response did not contain the expected JSON format after multiple attempts.&quot;);
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+                attempts++;
+                if (attempts &gt;&#x3D; maxRetries) {
+                    throw new InternalServerErrorException();
+                }
+            }
+        }
+    }
+    
+    async getSummaryCourse(payload: SummaryCourseDto): Promise&lt;string&gt; {
+        const course &#x3D; await this.prismaService.course.findFirst({
+            where: {
+                slug: payload.course_slug
+            },
+            select: {
+                title: true,
+                description: true,
+                requirement: true,
+                learning_outcome: true,
+                chapters: {
+                    where: {
+                        isPublished: true
+                    },
+                    select: {
+                        title: true,
+                        description: true,  
+                        contents: {
+                            select: {
+                                lesson: {
+                                    where: {
+                                        isPublished: true
+                                    },
+                                    select: {
+                                        title: true,
+                                        description: true
+                                    }
+                                },
+                                exercise: {
+                                    where: {
+                                        isOpen: true
+                                    },
+                                    select: {
+                                        title: true,
+                                        type: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const generationConfig &#x3D; {
+            temperature: 0.5,
+            topP: 0.95,
+            topK: 64,
+            responseMimeType: &quot;text/plain&quot;,
+        };
+
+        const models &#x3D; this.genai.getGenerativeModel({model: &#x27;gemini-1.5-pro&#x27;, generationConfig}, {timeout: 20 * 1000});
+
+        const input &#x3D; &#x60;Tóm tắt khóa học này: ${JSON.stringify(course)}&#x60;;
+
+        //console.log(input.length);
+
+        const chat &#x3D; models.startChat({
+            history: [
+                {
+                    role: &#x27;user&#x27;,
+                    parts: [{
+                        text: &#x27;Bạn là một trợ lý tóm tắt nội dung khóa học. Hãy tóm tắt một cách khách quan, chính xác, tập trung vào những điểm chính, ý tưởng quan trọng và không thêm thông tin không có trong nội dung gốc.&#x27;
+                    }]
+                },
+                {
+                    role: &#x27;model&#x27;,
+                    parts: [{
+                        text: input
+                    }]
+                }
+            ]
+        });
+
+        const result &#x3D; await chat.sendMessage(input);
+        const response &#x3D; await result.response;
+
+        let res: string &#x3D; response.text() ?? &#x27;&#x27;;
+
+        return res;
+    }
+
+    async chatbotUser(payload: ChatbotUserDto): Promise&lt;string&gt; {
+        try {
+            const model &#x3D; this.genai.getGenerativeModel({
+                model: &quot;gemini-1.5-pro&quot;,
+            });
+              
+            const generationConfig &#x3D; {
+                temperature: 0.4,
+                topP: 0.95,
+                topK: 64,
+                maxOutputTokens: 8192,
+            };
+
+            const safetySettings &#x3D; [
+                {
+                  category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                  category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                  category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                  category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+            ];
+
+            const history: InputContent[] &#x3D; payload.history.map((item) &#x3D;&gt; {
+                return {
+                    role: item.label,
+                    parts: [
+                        {
+                            text: item.value
+                        }
+                    ]
+                };
+            });
+
+            const chatSession &#x3D; model.startChat({
+                generationConfig,
+                safetySettings,
+                history
+            });
+            
+            const result &#x3D; await chatSession.sendMessage(payload.request);
+              
+            return result.response.text();
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    async translateSubtitle(subtitleUrl: string, languageTarget: string): Promise&lt;string&gt; {
+        try {
+            const file &#x3D; await fetch(subtitleUrl);
+            const buffer &#x3D; await file.buffer();
+
+            let subtitle &#x3D; parseSync(buffer.toString());
+
+            subtitle &#x3D; subtitle.filter(line &#x3D;&gt; line.type &#x3D;&#x3D;&#x3D; &#x27;cue&#x27;);
+
+            for (let i &#x3D; 0; i &lt; subtitle.length; i++) {
+                let text: string &#x3D; subtitle[i].data[&#x27;text&#x27;];
+
+                const { data } &#x3D; await firstValueFrom(
+                    this.httpService.request({
+                        baseURL: this.configService.get(&#x27;ENDPOINT_TRANSLATE&#x27;),
+                        url: &#x27;/translate&#x27;,
+                        method: &#x27;post&#x27;,
+                        headers: {
+                            &#x27;Ocp-Apim-Subscription-Key&#x27;: this.configService.get(&#x27;KEY_TRANSLATE&#x27;),
+                            &#x27;Ocp-Apim-Subscription-Region&#x27;: this.configService.get(&#x27;LOCATION_TRANSLATE&#x27;),
+                            &#x27;Content-type&#x27;: &#x27;application/json&#x27;,
+                            &#x27;X-ClientTraceId&#x27;: v4()
+                        },
+                        params: {
+                            &#x27;api-version&#x27;: &#x27;3.0&#x27;,
+                            &#x27;to&#x27;: languageTarget
+                        },
+                        data: [{
+                            &#x27;text&#x27;: text
+                        }],
+                        responseType: &#x27;json&#x27;
+                    })
+                );
+                subtitle[i].data[&#x27;text&#x27;] &#x3D; data[0].translations[0].text;
+            }
+            const output_file &#x3D; stringifySync(subtitle, {format: &#x27;WebVTT&#x27;});
+
+           /// console.log(output_file);
+
+            const fileAWS &#x3D; {
+                originalname: &#x27;translate-learning.vtt&#x27;,
+                buffer: Buffer.from(output_file)
+            }
+
+            return await this.uploadService.uploadAttachmentToS3(fileAWS);
+        }
+        catch(err) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    // async translateSubtitle(subtitleUrl: string, languageTarget: string): Promise&lt;string&gt; {
+    //     try {
+    //         const file &#x3D; await fetch(subtitleUrl);
+    //         const buffer &#x3D; await file.buffer();
+
+    //         const output_format &#x3D; {
+    //             &quot;Input&quot;: &quot;Translation of subtitles&quot;
+    //         }
+
+    //         let subtitle &#x3D; parseSync(buffer.toString());
+
+    //         subtitle &#x3D; subtitle.filter(line &#x3D;&gt; line.type &#x3D;&#x3D;&#x3D; &#x27;cue&#x27;);
+
+    //         let previousSubtitles &#x3D; [];
+
+    //         for (let i &#x3D; 0; i &lt; subtitle.length; i++) {
+    //             let text: string &#x3D; subtitle[i].data[&#x27;text&#x27;];
+
+    //             let input: {
+    //                 Input: string,
+    //                 Next?: string
+    //             } &#x3D; { Input: text };
+
+    //             if (subtitle[i + 1]) {
+    //                 input.Next &#x3D; subtitle[i + 1].data[&#x27;text&#x27;];
+    //             }
+    //             let completion: ChatSession;
+
+    //             for(;;) {
+    //                 try {
+    //                     let output_format_prompt: string &#x3D; &#x60;\nYou are to output the following in json format: ${JSON.stringify(
+    //                         output_format,
+    //                     )}. \nDo not put quotation marks or escape character \\ in the output fields.&#x60;;
+
+    //                     const model &#x3D; this.genai.getGenerativeModel({
+    //                         model: &#x27;gemini-1.5-pro&#x27;,
+    //                     },{
+    //                         timeout: 60 * 1000
+    //                     });
+
+    //                     completion &#x3D; model.startChat({
+    //                         history: [
+    //                             {
+    //                                 role: &#x27;user&#x27;,
+    //                                 parts: JSON.stringify(input)
+    //                             },
+    //                             ...previousSubtitles.slice(-4),
+    //                             {
+    //                                 role: &#x27;model&#x27;,
+    //                                 parts: &#x60;You are a program responsible for translating subtitles. Your task is to output the specified target language based on the input text. Please do not create the following subtitles on your own. Please do not output any text other than the translation. You will receive the subtitles as array that needs to be translated, as well as the previous translation results and next subtitle. You need to review the previous and next subtitles to translate the current subtitle to suit the context.If you need to merge the subtitles with the following line, simply repeat the translation. Please transliterate the person&#x27;s name into the local language. Target language: ${languageTarget}&#x60;
+    //                                 + output_format_prompt
+    //                             }
+    //                         ]
+    //                     });
+    //                     break;
+    //                 }
+    //                 catch (err) {
+    //                     console.log(err);
+    //                     throw new InternalServerErrorException();
+    //                 }
+    //             }
+
+    //             try {
+    //                 const result &#x3D; await completion.sendMessage(JSON.stringify(input));
+
+    //                 const response &#x3D; await result.response;
+        
+    //                 let res: string &#x3D; response.text() ?? &#x27;&#x27;;
+
+    //                 res &#x3D; JSON.parse(res).Input;
+
+    //                 console.log(res);
+
+    //                 previousSubtitles.push({ role: &#x27;model&#x27;, parts: JSON.stringify({ ...input, Input: res }) });
+    //                 previousSubtitles.push({ role: &#x27;user&#x27;, parts: JSON.stringify(input) });
+
+    //                 subtitle[i].data[&#x27;text&#x27;] &#x3D; res;
+    //             }
+    //             catch(err) {
+    //                 console.log(err);
+    //                 throw new InternalServerErrorException();
+    //             }
+    //         }
+
+    //         const output_file &#x3D; stringifySync(subtitle, {format: &#x27;WebVTT&#x27;});
+
+    //         console.log(output_file);
+
+    //         const fileAWS &#x3D; {
+    //             originalname: &#x27;translate-learning.vtt&#x27;,
+    //             buffer: Buffer.from(output_file)
+    //         }
+
+    //         return await this.uploadService.uploadAttachmentToS3(fileAWS);
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //         throw new InternalServerErrorException();
+    //     }
+
+    // }
+
+    // async translateSubtitle(subtitleUrl: string, languageTarget: string): Promise&lt;string&gt; {
+    //     try {
+    //         const file &#x3D; await fetch(subtitleUrl);
+    //         const buffer &#x3D; await file.buffer();
+
+    //         const output_format &#x3D; {
+    //             &quot;Input&quot;: &quot;Translation of subtitles&quot;
+    //         }
+
+    //         let subtitle &#x3D; parseSync(buffer.toString());
+
+    //         subtitle &#x3D; subtitle.filter(line &#x3D;&gt; line.type &#x3D;&#x3D;&#x3D; &#x27;cue&#x27;);
+
+    //         let previousSubtitles &#x3D; [];
+
+    //         for (let i &#x3D; 0; i &lt; subtitle.length; i++) {
+    //             let text: string &#x3D; subtitle[i].data[&#x27;text&#x27;];
+
+    //             let input: {
+    //                 Input: string,
+    //                 Next?: string
+    //             } &#x3D; { Input: text };
+
+    //             if (subtitle[i + 1]) {
+    //                 input.Next &#x3D; subtitle[i + 1].data[&#x27;text&#x27;];
+    //             }
+
+    //             for(;;) {
+    //                 try {
+    //                     let output_format_prompt: string &#x3D; &#x60;\nYou are to output the following in json format: ${JSON.stringify(
+    //                         output_format,
+    //                     )}. \nDo not put quotation marks or escape character \\ in the output fields.&#x60;;
+
+    //                     var completion &#x3D; await this.openai.chat.completions.create({
+    //                         model: &quot;gpt-3.5-turbo&quot;,
+    //                         messages: [
+    //                           {
+    //                             role: &quot;system&quot;,
+    //                             content: &#x60;You are a program responsible for translating subtitles. Your task is to output the specified target language based on the input text. Please do not create the following subtitles on your own. Please do not output any text other than the translation. You will receive the subtitles as array that needs to be translated, as well as the previous translation results and next subtitle. You need to review the previous and next subtitles to translate the current subtitle to suit the context.If you need to merge the subtitles with the following line, simply repeat the translation. Please transliterate the person&#x27;s name into the local language. Target language: ${languageTarget}&#x60;
+    //                             + output_format_prompt
+    //                           },
+    //                           ...previousSubtitles.slice(-4),
+    //                           {
+    //                             role: &quot;user&quot;,
+    //                             content: JSON.stringify(input)
+    //                           }
+    //                         ],
+    //                     }, {timeout: 60 * 1000 });
+    //                     break;
+    //                 }
+    //                 catch (err) {
+    //                     console.log(err);
+    //                     throw new InternalServerErrorException();
+    //                 }
+    //             }
+
+    //             try {
+    //                 let result &#x3D; completion.choices[0].message.content;
+
+    //                 result &#x3D; JSON.parse(result).Input;
+
+    //                 console.log(result);
+
+    //                 previousSubtitles.push({ role: &#x27;model&#x27;, parts: JSON.stringify({ ...input, Input: result }) });
+    //                 previousSubtitles.push({ role: &#x27;user&#x27;, parts: JSON.stringify(input) });
+
+    //                 subtitle[i].data[&#x27;text&#x27;] &#x3D; result;
+    //             }
+    //             catch(err) {
+    //                 console.log(err);
+    //                 throw new InternalServerErrorException();
+    //             }
+    //         }
+
+    //         const output_file &#x3D; stringifySync(subtitle, {format: &#x27;WebVTT&#x27;});
+
+    //         console.log(output_file);
+
+    //         const fileAWS &#x3D; {
+    //             originalname: &#x27;translate-learning.vtt&#x27;,
+    //             buffer: Buffer.from(output_file)
+    //         }
+
+    //         return await this.uploadService.uploadAttachmentToS3(fileAWS);
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //         throw new InternalServerErrorException();
+    //     }
+
+    // }
+
+    // async strict_output(
+    //     system_prompt: string,
+    //     user_prompt: string | string[],
+    //     output_format: OutputFormat,
+    //     default_category: string &#x3D; &#x27;&#x27;,
+    //     output_value_only: boolean &#x3D; false,
+    //     model: string &#x3D; &#x27;gpt-3.5-turbo&#x27;,
+    //     temperature: number &#x3D; 1,
+    //     num_tries: number &#x3D; 3,
+    // ): Promise&lt;
+    //     {
+    //         question: string;
+    //         answer: string;
+    //     }[]
+    // &gt; {
+    //     // if the user input is in a list, we also process the output as a list of json
+    //     const list_input: boolean &#x3D; Array.isArray(user_prompt);
+    //     // if the output format contains dynamic elements of &lt; or &gt;, then add to the prompt to handle dynamic elements
+    //     const dynamic_elements: boolean &#x3D; /&lt;.*?&gt;/.test(
+    //         JSON.stringify(output_format),
+    //     );
+    //     // if the output format contains list elements of [ or ], then we add to the prompt to handle lists
+    //     const list_output: boolean &#x3D; /\[.*?\]/.test(
+    //         JSON.stringify(output_format),
+    //     );
+
+    //     // start off with no error message
+    //     let error_msg: string &#x3D; &#x27;&#x27;;
+
+    //     for (let i &#x3D; 0; i &lt; num_tries; i++) {
+    //         let output_format_prompt: string &#x3D; &#x60;\nYou are to output the following in json format: ${JSON.stringify(
+    //             output_format,
+    //         )}. \nDo not put quotation marks or escape character \\ in the output fields.&#x60;;
+
+    //         if (list_output) {
+    //             output_format_prompt +&#x3D; &#x60;\nIf output field is a list, classify output into the best element of the list.&#x60;;
+    //         }
+
+    //         // if output_format contains dynamic elements, process it accordingly
+    //         if (dynamic_elements) {
+    //             output_format_prompt +&#x3D; &#x60;\nAny text enclosed by &lt; and &gt; indicates you must generate content to replace it. Example input: Go to &lt;location&gt;, Example output: Go to the garden\nAny output key containing &lt; and &gt; indicates you must generate the key name to replace it. Example input: {&#x27;&lt;location&gt;&#x27;: &#x27;description of location&#x27;}, Example output: {school: a place for education}&#x60;;
+    //         }
+
+    //         // if input is in a list format, ask it to generate json in a list
+    //         if (list_input) {
+    //             output_format_prompt +&#x3D; &#x60;\nGenerate a list of json, one json for each input element.&#x60;;
+    //         }
+
+    //         // Use OpenAI to get a response
+    //         const response &#x3D; await this.openai.chat.completions.create({
+    //             temperature: temperature,
+    //             model: model,
+    //             messages: [
+    //                 {
+    //                     role: &#x27;system&#x27;,
+    //                     content:
+    //                         system_prompt + output_format_prompt + error_msg,
+    //                 },
+    //                 { role: &#x27;user&#x27;, content: user_prompt.toString() },
+    //             ],
+    //         });
+
+    //         let res: string &#x3D; response.choices[0].message?.content ?? &#x27;&#x27;;
+
+    //         // ensure that we don&#x27;t replace away apostrophes in text
+    //         res &#x3D; res.replace(/(\w)&quot;(\w)/g, &quot;$1&#x27;$2&quot;);
+    //         // try-catch block to ensure output format is adhered to
+    //         try {
+    //             let output: any &#x3D; JSON.parse(res);
+
+    //             output &#x3D; !Array.isArray(output) ? new Array(output) : output;
+    //             // check for each element in the output_list, the format is correctly adhered to
+    //             for (let index &#x3D; 0; index &lt; output.length; index++) {
+    //                 for (const key in output_format) {
+    //                     // unable to ensure accuracy of dynamic output header, so skip it
+    //                     if (/&lt;.*?&gt;/.test(key)) {
+    //                         continue;
+    //                     }
+
+    //                     //if output field missing, raise an error
+    //                     if (!(key in output[index])) {
+    //                         throw new Error(&#x60;${key} not in json output&#x60;);
+    //                     }
+
+    //                     // check that one of the choices given for the list of words is an unknown
+    //                     if (Array.isArray(output_format[key])) {
+    //                         const choices &#x3D; output_format[key] as string[];
+    //                         // ensure output is not a list
+    //                         if (Array.isArray(output[index][key])) {
+    //                             output[index][key] &#x3D; output[index][key][0];
+    //                         }
+    //                         // output the default category (if any) if GPT is unable to identify the category
+    //                         if (
+    //                             !choices.includes(output[index][key]) &amp;&amp;
+    //                             default_category
+    //                         ) {
+    //                             output[index][key] &#x3D; default_category;
+    //                         }
+    //                         // if the output is a description format, get only the label
+    //                         if (output[index][key].includes(&#x27;:&#x27;)) {
+    //                             output[index][key] &#x3D;
+    //                                 output[index][key].split(&#x27;:&#x27;)[0];
+    //                         }
+    //                     }
+    //                 }
+
+    //                 // if we just want the values for the outputs
+    //                 if (output_value_only) {
+    //                     output[index] &#x3D; Object.values(output[index]);
+    //                     // just output without the list if there is only one element
+    //                     if (output[index].length &#x3D;&#x3D;&#x3D; 1) {
+    //                         output[index] &#x3D; output[index][0];
+    //                     }
+    //                 }
+    //             }
+
+    //             return output;
+    //         } catch (e) {
+    //             error_msg &#x3D; &#x60;\n\nResult: ${res}\n\nError message: ${e}&#x60;;
+    //             console.log(e);
+    //             throw new InternalServerErrorException();
+    //         }
+    //     }
+
+    //     return [];
+    // }
 
     async strict_output(
         system_prompt: string,
@@ -740,8 +1742,8 @@ export class ChatgptService implements ChatgptServiceInterface {
         output_format: OutputFormat,
         default_category: string &#x3D; &#x27;&#x27;,
         output_value_only: boolean &#x3D; false,
-        model: string &#x3D; &#x27;gpt-3.5-turbo&#x27;,
-        temperature: number &#x3D; 1,
+        model: string &#x3D; &#x27;gemini-1.5-pro&#x27;,
+        temperature: number &#x3D; 0.9,
         num_tries: number &#x3D; 3,
     ): Promise&lt;
         {
@@ -782,21 +1784,28 @@ export class ChatgptService implements ChatgptServiceInterface {
                 output_format_prompt +&#x3D; &#x60;\nGenerate a list of json, one json for each input element.&#x60;;
             }
 
-            // Use OpenAI to get a response
-            const response &#x3D; await this.openai.chat.completions.create({
-                temperature: temperature,
-                model: model,
-                messages: [
+            const models &#x3D; this.genai.getGenerativeModel({model});
+
+            const chat &#x3D; models.startChat({
+                history: [
                     {
-                        role: &#x27;system&#x27;,
-                        content:
-                            system_prompt + output_format_prompt + error_msg,
+                        role: &#x27;user&#x27;,
+                        parts: user_prompt.toString()
                     },
-                    { role: &#x27;user&#x27;, content: user_prompt.toString() },
+                    {
+                        role: &#x27;model&#x27;,
+                        parts: system_prompt + output_format_prompt + error_msg
+                    }
                 ],
+                generationConfig: {
+                    temperature
+                }
             });
 
-            let res: string &#x3D; response.choices[0].message?.content ?? &#x27;&#x27;;
+            const result &#x3D; await chat.sendMessage(user_prompt.toString());
+            const response &#x3D; await result.response;
+
+            let res: string &#x3D; response.text() ?? &#x27;&#x27;;
 
             // ensure that we don&#x27;t replace away apostrophes in text
             res &#x3D; res.replace(/(\w)&quot;(\w)/g, &quot;$1&#x27;$2&quot;);
@@ -852,7 +1861,7 @@ export class ChatgptService implements ChatgptServiceInterface {
 
                 return output;
             } catch (e) {
-                error_msg &#x3D; &#x60;\n\nResult: ${res}\n\nError message: ${e}&#x60;;
+                console.log(e);
                 throw new InternalServerErrorException();
             }
         }
@@ -864,40 +1873,44 @@ export class ChatgptService implements ChatgptServiceInterface {
         payload: CreateListQuizzDto,
         question: OutputFormatTF[],
     ): Promise&lt;string&gt; {
+        const user &#x3D; await this.quizzService.findUserByEmail(payload.email);
+        const course &#x3D; await this.quizzService.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.quizzService.findChapterByToken(payload.chapter_token, course.id);
+    
+        const exercise &#x3D; await this.quizzService.findExcersie(chapter.id, payload.exercise_token);
+
         try {
-            const exercise &#x3D; await this.quizzService.findExcersie(
-                payload.email,
-                payload.exercise_token,
-            );
-
-            question.map(async (item) &#x3D;&gt; {
-                const lastQuizz &#x3D; await this.prismaService.quizz.findFirst({
-                    where: {
-                        exerciseId: exercise.id,
-                    },
-                    orderBy: {
-                        position: &#x27;desc&#x27;,
-                    },
-                });
-
-                const newPosition &#x3D; lastQuizz ? lastQuizz.position + 1 : 1;
-
-                await this.prismaService.quizz.create({
-                    data: {
-                        token: new Date().getTime().toString(),
-                        question: item.question,
-                        answer:
-                            item.answer.charAt(0).toUpperCase() +
-                            item.answer.slice(1),
-                        position: newPosition,
-                        exerciseId: exercise.id,
-                        option: [&#x27;True&#x27;, &#x27;False&#x27;],
-                        explain: item?.explain || &#x27;&#x27;,
-                    },
-                });
+            return await this.prismaService.$transaction(async (tx) &#x3D;&gt; {
+                await Promise.all(
+                    question.map(async (item) &#x3D;&gt; {
+                        const lastQuizz &#x3D; await this.prismaService.quizz.findFirst({
+                            where: {
+                                exerciseId: exercise.id,
+                            },
+                            orderBy: {
+                                position: &#x27;desc&#x27;,
+                            },
+                        });
+        
+                        const newPosition &#x3D; lastQuizz ? lastQuizz.position + 1 : 1;
+        
+                        await tx.quizz.create({
+                            data: {
+                                token: new Date().getTime().toString(),
+                                question: item.question,
+                                answer:
+                                    item.answer,
+                                position: newPosition,
+                                exerciseId: exercise.id,
+                                option: [&#x27;True&#x27;, &#x27;False&#x27;],
+                                explain: item?.explain || &#x27;&#x27;,
+                            },
+                        });
+                    })
+                );
+    
+                return &#x27;SUCCESS&#x27;;
             });
-
-            return &#x27;SUCCESS&#x27;;
         } catch (err: any) {
             throw new InternalServerErrorException();
         }
@@ -907,45 +1920,49 @@ export class ChatgptService implements ChatgptServiceInterface {
         payload: CreateListQuizzDto,
         question: OutputFormatMC[],
     ): Promise&lt;string&gt; {
+        const user &#x3D; await this.quizzService.findUserByEmail(payload.email);
+        const course &#x3D; await this.quizzService.findCourseBySlug(payload.course_slug, user.id);
+        const chapter &#x3D; await this.quizzService.findChapterByToken(payload.chapter_token, course.id);
+    
+        const exercise &#x3D; await this.quizzService.findExcersie(chapter.id, payload.exercise_token);
+
         try {
-            const exercise &#x3D; await this.quizzService.findExcersie(
-                payload.email,
-                payload.exercise_token,
-            );
-
-            question.map(async (item) &#x3D;&gt; {
-                const lastQuizz &#x3D; await this.prismaService.quizz.findFirst({
-                    where: {
-                        exerciseId: exercise.id,
-                    },
-                    orderBy: {
-                        position: &#x27;desc&#x27;,
-                    },
-                });
-
-                const newPosition &#x3D; lastQuizz ? lastQuizz.position + 1 : 1;
-
-                await this.prismaService.quizz.create({
-                    data: {
-                        token: new Date().getTime().toString(),
-                        question: item.question,
-                        answer:
-                            item.answer.charAt(0).toUpperCase() +
-                            item.answer.slice(1),
-                        position: newPosition,
-                        exerciseId: exercise.id,
-                        option: [
-                            item?.option1 || &#x27;&#x27;,
-                            item?.option2 || &#x27;&#x27;,
-                            item?.option3 || &#x27;&#x27;,
-                            item.answer,
-                        ],
-                        explain: item?.explain || &#x27;&#x27;,
-                    },
-                });
+            return this.prismaService.$transaction(async (tx) &#x3D;&gt; {
+                await Promise.all(
+                    question.map(async (item) &#x3D;&gt; {
+                        const lastQuizz &#x3D; await this.prismaService.quizz.findFirst({
+                            where: {
+                                exerciseId: exercise.id,
+                            },
+                            orderBy: {
+                                position: &#x27;desc&#x27;,
+                            },
+                        });
+        
+                        const newPosition &#x3D; lastQuizz ? lastQuizz.position + 1 : 1;
+        
+                        await tx.quizz.create({
+                            data: {
+                                token: new Date().getTime().toString(),
+                                question: item.question,
+                                answer:
+                                    item.answer,
+                                position: newPosition,
+                                exerciseId: exercise.id,
+                                option: [
+                                    item?.option1 || &#x27;&#x27;,
+                                    item?.option2 || &#x27;&#x27;,
+                                    item?.option3 || &#x27;&#x27;,
+                                    item.answer,
+                                ],
+                                explain: item?.explain || &#x27;&#x27;,
+                            },
+                        });
+                    })
+                );
+    
+                return &#x27;SUCCESS&#x27;;
             });
-
-            return &#x27;SUCCESS&#x27;;
         } catch (err: any) {
             throw new InternalServerErrorException();
         }
@@ -970,9 +1987,7 @@ export class ChatgptService implements ChatgptServiceInterface {
 
         const questions &#x3D; await this.strict_output(
             &#x60;You are a helpful AI that is able to generate ${payload.type} include questions and answers, the length of each answer should not be more than 15 words, store all answers, questions, options, explain in a JSON array by language Vietnamese.&#x60;,
-            new Array(payload.amount).fill(
-                &#x60;You are to generate a question random level ${payload.level} ${payload.type} about ${payload.topic}&#x60;,
-            ),
+            &#x60;You are to generate ${payload.amount} question random level ${payload.level} ${payload.type} about ${payload.topic}&#x60;,
             format,
         );
         if (questions.length &lt; payload.amount) {

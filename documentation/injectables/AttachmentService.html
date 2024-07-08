@@ -258,8 +258,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="76"
-                                    class="link-to-prism">src/attachment/attachment.service.ts:76</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="78"
+                                    class="link-to-prism">src/attachment/attachment.service.ts:78</a></div>
                         </td>
                     </tr>
 
@@ -408,8 +408,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="40"
-                                    class="link-to-prism">src/attachment/attachment.service.ts:40</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="42"
+                                    class="link-to-prism">src/attachment/attachment.service.ts:42</a></div>
                         </td>
                     </tr>
 
@@ -477,8 +477,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/attachment/attachment.service.ts:54</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="56"
+                                    class="link-to-prism">src/attachment/attachment.service.ts:56</a></div>
                         </td>
                     </tr>
 
@@ -554,10 +554,12 @@ export class AttachmentService implements AttachmentServiceInterface {
         const lesson &#x3D; await this.prismaService.lesson.findUnique({
             where: {
                 token,
-                chapter: {
-                    course: {
-                        owner_id: id
-                    }
+                content: {
+                    chapter: {
+                        course: {
+                            owner_id: id
+                        }
+                    },
                 }
             },
         });

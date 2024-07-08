@@ -149,7 +149,21 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier"></span>
+                                <a href="#chatbotUser" >chatbotUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                 <a href="#createQuizzList" >createQuizzList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#summaryCourse" >summaryCourse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#supportCode" >supportCode</a>
                             </li>
                         </ul>
                     </td>
@@ -172,8 +186,86 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="chatbotUser"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>chatbotUser</b></span>
+                        <a href="#chatbotUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>chatbotUser(payload: <a href="../classes/ChatbotUserDto.html" target="_self">ChatbotUserDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;chatbot-user&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="21"
+                                    class="link-to-prism">src/chatgpt/chatgpt.controller.ts:21</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../classes/ChatbotUserDto.html" target="_self" >ChatbotUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createQuizzList"></a>
                     <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
                             <span class="modifier"></span>
                         <span ><b>createQuizzList</b></span>
                         <a href="#createQuizzList"><span class="icon ion-ios-link"></span></a>
@@ -191,14 +283,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;quizz-list&#x27;)<br /></code>
+                    <code>@Roles(&#x27;INSTRUCTOR&#x27;)<br />@UseGuards(JwtGuard, RolesGuard)<br />@Post(&#x27;quizz-list&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="15"
-                                    class="link-to-prism">src/chatgpt/chatgpt.controller.ts:15</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="16"
+                                    class="link-to-prism">src/chatgpt/chatgpt.controller.ts:16</a></div>
                         </td>
                     </tr>
 
@@ -244,6 +336,158 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="summaryCourse"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>summaryCourse</b></span>
+                        <a href="#summaryCourse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>summaryCourse(query: <a href="../classes/SummaryCourseDto.html" target="_self">SummaryCourseDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;summary-course&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="26"
+                                    class="link-to-prism">src/chatgpt/chatgpt.controller.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../classes/SummaryCourseDto.html" target="_self" >SummaryCourseDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="supportCode"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>supportCode</b></span>
+                        <a href="#supportCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>supportCode(query: <a href="../classes/SupportCodeDto.html" target="_self">SupportCodeDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;support-code&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="31"
+                                    class="link-to-prism">src/chatgpt/chatgpt.controller.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../classes/SupportCodeDto.html" target="_self" >SupportCodeDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>    </div>
 
 
@@ -254,16 +498,32 @@ import { ChatgptService } from &#x27;./chatgpt.service&#x27;;
 import { Roles } from &#x27;src/course/decorators/roles.decorator&#x27;;
 import { JwtGuard } from &#x27;src/auth/guards/jwt.guard&#x27;;
 import { RolesGuard } from &#x27;src/course/guards/role.guard&#x27;;
+import { ChatbotUserDto, SummaryCourseDto, SupportCodeDto } from &#x27;./dto/chatbot-user.dto&#x27;;
 
-@Roles(&#x27;INSTRUCTOR&#x27;)
-@UseGuards(JwtGuard, RolesGuard)
 @Controller(&#x27;chatgpt&#x27;)
 export class ChatgptController {
     constructor(private readonly chatgptService: ChatgptService) {}
 
+    @Roles(&#x27;INSTRUCTOR&#x27;)
+    @UseGuards(JwtGuard, RolesGuard)
     @Post(&#x27;quizz-list&#x27;)
     createQuizzList(@Body() payload: CreateListQuizzDto) {
         return this.chatgptService.createQuizzList(payload);
+    }
+
+    @Post(&#x27;chatbot-user&#x27;)
+    chatbotUser(@Body() payload: ChatbotUserDto) {
+        return this.chatgptService.chatbotUser(payload);
+    }
+
+    @Get(&#x27;summary-course&#x27;)
+    summaryCourse(@Query() query: SummaryCourseDto){
+        return this.chatgptService.getSummaryCourse(query);
+    }
+
+    @Get(&#x27;support-code&#x27;)
+    supportCode(@Query() query: SupportCodeDto) {
+        return this.chatgptService.supportCode(query);
     }
 }
 </code></pre>

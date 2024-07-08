@@ -150,12 +150,12 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier">Async</span>
-                                <a href="#handler" >handler</a>
+                                <a href="#handlerFailed" >handlerFailed</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier">Async</span>
-                                <a href="#handlerFailed" >handlerFailed</a>
+                                <a href="#translateSubtitleProcess" >translateSubtitleProcess</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -180,7 +180,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>, prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, uploadGateway: <a href="../classes/UploadGateway.html" target="_self">UploadGateway</a>)</code>
+<code>constructor(uploadService: <a href="../injectables/UploadService.html" target="_self">UploadService</a>, prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>, chatgptService: <a href="../injectables/ChatgptService.html" target="_self">ChatgptService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -227,10 +227,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>uploadGateway</td>
+                                                        <td>chatgptService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/UploadGateway.html" target="_self" >UploadGateway</a></code>
+                                                                        <code><a href="../injectables/ChatgptService.html" target="_self" >ChatgptService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -257,95 +257,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="handler"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier">Async</span>
-                        <span ><b>handler</b></span>
-                        <a href="#handler"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>handler(job: <a href="../interfaces/QueueUploadVideo.html" target="_self">Job&lt;QueueUploadVideo&gt;</a>, result: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@OnQueueCompleted()<br /></code>
-                </td>
-            </tr>
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="37"
-                                    class="link-to-prism">src/upload/upload.processor.ts:37</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>job</td>
-                                            <td>
-                                                            <code><a href="../interfaces/QueueUploadVideo.html" target="_self" >Job&lt;QueueUploadVideo&gt;</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                        <tr>
-                                                <td>result</td>
-                                            <td>
-                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="handlerFailed"></a>
                     <span class="name">
                             <span class="modifier"></span>
@@ -366,14 +277,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@OnQueueFailed()<br /></code>
+                    <code>@OnQueueFailed({name: &#x27;update-video&#x27;})<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="58"
-                                    class="link-to-prism">src/upload/upload.processor.ts:58</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/upload/upload.processor.ts:99</a></div>
                         </td>
                     </tr>
 
@@ -422,6 +333,83 @@
                             </div>
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translateSubtitleProcess"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>translateSubtitleProcess</b></span>
+                        <a href="#translateSubtitleProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>translateSubtitleProcess(job: <a href="../interfaces/TranslateSubtitleQueue.html" target="_self">Job&lt;TranslateSubtitleQueue&gt;</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Process(&#x27;translate-subtitle&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/upload/upload.processor.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>job</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TranslateSubtitleQueue.html" target="_self" >Job&lt;TranslateSubtitleQueue&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -528,53 +516,94 @@ import { UploadService } from &#x27;./upload.service&#x27;;
 import { Job } from &#x27;bull&#x27;;
 import { InternalServerErrorException } from &#x27;@nestjs/common&#x27;;
 import { PrismaService } from &#x27;src/prisma.service&#x27;;
-import { UploadGateway } from &#x27;./upload.gateway&#x27;;
 import { QueueUploadVideo } from &#x27;src/lesson/dto/queue-upload-video.dto&#x27;;
-import getVideoDurationInSeconds from &#x27;get-video-duration&#x27;;
+import { TranslateSubtitleQueue } from &#x27;src/lesson/dto/subtitle.dto&#x27;;
+import { ChatgptService } from &#x27;src/chatgpt/chatgpt.service&#x27;;
 
 @Processor(&#x27;upload&#x27;)
 export class UploadProcessor {
     constructor(
         private readonly uploadService: UploadService,
         private readonly prismaService: PrismaService,
-        private uploadGateway: UploadGateway,
+        private readonly chatgptService: ChatgptService
     ) {}
 
     @Process(&#x27;update-video&#x27;)
     async updateVideo(job: Job&lt;QueueUploadVideo&gt;): Promise&lt;any&gt; {
         try {
             const payload: any &#x3D; job.data;
-            return await this.uploadService.uploadVideoToS3(
+            
+            const result &#x3D; await this.uploadService.moderateVideo(payload.data.file);
+
+            if(result.Hate &gt; 0 || result.SelfHarm &gt; 0 || result.Sexual &gt; 0 || result.Violence &gt; 0) {
+                return await this.prismaService.asyncVideo.update({
+                    where: {
+                        id: payload.data.asyncVideoId
+                    },
+                    data: {
+                        type: &#x27;WARNING&#x27;,
+                        description: &#x60;{
+                            Hate: ${result.Hate};
+                            SelfHarm: ${result.SelfHarm};
+                            Sexual: ${result.Sexual};
+                            Violence: ${result.Violence}
+                        }&#x60;
+                    }
+                });
+            }
+
+            const videoUpload &#x3D;  await this.uploadService.uploadVideoToS3(
                 payload.data.file,
                 payload.data.fileName,
             );
-        } catch (err: any) {
-            throw new InternalServerErrorException();
-        }
-    }
 
-    @OnQueueCompleted()
-    async handler(job: Job&lt;QueueUploadVideo&gt;, result: any): Promise&lt;void&gt; {
-        try {
-            const payload: any &#x3D; job.data;
-            const duration &#x3D; await getVideoDurationInSeconds(payload.data.link);
-
-            await this.prismaService.lesson.update({
+            return await this.prismaService.lesson.update({
                 where: {
                     id: payload.data.lesson_id,
                 },
                 data: {
-                    isCompleteVideo: true,
-                    duration,
+                    duration: payload.data.duration,
+                    videoUrl: payload.data.link,
+                    asyncVideo: {
+                        update: {
+                            type: &#x27;COMPLETED&#x27;
+                        }
+                    }
                 },
             });
+            
         } catch (err: any) {
             console.log(err);
             throw new InternalServerErrorException();
         }
     }
 
-    @OnQueueFailed()
+    // @OnQueueCompleted({
+    //     name: &#x27;update-video&#x27;
+    // })
+    // async handler(job: Job&lt;QueueUploadVideo&gt;, result: any): Promise&lt;void&gt; {
+    //     try {
+    //         const payload: any &#x3D; job.data;
+    //         console.log(payload);
+    //         const duration &#x3D; await getVideoDurationInSeconds(payload.data.link);
+
+    //         await this.prismaService.lesson.update({
+    //             where: {
+    //                 id: payload.data.lesson_id,
+    //             },
+    //             data: {
+    //                 isCompleteVideo: true,
+    //                 duration,
+    //             },
+    //         });
+    //     } catch (err: any) {
+    //         throw new InternalServerErrorException();
+    //     }
+    // }
+
+    @OnQueueFailed({
+        name: &#x27;update-video&#x27;
+    })
     async handlerFailed(job: Job&lt;QueueUploadVideo&gt;, err: Error) {
         const payload: any &#x3D; job.data;
 
@@ -583,9 +612,34 @@ export class UploadProcessor {
                 id: payload.data.lesson_id,
             },
             data: {
-                videoUrl: &#x27;&#x27;,
+                asyncVideo: {
+                    update: {
+                        type: &#x27;ERROR&#x27;
+                    }
+                }
             },
         });
+    }
+
+    @Process(&#x27;translate-subtitle&#x27;)
+    async translateSubtitleProcess(job: Job&lt;TranslateSubtitleQueue&gt;): Promise&lt;any&gt; {
+        try {
+            const payload: any &#x3D; job.data;
+            
+            const fileUrl &#x3D; await this.chatgptService.translateSubtitle(payload.data.subtitleUrl, payload.data.language_code);
+
+            return await this.prismaService.subtitle.create({
+                data: {
+                    lessonId: payload.data.lessonId,
+                    file: fileUrl,
+                    language: payload.data.language,
+                    language_code: payload.data.language_code
+                }
+            });
+        } catch (err: any) {
+            console.log(err);
+            throw new InternalServerErrorException();
+        }
     }
 }
 </code></pre>
