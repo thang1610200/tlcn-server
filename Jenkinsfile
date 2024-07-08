@@ -13,8 +13,11 @@ pipeline{
         stage('Checkout from Git'){
             steps{
                 git branch: 'main', url: 'https://github.com/thang1610200/tlcn-server.git'
-
-                sh ('ls')
+            }
+        }
+        stage('Docker Build & Push'){
+            withCredentials([file(credentialsId: 'Server', keyFileVariable: 'PRIVATE_KEY_FILE')]) {
+                sh ('PRIVATE_KEY_FILE')
             }
         }
         // stage("Docker Build & Push"){
