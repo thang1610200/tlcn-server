@@ -18,7 +18,6 @@ enum Role {
 
 enum TypeExercise {
   QUIZZ
-  IMAGE
   CODE
 }
 

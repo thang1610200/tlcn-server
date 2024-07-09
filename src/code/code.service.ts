@@ -111,6 +111,17 @@ export class CodeService implements CodeServiceInterface {
         try {
             const statusCode = await this.evaluateService.evaluateFunction(data);
 
+            const course = await this.prismaService.course.findFirst({
+                where: {
+                    slug: payload.course_slug,
+                    owner_id: user.id
+                }
+            });
+
+            if(course) {
+                return statusCode;
+            }
+
             const userProgress = await this.prismaService.userProgress.findFirst({
                 where: {
                     userId: user.id,
