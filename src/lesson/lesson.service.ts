@@ -637,7 +637,8 @@ export class LessonService implements LessonServiceInterface {
             });
 
             return this.updatePositionLessons(lessonDeleted.contentId);
-        } catch {
+        } catch(err) {
+            console.log(err);
             throw new InternalServerErrorException();
         }
     }

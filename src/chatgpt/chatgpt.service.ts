@@ -662,6 +662,19 @@ export class ChatgptService implements ChatgptServiceInterface {
     //     return [];
     // }
 
+    isJsonString(str: string): boolean {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
+
+    capitalizeFirstLetter(str: string): string {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
     async strict_output(
         system_prompt: string,
         user_prompt: string | string[],
@@ -737,7 +750,13 @@ export class ChatgptService implements ChatgptServiceInterface {
             res = res.replace(/(\w)"(\w)/g, "$1'$2");
             // try-catch block to ensure output format is adhered to
             try {
-                let output: any = JSON.parse(res);
+                console.log(res);
+                if(!this.isJsonString(res)) {
+                    res = res.match(/json\s*(\[[\s\S]*?\])/)[1];
+                    console.log(res);
+                }
+                //console.log(JSON.stringify(res));
+                let output: any = JSON.parse(res.trim());
 
                 output = !Array.isArray(output) ? new Array(output) : output;
                 // check for each element in the output_list, the format is correctly adhered to
@@ -824,8 +843,7 @@ export class ChatgptService implements ChatgptServiceInterface {
                             data: {
                                 token: new Date().getTime().toString(),
                                 question: item.question,
-                                answer:
-                                    item.answer,
+                                answer: this.capitalizeFirstLetter(item.answer),
                                 position: newPosition,
                                 exerciseId: exercise.id,
                                 option: ['True', 'False'],
@@ -905,17 +923,24 @@ export class ChatgptService implements ChatgptServiceInterface {
                 : {
                       question: 'question',
                       answer: 'answer with max length of 15 words',
-                      option1: 'option1 with max length of 15 words',
-                      option2: 'option2 with max length of 15 words',
-                      option3: 'option3 with max length of 15 words',
-                      explain: 'explain why you chose the answer',
+                      option1: 'option1 with max length of 15 words and must not be the same as the answer',
+                      option2: 'option2 with max length of 15 words and must not be the same as the answer',
+                      option3: 'option3 with max length of 15 words and must not be the same as the answer',
+                      explain: 'explain why you chose the answer and must not be the same as the answer',
                   };
 
+        // const questions = await this.strict_output(
+        //     `You are a helpful AI that is able to generate ${payload.type} include questions and answers, the length of each answer should not be more than 15 words, store all answers, questions, options, explain in a JSON array by language Vietnamese.`,
+        //     `You are to generate ${payload.amount} question random level ${payload.level} ${payload.type} about ${payload.topic}`,
+        //     format,
+        // );
+
         const questions = await this.strict_output(
-            `You are a helpful AI that is able to generate ${payload.type} include questions and answers, the length of each answer should not be more than 15 words, store all answers, questions, options, explain in a JSON array by language Vietnamese.`,
-            `You are to generate ${payload.amount} question random level ${payload.level} ${payload.type} about ${payload.topic}`,
+            `You are an AI that automatically creates quizzes, please help me create a quiz with the form ${payload.type}, includes questions and answers, the length of each answer must not exceed 15 words, store all answers, questions, options, explanations as a JSON array by language Vietnamese`,
+            `You muste generate according to the following requirements: topic about ${payload.topic}, ${payload.level} difficulty, number of questions is ${payload.amount}`,
             format,
         );
+
         if (questions.length < payload.amount) {
             throw new InternalServerErrorException();
         } else {
